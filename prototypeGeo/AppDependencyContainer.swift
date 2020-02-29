@@ -13,7 +13,7 @@ import RxSwift
 class AppDependencyContainer {
     
     let stateStore: Store<AppState> = {
-        return Store(reducer: Reducers.appReducer, state: AppState(farmerState: FarmerState(), navigationState: NavigationState(), mapFieldState: MapFieldState()), middleware: [FarmerMiddleware.shared.makeGetFarmersMiddleware(), MapFieldMiddleware.shared.makeGetAllFieldMiddleware()], automaticallySkipsRepeats: true)
+        return Store(reducer: Reducers.appReducer, state: AppState(farmerState: FarmerState(), navigationState: NavigationState(), mapFieldState: MapState()), middleware: [FarmerMiddleware.shared.makeGetFarmersMiddleware(), MapFieldMiddleware.shared.makeGetAllFieldMiddleware()], automaticallySkipsRepeats: true)
     }()
     
     let appRouter = AppRouter()
@@ -91,8 +91,8 @@ class AppDependencyContainer {
     
     
     
-    func makeMapFieldAllStateObservable() -> Observable<MapFieldAllFieldsState> {
-        self.stateStore.makeObservable(transform: {(subscription: Subscription<AppState>) -> Subscription<MapFieldAllFieldsState> in
+    func makeMapFieldAllStateObservable() -> Observable<MapFieldState> {
+        self.stateStore.makeObservable(transform: {(subscription: Subscription<AppState>) -> Subscription<MapFieldState> in
             subscription
                 .select { $0.mapFieldState.mapFieldAllFieldsState }
                 .skip { $0.uuidState == $1.uuidState }

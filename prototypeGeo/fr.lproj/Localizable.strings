@@ -1,0 +1,15 @@
+/* 
+  Localizable.strings
+  prototypeGeo
+
+  Created by Alexandre Andze Kande on 2020-02-29.
+  Copyright © 2020 Alexandre Andze Kande. All rights reserved.
+*/
+
+"Absente" = "Absente";
+"Captage Partiel" = "Captage Partiel";
+"Captage systématique" = "Captage systématique"
+"Ne s'applique pas" = "Ne s'applique pas"
+"1 à 3m" = "1 à 3m"
+"4m et plus" = "4m et plus"
+

@@ -11,7 +11,7 @@ import RxSwift
 import MapKit
 
 class MapFieldViewModel {
-    let mapFieldAllFieldState$: Observable<MapFieldAllFieldsState>
+    let mapFieldAllFieldState$: Observable<MapFieldState>
     let mapFieldInteraction: MapFieldInteraction
     var disposableMapFieldAllState: Disposable?
     var mapView: MKMapView!
@@ -20,7 +20,7 @@ class MapFieldViewModel {
     let idAnnotationView = "My annotation view"
     
     init(
-        mapFieldAllFieldState$: Observable<MapFieldAllFieldsState>,
+        mapFieldAllFieldState$: Observable<MapFieldState>,
         mapFieldInteraction: MapFieldInteraction
     ) {
         self.mapFieldAllFieldState$ = mapFieldAllFieldState$

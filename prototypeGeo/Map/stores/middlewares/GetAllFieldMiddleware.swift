@@ -21,7 +21,7 @@ extension MapFieldMiddleware {
                         if let tupleUtilPolygon = fieldPolygonAnnotationTuple?.0,
                             let tupleUtilMultiPolygon = fieldPolygonAnnotationTuple?.1 {
                              
-                            let mapFieldAllFieldState = MapFieldAllFieldsState(uuidState: NSUUID().uuidString, fieldPolygonAnnotation: tupleUtilPolygon, fieldMultiPolygonAnnotation: tupleUtilMultiPolygon)
+                            let mapFieldAllFieldState = MapFieldState(uuidState: NSUUID().uuidString, fieldPolygonAnnotation: tupleUtilPolygon, fieldMultiPolygonAnnotation: tupleUtilMultiPolygon)
                             
                             dispatch(MapFieldAction.GetAllFieldSuccess(mapFieldAllFieldState: mapFieldAllFieldState))
                             

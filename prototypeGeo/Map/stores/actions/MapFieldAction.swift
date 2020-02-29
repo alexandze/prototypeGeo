@@ -13,6 +13,6 @@ struct MapFieldAction {
     struct GetAllField: Action {}
     
     struct GetAllFieldSuccess: Action {
-        var mapFieldAllFieldState: MapFieldAllFieldsState
+        var mapFieldAllFieldState: MapFieldState
     }
 }

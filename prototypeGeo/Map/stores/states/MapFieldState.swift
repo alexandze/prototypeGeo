@@ -9,8 +9,8 @@
 import Foundation
 import MapKit
 
-struct MapFieldAllFieldsState: Equatable {
-    static func == (lhs: MapFieldAllFieldsState, rhs: MapFieldAllFieldsState) -> Bool {
+struct MapFieldState: Equatable {
+    static func == (lhs: MapFieldState, rhs: MapFieldState) -> Bool {
         lhs.uuidState == rhs.uuidState
     }
     

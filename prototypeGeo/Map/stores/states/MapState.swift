@@ -8,6 +8,6 @@
 
 import Foundation
 
-struct MapFieldState {
-    var mapFieldAllFieldsState: MapFieldAllFieldsState = MapFieldAllFieldsState(uuidState: "", fieldPolygonAnnotation: [], fieldMultiPolygonAnnotation: [])
+struct MapState {
+    var mapFieldAllFieldsState: MapFieldState = MapFieldState(uuidState: "", fieldPolygonAnnotation: [], fieldMultiPolygonAnnotation: [])
 }

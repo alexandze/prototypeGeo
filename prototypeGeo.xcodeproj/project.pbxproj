@@ -15,10 +15,10 @@
 		98363B2D23DECA3F00AFFC63 /* MapFieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98363B2C23DECA3F00AFFC63 /* MapFieldViewController.swift */; };
 		98363B3023DECA9F00AFFC63 /* MapFieldViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98363B2F23DECA9F00AFFC63 /* MapFieldViewModel.swift */; };
 		98363B3623DECD7500AFFC63 /* MapFieldReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98363B3523DECD7500AFFC63 /* MapFieldReducer.swift */; };
-		98363B3923DECDA500AFFC63 /* MapFieldState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98363B3823DECDA500AFFC63 /* MapFieldState.swift */; };
+		98363B3923DECDA500AFFC63 /* MapState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98363B3823DECDA500AFFC63 /* MapState.swift */; };
 		98363B3C23DED00900AFFC63 /* FieldGeoJsonArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98363B3B23DED00900AFFC63 /* FieldGeoJsonArray.swift */; };
 		98363B3E23DED25A00AFFC63 /* Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98363B3D23DED25A00AFFC63 /* Field.swift */; };
-		98363B4023DED70D00AFFC63 /* MapFieldAllFieldsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98363B3F23DED70D00AFFC63 /* MapFieldAllFieldsState.swift */; };
+		98363B4023DED70D00AFFC63 /* MapFieldState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98363B3F23DED70D00AFFC63 /* MapFieldState.swift */; };
 		98363B4223DEDF6600AFFC63 /* MapFieldAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98363B4123DEDF6600AFFC63 /* MapFieldAction.swift */; };
 		98363B4423DEE2AC00AFFC63 /* ACTU.json in Resources */ = {isa = PBXBuildFile; fileRef = 98363B4323DEE2AC00AFFC63 /* ACTU.json */; };
 		98363B4823DEE34F00AFFC63 /* MapFieldRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98363B4723DEE34F00AFFC63 /* MapFieldRepository.swift */; };
@@ -35,6 +35,11 @@
 		9854BFD72408F5F700E5AB8A /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFD62408F5F700E5AB8A /* TitleView.swift */; };
 		9854BFDD2409000E00E5AB8A /* ContainerMobileFieldListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFDC2409000E00E5AB8A /* ContainerMobileFieldListView.swift */; };
 		9854BFDF2409047C00E5AB8A /* FieldListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFDE2409047C00E5AB8A /* FieldListView.swift */; };
+		9854BFE1240A1C3C00E5AB8A /* ContainerMapAndListFieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFE0240A1C3C00E5AB8A /* ContainerMapAndListFieldViewController.swift */; };
+		9854BFE3240A1D6200E5AB8A /* FieldListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFE2240A1D6200E5AB8A /* FieldListViewModel.swift */; };
+		9854BFE5240A1FA500E5AB8A /* FieldListState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFE4240A1FA500E5AB8A /* FieldListState.swift */; };
+		9854BFE7240A224600E5AB8A /* CulturalPractice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFE6240A224600E5AB8A /* CulturalPractice.swift */; };
+		9854BFEC240A2B9900E5AB8A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9854BFEE240A2B9900E5AB8A /* Localizable.strings */; };
 		9860400023BD855F00D5B538 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98603FFF23BD855F00D5B538 /* AppState.swift */; };
 		9860400423BD868A00D5B538 /* FarmerTableVIewControllerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9860400323BD868A00D5B538 /* FarmerTableVIewControllerState.swift */; };
 		9860400623BD882900D5B538 /* Reducers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9860400523BD882900D5B538 /* Reducers.swift */; };
@@ -92,10 +97,10 @@
 		98363B2C23DECA3F00AFFC63 /* MapFieldViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFieldViewController.swift; sourceTree = "<group>"; };
 		98363B2F23DECA9F00AFFC63 /* MapFieldViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFieldViewModel.swift; sourceTree = "<group>"; };
 		98363B3523DECD7500AFFC63 /* MapFieldReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFieldReducer.swift; sourceTree = "<group>"; };
-		98363B3823DECDA500AFFC63 /* MapFieldState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFieldState.swift; sourceTree = "<group>"; };
+		98363B3823DECDA500AFFC63 /* MapState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapState.swift; sourceTree = "<group>"; };
 		98363B3B23DED00900AFFC63 /* FieldGeoJsonArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldGeoJsonArray.swift; sourceTree = "<group>"; };
 		98363B3D23DED25A00AFFC63 /* Field.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Field.swift; sourceTree = "<group>"; };
-		98363B3F23DED70D00AFFC63 /* MapFieldAllFieldsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFieldAllFieldsState.swift; sourceTree = "<group>"; };
+		98363B3F23DED70D00AFFC63 /* MapFieldState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFieldState.swift; sourceTree = "<group>"; };
 		98363B4123DEDF6600AFFC63 /* MapFieldAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFieldAction.swift; sourceTree = "<group>"; };
 		98363B4323DEE2AC00AFFC63 /* ACTU.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ACTU.json; sourceTree = "<group>"; };
 		98363B4723DEE34F00AFFC63 /* MapFieldRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFieldRepository.swift; sourceTree = "<group>"; };
@@ -112,6 +117,14 @@
 		9854BFD62408F5F700E5AB8A /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		9854BFDC2409000E00E5AB8A /* ContainerMobileFieldListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerMobileFieldListView.swift; sourceTree = "<group>"; };
 		9854BFDE2409047C00E5AB8A /* FieldListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldListView.swift; sourceTree = "<group>"; };
+		9854BFE0240A1C3C00E5AB8A /* ContainerMapAndListFieldViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerMapAndListFieldViewController.swift; sourceTree = "<group>"; };
+		9854BFE2240A1D6200E5AB8A /* FieldListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldListViewModel.swift; sourceTree = "<group>"; };
+		9854BFE4240A1FA500E5AB8A /* FieldListState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldListState.swift; sourceTree = "<group>"; };
+		9854BFE6240A224600E5AB8A /* CulturalPractice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalPractice.swift; sourceTree = "<group>"; };
+		9854BFEA240A2B7B00E5AB8A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
+		9854BFEB240A2B7B00E5AB8A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		9854BFED240A2B9900E5AB8A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9854BFEF240A2B9C00E5AB8A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		98603FFF23BD855F00D5B538 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		9860400323BD868A00D5B538 /* FarmerTableVIewControllerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FarmerTableVIewControllerState.swift; sourceTree = "<group>"; };
 		9860400523BD882900D5B538 /* Reducers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reducers.swift; sourceTree = "<group>"; };
@@ -191,7 +204,7 @@
 			path = Calcul;
 			sourceTree = "<group>";
 		};
-		98363B2A23DEC70D00AFFC63 /* MapField */ = {
+		98363B2A23DEC70D00AFFC63 /* Map */ = {
 			isa = PBXGroup;
 			children = (
 				98363B5E23DFF7CF00AFFC63 /* views */,
@@ -199,7 +212,7 @@
 				98363B2E23DECA6200AFFC63 /* viewModels */,
 				98363B2B23DEC75400AFFC63 /* viewControllers */,
 			);
-			path = MapField;
+			path = Map;
 			sourceTree = "<group>";
 		};
 		98363B2B23DEC75400AFFC63 /* viewControllers */ = {
@@ -207,6 +220,7 @@
 			children = (
 				98363B2C23DECA3F00AFFC63 /* MapFieldViewController.swift */,
 				9854BFD42408F53400E5AB8A /* FieldListViewController.swift */,
+				9854BFE0240A1C3C00E5AB8A /* ContainerMapAndListFieldViewController.swift */,
 			);
 			path = viewControllers;
 			sourceTree = "<group>";
@@ -215,6 +229,7 @@
 			isa = PBXGroup;
 			children = (
 				98363B2F23DECA9F00AFFC63 /* MapFieldViewModel.swift */,
+				9854BFE2240A1D6200E5AB8A /* FieldListViewModel.swift */,
 			);
 			path = viewModels;
 			sourceTree = "<group>";
@@ -262,8 +277,9 @@
 		98363B3723DECD8200AFFC63 /* states */ = {
 			isa = PBXGroup;
 			children = (
-				98363B3823DECDA500AFFC63 /* MapFieldState.swift */,
-				98363B3F23DED70D00AFFC63 /* MapFieldAllFieldsState.swift */,
+				98363B3823DECDA500AFFC63 /* MapState.swift */,
+				98363B3F23DED70D00AFFC63 /* MapFieldState.swift */,
+				9854BFE4240A1FA500E5AB8A /* FieldListState.swift */,
 			);
 			path = states;
 			sourceTree = "<group>";
@@ -273,6 +289,7 @@
 			children = (
 				98363B3B23DED00900AFFC63 /* FieldGeoJsonArray.swift */,
 				98363B3D23DED25A00AFFC63 /* Field.swift */,
+				9854BFE6240A224600E5AB8A /* CulturalPractice.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -405,7 +422,7 @@
 				98FCCDA723C6CB230028540B /* routing */,
 				98603FFE23BD854400D5B538 /* store */,
 				98B9992523B50E2C00CA7EF9 /* libs */,
-				98363B2A23DEC70D00AFFC63 /* MapField */,
+				98363B2A23DEC70D00AFFC63 /* Map */,
 				98B9991E23B50AF100CA7EF9 /* Farmer */,
 				98B9990523B5076000CA7EF9 /* AppDelegate.swift */,
 				98B9990723B5076000CA7EF9 /* SceneDelegate.swift */,
@@ -417,6 +434,7 @@
 				98B9990E23B5076000CA7EF9 /* prototypeGeo.xcdatamodeld */,
 				98D1929123C012E300BF9A7A /* AppDependencyContainer.swift */,
 				98363B4323DEE2AC00AFFC63 /* ACTU.json */,
+				9854BFEE240A2B9900E5AB8A /* Localizable.strings */,
 			);
 			path = prototypeGeo;
 			sourceTree = "<group>";
@@ -566,6 +584,7 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
 			);
 			mainGroup = 98B998F923B5076000CA7EF9;
 			productRefGroup = 98B9990323B5076000CA7EF9 /* Products */;
@@ -590,6 +609,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9854BFEC240A2B9900E5AB8A /* Localizable.strings in Resources */,
 				98B9991523B5076400CA7EF9 /* LaunchScreen.storyboard in Resources */,
 				98B9991223B5076400CA7EF9 /* Assets.xcassets in Resources */,
 				98363B4423DEE2AC00AFFC63 /* ACTU.json in Resources */,
@@ -644,6 +664,7 @@
 				98304AD423EE19A400510FFE /* UtilAreaPolygon.swift in Sources */,
 				98304AD623EE21E200510FFE /* ErrorValueEnum.swift in Sources */,
 				98B9990623B5076000CA7EF9 /* AppDelegate.swift in Sources */,
+				9854BFE5240A1FA500E5AB8A /* FieldListState.swift in Sources */,
 				98D1929E23C03CF900BF9A7A /* FarmerMiddleware.swift in Sources */,
 				98FCCDA623C6CAD20028540B /* AppRouter.swift in Sources */,
 				98363B5323DEED2100AFFC63 /* GetAllFieldMiddleware.swift in Sources */,
@@ -655,10 +676,11 @@
 				98D1929723C020ED00BF9A7A /* FarmerTableViewInteractionsImpl.swift in Sources */,
 				98FCCDB023C6F3520028540B /* FarmerRouter.swift in Sources */,
 				9860400023BD855F00D5B538 /* AppState.swift in Sources */,
-				98363B4023DED70D00AFFC63 /* MapFieldAllFieldsState.swift in Sources */,
+				98363B4023DED70D00AFFC63 /* MapFieldState.swift in Sources */,
 				98363B3E23DED25A00AFFC63 /* Field.swift in Sources */,
 				9854BFD72408F5F700E5AB8A /* TitleView.swift in Sources */,
 				98B9992223B50B6000CA7EF9 /* Farmer.swift in Sources */,
+				9854BFE3240A1D6200E5AB8A /* FieldListViewModel.swift in Sources */,
 				98363B5723DEF21100AFFC63 /* MapFieldInteractionI.swift in Sources */,
 				98A13FBF23C5A75D0087BB22 /* FarmerAddViewController.swift in Sources */,
 				9854BFDF2409047C00E5AB8A /* FieldListView.swift in Sources */,
@@ -670,6 +692,7 @@
 				98363B4823DEE34F00AFFC63 /* MapFieldRepository.swift in Sources */,
 				9805683423B92DD40056D199 /* FarmerFormated.swift in Sources */,
 				9860401123BD9C1700D5B538 /* StoreSubscriptionExtension.swift in Sources */,
+				9854BFE1240A1C3C00E5AB8A /* ContainerMapAndListFieldViewController.swift in Sources */,
 				98FCCDAD23C6D3450028540B /* NavigationState.swift in Sources */,
 				98D1929923C0212C00BF9A7A /* ActionDispatcher.swift in Sources */,
 				98FCCDA923C6CB760028540B /* NavigationAction.swift in Sources */,
@@ -682,13 +705,14 @@
 				98363B4223DEDF6600AFFC63 /* MapFieldAction.swift in Sources */,
 				98D1929223C012E300BF9A7A /* AppDependencyContainer.swift in Sources */,
 				9860400A23BD8BC800D5B538 /* FarmerReducer.swift in Sources */,
-				98363B3923DECDA500AFFC63 /* MapFieldState.swift in Sources */,
+				98363B3923DECDA500AFFC63 /* MapState.swift in Sources */,
 				98363B3023DECA9F00AFFC63 /* MapFieldViewModel.swift in Sources */,
 				98D1929023BFFF7C00BF9A7A /* Actions.swift in Sources */,
 				98B9990823B5076000CA7EF9 /* SceneDelegate.swift in Sources */,
 				98D192A023C03E0800BF9A7A /* GetFarmersMiddleware.swift in Sources */,
 				98363B3623DECD7500AFFC63 /* MapFieldReducer.swift in Sources */,
 				98363B4C23DEE57A00AFFC63 /* MapFieldService.swift in Sources */,
+				9854BFE7240A224600E5AB8A /* CulturalPractice.swift in Sources */,
 				9805683623B9468F0056D199 /* FarmerNavigationController.swift in Sources */,
 				98363B4A23DEE3C900AFFC63 /* UtilFileReader.swift in Sources */,
 			);
@@ -705,10 +729,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		9854BFEE240A2B9900E5AB8A /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9854BFED240A2B9900E5AB8A /* fr */,
+				9854BFEF240A2B9C00E5AB8A /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		98B9990B23B5076000CA7EF9 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				98B9990C23B5076000CA7EF9 /* Base */,
+				9854BFEA240A2B7B00E5AB8A /* fr */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -717,6 +751,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				98B9991423B5076400CA7EF9 /* Base */,
+				9854BFEB240A2B7B00E5AB8A /* fr */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -768,6 +803,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -828,6 +864,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

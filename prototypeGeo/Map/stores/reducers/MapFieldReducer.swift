@@ -10,8 +10,8 @@ import Foundation
 import ReSwift
 
 extension Reducers {
-    public static func MapFieldReducer(action: Action, state: MapFieldState?) -> MapFieldState {
-        var state = state ?? MapFieldState()
+    public static func MapFieldReducer(action: Action, state: MapState?) -> MapState {
+        var state = state ?? MapState()
         
         switch action {
         case let getAllMapFieldSuccess as MapFieldAction.GetAllFieldSuccess :
