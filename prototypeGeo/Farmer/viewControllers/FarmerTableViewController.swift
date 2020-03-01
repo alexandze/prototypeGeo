@@ -9,7 +9,9 @@
 import UIKit
 import RxSwift
 
-class FarmerTableViewController: UITableViewController {
+class FarmerTableViewController: UITableViewController, Identifier {
+    static var identifier: String = "FarmerTableViewController"
+    
     
     let cellID = "myCellId"
     var farmers: [Farmer] = []

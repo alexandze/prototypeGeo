@@ -10,6 +10,6 @@ import Foundation
 import ReSwift
 
 struct NavigationAction: Action {
-    var url: String?
-    var data: [AnyHashable: Any]?
+    var from: String
+    var to: String
 }

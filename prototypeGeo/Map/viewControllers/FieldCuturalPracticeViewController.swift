@@ -1,25 +1,31 @@
 //
-//  FarmerNavigationController.swift
+//  FieldCuturalPracticeViewController.swift
 //  prototypeGeo
 //
-//  Created by Alexandre Andze Kande on 2019-12-29.
-//  Copyright © 2019 Alexandre Andze Kande. All rights reserved.
+//  Created by Alexandre Andze Kande on 2020-03-01.
+//  Copyright © 2020 Alexandre Andze Kande. All rights reserved.
 //
 
 import UIKit
 
-class FarmerNavigationController: UINavigationController {
-
+class FieldCuturalPracticeViewController: UIViewController, Identifier {
+    static var identifier: String = "FieldCuturalPracticeViewController"
+    
+    
+    let fieldCulturalPracticeViewModel: FieldCulturalPraticeViewModel
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
     
-    init(farmerTableViewController: FarmerTableViewController) {
-        super.init(rootViewController: farmerTableViewController)
+    init(fieldCulturalPracticeViewModel: FieldCulturalPraticeViewModel) {
+        self.fieldCulturalPracticeViewModel = fieldCulturalPracticeViewModel
+        super.init(nibName: nil, bundle: nil)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
         // Do any additional setup after loading the view.
     }
     

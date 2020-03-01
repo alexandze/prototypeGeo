@@ -10,4 +10,7 @@ import Foundation
 
 struct MapState {
     var mapFieldAllFieldsState: MapFieldState = MapFieldState(uuidState: "", fieldPolygonAnnotation: [], fieldMultiPolygonAnnotation: [])
+    var fieldListState: FieldListState = FieldListState(uuidState: "", fieldList: nil, currentField: nil)
+    var culturalPracticeState: CulturalPracticeState = CulturalPracticeState(uuidState: "", currentField: nil)
+    
 }

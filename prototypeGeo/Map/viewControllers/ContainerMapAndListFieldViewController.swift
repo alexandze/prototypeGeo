@@ -8,26 +8,30 @@
 
 import UIKit
 
-class ContainerMapAndListFieldViewController: UIViewController {
+class ContainerMapAndListFieldViewController: UIViewController, ContainerViewController, Identifier {
+    var viewControllers: [UIViewController] = []
+    static var identifier: String = "ContainerMapAndListFieldViewController"
     
-    var mapFieldViewController: MapFieldViewController!
-    var fieldListViewController: FieldListViewController!
+    
+    let mapFieldViewController: MapFieldViewController
+    let fieldListNavigationController: UINavigationController
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
     
     init(
-        mapFieldViewModel: MapFieldViewModel,
-        
+        mapFieldViewController: MapFieldViewController,
+        fieldListNavigationController: UINavigationController
     ) {
-        
+        self.mapFieldViewController = mapFieldViewController
+        self.fieldListNavigationController = fieldListNavigationController
+        viewControllers.append(mapFieldViewController)
+        viewControllers.append(fieldListNavigationController)
         super.init(nibName: nil, bundle: nil)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
-
 }

@@ -8,10 +8,16 @@
 
 import Foundation
 
+enum FieldType {
+    case polygon(Field<Polygon>)
+    case multiPolygon(Field<MultiPolygon>)
+}
+
 struct Field<T: GeometryShape> {
     var id: Int
     var name: String
     var type: String
+    var culturalPratice: CulturalPracticeState
     var coordinates: T
 }
 

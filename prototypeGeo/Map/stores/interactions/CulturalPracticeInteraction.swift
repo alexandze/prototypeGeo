@@ -1,25 +1,22 @@
 //
-//  MapFieldInteraction.swift
+//  CulturalPracticeInteraction.swift
 //  prototypeGeo
 //
-//  Created by Alexandre Andze Kande on 2020-01-27.
+//  Created by Alexandre Andze Kande on 2020-03-01.
 //  Copyright © 2020 Alexandre Andze Kande. All rights reserved.
 //
 
 import Foundation
 
-public class MapFieldInteractionImpl: MapFieldInteraction {
-    
-    // MARK: - Properties
+class CulturalPracticeInteractionImpl: FieldCulturalPracticeInteraction  {
     let actionDispatcher: ActionDispatcher
     
     // MARK: - Methods
     init(actionDispatcher: ActionDispatcher) {
         self.actionDispatcher = actionDispatcher
     }
-    
-    public func getAllField() {
-        self.actionDispatcher.dispatch(MapFieldAction.GetAllField())
-    }
+}
+
+protocol FieldCulturalPracticeInteraction  {
     
 }

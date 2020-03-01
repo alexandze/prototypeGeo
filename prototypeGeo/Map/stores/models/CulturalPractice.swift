@@ -9,23 +9,23 @@
 import Foundation
 
 struct CulturalPractice {
-    let avaloir: Avaloir
-    let bandeRiveraine: BandeRiveraine
-    let doseFumier: [DoseFumier] // jusqu'a trois dose
-    let periodeApplicationFumier: PeriodeApplicationFumier // jusqu'a trois application
-    let delaiIncorporationFumier: DelaiIncorporationFumier // jusqu'a trois application
-    let travailSol: TravailSol
-    let couvertureAssociee: CouvertureAssociee
-    let couvertureDerobee: CouvertureDerobee
-    let drainageSouterrain: DrainageSouterrain
-    let drainageSurface: DrainageSurface
-    let conditionProfilCultural: ConditionProfilCultural
-    let tauxApplicationPhosphoreRang: KilogramPerHectare
-    let tauxApplicationPhosphoreVolee: KilogramPerHectare
-    let pMehlich3: KilogramPerHectare
-    let alMehlich3: Percentage
-    let cultureAnneeEnCours: String
-    let cultureAnneeAnterieure: String
+    var avaloir: Avaloir
+    var bandeRiveraine: BandeRiveraine
+    var doseFumier: [DoseFumier] // jusqu'a trois dose
+    var periodeApplicationFumier: PeriodeApplicationFumier // jusqu'a trois application
+    var delaiIncorporationFumier: DelaiIncorporationFumier // jusqu'a trois application
+    var travailSol: TravailSol
+    var couvertureAssociee: CouvertureAssociee
+    var couvertureDerobee: CouvertureDerobee
+    var drainageSouterrain: DrainageSouterrain
+    var drainageSurface: DrainageSurface
+    var conditionProfilCultural: ConditionProfilCultural
+    var tauxApplicationPhosphoreRang: KilogramPerHectare
+    var tauxApplicationPhosphoreVolee: KilogramPerHectare
+    var pMehlich3: KilogramPerHectare
+    var alMehlich3: Percentage
+    var cultureAnneeEnCours: String
+    var cultureAnneeAnterieure: String
 }
 
 enum Avaloir {
@@ -148,7 +148,7 @@ enum DrainageSouterrain {
         [
             (DrainageSouterrain.systematique, NSLocalizedString("Systématique", comment: "Drainage souterrain Systématique")),
             (DrainageSouterrain.partiel, NSLocalizedString("Partiel", comment: "Drainage souterrain Partiel")),
-            (DrainageSouterrain.absent, NSLocalizedString("absent", comment: "Drainage souterrain absent"))
+            (DrainageSouterrain.absent, NSLocalizedString("Absent", comment: "Drainage souterrain absent"))
         ]
     }
 }

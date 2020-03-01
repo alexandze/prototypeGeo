@@ -8,8 +8,30 @@
 
 "Absente" = "Absente";
 "Captage Partiel" = "Captage Partiel";
-"Captage systématique" = "Captage systématique"
-"Ne s'applique pas" = "Ne s'applique pas"
-"1 à 3m" = "1 à 3m"
-"4m et plus" = "4m et plus"
-
+"Captage systématique" = "Captage systématique";
+"Ne s'applique pas" = "Ne s'applique pas";
+"1 à 3m" = "1 à 3m";
+"4m et plus" = "4m et plus";
+"Pré-semi" = "Pré-semi";
+"Post-levée" = "Post-levée";
+"Automne hâtif" = "Automne hâtif";
+"Automne tardif" = "Automne tardif";
+"Incorporé en 48h" = "Incorporé en 48h";
+"Incorporé en 48h à 1 semaine" = "Incorporé en 48h à 1 semaine";
+"Supérieur à 1 semaine" = "Supérieur à 1 semaine";
+"Non incorporé" = "Non incorporé";
+"Labour à l'automne, travail secondaire au printemps" = "Labour à l'automne, travail secondaire au printemps";
+"Chisel ou pulvérisateur à l'automne, travail secondaire au printemps" = "Chisel ou pulvérisateur à l'automne, travail secondaire au printemps";
+"Déchaumage au printemps et travail secondaire au printemps" = "Déchaumage au printemps et travail secondaire au printemps";
+"Semi direct ou bilons" = "Semi direct ou bilons";
+"Oui" = "Oui";
+"Non" = "Non";
+"Systématique" = "Systématique";
+"Partiel" = "Partiel";
+"Absent" = "Absent";
+"Bon" = "Bon";
+"Moyen" = "Moyen";
+"Mauvais" = "Mauvais";
+"Bonne" = "Bonne";
+"Présence de zone à risque" = "Présence de zone à risque";
+"Dominance de zone à risque" = "Dominance de zone à risque";

@@ -10,7 +10,9 @@ import UIKit
 import MapKit
 
 
-class MapFieldViewController: UIViewController, MKMapViewDelegate {
+class MapFieldViewController: UIViewController, MKMapViewDelegate, Identifier {
+    static var identifier: String = "MapFieldViewController"
+    
     var mapFieldViewModel: MapFieldViewModel!
     var mapFieldView: MapFieldView!
     var mapView: MKMapView!

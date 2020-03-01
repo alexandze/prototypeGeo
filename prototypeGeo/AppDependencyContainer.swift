@@ -16,7 +16,13 @@ class AppDependencyContainer {
         return Store(reducer: Reducers.appReducer, state: AppState(farmerState: FarmerState(), navigationState: NavigationState(), mapFieldState: MapState()), middleware: [FarmerMiddleware.shared.makeGetFarmersMiddleware(), MapFieldMiddleware.shared.makeGetAllFieldMiddleware()], automaticallySkipsRepeats: true)
     }()
     
+    let mapDependencyContainer: MapDependencyContainerImpl
+    
     let appRouter = AppRouter()
+    
+    init() {
+        self.mapDependencyContainer = MapDependencyContainerImpl(stateStore: self.stateStore)
+    }
     
     func makeFarmerTableViewController(farmerTableViewModel: FarmerTableViewModel) -> FarmerTableViewController {
         return FarmerTableViewController(farmerViewModel: farmerTableViewModel)
@@ -90,47 +96,9 @@ class AppDependencyContainer {
     }
     
     
-    
-    func makeMapFieldAllStateObservable() -> Observable<MapFieldState> {
-        self.stateStore.makeObservable(transform: {(subscription: Subscription<AppState>) -> Subscription<MapFieldState> in
-            subscription
-                .select { $0.mapFieldState.mapFieldAllFieldsState }
-                .skip { $0.uuidState == $1.uuidState }
-        })
-    }
-    
-    func createMapFieldInteraction() -> MapFieldInteraction {
-        MapFieldInteractionImpl(actionDispatcher: self.stateStore)
-    }
-    
-    func makeMapFieldViewModel() -> MapFieldViewModel {
-        let observable = makeMapFieldAllStateObservable()
-        let interaction = createMapFieldInteraction()
-        return MapFieldViewModel(mapFieldAllFieldState$: observable, mapFieldInteraction: interaction)
-    }
-    
-    func makeMapFieldNavigationController(rootViewController: MapFieldViewController) -> UINavigationController {
-        let navController = UINavigationController(rootViewController: rootViewController)
-        let tabBarItem = UITabBarItem(title: "Carte", image: UIImage(named: "mapsIcon"), tag: 2)
-        navController.tabBarItem = tabBarItem
-        return navController
-    }
-    
-    
-    func makeMapFieldViewController() -> MapFieldViewController {
-        let viewModel = makeMapFieldViewModel()
-        let viewController = MapFieldViewController(mapFieldViewModel: viewModel)
-        return viewController
-    }
-    
-    func processInitMapField() -> UINavigationController {
-        let viewController = makeMapFieldViewController()
-        return makeMapFieldNavigationController(rootViewController: viewController)
-    }
-    
     func proccessInitTabBarController() -> UITabBarController {
         let farmerNavigationController = self.processInitFarmerPackage()
-        let mapFieldNavigationController = self.processInitMapField()
+        let mapFieldNavigationController = self.mapDependencyContainer.processInitMapField()
         let tabBarController = UITabBarController()
         
         tabBarController.viewControllers = [farmerNavigationController, mapFieldNavigationController]
@@ -140,5 +108,8 @@ class AppDependencyContainer {
         
         return tabBarController
     }
+    
+    
+    
     
 }

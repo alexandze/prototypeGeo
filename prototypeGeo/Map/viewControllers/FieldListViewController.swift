@@ -8,18 +8,26 @@
 
 import UIKit
 
-class FieldListViewController: UIViewController {
+class FieldListViewController: UIViewController, Identifier {
+    static var identifier: String = "FieldListViewController"
+    
+    
+    let fieldListViewModel: FieldListViewModel
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
     
-    init() {
+    init(
+        fieldListViewModel: FieldListViewModel
+    ) {
+        self.fieldListViewModel = fieldListViewModel
         super.init(nibName: nil, bundle: nil)
     }
     
     override func loadView() {
         self.view = ContainerMobileFieldListView()
+        
     }
 
     override func viewDidLoad() {

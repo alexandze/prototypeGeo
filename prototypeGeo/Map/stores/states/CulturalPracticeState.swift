@@ -1,19 +1,17 @@
 //
-//  FieldListState.swift
+//  CulturalPracticeState.swift
 //  prototypeGeo
 //
-//  Created by Alexandre Andze Kande on 2020-02-28.
+//  Created by Alexandre Andze Kande on 2020-03-01.
 //  Copyright © 2020 Alexandre Andze Kande. All rights reserved.
 //
 
 import Foundation
-
-struct FieldListState: Equatable {
-    static func == (lhs: FieldListState, rhs: FieldListState) -> Bool {
+struct CulturalPracticeState: Equatable {
+    static func == (lhs: CulturalPracticeState, rhs: CulturalPracticeState) -> Bool {
         lhs.uuidState == rhs.uuidState
     }
     
     var uuidState: String
-    var fieldList: [FieldType]?
     var currentField: FieldType?
 }
