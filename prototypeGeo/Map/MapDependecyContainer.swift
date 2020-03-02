@@ -10,7 +10,7 @@ import Foundation
 import ReSwift
 import RxSwift
 
-public class MapDependencyContainerImpl {
+public class MapDependencyContainerImpl: MapDependencyContainer {
     // MARK: - Properties
     let stateStore: Store<AppState>
     
@@ -94,6 +94,10 @@ public class MapDependencyContainerImpl {
         FieldCuturalPracticeViewController(fieldCulturalPracticeViewModel: self.makeCulturalPracticeViewModel())
     }
     
+    func makeContainerFieldNavigationViewController() -> ContainerFieldNavigationViewController {
+        ContainerFieldNavigationViewController(navigationFieldController: makeFieldListNavigationController())
+    }
+    
     // MARK: - Methods navigation
     func makeFieldListNavigationController() -> UINavigationController {
         UINavigationController(rootViewController: self.makeFieldListViewController())
@@ -114,6 +118,10 @@ public class MapDependencyContainerImpl {
     func processInitFieldListNavigation() -> UINavigationController {
         makeFieldListNavigationController()
     }
+    
+    func processInitContainerMapAndFieldNavigation() -> ContainerMapAndListFieldViewController {
+        ContainerMapAndListFieldViewController(mapFieldViewController: makeMapFieldViewController(), containerFieldNavigationViewController:  makeContainerFieldNavigationViewController())
+    }
 
 }
 
@@ -122,6 +130,8 @@ protocol MapDependencyContainer {
     func makeFieldListNavigationController() -> UINavigationController
     func makeFieldCulturalPracticeViewController() -> FieldCuturalPracticeViewController
     func makeFieldListViewController() -> FieldListViewController
+    func processInitContainerMapAndFieldNavigation() -> ContainerMapAndListFieldViewController
+    func processInitMapField() -> UINavigationController
     
     
 }

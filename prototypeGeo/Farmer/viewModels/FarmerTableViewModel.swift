@@ -109,7 +109,7 @@ public class FarmerTableViewModel {
     }
     
     func dispatchGoToFarmerAddViewController(farmerTableViewInteractions: FarmerTableViewInteractions) {
-        farmerTableViewInteractions.goToFarmerAddViewController()
+        
     }
     
     

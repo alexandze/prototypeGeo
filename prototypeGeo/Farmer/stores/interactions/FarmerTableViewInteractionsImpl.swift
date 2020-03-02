@@ -20,8 +20,4 @@ public class FarmerTableViewInteractionsImpl: FarmerTableViewInteractions {
     public func getFamers(offset: Int, limit: Int) {
         self.actionDispatcher.dispatch(GetFamersAction(offset: offset, limit: limit))
     }
-    
-    public func goToFarmerAddViewController() {
-        self.actionDispatcher.dispatch(NavigationAction(url: FarmerRouter.URL_FARMER_TABLE_VIEW_TO_FARMER_CREATE, data: nil))
-    }
 }

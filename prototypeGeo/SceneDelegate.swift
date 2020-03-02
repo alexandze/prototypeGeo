@@ -11,7 +11,7 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    var appDependencyContainer = AppDependencyContainer()
+    var appDependencyContainer: AppDependencyContainer = AppDependencyContainerImpl()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             self.window = UIWindow(windowScene: windowScene)
             
            // self.window!.rootViewController = appDependencyContainer.proccessInitTabBarController()
-            self.window!.rootViewController = FieldListViewController()
+            self.window!.rootViewController = appDependencyContainer.processInitContainerMapAndFieldNavigation()
            // self.window!.backgroundColor = .white
             self.window!.makeKeyAndVisible()
         }

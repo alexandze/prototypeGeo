@@ -13,12 +13,14 @@ import MapKit
 class MapFieldViewController: UIViewController, MKMapViewDelegate, Identifier {
     static var identifier: String = "MapFieldViewController"
     
+    
+    
     var mapFieldViewModel: MapFieldViewModel!
     var mapFieldView: MapFieldView!
     var mapView: MKMapView!
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
+        fatalError("init(coder:) has not been implemented")
     }
     
     init(mapFieldViewModel: MapFieldViewModel) {

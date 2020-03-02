@@ -13,7 +13,6 @@ struct Reducers {
     public static func appReducer(action: Action, state: AppState?) -> AppState {
         return AppState(
             farmerState: Reducers.farmerReducer(action: action, state: state?.farmerState),
-            navigationState: Reducers.navigationReducer(action: action, state: state?.navigationState),
             mapFieldState: Reducers.MapFieldReducer(action: action, state: state?.mapFieldState)
         )
     }

@@ -35,7 +35,7 @@ extension MapFieldService {
             let id = feature.id
             let coordinates = feature.geometry.coordinates![0]
             let polygon = Polygon(value: coordinates)
-            return Field(id: id, name: "", type: type, coordinates: polygon)
+            return Field(id: id, name: "", type: type, culturalPratice: nil, coordinates: polygon)
         }
     }
 
@@ -47,7 +47,7 @@ extension MapFieldService {
             let id = feature.id
             let coordinates = feature.geometry.coordinatesMulti![0]
             let multiPolyon = MultiPolygon(value: coordinates)
-            return Field(id: id, name: "", type: type, coordinates: multiPolyon)
+            return Field(id: id, name: "", type: type, culturalPratice: nil, coordinates: multiPolyon)
         }
     }
 

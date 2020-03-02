@@ -31,7 +31,7 @@
 		98363B6223E028BD00AFFC63 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98363B6123E028BD00AFFC63 /* Util.swift */; };
 		9854BFD52408F53400E5AB8A /* FieldListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFD42408F53400E5AB8A /* FieldListViewController.swift */; };
 		9854BFD72408F5F700E5AB8A /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFD62408F5F700E5AB8A /* TitleView.swift */; };
-		9854BFDD2409000E00E5AB8A /* ContainerMobileFieldListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFDC2409000E00E5AB8A /* ContainerMobileFieldListView.swift */; };
+		9854BFDD2409000E00E5AB8A /* ContainerFieldNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFDC2409000E00E5AB8A /* ContainerFieldNavigationView.swift */; };
 		9854BFDF2409047C00E5AB8A /* FieldListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFDE2409047C00E5AB8A /* FieldListView.swift */; };
 		9854BFE1240A1C3C00E5AB8A /* ContainerMapAndListFieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFE0240A1C3C00E5AB8A /* ContainerMapAndListFieldViewController.swift */; };
 		9854BFE3240A1D6200E5AB8A /* FieldListViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFE2240A1D6200E5AB8A /* FieldListViewModelImpl.swift */; };
@@ -64,6 +64,10 @@
 		98B9991D23B50ACC00CA7EF9 /* FarmerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B9991C23B50ACC00CA7EF9 /* FarmerTableViewController.swift */; };
 		98B9992223B50B6000CA7EF9 /* Farmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B9992123B50B6000CA7EF9 /* Farmer.swift */; };
 		98B9992423B50E0800CA7EF9 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B9992323B50E0800CA7EF9 /* Section.swift */; };
+		98BA0D7B240CDC2800948A26 /* ContainerFieldNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BA0D7A240CDC2800948A26 /* ContainerFieldNavigationViewController.swift */; };
+		98BA0D7D240CDDD000948A26 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BA0D7C240CDDD000948A26 /* UIViewControllerExtension.swift */; };
+		98BA0D7F240CE41F00948A26 /* ContainerMapAndListFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BA0D7E240CE41F00948A26 /* ContainerMapAndListFieldView.swift */; };
+		98BA0D81240CF43600948A26 /* UIViewExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BA0D80240CF43600948A26 /* UIViewExtention.swift */; };
 		98D1929023BFFF7C00BF9A7A /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D1928F23BFFF7C00BF9A7A /* Actions.swift */; };
 		98D1929223C012E300BF9A7A /* AppDependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D1929123C012E300BF9A7A /* AppDependencyContainer.swift */; };
 		98D1929523C020B000BF9A7A /* FarmerTableViewInteractions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D1929423C020B000BF9A7A /* FarmerTableViewInteractions.swift */; };
@@ -72,11 +76,6 @@
 		98D1929B23C034A600BF9A7A /* FamerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D1929A23C034A600BF9A7A /* FamerViewCell.swift */; };
 		98D1929E23C03CF900BF9A7A /* FarmerMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D1929D23C03CF900BF9A7A /* FarmerMiddleware.swift */; };
 		98D192A023C03E0800BF9A7A /* GetFarmersMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D1929F23C03E0800BF9A7A /* GetFarmersMiddleware.swift */; };
-		98FCCDA623C6CAD20028540B /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FCCDA523C6CAD20028540B /* AppRouter.swift */; };
-		98FCCDA923C6CB760028540B /* NavigationAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FCCDA823C6CB760028540B /* NavigationAction.swift */; };
-		98FCCDAB23C6CDDF0028540B /* NavigationReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FCCDAA23C6CDDF0028540B /* NavigationReducer.swift */; };
-		98FCCDAD23C6D3450028540B /* NavigationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FCCDAC23C6D3450028540B /* NavigationState.swift */; };
-		98FCCDB023C6F3520028540B /* FarmerRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FCCDAF23C6F3520028540B /* FarmerRouter.swift */; };
 		AF45707174C76E537F6FAC77 /* libPods-prototypeGeo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D913FCD2E376EA77076135B /* libPods-prototypeGeo.a */; };
 /* End PBXBuildFile section */
 
@@ -119,7 +118,7 @@
 		98363B6123E028BD00AFFC63 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		9854BFD42408F53400E5AB8A /* FieldListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldListViewController.swift; sourceTree = "<group>"; };
 		9854BFD62408F5F700E5AB8A /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
-		9854BFDC2409000E00E5AB8A /* ContainerMobileFieldListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerMobileFieldListView.swift; sourceTree = "<group>"; };
+		9854BFDC2409000E00E5AB8A /* ContainerFieldNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerFieldNavigationView.swift; sourceTree = "<group>"; };
 		9854BFDE2409047C00E5AB8A /* FieldListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldListView.swift; sourceTree = "<group>"; };
 		9854BFE0240A1C3C00E5AB8A /* ContainerMapAndListFieldViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerMapAndListFieldViewController.swift; sourceTree = "<group>"; };
 		9854BFE2240A1D6200E5AB8A /* FieldListViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldListViewModelImpl.swift; sourceTree = "<group>"; };
@@ -157,6 +156,10 @@
 		98B9991C23B50ACC00CA7EF9 /* FarmerTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FarmerTableViewController.swift; sourceTree = "<group>"; };
 		98B9992123B50B6000CA7EF9 /* Farmer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Farmer.swift; sourceTree = "<group>"; };
 		98B9992323B50E0800CA7EF9 /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
+		98BA0D7A240CDC2800948A26 /* ContainerFieldNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerFieldNavigationViewController.swift; sourceTree = "<group>"; };
+		98BA0D7C240CDDD000948A26 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
+		98BA0D7E240CE41F00948A26 /* ContainerMapAndListFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerMapAndListFieldView.swift; sourceTree = "<group>"; };
+		98BA0D80240CF43600948A26 /* UIViewExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtention.swift; sourceTree = "<group>"; };
 		98D1928F23BFFF7C00BF9A7A /* Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actions.swift; sourceTree = "<group>"; };
 		98D1929123C012E300BF9A7A /* AppDependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependencyContainer.swift; sourceTree = "<group>"; };
 		98D1929423C020B000BF9A7A /* FarmerTableViewInteractions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FarmerTableViewInteractions.swift; sourceTree = "<group>"; };
@@ -165,11 +168,6 @@
 		98D1929A23C034A600BF9A7A /* FamerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamerViewCell.swift; sourceTree = "<group>"; };
 		98D1929D23C03CF900BF9A7A /* FarmerMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FarmerMiddleware.swift; sourceTree = "<group>"; };
 		98D1929F23C03E0800BF9A7A /* GetFarmersMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFarmersMiddleware.swift; sourceTree = "<group>"; };
-		98FCCDA523C6CAD20028540B /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
-		98FCCDA823C6CB760028540B /* NavigationAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationAction.swift; sourceTree = "<group>"; };
-		98FCCDAA23C6CDDF0028540B /* NavigationReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationReducer.swift; sourceTree = "<group>"; };
-		98FCCDAC23C6D3450028540B /* NavigationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationState.swift; sourceTree = "<group>"; };
-		98FCCDAF23C6F3520028540B /* FarmerRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FarmerRouter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,6 +233,7 @@
 				9854BFD42408F53400E5AB8A /* FieldListViewController.swift */,
 				9854BFE0240A1C3C00E5AB8A /* ContainerMapAndListFieldViewController.swift */,
 				9854BFF6240B8FA800E5AB8A /* FieldCuturalPracticeViewController.swift */,
+				98BA0D7A240CDC2800948A26 /* ContainerFieldNavigationViewController.swift */,
 			);
 			path = viewControllers;
 			sourceTree = "<group>";
@@ -342,8 +341,9 @@
 			children = (
 				98363B5F23DFF7EA00AFFC63 /* MapFieldView.swift */,
 				9854BFD62408F5F700E5AB8A /* TitleView.swift */,
-				9854BFDC2409000E00E5AB8A /* ContainerMobileFieldListView.swift */,
+				9854BFDC2409000E00E5AB8A /* ContainerFieldNavigationView.swift */,
 				9854BFDE2409047C00E5AB8A /* FieldListView.swift */,
+				98BA0D7E240CE41F00948A26 /* ContainerMapAndListFieldView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -436,7 +436,6 @@
 			isa = PBXGroup;
 			children = (
 				98304AD223EE185900510FFE /* Calcul */,
-				98FCCDA723C6CB230028540B /* routing */,
 				98603FFE23BD854400D5B538 /* store */,
 				98B9992523B50E2C00CA7EF9 /* libs */,
 				98363B2A23DEC70D00AFFC63 /* Map */,
@@ -459,7 +458,6 @@
 		98B9991E23B50AF100CA7EF9 /* Farmer */ = {
 			isa = PBXGroup;
 			children = (
-				98FCCDAE23C6F3370028540B /* routing */,
 				987820D223C5A22C0086ED75 /* views */,
 				987820D123C5A20D0086ED75 /* viewModels */,
 				9860400823BD8A1100D5B538 /* stores */,
@@ -496,6 +494,8 @@
 				98304AD523EE21E200510FFE /* ErrorValueEnum.swift */,
 				9854C000240BC1C100E5AB8A /* Identifier.swift */,
 				9854C002240BC60400E5AB8A /* ContainerVIewControllers.swift */,
+				98BA0D7C240CDDD000948A26 /* UIViewControllerExtension.swift */,
+				98BA0D80240CF43600948A26 /* UIViewExtention.swift */,
 			);
 			path = libs;
 			sourceTree = "<group>";
@@ -516,25 +516,6 @@
 				98D1929F23C03E0800BF9A7A /* GetFarmersMiddleware.swift */,
 			);
 			path = middlewares;
-			sourceTree = "<group>";
-		};
-		98FCCDA723C6CB230028540B /* routing */ = {
-			isa = PBXGroup;
-			children = (
-				98FCCDA523C6CAD20028540B /* AppRouter.swift */,
-				98FCCDA823C6CB760028540B /* NavigationAction.swift */,
-				98FCCDAA23C6CDDF0028540B /* NavigationReducer.swift */,
-				98FCCDAC23C6D3450028540B /* NavigationState.swift */,
-			);
-			path = routing;
-			sourceTree = "<group>";
-		};
-		98FCCDAE23C6F3370028540B /* routing */ = {
-			isa = PBXGroup;
-			children = (
-				98FCCDAF23C6F3520028540B /* FarmerRouter.swift */,
-			);
-			path = routing;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -679,25 +660,26 @@
 				9860400C23BD8EEB00D5B538 /* FarmerState.swift in Sources */,
 				98B9990A23B5076000CA7EF9 /* ViewController.swift in Sources */,
 				98363B3C23DED00900AFFC63 /* FieldGeoJsonArray.swift in Sources */,
+				98BA0D7F240CE41F00948A26 /* ContainerMapAndListFieldView.swift in Sources */,
 				98B9991D23B50ACC00CA7EF9 /* FarmerTableViewController.swift in Sources */,
 				98304AD423EE19A400510FFE /* UtilAreaPolygon.swift in Sources */,
 				98304AD623EE21E200510FFE /* ErrorValueEnum.swift in Sources */,
 				9854BFF5240B7A9F00E5AB8A /* FieldListInteraction.swift in Sources */,
 				98B9990623B5076000CA7EF9 /* AppDelegate.swift in Sources */,
 				9854BFE5240A1FA500E5AB8A /* FieldListState.swift in Sources */,
+				98BA0D7B240CDC2800948A26 /* ContainerFieldNavigationViewController.swift in Sources */,
 				98D1929E23C03CF900BF9A7A /* FarmerMiddleware.swift in Sources */,
-				98FCCDA623C6CAD20028540B /* AppRouter.swift in Sources */,
 				9854C003240BC60400E5AB8A /* ContainerVIewControllers.swift in Sources */,
 				98363B5323DEED2100AFFC63 /* GetAllFieldMiddleware.swift in Sources */,
 				9860400F23BD976800D5B538 /* StoreSubcriberProxy.swift in Sources */,
 				9854BFFF240B9DD500E5AB8A /* FieldCuturalPracticeInteraction.swift in Sources */,
 				9854C001240BC1C100E5AB8A /* Identifier.swift in Sources */,
+				98BA0D7D240CDDD000948A26 /* UIViewControllerExtension.swift in Sources */,
 				98363B6023DFF7EA00AFFC63 /* MapFieldView.swift in Sources */,
 				9805683823B954630056D199 /* FarmerTableViewModel.swift in Sources */,
 				98B9992423B50E0800CA7EF9 /* Section.swift in Sources */,
 				98B9991023B5076000CA7EF9 /* prototypeGeo.xcdatamodeld in Sources */,
 				98D1929723C020ED00BF9A7A /* FarmerTableViewInteractionsImpl.swift in Sources */,
-				98FCCDB023C6F3520028540B /* FarmerRouter.swift in Sources */,
 				9860400023BD855F00D5B538 /* AppState.swift in Sources */,
 				98363B4023DED70D00AFFC63 /* MapFieldState.swift in Sources */,
 				98363B3E23DED25A00AFFC63 /* Field.swift in Sources */,
@@ -708,18 +690,16 @@
 				9854BFDF2409047C00E5AB8A /* FieldListView.swift in Sources */,
 				9854BFF9240B901A00E5AB8A /* FieldCulturalPracticeViewModel.swift in Sources */,
 				98363B5123DEEC7A00AFFC63 /* mapFieldMiddleware.swift in Sources */,
-				98FCCDAB23C6CDDF0028540B /* NavigationReducer.swift in Sources */,
 				9860400423BD868A00D5B538 /* FarmerTableVIewControllerState.swift in Sources */,
 				98D1929B23C034A600BF9A7A /* FamerViewCell.swift in Sources */,
 				9854BFFB240B956400E5AB8A /* CulturalPracticeState.swift in Sources */,
-				9854BFDD2409000E00E5AB8A /* ContainerMobileFieldListView.swift in Sources */,
+				9854BFDD2409000E00E5AB8A /* ContainerFieldNavigationView.swift in Sources */,
+				98BA0D81240CF43600948A26 /* UIViewExtention.swift in Sources */,
 				98363B4823DEE34F00AFFC63 /* MapFieldRepository.swift in Sources */,
 				9805683423B92DD40056D199 /* FarmerFormated.swift in Sources */,
 				9860401123BD9C1700D5B538 /* StoreSubscriptionExtension.swift in Sources */,
 				9854BFE1240A1C3C00E5AB8A /* ContainerMapAndListFieldViewController.swift in Sources */,
-				98FCCDAD23C6D3450028540B /* NavigationState.swift in Sources */,
 				98D1929923C0212C00BF9A7A /* ActionDispatcher.swift in Sources */,
-				98FCCDA923C6CB760028540B /* NavigationAction.swift in Sources */,
 				98363B6223E028BD00AFFC63 /* Util.swift in Sources */,
 				9854BFD52408F53400E5AB8A /* FieldListViewController.swift in Sources */,
 				98D1929523C020B000BF9A7A /* FarmerTableViewInteractions.swift in Sources */,

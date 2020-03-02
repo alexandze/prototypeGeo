@@ -9,5 +9,4 @@
 import Foundation
 public protocol FarmerTableViewInteractions {
     func getFamers(offset: Int, limit: Int)
-    func goToFarmerAddViewController()
 }

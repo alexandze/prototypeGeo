@@ -15,7 +15,7 @@ class FieldCuturalPracticeViewController: UIViewController, Identifier {
     let fieldCulturalPracticeViewModel: FieldCulturalPraticeViewModel
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
+        fatalError("init(coder:) has not been implemented")
     }
     
     init(fieldCulturalPracticeViewModel: FieldCulturalPraticeViewModel) {

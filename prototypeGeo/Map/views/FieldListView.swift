@@ -28,6 +28,7 @@ class FieldListView: UIView {
     private func initConstraintTableView(parentView: UIView, tableView: UITableView) {
         parentView.addSubview(tableView)
         
+        
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: parentView.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: parentView.bottomAnchor),

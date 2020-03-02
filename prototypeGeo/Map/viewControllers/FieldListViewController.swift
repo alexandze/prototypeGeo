@@ -8,14 +8,14 @@
 
 import UIKit
 
-class FieldListViewController: UIViewController, Identifier {
-    static var identifier: String = "FieldListViewController"
+class FieldListViewController: UIViewController {
+
     
     
     let fieldListViewModel: FieldListViewModel
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
+        fatalError("init(coder:) has not been implemented")
     }
     
     init(
@@ -26,8 +26,7 @@ class FieldListViewController: UIViewController, Identifier {
     }
     
     override func loadView() {
-        self.view = ContainerMobileFieldListView()
-        
+        self.view = FieldListView()
     }
 
     override func viewDidLoad() {

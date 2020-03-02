@@ -11,7 +11,6 @@ import ReSwift
 
 struct AppState: StateType {
     var farmerState: FarmerState
-    var navigationState: NavigationState
     var mapFieldState: MapState
 }
 
