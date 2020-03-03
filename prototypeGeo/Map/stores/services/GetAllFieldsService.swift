@@ -10,10 +10,10 @@ import Foundation
 import MapKit
 
 extension MapFieldService {
-    public func getFields() -> ([(Field<Polygon>, MKPolygon, MKPointAnnotation)?], [(Field<MultiPolygon>, [(MKPolygon, MKPointAnnotation )?])])? {
+    public func getFields() -> ([(Field<Polygon>, MKPolygon, AnnotationWithData<PayloadFieldAnnotation>)?], [(Field<MultiPolygon>, [(MKPolygon, AnnotationWithData<PayloadFieldAnnotation> )?])])? {
         let fieldsGeoJson = self.mapFieldRepository.getFieldGeoJsonArray()
         
-        return fieldsGeoJson.map { (fieldsGeoJsonUnwrap: FieldGeoJsonArray) -> ([(Field<Polygon>, MKPolygon, MKPointAnnotation)?], [(Field<MultiPolygon>, [(MKPolygon, MKPointAnnotation )?])]) in
+        return fieldsGeoJson.map { (fieldsGeoJsonUnwrap: FieldGeoJsonArray) -> ([(Field<Polygon>, MKPolygon, AnnotationWithData<PayloadFieldAnnotation>)?], [(Field<MultiPolygon>, [(MKPolygon, AnnotationWithData<PayloadFieldAnnotation> )?])]) in
             let tupleFormatFieldJson = formatFieldsGeoJson(fieldsGeoJson: fieldsGeoJsonUnwrap)
             let fieldMKPolygonMKPointAnnotation = createMKPolygonMKPointAnnotationFor(fields: tupleFormatFieldJson.0)
             let fieldMKMultiPolygonMKPointAnnotation = createMKMultiPolygonMKPoinAnnotationFor(fields: tupleFormatFieldJson.1)
@@ -101,11 +101,11 @@ extension MapFieldService {
     }
     
     //////////////
-    private func createMKPolygonMKPointAnnotationFor(fields: [Field<Polygon>]) -> [(Field<Polygon>, MKPolygon, MKPointAnnotation)?] {
+    private func createMKPolygonMKPointAnnotationFor(fields: [Field<Polygon>]) -> [(Field<Polygon>, MKPolygon, AnnotationWithData<PayloadFieldAnnotation>)?] {
         fields.map { createFieldWithMKPolygon(field: $0) }
     }
 
-    private func createMKMultiPolygonMKPoinAnnotationFor(fields: [Field<MultiPolygon>]) -> [(Field<MultiPolygon>, [(MKPolygon, MKPointAnnotation )?])] {
+    private func createMKMultiPolygonMKPoinAnnotationFor(fields: [Field<MultiPolygon>]) -> [(Field<MultiPolygon>, [(MKPolygon, AnnotationWithData<PayloadFieldAnnotation> )?])] {
         fields.map { createFieldWithMKMultiPolygon(field: $0) }
     }
     
@@ -117,26 +117,36 @@ extension MapFieldService {
         MKPolygon(points: mapPoint, count: mapPoint.count)
     }
 
-    private func createFieldWithMKPolygon(field: Field<Polygon>) -> (Field<Polygon>, MKPolygon, MKPointAnnotation)? {
+    private func createFieldWithMKPolygon(field: Field<Polygon>) -> (Field<Polygon>, MKPolygon, AnnotationWithData<PayloadFieldAnnotation>)? {
         let mapPoint = createMapPoints(from: field.coordinates.value)
         let mkPolygon = createPolygon(from: mapPoint)
         let centerLocationCoordinate2D = calculCenterPolygon(from: mapPoint)
         
-        return centerLocationCoordinate2D.map { (location: CLLocationCoordinate2D) -> (Field<Polygon>, MKPolygon, MKPointAnnotation) in
-            let mkPointannotation = createPointAnnotation(locationCoordinate2D: location, title: "\(field.id)", subtitle: nil)
+        return centerLocationCoordinate2D.map { (location: CLLocationCoordinate2D) -> (Field<Polygon>, MKPolygon, AnnotationWithData<PayloadFieldAnnotation>) in
+            let mkPointannotation = createAnnotationWithData(
+                locationCoordinate2D: location,
+                title: " \(field.id)",
+                subtitle: "\(NSLocalizedString("Parcelle avec le id", comment: "Parcelle avec le id")) \(field.id)",
+                payloadFieldAnnotation: PayloadFieldAnnotation(idField: field.id)
+            )
             
             return (field, mkPolygon, mkPointannotation)
         }
     }
 
-    private func createFieldWithMKMultiPolygon(field: Field<MultiPolygon>) -> (Field<MultiPolygon>, [(MKPolygon, MKPointAnnotation)?]) {
-       let mkPolygonsAndMkPointAnnotation = field.coordinates.value.map {(polygonType: PolygonType) -> (MKPolygon, MKPointAnnotation)? in
+    private func createFieldWithMKMultiPolygon(field: Field<MultiPolygon>) -> (Field<MultiPolygon>, [(MKPolygon, AnnotationWithData<PayloadFieldAnnotation>)?]) {
+       let mkPolygonsAndMkPointAnnotation = field.coordinates.value.map {(polygonType: PolygonType) -> (MKPolygon, AnnotationWithData<PayloadFieldAnnotation>)? in
             let mapPoint = createMapPoints(from: polygonType)
             let mkPolygon = createPolygon(from: mapPoint)
             let centerLocationCoordinate2D = calculCenterPolygon(from: mapPoint)
         
-            return centerLocationCoordinate2D.map {(location: CLLocationCoordinate2D) -> (MKPolygon, MKPointAnnotation) in
-                let mkPointannotation = createPointAnnotation(locationCoordinate2D: location, title: "\(field.id)", subtitle: "")
+            return centerLocationCoordinate2D.map {(location: CLLocationCoordinate2D) -> (MKPolygon, AnnotationWithData<PayloadFieldAnnotation>) in
+                let mkPointannotation = createAnnotationWithData(
+                    locationCoordinate2D: location,
+                    title: " \(field.id)",
+                    subtitle: "\(NSLocalizedString("Parcelle avec le id", comment: "Parcelle avec le id")) \(field.id)",
+                    payloadFieldAnnotation: PayloadFieldAnnotation(idField: field.id)
+                )
                 return (mkPolygon, mkPointannotation)
             }
         }
@@ -146,12 +156,12 @@ extension MapFieldService {
 
     
 
-    private func createPointAnnotation(locationCoordinate2D: CLLocationCoordinate2D, title: String?, subtitle: String?) -> MKPointAnnotation {
+    private func createAnnotationWithData(locationCoordinate2D: CLLocationCoordinate2D, title: String?, subtitle: String?, payloadFieldAnnotation: PayloadFieldAnnotation) -> AnnotationWithData<PayloadFieldAnnotation> {
         let locationCoordianate = locationCoordinate2D
-        let pointAnnotation = MKPointAnnotation()
-        pointAnnotation.coordinate = locationCoordianate
-        pointAnnotation.title = title
-        pointAnnotation.subtitle = subtitle
-        return pointAnnotation
+        let annotationWithData = AnnotationWithData(location: locationCoordianate, data: payloadFieldAnnotation)
+        annotationWithData.coordinate = locationCoordianate
+        annotationWithData.title = title
+        annotationWithData.subtitle = subtitle
+        return annotationWithData
     }
 }

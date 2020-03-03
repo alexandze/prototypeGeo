@@ -38,7 +38,7 @@ class ContainerFieldNavigationViewController: UIViewController {
         self.addChild(self.navigationFieldController)
         navigationFieldController.isNavigationBarHidden = true
         containerFieldNavigationView.initNavigationView(navigationView: navigationFieldController.view)
-        self.navigationController?.didMove(toParent: self)
+        self.navigationFieldController.didMove(toParent: self)
     }
     
     func getTitleView() -> TitleView {

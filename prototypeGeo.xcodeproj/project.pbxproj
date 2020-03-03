@@ -54,6 +54,8 @@
 		9860400F23BD976800D5B538 /* StoreSubcriberProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9860400E23BD976800D5B538 /* StoreSubcriberProxy.swift */; };
 		9860401123BD9C1700D5B538 /* StoreSubscriptionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9860401023BD9C1700D5B538 /* StoreSubscriptionExtension.swift */; };
 		98A13FBF23C5A75D0087BB22 /* FarmerAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A13FBE23C5A75D0087BB22 /* FarmerAddViewController.swift */; };
+		98A2C548240E696C002A884B /* AnnotationWithData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A2C547240E696C002A884B /* AnnotationWithData.swift */; };
+		98A2C54A240E6BD9002A884B /* PayloadFieldAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A2C549240E6BD9002A884B /* PayloadFieldAnnotation.swift */; };
 		98B9990623B5076000CA7EF9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B9990523B5076000CA7EF9 /* AppDelegate.swift */; };
 		98B9990823B5076000CA7EF9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B9990723B5076000CA7EF9 /* SceneDelegate.swift */; };
 		98B9990A23B5076000CA7EF9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B9990923B5076000CA7EF9 /* ViewController.swift */; };
@@ -144,6 +146,8 @@
 		9860400E23BD976800D5B538 /* StoreSubcriberProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreSubcriberProxy.swift; sourceTree = "<group>"; };
 		9860401023BD9C1700D5B538 /* StoreSubscriptionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreSubscriptionExtension.swift; sourceTree = "<group>"; };
 		98A13FBE23C5A75D0087BB22 /* FarmerAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FarmerAddViewController.swift; sourceTree = "<group>"; };
+		98A2C547240E696C002A884B /* AnnotationWithData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationWithData.swift; sourceTree = "<group>"; };
+		98A2C549240E6BD9002A884B /* PayloadFieldAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayloadFieldAnnotation.swift; sourceTree = "<group>"; };
 		98B9990223B5076000CA7EF9 /* prototypeGeo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = prototypeGeo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98B9990523B5076000CA7EF9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		98B9990723B5076000CA7EF9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -306,6 +310,7 @@
 				98363B3B23DED00900AFFC63 /* FieldGeoJsonArray.swift */,
 				98363B3D23DED25A00AFFC63 /* Field.swift */,
 				9854BFE6240A224600E5AB8A /* CulturalPractice.swift */,
+				98A2C549240E6BD9002A884B /* PayloadFieldAnnotation.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -496,6 +501,7 @@
 				9854C002240BC60400E5AB8A /* ContainerVIewControllers.swift */,
 				98BA0D7C240CDDD000948A26 /* UIViewControllerExtension.swift */,
 				98BA0D80240CF43600948A26 /* UIViewExtention.swift */,
+				98A2C547240E696C002A884B /* AnnotationWithData.swift */,
 			);
 			path = libs;
 			sourceTree = "<group>";
@@ -656,6 +662,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9854BFF3240B668F00E5AB8A /* MapDependecyContainer.swift in Sources */,
+				98A2C548240E696C002A884B /* AnnotationWithData.swift in Sources */,
 				98363B4E23DEEABA00AFFC63 /* GetAllFieldsService.swift in Sources */,
 				9860400C23BD8EEB00D5B538 /* FarmerState.swift in Sources */,
 				98B9990A23B5076000CA7EF9 /* ViewController.swift in Sources */,
@@ -704,6 +711,7 @@
 				9854BFD52408F53400E5AB8A /* FieldListViewController.swift in Sources */,
 				98D1929523C020B000BF9A7A /* FarmerTableViewInteractions.swift in Sources */,
 				98363B2D23DECA3F00AFFC63 /* MapFieldViewController.swift in Sources */,
+				98A2C54A240E6BD9002A884B /* PayloadFieldAnnotation.swift in Sources */,
 				98363B5523DEF0EC00AFFC63 /* MapFieldInteraction.swift in Sources */,
 				9860400623BD882900D5B538 /* Reducers.swift in Sources */,
 				98363B4223DEDF6600AFFC63 /* MapFieldAction.swift in Sources */,

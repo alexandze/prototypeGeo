@@ -80,7 +80,6 @@ class FarmerTableViewController: UITableViewController, Identifier {
                     let label = tableViewCell.contentView.viewWithTag(1) as? UILabel
                     label?.text =  "\($0.firstName) \($0.lastName)"
                 }
-                
             }
         }
         

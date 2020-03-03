@@ -12,6 +12,7 @@ class ContainerMapAndListFieldViewController: UIViewController {
     let mapFieldViewController: MapFieldViewController
     let containerFieldNavigationViewController: ContainerFieldNavigationViewController
     var containerMapAndListFieldView: ContainerMapAndListFieldView = ContainerMapAndListFieldView()
+    var firstCall: Bool = true
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -31,9 +32,10 @@ class ContainerMapAndListFieldViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         initContainerView()
         initDragGestureOnContainerFieldNavigation()
+       // self.containerMapAndListFieldView.slideContainerFieldNavigationViewToMaxPosition()
+        
     }
     
     private func initContainerView() {
@@ -42,15 +44,27 @@ class ContainerMapAndListFieldViewController: UIViewController {
         containerMapAndListFieldView.initViewOfContainerFieldNavigationViewController(containerFieldNavigationView: containerFieldNavigationViewController.view)
         mapFieldViewController.didMove(toParent: self)
         containerFieldNavigationViewController.didMove(toParent: self)
-        
     }
     
     private func initDragGestureOnContainerFieldNavigation() {
         containerMapAndListFieldView.initDragGestureOnContainerFieldNavigation(titleView: containerFieldNavigationViewController.getTitleView())
     }
     
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransition(to: newCollection, with: coordinator)
+        print("oklm1")
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.containerMapAndListFieldView.slideContainerFieldNavigationViewToMaxPosition()
+        
+        if firstCall {
+            self.containerMapAndListFieldView.slideContainerFieldNavigationViewToMaxPosition()
+            firstCall = false
+        } else {
+            self.containerMapAndListFieldView.setminYContainerFieldNavigationViewToCurrentPosition()
+        }
+        
+        
     }
 }

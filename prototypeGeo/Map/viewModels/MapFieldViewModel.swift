@@ -35,14 +35,55 @@ class MapFieldViewModel {
     }
     
     func handleAnnotation(mkAnnotation: MKAnnotation) -> MKAnnotationView? {
-        if mkAnnotation is MKPointAnnotation {
+        if mkAnnotation is AnnotationWithData<PayloadFieldAnnotation> {
             let markerAnnotation = mapView.dequeueReusableAnnotationView(withIdentifier: self.idAnnotationView, for: mkAnnotation) as! MKMarkerAnnotationView
+            markerAnnotation.titleVisibility = .adaptive
+            markerAnnotation.subtitleVisibility = .adaptive
             markerAnnotation.markerTintColor = .black
             markerAnnotation.clusteringIdentifier = self.idClusterAnnotation
             markerAnnotation.displayPriority = .defaultHigh
+            markerAnnotation.canShowCallout = true
+            let test = UIView()
+            test.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+            
+            let buttonAdd = UIButton(type: .contactAdd)
+            let buttonCancel = UIButton(type: .close)
+            
+           
+            
+            
+            test.addSubview(buttonCancel)
+            test.addSubview(buttonAdd)
+            
+            buttonAdd.translatesAutoresizingMaskIntoConstraints = false
+            buttonCancel.translatesAutoresizingMaskIntoConstraints = false
+            
+            buttonCancel.isHidden = true
+            buttonAdd.isHidden = true
+                       
+            NSLayoutConstraint.activate([
+                buttonAdd.centerXAnchor.constraint(equalTo: test.centerXAnchor),
+                buttonAdd.centerYAnchor.constraint(equalTo: test.centerYAnchor)
+            ])
+            
+            NSLayoutConstraint.activate([
+                buttonCancel.centerXAnchor.constraint(equalTo: test.centerXAnchor),
+                buttonCancel.centerYAnchor.constraint(equalTo: test.centerYAnchor)
+            ])
+            
+
+            
+            
+
+            markerAnnotation.rightCalloutAccessoryView = test
+            
+            
             // markerAnnotation.animatesWhenAdded = true
            //  markerAnnotation.isDraggable = true
             return markerAnnotation
+        }
+        if mkAnnotation is MKClusterAnnotation {
+            
         }
         
         return nil
@@ -90,8 +131,8 @@ class MapFieldViewModel {
     }
     
     private func proccessInitMap(
-        fieldPolygonAnnotation: [(Field<Polygon>, MKPolygon, MKPointAnnotation)?],
-        fieldMultiPolygonAnnotation: [(Field<MultiPolygon>, [(MKPolygon, MKPointAnnotation)?])]
+        fieldPolygonAnnotation: [(Field<Polygon>, MKPolygon, AnnotationWithData<PayloadFieldAnnotation>)?],
+        fieldMultiPolygonAnnotation: [(Field<MultiPolygon>, [(MKPolygon, AnnotationWithData<PayloadFieldAnnotation>)?])]
     ) {
         fieldPolygonAnnotation.forEach { fieldPolygonAnnotationTuple in
             addAnnotation(in: self.mapView, mkPointAnnotation: fieldPolygonAnnotationTuple?.2)
@@ -106,7 +147,7 @@ class MapFieldViewModel {
         }
     }
     
-    private func addAnnotation(in mapView: MKMapView, mkPointAnnotation: MKPointAnnotation?) {
+    private func addAnnotation(in mapView: MKMapView, mkPointAnnotation: AnnotationWithData<PayloadFieldAnnotation>?) {
         mkPointAnnotation.map {mapView.addAnnotation($0)}
     }
     

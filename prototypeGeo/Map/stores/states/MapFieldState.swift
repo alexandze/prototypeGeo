@@ -15,6 +15,6 @@ struct MapFieldState: Equatable {
     }
     
     var uuidState: String
-    var fieldPolygonAnnotation: [(Field<Polygon>, MKPolygon, MKPointAnnotation)?]
-    var fieldMultiPolygonAnnotation: [(Field<MultiPolygon>, [(MKPolygon, MKPointAnnotation)?])]
+    var fieldPolygonAnnotation: [(Field<Polygon>, MKPolygon, AnnotationWithData<PayloadFieldAnnotation>)?]
+    var fieldMultiPolygonAnnotation: [(Field<MultiPolygon>, [(MKPolygon, AnnotationWithData<PayloadFieldAnnotation>)?])]
 }
