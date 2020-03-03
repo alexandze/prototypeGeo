@@ -12,12 +12,6 @@ class ContainerMapAndListFieldViewController: UIViewController {
     let mapFieldViewController: MapFieldViewController
     let containerFieldNavigationViewController: ContainerFieldNavigationViewController
     var containerMapAndListFieldView: ContainerMapAndListFieldView = ContainerMapAndListFieldView()
-    /*
-    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
-        return .portrait
-    }
- */
- 
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -55,28 +49,8 @@ class ContainerMapAndListFieldViewController: UIViewController {
         containerMapAndListFieldView.initDragGestureOnContainerFieldNavigation(titleView: containerFieldNavigationViewController.getTitleView())
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        print(view.frame.minY)
-        print(view.layoutMargins.top)
-        print(view.frame.midY)
-        print(view.frame.maxY)
-        
-    }
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        print("ok")
-        let anim = UIViewPropertyAnimator(duration: 2, timingParameters: UISpringTimingParameters(dampingRatio: 0.6, initialVelocity: .zero))
-        let positionY = containerMapAndListFieldView.createPositionY()
-         print(positionY)
-        
-        anim.addAnimations {
-            
-            self.containerFieldNavigationViewController.view.frame.origin.y = positionY!.maxY
-            print(self.containerFieldNavigationViewController.view.frame.origin.y)
-        }
-        
-        anim.startAnimation()
+        self.containerMapAndListFieldView.slideContainerFieldNavigationViewToMaxPosition()
     }
 }

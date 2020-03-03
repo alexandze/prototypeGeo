@@ -46,34 +46,53 @@ class ContainerMapAndListFieldView: UIView {
         containerFieldNavigationView.tag = 2
         containerFieldNavigationView.translatesAutoresizingMaskIntoConstraints = false
         
-        topConstraintContainerNavigation = safeAreaLayoutGuide.topAnchor.constraint(equalTo: containerFieldNavigationView.topAnchor)
-        
-       // topConstraintContainerNavigation!.constant += -(frame.height * 0.8)
-        
-       constraintNavigationViewControllerView = [
+        constraintNavigationViewControllerView = [
             leadingAnchor.constraint(equalTo: containerFieldNavigationView.leadingAnchor),
             trailingAnchor.constraint(equalTo: containerFieldNavigationView.trailingAnchor),
-            topConstraintContainerNavigation!,
+            safeAreaLayoutGuide.topAnchor.constraint(equalTo: containerFieldNavigationView.topAnchor),
             bottomAnchor.constraint(equalTo: containerFieldNavigationView.bottomAnchor)
         ]
         
-        NSLayoutConstraint.activate(constraintNavigationViewControllerView!)
-        
-        
-        
-    }
-    
-    func activate1() {
-        NSLayoutConstraint.deactivate(constraintFieldViewController!)
-        NSLayoutConstraint.deactivate(constraintNavigationViewControllerView!)
-        NSLayoutConstraint.activate(constraintFieldViewController!)
         NSLayoutConstraint.activate(constraintNavigationViewControllerView!)
     }
     
     public func initDragGestureOnContainerFieldNavigation(titleView: TitleView) {
         let panGesture = createPanGestureRecognizer()
         addPanGestureRecognizerToTitleView(titleView: titleView, panGesture: panGesture)
+    }
+    
+    public func slideContainerFieldNavigationViewToMaxPosition() {
+        slideTo { $0.frame.origin.y = $1.maxY }
+    }
+    
+    public func slideContainerFieldNavigationViewToMinPostion() {
+        slideTo { $0.frame.origin.y = $1.minY }
+    }
+    
+    public func slideContainerFieldNavigationViewToMidPosition() {
+        slideTo { $0.frame.origin.y = $1.midY }
+    }
+    
+    private func slideTo(_ slideFunc: @escaping (UIView, PositionY) -> Void) {
+        let containerFieldNavigationView = getContainerFieldNavigationView()
+        let positionY = createPositionY()
+        let anim = createViewPropertyAnimator(duration: 2, dampingRatio: 0.8)
         
+        if containerFieldNavigationView != nil && positionY != nil {
+            anim.addAnimations {
+               slideFunc(containerFieldNavigationView!, positionY!)
+            }
+
+            anim.startAnimation()
+        }
+    }
+    
+    private func getMapFieldView() -> UIView? {
+        viewWithTag(1)
+    }
+    
+    private func getContainerFieldNavigationView() -> UIView? {
+        viewWithTag(2)
     }
     
     private func createPanGestureRecognizer() -> UIPanGestureRecognizer {
@@ -84,27 +103,53 @@ class ContainerMapAndListFieldView: UIView {
         titleView.addGestureRecognizer(panGesture)
     }
     
-    private func getContainerNavigationView() -> UIView? {
-        viewWithTag(2)
-    }
-    
-    @objc func dragging(_ panGestureRecognizer: UIPanGestureRecognizer) {
+    @objc private func dragging(_ panGestureRecognizer: UIPanGestureRecognizer) {
 
       //  print(getContainerNavigationView()?.frame)
       //  print(getContainerNavigationView()?.frame.origin)
+        let delta = panGestureRecognizer.translation(in: superview)
+        let positionY = createPositionY()
+        
+        guard let containerNavigationView = getContainerFieldNavigationView(), positionY != nil  else {
+            return
+        }
+        
+        let newMinY = containerNavigationView.frame.origin.y + delta.y
         
         switch panGestureRecognizer.state {
         case .began, .changed:
-            let delta = panGestureRecognizer.translation(in: superview)
             
-            if let containerNavigationView = getContainerNavigationView() {
-                var centerContainerNavigationView = containerNavigationView.center
-                centerContainerNavigationView.y += delta.y
-                containerNavigationView.center = centerContainerNavigationView
-                panGestureRecognizer.setTranslation(.zero, in: superview)
+
+            if isMaxSlideUp(currentMinY: newMinY, minY: positionY!.minY) {
+                containerNavigationView.frame.origin.y = positionY!.minY
+                return panGestureRecognizer.setTranslation(.zero, in: superview)
+            }
+
+            if isMinSlideDown(currentMinY: newMinY, maxY: positionY!.maxY) {
+                containerNavigationView.frame.origin.y = positionY!.maxY
+                return panGestureRecognizer.setTranslation(.zero, in: superview)
             }
             
+            containerNavigationView.frame.origin.y = newMinY
+            panGestureRecognizer.setTranslation(.zero, in: superview)
+
             
+        case .ended, .failed:
+            if isGreaterThanMaxMidY(currentMinY: newMinY, maxMidY: positionY!.maxMidY) {
+                return slideContainerFieldNavigationViewToMaxPosition()
+            }
+            
+            if isLessThanMaxMidYAndGreaterThanMidY(currentMinY: newMinY, maxMidY: positionY!.maxMidY, midY: positionY!.midY) {
+                return slideContainerFieldNavigationViewToMidPosition()
+            }
+            
+            if isLessThanMidYAndGreaterThanMinMidY(currentMinY: newMinY, midY: positionY!.midY, minMidY: positionY!.minMidY) {
+                return slideContainerFieldNavigationViewToMidPosition()
+            }
+            
+            if isLessThanMinMidY(currentMinY: newMinY, minMidY: positionY!.minMidY) {
+                return slideContainerFieldNavigationViewToMinPostion()
+            }
             
         default:
             break
@@ -112,31 +157,63 @@ class ContainerMapAndListFieldView: UIView {
         }
     }
     
-    func getMinY() -> CGFloat? {
-        if let parentView = superview {
-            return parentView.layoutMargins.top
+    private func isLessThanMinMidY(currentMinY: CGFloat, minMidY: CGFloat) -> Bool {
+        currentMinY < minMidY
+    }
+    
+    private func isMaxSlideUp(currentMinY: CGFloat, minY: CGFloat) -> Bool {
+        currentMinY < minY
+    }
+    
+    private func isMinSlideDown(currentMinY: CGFloat, maxY: CGFloat) -> Bool {
+        currentMinY > maxY
+    }
+    
+    private func isLessThanMidYAndGreaterThanMinMidY(currentMinY: CGFloat, midY: CGFloat, minMidY: CGFloat) -> Bool {
+        currentMinY < midY && currentMinY > minMidY
+    }
+    
+    private func isLessThanMaxMidYAndGreaterThanMidY(currentMinY: CGFloat, maxMidY: CGFloat, midY: CGFloat) -> Bool {
+       (currentMinY < maxMidY) && (currentMinY > midY)
+    }
+    
+    private func isGreaterThanMaxMidY(currentMinY: CGFloat, maxMidY: CGFloat) -> Bool {
+        currentMinY > maxMidY
+    }
+    
+    private func getMinY() -> CGFloat? {
+        guard let parentView = superview else {
+            return nil
         }
         
-        return nil
+        if isLandscapeOrientationMobile() {
+            return parentView.layoutMargins.top + 50
+        }
+        
+         return parentView.layoutMargins.top
     }
     
-    func getMaxY() -> CGFloat {
-        frame.height * 0.8
+    private func getMaxY() -> CGFloat {
+        if isLandscapeOrientationMobile() {
+            return (frame.height * 0.8) - 50
+        }
+        
+        return frame.height * 0.8
     }
     
-    func getMidY() -> CGFloat {
+    private func getMidY() -> CGFloat {
         frame.midY
     }
     
-    func getMinMidY(minY: CGFloat, midY: CGFloat) -> CGFloat {
+    private func getMinMidY(minY: CGFloat, midY: CGFloat) -> CGFloat {
         (minY + midY) / 2
     }
     
-    func getMaxMidY(maxY: CGFloat, midY: CGFloat) -> CGFloat {
+    private func getMaxMidY(maxY: CGFloat, midY: CGFloat) -> CGFloat {
         (maxY + midY) / 2
     }
     
-    func createPositionY() -> PositionY? {
+    private func createPositionY() -> PositionY? {
         let maxY = getMaxY()
         let minY = getMinY()
         let midY = getMidY()
@@ -148,6 +225,10 @@ class ContainerMapAndListFieldView: UIView {
         }
         
         return nil
+    }
+    
+    private func createViewPropertyAnimator(duration: TimeInterval, dampingRatio: CGFloat) -> UIViewPropertyAnimator {
+        UIViewPropertyAnimator(duration: duration, timingParameters: UISpringTimingParameters(dampingRatio: dampingRatio, initialVelocity: .zero))
     }
 }
 

@@ -34,7 +34,7 @@ class ContainerFieldNavigationView: UIView {
             titleView!.topAnchor.constraint(equalTo: parentView.topAnchor),
             titleView!.leadingAnchor.constraint(equalTo: parentView.leadingAnchor),
             titleView!.trailingAnchor.constraint(equalTo: parentView.trailingAnchor),
-            titleView!.heightAnchor.constraint(equalToConstant: 80)
+            titleView!.heightAnchor.constraint(equalToConstant: 60)
         ])
     }
     
@@ -53,7 +53,7 @@ class ContainerFieldNavigationView: UIView {
     
     private func configView() {
         clipsToBounds = true
-        layer.cornerRadius = 10
+        layer.cornerRadius = 15
         layer.masksToBounds = true
     }
     

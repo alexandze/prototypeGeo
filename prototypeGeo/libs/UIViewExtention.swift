@@ -9,5 +9,11 @@
 import UIKit
 
 extension UIView {
+    func isPortraitOrientationMobile() -> Bool {
+        return traitCollection.horizontalSizeClass == .compact && traitCollection.verticalSizeClass == .regular
+    }
     
+    func isLandscapeOrientationMobile() -> Bool {
+        return traitCollection.horizontalSizeClass == .regular && traitCollection.verticalSizeClass == .compact
+    }
 }
