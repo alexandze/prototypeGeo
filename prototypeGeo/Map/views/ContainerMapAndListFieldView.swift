@@ -22,7 +22,6 @@ class ContainerMapAndListFieldView: UIView {
         super.init(frame: .zero)
     }
     
-    
     public func initViewOfMapFieldViewController(viewOfMapFieldViewController: UIView) {
         addSubview(viewOfMapFieldViewController)
         viewOfMapFieldViewController.tag = 1

@@ -15,4 +15,9 @@ struct MapFieldAction {
     struct GetAllFieldSuccess: Action {
         var mapFieldAllFieldState: MapFieldState
     }
+    
+    struct SelectedFieldAction {
+        let fieldType: FieldType
+        let annotationWIthData: AnnotationWithData<PayloadFieldAnnotation>
+    }
 }

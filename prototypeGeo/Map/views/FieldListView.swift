@@ -22,6 +22,7 @@ class FieldListView: UIView {
     public let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.alpha = 0.92
         return tableView
     }()
     

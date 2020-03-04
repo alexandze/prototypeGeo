@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct PayloadFieldAnnotation {
+class PayloadFieldAnnotation {
     let idField: Int
     var isSelected = false
     

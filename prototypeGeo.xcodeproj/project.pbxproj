@@ -53,6 +53,7 @@
 		9860400C23BD8EEB00D5B538 /* FarmerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9860400B23BD8EEB00D5B538 /* FarmerState.swift */; };
 		9860400F23BD976800D5B538 /* StoreSubcriberProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9860400E23BD976800D5B538 /* StoreSubcriberProxy.swift */; };
 		9860401123BD9C1700D5B538 /* StoreSubscriptionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9860401023BD9C1700D5B538 /* StoreSubscriptionExtension.swift */; };
+		98943408240F901D003C0110 /* SelectedFieldRightCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98943407240F901D003C0110 /* SelectedFieldRightCalloutView.swift */; };
 		98A13FBF23C5A75D0087BB22 /* FarmerAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A13FBE23C5A75D0087BB22 /* FarmerAddViewController.swift */; };
 		98A2C548240E696C002A884B /* AnnotationWithData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A2C547240E696C002A884B /* AnnotationWithData.swift */; };
 		98A2C54A240E6BD9002A884B /* PayloadFieldAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A2C549240E6BD9002A884B /* PayloadFieldAnnotation.swift */; };
@@ -145,6 +146,7 @@
 		9860400B23BD8EEB00D5B538 /* FarmerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FarmerState.swift; sourceTree = "<group>"; };
 		9860400E23BD976800D5B538 /* StoreSubcriberProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreSubcriberProxy.swift; sourceTree = "<group>"; };
 		9860401023BD9C1700D5B538 /* StoreSubscriptionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreSubscriptionExtension.swift; sourceTree = "<group>"; };
+		98943407240F901D003C0110 /* SelectedFieldRightCalloutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedFieldRightCalloutView.swift; sourceTree = "<group>"; };
 		98A13FBE23C5A75D0087BB22 /* FarmerAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FarmerAddViewController.swift; sourceTree = "<group>"; };
 		98A2C547240E696C002A884B /* AnnotationWithData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationWithData.swift; sourceTree = "<group>"; };
 		98A2C549240E6BD9002A884B /* PayloadFieldAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayloadFieldAnnotation.swift; sourceTree = "<group>"; };
@@ -349,6 +351,7 @@
 				9854BFDC2409000E00E5AB8A /* ContainerFieldNavigationView.swift */,
 				9854BFDE2409047C00E5AB8A /* FieldListView.swift */,
 				98BA0D7E240CE41F00948A26 /* ContainerMapAndListFieldView.swift */,
+				98943407240F901D003C0110 /* SelectedFieldRightCalloutView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -699,6 +702,7 @@
 				98363B5123DEEC7A00AFFC63 /* mapFieldMiddleware.swift in Sources */,
 				9860400423BD868A00D5B538 /* FarmerTableVIewControllerState.swift in Sources */,
 				98D1929B23C034A600BF9A7A /* FamerViewCell.swift in Sources */,
+				98943408240F901D003C0110 /* SelectedFieldRightCalloutView.swift in Sources */,
 				9854BFFB240B956400E5AB8A /* CulturalPracticeState.swift in Sources */,
 				9854BFDD2409000E00E5AB8A /* ContainerFieldNavigationView.swift in Sources */,
 				98BA0D81240CF43600948A26 /* UIViewExtention.swift in Sources */,

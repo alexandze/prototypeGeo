@@ -64,14 +64,7 @@ class MapFieldViewController: UIViewController, MKMapViewDelegate, Identifier {
         self.mapFieldViewModel.handleOverlay(overlay: overlay)
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        self.mapFieldViewModel.handleAnnotationViewSelected(annotationView: view)
+    }
 }

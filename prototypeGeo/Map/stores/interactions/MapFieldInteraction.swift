@@ -10,6 +10,8 @@ import Foundation
 
 public class MapFieldInteractionImpl: MapFieldInteraction {
     
+    
+    
     // MARK: - Properties
     let actionDispatcher: ActionDispatcher
     
@@ -22,9 +24,14 @@ public class MapFieldInteractionImpl: MapFieldInteraction {
         self.actionDispatcher.dispatch(MapFieldAction.GetAllField())
     }
     
+    func selectedField(fieldTypeAnnotationWithData: (Field<Polygon>, AnnotationWithData<PayloadFieldAnnotation>)) {
+        
+    }
+    
 }
 
 
 protocol MapFieldInteraction {
     func getAllField()
+    func selectedField(fieldTypeAnnotationWithData: (Field<Polygon>, AnnotationWithData<PayloadFieldAnnotation>))
 }
