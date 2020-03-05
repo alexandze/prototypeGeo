@@ -25,7 +25,7 @@ class Util {
         UIColor {(tr: UITraitCollection) -> UIColor in
             switch tr.userInterfaceStyle {
             case .dark:
-                return .darkGray
+                return .darkText
             default:
                 return .white
             }

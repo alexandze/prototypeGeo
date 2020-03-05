@@ -24,8 +24,14 @@ public class MapFieldInteractionImpl: MapFieldInteraction {
         self.actionDispatcher.dispatch(MapFieldAction.GetAllField())
     }
     
-    func selectedField(fieldTypeAnnotationWithData: (Field<Polygon>, AnnotationWithData<PayloadFieldAnnotation>)) {
-        
+    func selectedField(field: FieldType) {
+        let selectedFieldOnMapAction = MapFieldAction.SelectedFieldOnMapAction(fieldType: field)
+        self.actionDispatcher.dispatch(selectedFieldOnMapAction)
+    }
+    
+    func deselectedField(field: FieldType) {
+        let deselectedFieldOnMapAction = MapFieldAction.DeselectedFieldOnMapAction(fieldType: field)
+        self.actionDispatcher.dispatch(deselectedFieldOnMapAction)
     }
     
 }
@@ -33,5 +39,6 @@ public class MapFieldInteractionImpl: MapFieldInteraction {
 
 protocol MapFieldInteraction {
     func getAllField()
-    func selectedField(fieldTypeAnnotationWithData: (Field<Polygon>, AnnotationWithData<PayloadFieldAnnotation>))
+    func selectedField(field: FieldType)
+    func deselectedField(field: FieldType)
 }

@@ -14,6 +14,8 @@ struct FieldListState: Equatable {
     }
     
     var uuidState: String
-    var fieldList: [FieldType]?
+    var fieldList: [FieldType]
     var currentField: FieldType?
+    var isForRemove: Bool = false
+    var indexForRemove: Int = 0
 }

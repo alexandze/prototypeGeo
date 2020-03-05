@@ -59,9 +59,8 @@ extension MapFieldService {
     private func filterMultiPolygon(fieldsGeoJson: FieldGeoJsonArray) -> FieldGeoJsonArray {
         FieldGeoJsonArray(features: fieldsGeoJson.features.filter { $0.geometry.type == "MultiPolygon" })
     }
-
-
-    ///////////////////////
+    
+    
     private func calculCenterPolygon(from mapPoint:[MKMapPoint]) -> CLLocationCoordinate2D? {
         let minLatitude = getMinLatitude(from: mapPoint)
         let maxLatitude = getMaxLatitude(from: mapPoint)
@@ -114,12 +113,14 @@ extension MapFieldService {
     }
 
     private func createPolygon(from mapPoint: [MKMapPoint]) -> MKPolygon {
-        MKPolygon(points: mapPoint, count: mapPoint.count)
+        PolygonWithData<PayloadFieldAnnotation>(points: mapPoint, count: mapPoint.count)
     }
 
     private func createFieldWithMKPolygon(field: Field<Polygon>) -> (Field<Polygon>, MKPolygon, AnnotationWithData<PayloadFieldAnnotation>)? {
+        let payload = PayloadFieldAnnotation(idField: field.id)
         let mapPoint = createMapPoints(from: field.coordinates.value)
-        let mkPolygon = createPolygon(from: mapPoint)
+        let mkPolygon = createPolygon(from: mapPoint) as! PolygonWithData<PayloadFieldAnnotation>
+        mkPolygon.data = payload
         let centerLocationCoordinate2D = calculCenterPolygon(from: mapPoint)
         
         return centerLocationCoordinate2D.map { (location: CLLocationCoordinate2D) -> (Field<Polygon>, MKPolygon, AnnotationWithData<PayloadFieldAnnotation>) in
@@ -127,35 +128,37 @@ extension MapFieldService {
                 locationCoordinate2D: location,
                 title: " \(field.id)",
                 subtitle: "\(NSLocalizedString("Parcelle avec le id", comment: "Parcelle avec le id")) \(field.id)",
-                payloadFieldAnnotation: PayloadFieldAnnotation(idField: field.id)
+                payloadFieldAnnotation: payload
             )
             
             return (field, mkPolygon, mkPointannotation)
         }
     }
-
+    
     private func createFieldWithMKMultiPolygon(field: Field<MultiPolygon>) -> (Field<MultiPolygon>, [(MKPolygon, AnnotationWithData<PayloadFieldAnnotation>)?]) {
-       let mkPolygonsAndMkPointAnnotation = field.coordinates.value.map {(polygonType: PolygonType) -> (MKPolygon, AnnotationWithData<PayloadFieldAnnotation>)? in
-            let mapPoint = createMapPoints(from: polygonType)
-            let mkPolygon = createPolygon(from: mapPoint)
-            let centerLocationCoordinate2D = calculCenterPolygon(from: mapPoint)
+        let payload = PayloadFieldAnnotation(idField: field.id)
         
+        let mkPolygonsAndMkPointAnnotation = field.coordinates.value.map {(polygonType: PolygonType) -> (MKPolygon, AnnotationWithData<PayloadFieldAnnotation>)? in
+            let mapPoint = createMapPoints(from: polygonType)
+            let mkPolygon = createPolygon(from: mapPoint) as! PolygonWithData<PayloadFieldAnnotation>
+            mkPolygon.data = payload
+            let centerLocationCoordinate2D = calculCenterPolygon(from: mapPoint)
+            
             return centerLocationCoordinate2D.map {(location: CLLocationCoordinate2D) -> (MKPolygon, AnnotationWithData<PayloadFieldAnnotation>) in
                 let mkPointannotation = createAnnotationWithData(
                     locationCoordinate2D: location,
                     title: " \(field.id)",
                     subtitle: "\(NSLocalizedString("Parcelle avec le id", comment: "Parcelle avec le id")) \(field.id)",
-                    payloadFieldAnnotation: PayloadFieldAnnotation(idField: field.id)
+                    payloadFieldAnnotation: payload
                 )
+                
                 return (mkPolygon, mkPointannotation)
             }
         }
         
         return (field, mkPolygonsAndMkPointAnnotation)
     }
-
     
-
     private func createAnnotationWithData(locationCoordinate2D: CLLocationCoordinate2D, title: String?, subtitle: String?, payloadFieldAnnotation: PayloadFieldAnnotation) -> AnnotationWithData<PayloadFieldAnnotation> {
         let locationCoordianate = locationCoordinate2D
         let annotationWithData = AnnotationWithData(location: locationCoordianate, data: payloadFieldAnnotation)

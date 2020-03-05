@@ -6,7 +6,6 @@
 //  Copyright © 2020 Alexandre Andze Kande. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 public class FarmerViewCell {

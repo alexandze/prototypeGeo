@@ -31,7 +31,8 @@ class TitleView: UIView {
     }()
     
     private func configView(view: UIView) {
-        view.backgroundColor = Util.getColorBlackOrWhite()
+        view.backgroundColor = .systemGray6
+        view.alpha = 0.95
     }
     
     private func centerLabel(parentView: UIView, label: UILabel) {

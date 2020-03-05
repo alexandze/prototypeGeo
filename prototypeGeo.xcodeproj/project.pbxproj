@@ -54,6 +54,8 @@
 		9860400F23BD976800D5B538 /* StoreSubcriberProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9860400E23BD976800D5B538 /* StoreSubcriberProxy.swift */; };
 		9860401123BD9C1700D5B538 /* StoreSubscriptionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9860401023BD9C1700D5B538 /* StoreSubscriptionExtension.swift */; };
 		98943408240F901D003C0110 /* SelectedFieldRightCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98943407240F901D003C0110 /* SelectedFieldRightCalloutView.swift */; };
+		9894340A2410C76D003C0110 /* PolygonWithData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989434092410C76D003C0110 /* PolygonWithData.swift */; };
+		9894340C2410FAF0003C0110 /* FieldSelectedViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9894340B2410FAF0003C0110 /* FieldSelectedViewCell.swift */; };
 		98A13FBF23C5A75D0087BB22 /* FarmerAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A13FBE23C5A75D0087BB22 /* FarmerAddViewController.swift */; };
 		98A2C548240E696C002A884B /* AnnotationWithData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A2C547240E696C002A884B /* AnnotationWithData.swift */; };
 		98A2C54A240E6BD9002A884B /* PayloadFieldAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A2C549240E6BD9002A884B /* PayloadFieldAnnotation.swift */; };
@@ -147,6 +149,8 @@
 		9860400E23BD976800D5B538 /* StoreSubcriberProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreSubcriberProxy.swift; sourceTree = "<group>"; };
 		9860401023BD9C1700D5B538 /* StoreSubscriptionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreSubscriptionExtension.swift; sourceTree = "<group>"; };
 		98943407240F901D003C0110 /* SelectedFieldRightCalloutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedFieldRightCalloutView.swift; sourceTree = "<group>"; };
+		989434092410C76D003C0110 /* PolygonWithData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolygonWithData.swift; sourceTree = "<group>"; };
+		9894340B2410FAF0003C0110 /* FieldSelectedViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldSelectedViewCell.swift; sourceTree = "<group>"; };
 		98A13FBE23C5A75D0087BB22 /* FarmerAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FarmerAddViewController.swift; sourceTree = "<group>"; };
 		98A2C547240E696C002A884B /* AnnotationWithData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationWithData.swift; sourceTree = "<group>"; };
 		98A2C549240E6BD9002A884B /* PayloadFieldAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayloadFieldAnnotation.swift; sourceTree = "<group>"; };
@@ -352,6 +356,7 @@
 				9854BFDE2409047C00E5AB8A /* FieldListView.swift */,
 				98BA0D7E240CE41F00948A26 /* ContainerMapAndListFieldView.swift */,
 				98943407240F901D003C0110 /* SelectedFieldRightCalloutView.swift */,
+				9894340B2410FAF0003C0110 /* FieldSelectedViewCell.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -505,6 +510,7 @@
 				98BA0D7C240CDDD000948A26 /* UIViewControllerExtension.swift */,
 				98BA0D80240CF43600948A26 /* UIViewExtention.swift */,
 				98A2C547240E696C002A884B /* AnnotationWithData.swift */,
+				989434092410C76D003C0110 /* PolygonWithData.swift */,
 			);
 			path = libs;
 			sourceTree = "<group>";
@@ -682,6 +688,7 @@
 				9854C003240BC60400E5AB8A /* ContainerVIewControllers.swift in Sources */,
 				98363B5323DEED2100AFFC63 /* GetAllFieldMiddleware.swift in Sources */,
 				9860400F23BD976800D5B538 /* StoreSubcriberProxy.swift in Sources */,
+				9894340A2410C76D003C0110 /* PolygonWithData.swift in Sources */,
 				9854BFFF240B9DD500E5AB8A /* FieldCuturalPracticeInteraction.swift in Sources */,
 				9854C001240BC1C100E5AB8A /* Identifier.swift in Sources */,
 				98BA0D7D240CDDD000948A26 /* UIViewControllerExtension.swift in Sources */,
@@ -722,6 +729,7 @@
 				98D1929223C012E300BF9A7A /* AppDependencyContainer.swift in Sources */,
 				9860400A23BD8BC800D5B538 /* FarmerReducer.swift in Sources */,
 				98363B3923DECDA500AFFC63 /* MapState.swift in Sources */,
+				9894340C2410FAF0003C0110 /* FieldSelectedViewCell.swift in Sources */,
 				98363B3023DECA9F00AFFC63 /* MapFieldViewModel.swift in Sources */,
 				98D1929023BFFF7C00BF9A7A /* Actions.swift in Sources */,
 				98B9990823B5076000CA7EF9 /* SceneDelegate.swift in Sources */,

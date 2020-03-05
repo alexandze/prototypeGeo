@@ -24,11 +24,7 @@ extension MapFieldMiddleware {
                             let mapFieldAllFieldState = MapFieldState(uuidState: NSUUID().uuidString, fieldPolygonAnnotation: tupleUtilPolygon, fieldMultiPolygonAnnotation: tupleUtilMultiPolygon)
                             
                             dispatch(MapFieldAction.GetAllFieldSuccess(mapFieldAllFieldState: mapFieldAllFieldState))
-                            
                         }
-                        
-                        
-                       
                     default:
                         break
                     }

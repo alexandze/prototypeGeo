@@ -16,8 +16,11 @@ struct MapFieldAction {
         var mapFieldAllFieldState: MapFieldState
     }
     
-    struct SelectedFieldAction {
+    struct SelectedFieldOnMapAction: Action {
         let fieldType: FieldType
-        let annotationWIthData: AnnotationWithData<PayloadFieldAnnotation>
+    }
+    
+    struct DeselectedFieldOnMapAction: Action {
+        let fieldType: FieldType
     }
 }

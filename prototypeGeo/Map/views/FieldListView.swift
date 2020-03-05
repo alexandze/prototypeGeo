@@ -22,7 +22,9 @@ class FieldListView: UIView {
     public let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.alpha = 0.92
+        tableView.backgroundColor = .systemGray6
+        tableView.alpha = 0.95
+        tableView.rowHeight = 80
         return tableView
     }()
     
@@ -36,5 +38,5 @@ class FieldListView: UIView {
             tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
         ])
     }
-
+    
 }

@@ -64,7 +64,5 @@ class ContainerMapAndListFieldViewController: UIViewController {
         } else {
             self.containerMapAndListFieldView.setminYContainerFieldNavigationViewToCurrentPosition()
         }
-        
-        
     }
 }

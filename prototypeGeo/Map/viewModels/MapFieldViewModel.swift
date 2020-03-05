@@ -21,6 +21,7 @@ class MapFieldViewModel {
     let idClusterAnnotation = "idCLusterAnnotation"
     let idAnnotationView = "My annotation view"
     var currentSelectedAnnotation: AnnotationWithData<PayloadFieldAnnotation>?
+    let disposeBag = DisposeBag()
     
     init(
         mapFieldAllFieldState$: Observable<MapFieldState>,
@@ -54,11 +55,16 @@ class MapFieldViewModel {
     }
     
     func handleOverlay(overlay: MKOverlay) -> MKOverlayRenderer {
-        if let overlay = overlay as? MKPolygon {
+        if let overlay = overlay as? PolygonWithData<PayloadFieldAnnotation> {
             let polygonRenderer = MKPolygonRenderer(polygon: overlay)
-            polygonRenderer.fillColor = UIColor.red.withAlphaComponent(0.1)
-            polygonRenderer.strokeColor = UIColor.yellow.withAlphaComponent(0.8)
-            polygonRenderer.lineWidth = 2
+            
+            if overlay.data!.isSelected {
+                configPolygonRendererSelected(polygonRenderer: polygonRenderer)
+                return polygonRenderer
+            }
+            
+            
+            configPolygonRendererNotSelected(polygonRenderer: polygonRenderer)
             return polygonRenderer
         }
         
@@ -161,26 +167,30 @@ class MapFieldViewModel {
     private func handleButtonAdd(buttonAdd: UIButton) {
         guard let dataFromAnnotation = currentSelectedAnnotation?.data else { return }
         guard let selectedFieldCalloutView = buttonAdd.superview as? SelectedFieldCalloutView else { return }
+        
         dataFromAnnotation.isSelected = true
         selectedFieldCalloutView.setStateButton(isSelected: true)
         findFieldById(idField: dataFromAnnotation.idField)
-            .flatMap({ (tuple: [(FieldType, AnnotationWithData<PayloadFieldAnnotation>, MKPolygon)]) -> Observable< (FieldType, AnnotationWithData<PayloadFieldAnnotation>, MKPolygon, MKOverlayRenderer)> in
-                if let over =  self.mapView.renderer(for: tuple[0].2 ) {
-                    return Observable.just( (tuple[0].0, tuple[0].1, tuple[0].2, over ) )
-                }
-                
-                return Observable.error(NSError(domain: "", code: 1))
-            })
+            .do(onNext: { self.addFieldToListFieldView(tuple: $0, mapFieldInteraction: self.mapFieldInteraction) })
             .observeOn(MainScheduler.instance)
+            .take(1)
             .subscribe {
-                if let over  = $0.element?.3 as? MKPolygonRenderer {
-                    print(over)
-                    over.fillColor = UIColor.green.withAlphaComponent(0.5)
-                    over.strokeColor = UIColor.yellow.withAlphaComponent(0.8)
+                if let polygonRenderer = $0.element?.3 as? MKPolygonRenderer {
+                    self.configPolygonRendererSelected(polygonRenderer: polygonRenderer)
                 }
-        }
-        //TODO: dispatch to add tableView
-        
+        }.disposed(by: self.disposeBag)
+    }
+    
+    private func configPolygonRendererSelected(polygonRenderer: MKPolygonRenderer) {
+        polygonRenderer.fillColor = UIColor.green.withAlphaComponent(0.3)
+        polygonRenderer.strokeColor = UIColor.yellow.withAlphaComponent(0.8)
+        polygonRenderer.lineWidth = 2
+    }
+    
+    private func configPolygonRendererNotSelected(polygonRenderer: MKPolygonRenderer) {
+        polygonRenderer.fillColor = UIColor.red.withAlphaComponent(0.1)
+        polygonRenderer.strokeColor = UIColor.yellow.withAlphaComponent(0.8)
+        polygonRenderer.lineWidth = 2
     }
     
     private func handleButtonCancel(buttonCancel: UIButton) {
@@ -188,39 +198,71 @@ class MapFieldViewModel {
         guard let selectedFieldCalloutView = buttonCancel.superview as? SelectedFieldCalloutView else { return }
         dataFromAnnotation.isSelected = false
         selectedFieldCalloutView.setStateButton(isSelected: false)
+        
+        findFieldById(idField: dataFromAnnotation.idField)
+            .do(onNext: { self.removeFieldToListFieldView(tuple: $0, mapFieldInteraction: self.mapFieldInteraction) })
+            .observeOn(MainScheduler.instance)
+            .take(1)
+            .subscribe {
+                if let polygonRenderer = $0.element?.3 as? MKPolygonRenderer {
+                    self.configPolygonRendererNotSelected(polygonRenderer: polygonRenderer)
+                }
+        }.disposed(by: self.disposeBag)
         //TODO: dispatch to remove tableView
     }
     
-    private func findFieldById(idField: Int) -> Observable<[(FieldType, AnnotationWithData<PayloadFieldAnnotation>, MKPolygon)]> {
+    private func findFieldById(idField: Int) ->Observable<(FieldType, AnnotationWithData<PayloadFieldAnnotation>, MKPolygon, MKOverlayRenderer)> {
         if fieldsPolygonsAnnotations != nil {
             return Observable
                 .from(fieldsPolygonsAnnotations!)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(queue: DispatchQueue.global()))
-                .filter { (tuple: (Field<Polygon>, MKPolygon, AnnotationWithData<PayloadFieldAnnotation>)?) -> Bool in
-                    if let field = tuple?.0 {
-                        return field.id == idField
-                    }
-                    
-                    return false
-            }.flatMap { (tuple: (Field<Polygon>, MKPolygon, AnnotationWithData<PayloadFieldAnnotation>)?) -> Observable< (FieldType, AnnotationWithData<PayloadFieldAnnotation>, MKPolygon)> in
-                if let field = tuple?.0, let annotationWithData = tuple?.2, let mkPolygon = tuple?.1 {
-                    return Observable.just((FieldType.polygon(field), annotationWithData, mkPolygon))
-                }
+                .filter { self.filterSelectedById(idField: idField, field: $0?.0)}
+                .flatMap { self.flapMapTupleFieldPolygonAnnotation(tuple: $0, idField: idField) }
+                .reduce([]) { self.reduceTupleFieldPolygonAnnotation(tupleArray: $0, tuple: $1) }
+                .flatMap { self.getOverlayRendererByPolygon(tuple: $0)}
                 
-                return Observable.error(NSError(domain: "not found field with id \(idField)", code: 1))
-            }.reduce([]) { (tupleArray: [(FieldType, AnnotationWithData<PayloadFieldAnnotation>, MKPolygon)], tuple: (FieldType, AnnotationWithData<PayloadFieldAnnotation>, MKPolygon)) -> [(FieldType, AnnotationWithData<PayloadFieldAnnotation>, MKPolygon)] in
-                var array = tupleArray
-                array.append(tuple)
-                return array
-            }
+                
         }
         
         return Observable.error(NSError(domain: "not found field with id \(idField)", code: 1))
     }
     
+    private func filterSelectedById(idField: Int, field: Field<Polygon>?) -> Bool {
+        if field != nil {
+            return field!.id == idField
+        }
+        
+        return false
+    }
     
+    private func flapMapTupleFieldPolygonAnnotation(tuple: (Field<Polygon>, MKPolygon, AnnotationWithData<PayloadFieldAnnotation>)?, idField: Int) -> Observable<(FieldType, AnnotationWithData<PayloadFieldAnnotation>, MKPolygon)> {
+        if let field = tuple?.0, let annotationWithData = tuple?.2, let mkPolygon = tuple?.1 {
+            return Observable.just((FieldType.polygon(field), annotationWithData, mkPolygon))
+        }
+        
+        return Observable.error(NSError(domain: "not found field with id \(idField)", code: 1))
+    }
     
+    private func reduceTupleFieldPolygonAnnotation(tupleArray: [(FieldType, AnnotationWithData<PayloadFieldAnnotation>, MKPolygon)],tuple: (FieldType, AnnotationWithData<PayloadFieldAnnotation>, MKPolygon)) ->  [(FieldType, AnnotationWithData<PayloadFieldAnnotation>, MKPolygon)] {
+        var array = tupleArray
+        array.append(tuple)
+        return array
+    }
     
+    private func getOverlayRendererByPolygon(tuple: [(FieldType, AnnotationWithData<PayloadFieldAnnotation>, MKPolygon)]) -> Observable<(FieldType, AnnotationWithData<PayloadFieldAnnotation>, MKPolygon, MKOverlayRenderer)> {
+        if let over =  self.mapView.renderer(for: tuple[0].2 ) {
+            return Observable.just( (tuple[0].0, tuple[0].1, tuple[0].2, over ) )
+        }
+        
+        return Observable.error(NSError(domain: "", code: 1))
+    }
     
+    private func addFieldToListFieldView(tuple: (FieldType, AnnotationWithData<PayloadFieldAnnotation>, MKPolygon, MKOverlayRenderer), mapFieldInteraction: MapFieldInteraction) {
+        mapFieldInteraction.selectedField(field: tuple.0)
+    }
+    
+    private func removeFieldToListFieldView(tuple: (FieldType, AnnotationWithData<PayloadFieldAnnotation>, MKPolygon, MKOverlayRenderer), mapFieldInteraction: MapFieldInteraction) {
+        mapFieldInteraction.deselectedField(field: tuple.0)
+    }
     
 }
