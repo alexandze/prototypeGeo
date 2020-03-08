@@ -17,23 +17,23 @@ extension MapFieldMiddleware {
                     switch action {
                     case _ as MapFieldAction.GetAllField:
                         let fieldPolygonAnnotationTuple = self.mapFieldService.getFields()
-                        
+
                         if let tupleUtilPolygon = fieldPolygonAnnotationTuple?.0,
                             let tupleUtilMultiPolygon = fieldPolygonAnnotationTuple?.1 {
-                             
+
                             let mapFieldAllFieldState = MapFieldState(uuidState: NSUUID().uuidString, fieldPolygonAnnotation: tupleUtilPolygon, fieldMultiPolygonAnnotation: tupleUtilMultiPolygon)
-                            
+
                             dispatch(MapFieldAction.GetAllFieldSuccess(mapFieldAllFieldState: mapFieldAllFieldState))
                         }
                     default:
                         break
                     }
-                    
+
                     return next(action)
                 }
             }
         }
-        
+
         return getAllFieldMiddleware
     }
 }

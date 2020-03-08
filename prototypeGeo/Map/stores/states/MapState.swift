@@ -12,5 +12,5 @@ struct MapState {
     var mapFieldAllFieldsState: MapFieldState = MapFieldState(uuidState: "", fieldPolygonAnnotation: [], fieldMultiPolygonAnnotation: [])
     var fieldListState: FieldListState = FieldListState(uuidState: "", fieldList: [], currentField: nil, isForRemove: false, indexForRemove: -1)
     var culturalPracticeState: CulturalPracticeState = CulturalPracticeState(uuidState: "", currentField: nil)
-    
+
 }

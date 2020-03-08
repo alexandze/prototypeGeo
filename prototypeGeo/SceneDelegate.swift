@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         if let windowScene = scene as? UIWindowScene {
             self.window = UIWindow(windowScene: windowScene)
-            
+
            // self.window!.rootViewController = appDependencyContainer.proccessInitTabBarController()
             self.window!.rootViewController = appDependencyContainer.processInitContainerMapAndFieldNavigation()
            // self.window!.backgroundColor = .white
@@ -58,6 +58,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
     }
 
-
 }
-

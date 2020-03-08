@@ -13,8 +13,7 @@ struct FarmerTableViewControllerState: Equatable {
     static func == (lhs: FarmerTableViewControllerState, rhs: FarmerTableViewControllerState) -> Bool {
         lhs.uuidState == rhs.uuidState
     }
-    
-    
+
     var uuidState: String
     var farmers: [Farmer]
     var sectionsFarmersFormated: [Section<FarmerFormated>]

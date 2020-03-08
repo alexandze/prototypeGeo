@@ -10,26 +10,25 @@ import UIKit
 
 public class FarmerViewCell {
     let contentView: UIView
-    
+
     init(contentView: UIView) {
         self.contentView = contentView
     }
-    
+
     func initView(textLabel: String, nameImage: String) {
         let imageView = createImageView(nameImage: nameImage, tag: 2)
         addImageViewToContentView(contentView: self.contentView, imageView: imageView)
         positionImage(contentView: self.contentView, imageView: imageView)
         let label = createLabel(text: textLabel, tag: 1)
         addLabelToContentView(contentView: self.contentView, label: label)
-        positionLabel(contentView: self.contentView, label: label, ImageView: imageView)
+        positionLabel(contentView: self.contentView, label: label, imageView: imageView)
     }
-    
-    
+
     private func createLabel(text: String, tag: Int) -> UILabel {
         let label = UILabel()
         label.text = text
         label.tag = tag
-        
+
         label.textColor = UIColor {traitCollection in
             switch traitCollection.userInterfaceStyle {
             case .dark:
@@ -40,12 +39,12 @@ public class FarmerViewCell {
                 return .white
             }
         }
-        
+
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         return label
     }
-    
+
     private func createImageView(nameImage: String, tag: Int) -> UIImageView {
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -54,7 +53,7 @@ public class FarmerViewCell {
         imageView.image = imageResized
         return imageView
     }
-    
+
     private func positionImage(contentView: UIView, imageView: UIImageView) {
         NSLayoutConstraint.activate([
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
@@ -62,19 +61,19 @@ public class FarmerViewCell {
             imageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
     }
-    
-    private func positionLabel(contentView: UIView, label: UIView, ImageView: UIImageView) {
+
+    private func positionLabel(contentView: UIView, label: UIView, imageView: UIImageView) {
         NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: ImageView.trailingAnchor, constant: 5),
+            label.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 5),
             label.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             label.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.8)
         ])
     }
-    
+
     private func addLabelToContentView(contentView: UIView, label: UILabel) {
         contentView.addSubview(label)
     }
-    
+
     private func addImageViewToContentView(contentView: UIView, imageView: UIImageView) {
         contentView.addSubview(imageView)
     }

@@ -11,10 +11,10 @@ import UIKit
 class SelectedFieldCalloutView: UIView {
     static let tagButtonCancel = 51
     static let tagButttonAdd = 50
-    
+
     private var handleButtonCancelFunc: ((UIButton) -> Void)?
     private var handleButtonAddFunc: ((UIButton) -> Void)?
-    
+
     let buttonAdd: UIButton = {
         let buttonAdd = UIButton()
         let addImage = UIImage(named: "plus")
@@ -23,7 +23,7 @@ class SelectedFieldCalloutView: UIView {
         buttonAdd.translatesAutoresizingMaskIntoConstraints = false
         return buttonAdd
     }()
-    
+
     let buttonCancel: UIButton = {
         let buttonCancel = UIButton()
         let cancelImage = UIImage(named: "stop")
@@ -32,56 +32,53 @@ class SelectedFieldCalloutView: UIView {
         buttonCancel.translatesAutoresizingMaskIntoConstraints = false
         return buttonCancel
     }()
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     init() {
         super.init(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
         initView()
     }
-    
-    
-    
-    public func addTargetHandleForButtonCancel(_ handleButtonCancelFunc: @escaping (UIButton) -> Void) {
-        self.handleButtonCancelFunc = handleButtonCancelFunc
-        buttonCancel.addTarget(self, action: #selector(handleButtonCancel(sender:)), for: .touchDown)
+
+    public func addTargetButtonCancel(handleCancelFunc: @escaping (UIButton) -> Void) {
+        self.handleButtonCancelFunc = handleCancelFunc
+        buttonCancel.addTarget(self, action: #selector(handle(buttonCancel:)), for: .touchDown)
     }
-    
-    public func addTargetHandleForButtonAdd(_ handleButtonAddFunc: @escaping (UIButton) -> Void) {
-        self.handleButtonAddFunc = handleButtonAddFunc
-        buttonAdd.addTarget(self, action: #selector(handleButtonAdd(sender:)), for: .touchDown)
+
+    public func addTargetButtonAdd(handleAddFunc: @escaping (UIButton) -> Void) {
+        self.handleButtonAddFunc = handleAddFunc
+        buttonAdd.addTarget(self, action: #selector(handle(addButton:)), for: .touchDown)
     }
-    
-    
-    public func setStateButton(isSelected: Bool) {
+
+    public func setStateButton(with isSelected: Bool) {
         buttonCancel.isHidden = !isSelected
         buttonAdd.isHidden = isSelected
     }
-    
+
     private func initView() {
         addSubview(buttonAdd)
         addSubview(buttonCancel)
         buttonCancel.isHidden = true
         buttonAdd.isHidden = false
-        centerButtonInView(button: buttonAdd)
-        centerButtonInView(button: buttonCancel)
+        centerInView(button: buttonAdd)
+        centerInView(button: buttonCancel)
     }
-    
-    @objc private func handleButtonCancel(sender: UIButton) {
+
+    @objc private func handle(buttonCancel: UIButton) {
         handleButtonCancelFunc.map {
-            $0(sender)
+            $0(buttonCancel)
         }
     }
-    
-    @objc private func handleButtonAdd(sender: UIButton) {
+
+    @objc private func handle(addButton: UIButton) {
         handleButtonAddFunc.map {
-            $0(sender)
+            $0(addButton)
         }
     }
-    
-    private func centerButtonInView(button: UIButton) {
+
+    private func centerInView(button: UIButton) {
         NSLayoutConstraint.activate([
             button.centerXAnchor.constraint(equalTo: centerXAnchor),
             button.centerYAnchor.constraint(equalTo: centerYAnchor)

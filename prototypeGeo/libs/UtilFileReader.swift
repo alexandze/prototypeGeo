@@ -9,12 +9,16 @@
 import Foundation
 
 public class UtilReaderFile {
-    public static func readJsonFile<T: Codable>(resource: String, typeRessource: String, _ type: T.Type) -> T? {
+    public static func readJsonFile<T: Codable>(
+        resource: String,
+        typeRessource: String,
+        _ type: T.Type
+    ) -> T? {
         if let data = readFile(resource: resource, typeRessource: typeRessource) {
             let jsonDecode = JSONDecoder()
             return try? jsonDecode.decode(T.self, from: data)
         }
-        
+
         return nil
     }
 
@@ -23,10 +27,10 @@ public class UtilReaderFile {
             do {
                 return try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
             } catch {
-                
+
             }
         }
-        
+
         return nil
     }
 }

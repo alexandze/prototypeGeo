@@ -10,5 +10,11 @@ import Foundation
 import ReSwift
 
 struct FarmerState {
-    var farmerTableViewControllerState: FarmerTableViewControllerState = FarmerTableViewControllerState(uuidState: "",  farmers: [], sectionsFarmersFormated: [], isEmptyFarmers: true)
+    var farmerTableViewControllerState: FarmerTableViewControllerState =
+        FarmerTableViewControllerState(
+            uuidState: "",
+            farmers: [],
+            sectionsFarmersFormated: [],
+            isEmptyFarmers: true
+    )
 }

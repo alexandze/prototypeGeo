@@ -9,18 +9,17 @@
 import UIKit
 
 class NavigationControllerViewController<T: UIViewController>: UINavigationController {
-    
+
     let rootViewController: T
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
+
     init(rootViewController: T) {
         super.init(rootViewController: rootViewController)
     }
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }

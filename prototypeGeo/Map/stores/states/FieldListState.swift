@@ -12,7 +12,7 @@ struct FieldListState: Equatable {
     static func == (lhs: FieldListState, rhs: FieldListState) -> Bool {
         lhs.uuidState == rhs.uuidState
     }
-    
+
     var uuidState: String
     var fieldList: [FieldType]
     var currentField: FieldType?

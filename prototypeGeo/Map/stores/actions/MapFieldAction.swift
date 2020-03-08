@@ -11,15 +11,15 @@ import ReSwift
 
 struct MapFieldAction {
     struct GetAllField: Action {}
-    
+
     struct GetAllFieldSuccess: Action {
         var mapFieldAllFieldState: MapFieldState
     }
-    
+
     struct SelectedFieldOnMapAction: Action {
         let fieldType: FieldType
     }
-    
+
     struct DeselectedFieldOnMapAction: Action {
         let fieldType: FieldType
     }

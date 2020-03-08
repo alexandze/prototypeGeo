@@ -14,12 +14,12 @@ class AnnotationWithData<T>: NSObject, MKAnnotation {
     var title: String?
     var subtitle: String?
     var data: T?
-    
+
     init(location coordinate: CLLocationCoordinate2D) {
         self.coordinate = coordinate
         super.init()
     }
-    
+
     init(location coordinate: CLLocationCoordinate2D, data: T) {
         self.coordinate = coordinate
         self.data = data

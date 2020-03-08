@@ -10,10 +10,9 @@ import Foundation
 
 class MapFieldRepository {
     static let shared = MapFieldRepository()
-    
+
     public func getFieldGeoJsonArray() -> FieldGeoJsonArray? {
         UtilReaderFile.readJsonFile(resource: "ACTU", typeRessource: "json", FieldGeoJsonArray.self)
     }
-    
-    
+
 }

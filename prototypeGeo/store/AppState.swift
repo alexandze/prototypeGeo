@@ -13,5 +13,3 @@ struct AppState: StateType {
     var farmerState: FarmerState
     var mapFieldState: MapState
 }
-
-

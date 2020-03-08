@@ -19,51 +19,62 @@ extension FarmerMiddleware {
                     case _ as GetFamersAction:
                         self.getFamers().subscribe(onSuccess: {farmers in
                             let sectionFarmerFormated = self.getSectionFromFarmers(farmers: farmers)
-                            let farmerTableViewControllerState = FarmerTableViewControllerState(uuidState: NSUUID().uuidString, farmers: farmers, sectionsFarmersFormated: sectionFarmerFormated, isEmptyFarmers: farmers.count == 0)
-                            
-                            dispatch(SuccessGetFamersAction(farmerTableViewControllerState: farmerTableViewControllerState))
+                            let farmerTableViewControllerState = FarmerTableViewControllerState(
+                                uuidState: NSUUID().uuidString,
+                                farmers: farmers,
+                                sectionsFarmersFormated: sectionFarmerFormated,
+                                isEmptyFarmers: farmers.isEmpty
+                            )
+
+                            dispatch(SuccessGetFamersAction(
+                                farmerTableViewControllerState: farmerTableViewControllerState)
+                            )
                         }, onError: {error in
                             print(error)
                         }).disposed(by: self.disposeBag)
                     default:
                         break
                     }
-                    
+
                     return next(action)
                 }
             }
         }
-        
+
         return getFarmersMiddleware
     }
-    
+
     private func getSectionFromFarmers(farmers: [Farmer]) -> [Section<FarmerFormated>] {
         let farmersFormated = createFarmersFormatedFromFarmers(farmers: farmers)
         let farmerFormatedGrouping = createDictionaryGroupingFromFarmers(farmersFormated: farmersFormated)
         let farmerSorted = sortedFarmersFormatedDictionnary(farmersFormated: farmerFormatedGrouping)
         return tupleFarmersToSection(farmers: farmerSorted)
     }
-    
+
     private func createFarmersFormatedFromFarmers(farmers: [Farmer]) -> [FarmerFormated] {
         farmers.map {
             FarmerFormated(farmer: $0, lastNameFormated: $0.lastName.uppercased())
         }
     }
-    
-    private func createDictionaryGroupingFromFarmers(farmersFormated: [FarmerFormated]) -> Dictionary<String, [FarmerFormated]> {
+
+    private func createDictionaryGroupingFromFarmers(
+        farmersFormated: [FarmerFormated]
+    ) -> [String: [FarmerFormated]] {
         Dictionary(grouping: farmersFormated) { String($0.lastNameFormated.prefix(1)) }
     }
-    
-    private func sortedFarmersFormatedDictionnary(farmersFormated: Dictionary<String, [FarmerFormated]>) -> [(key: String, value: [FarmerFormated])] {
+
+    private func sortedFarmersFormatedDictionnary(
+        farmersFormated: [String: [FarmerFormated]]
+    ) -> [(key: String, value: [FarmerFormated])] {
         Array(farmersFormated).sorted(by: {$0.key < $1.key})
     }
-    
+
     private func tupleFarmersToSection(farmers: [(key: String, value: [FarmerFormated])] ) -> [Section<FarmerFormated>] {
         farmers.map {
             Section<FarmerFormated>(sectionName: $0.key, rowData: $0.value)
         }
     }
-    
+
     private func getFamers() -> Single<[Farmer]> {
         let farmers = [
             Farmer(firstName: "APrenom", lastName: "BNom"),
@@ -107,16 +118,14 @@ extension FarmerMiddleware {
             Farmer(firstName: "NjjikPrenom", lastName: "hghBNom"),
             Farmer(firstName: "cnbvPrenom", lastName: "fgfBNom"),
             Farmer(firstName: "lhkjPrenom", lastName: "BNom"),
-            Farmer(firstName: "sgfjhPrenom", lastName: "sdfNom"),
+            Farmer(firstName: "sgfjhPrenom", lastName: "sdfNom")
         ]
         // TODO appeler le service qui recupere le farmer
         return Single.create { singleObser in
             singleObser(.success(farmers))
             return Disposables.create()
         }
-        
+
     }
-    
-    
-    
+
 }

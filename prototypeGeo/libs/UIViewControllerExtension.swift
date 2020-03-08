@@ -12,7 +12,7 @@ extension UIViewController {
     func addChilds(_ viewControllers: UIViewController...) {
         viewControllers.forEach { self.addChild($0) }
     }
-    
+
     func addSubviews(_ views: UIView ...) {
         views.forEach { self.view.addSubview($0) }
     }

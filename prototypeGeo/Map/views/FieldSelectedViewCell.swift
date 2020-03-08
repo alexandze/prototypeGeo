@@ -10,16 +10,15 @@ import UIKit
 
 public class FieldSelectedViewCell {
     let contentView: UIView
-    
+
     let imageView: UIImageView = {
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 70, height: 70))
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-    
+
     init(contentView: UIView) {
         self.contentView = contentView
     }
-    
-    
+
 }

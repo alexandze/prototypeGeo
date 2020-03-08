@@ -9,61 +9,58 @@
 import UIKit
 import MapKit
 
-
 class MapFieldViewController: UIViewController, MKMapViewDelegate, Identifier {
     static var identifier: String = "MapFieldViewController"
-    
-    
-    
+
     var mapFieldViewModel: MapFieldViewModel!
     var mapFieldView: MapFieldView!
     var mapView: MKMapView!
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     init(mapFieldViewModel: MapFieldViewModel) {
         self.mapFieldViewModel = mapFieldViewModel
         self.mapFieldView = MapFieldView(mapFieldViewModel: self.mapFieldViewModel)
-        
+
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     override func loadView() {
         self.view = self.mapFieldView
         self.mapFieldViewModel.mapView = self.mapFieldView.mapView
         self.mapView = self.mapFieldView.mapView
         self.mapView.delegate = self
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         self.mapFieldViewModel.subscribeToTableViewControllerState()
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.mapFieldViewModel.disposeToTableViewControllerState()
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.mapFieldViewModel.dispatchGetAllFields()
         self.mapFieldViewModel.registerAnnotationView()
-        self.mapFieldViewModel.initTitleNavigation(viewController: self)
+        self.mapFieldViewModel.initTitleNavigation(of: self)
         self.mapFieldViewModel.initRegion()
     }
-    
+
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        self.mapFieldViewModel.handleAnnotation(mkAnnotation: annotation)
+        self.mapFieldViewModel.handle(mkAnnotation: annotation)
     }
-    
+
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        self.mapFieldViewModel.handleOverlay(overlay: overlay)
+        self.mapFieldViewModel.handle(overlay: overlay)
     }
-    
+
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         self.mapFieldViewModel.handleAnnotationViewSelected(annotationView: view)
     }

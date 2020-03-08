@@ -10,21 +10,20 @@ import Foundation
 import RxSwift
 
 class FieldCulturalPraticeViewModelImpl: FieldCulturalPraticeViewModel {
-    
-    let fieldCulturalPracticeState$: Observable<CulturalPracticeState>
+
+    let fieldCulturalPracticeStateObs: Observable<CulturalPracticeState>
     let fieldCulturalPracticeInteraction: FieldCulturalPracticeInteraction
-    
+
     init(
-        fieldCulturalPracticeState$: Observable<CulturalPracticeState>,
+        fieldCulturalPracticeStateObs: Observable<CulturalPracticeState>,
         fieldCulturalPracticeInteraction: FieldCulturalPracticeInteraction
     ) {
-        self.fieldCulturalPracticeState$ = fieldCulturalPracticeState$
+        self.fieldCulturalPracticeStateObs = fieldCulturalPracticeStateObs
         self.fieldCulturalPracticeInteraction = fieldCulturalPracticeInteraction
     }
-    
-    
+
 }
 
 protocol FieldCulturalPraticeViewModel {
-    
+
 }

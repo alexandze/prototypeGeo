@@ -8,15 +8,15 @@
 
 import Foundation
 
-class FieldCulturalPracticeInteractionImpl: FieldCulturalPracticeInteraction  {
+class FieldCulturalPracticeInteractionImpl: FieldCulturalPracticeInteraction {
     let actionDispatcher: ActionDispatcher
-    
+
     // MARK: - Methods
     init(actionDispatcher: ActionDispatcher) {
         self.actionDispatcher = actionDispatcher
     }
 }
 
-protocol FieldCulturalPracticeInteraction  {
-    
+protocol FieldCulturalPracticeInteraction {
+
 }

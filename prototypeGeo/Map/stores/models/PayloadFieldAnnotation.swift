@@ -11,7 +11,7 @@ import Foundation
 class PayloadFieldAnnotation {
     let idField: Int
     var isSelected = false
-    
+
     init(idField: Int) {
         self.idField = idField
     }

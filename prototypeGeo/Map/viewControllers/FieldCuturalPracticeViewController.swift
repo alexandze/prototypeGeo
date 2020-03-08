@@ -10,14 +10,13 @@ import UIKit
 
 class FieldCuturalPracticeViewController: UIViewController, Identifier {
     static var identifier: String = "FieldCuturalPracticeViewController"
-    
-    
+
     let fieldCulturalPracticeViewModel: FieldCulturalPraticeViewModel
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     init(fieldCulturalPracticeViewModel: FieldCulturalPraticeViewModel) {
         self.fieldCulturalPracticeViewModel = fieldCulturalPracticeViewModel
         super.init(nibName: nil, bundle: nil)
@@ -28,7 +27,6 @@ class FieldCuturalPracticeViewController: UIViewController, Identifier {
 
         // Do any additional setup after loading the view.
     }
-    
 
     /*
     // MARK: - Navigation

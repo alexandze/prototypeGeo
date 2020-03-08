@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 class MapFieldService {
     static let shared = MapFieldService()
     let mapFieldRepository = MapFieldRepository.shared

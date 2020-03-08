@@ -9,19 +9,19 @@
 import UIKit
 
 class ContainerFieldNavigationView: UIView {
-    
+    public static let VIEW_TAG = 80
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     init() {
         super.init(frame: .zero)
         configView()
         initViewTitle(parentView: self)
     }
-    
+
     var titleView: TitleView?
-     
+
     private func initViewTitle(parentView: UIView) {
         titleView = TitleView()
         titleView!.clipsToBounds = true
@@ -29,7 +29,7 @@ class ContainerFieldNavigationView: UIView {
         titleView!.setTitle(title: "Liste des parcelles choisies")
         titleView!.translatesAutoresizingMaskIntoConstraints = false
         parentView.addSubview(titleView!)
-        
+
         NSLayoutConstraint.activate([
             titleView!.topAnchor.constraint(equalTo: parentView.topAnchor),
             titleView!.leadingAnchor.constraint(equalTo: parentView.leadingAnchor),
@@ -37,26 +37,24 @@ class ContainerFieldNavigationView: UIView {
             titleView!.heightAnchor.constraint(equalToConstant: 60)
         ])
     }
-    
-    func initNavigationView(navigationView: UIView) {
+
+    func initNavigationControllerView(navigationControllerView: UIView) {
         let titleView = viewWithTag(1)!
-        navigationView.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(navigationView)
-        
+        navigationControllerView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(navigationControllerView)
+
         NSLayoutConstraint.activate([
-            navigationView.topAnchor.constraint(equalTo: titleView.bottomAnchor),
-            navigationView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            navigationView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            navigationView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            navigationControllerView.topAnchor.constraint(equalTo: titleView.bottomAnchor),
+            navigationControllerView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            navigationControllerView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            navigationControllerView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
-    
+
     private func configView() {
         clipsToBounds = true
         layer.cornerRadius = 15
         layer.masksToBounds = true
     }
-    
-    
 
 }

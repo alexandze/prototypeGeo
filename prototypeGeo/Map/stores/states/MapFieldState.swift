@@ -13,7 +13,7 @@ struct MapFieldState: Equatable {
     static func == (lhs: MapFieldState, rhs: MapFieldState) -> Bool {
         lhs.uuidState == rhs.uuidState
     }
-    
+
     var uuidState: String
     var fieldPolygonAnnotation: [(Field<Polygon>, MKPolygon, AnnotationWithData<PayloadFieldAnnotation>)?]
     var fieldMultiPolygonAnnotation: [(Field<MultiPolygon>, [(MKPolygon, AnnotationWithData<PayloadFieldAnnotation>)?])]

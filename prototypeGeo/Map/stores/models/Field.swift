@@ -21,7 +21,6 @@ struct Field<T: GeometryShape> {
     var coordinates: T
 }
 
-
 typealias PolygonType = [PointType]
 typealias MultiPolygonType = [PolygonType]
 typealias PointType = [Double]

@@ -10,7 +10,6 @@ import UIKit
 
 class FarmerAddViewController: UIViewController, Identifier {
     static var identifier: String = "FarmerAddViewController"
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()

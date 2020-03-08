@@ -14,15 +14,15 @@ class UtilCalcul {
         // TODO chercher la formule
         return 0.0
     }
-    
+
     /**
      calcul des quantite
      - Parameter zoneHa2: Column
      */
     private func calcQte(zoneHa2: Double, sed: Double) -> Double {
-        zoneHa2 * sed;
+        zoneHa2 * sed
     }
-    
+
     /**
      calcul modif ghDrain
      - Parameter drainSout: Column Drai_Sout
@@ -38,7 +38,7 @@ class UtilCalcul {
             return 0
         }
     }
-    
+
     /**
      Calcul new value of  column  Gr_hydroDRAIN
      - Parameter drainSout: Column Drai_sout
@@ -54,7 +54,7 @@ class UtilCalcul {
             return grHydroS
         }
     }
-    
+
     /**
      Calcul new column Modif_GrHySURF
      - Parameter domDrainSurf: Column Drai_surf
@@ -85,7 +85,7 @@ class UtilCalcul {
             return 2
         }
     }
-    
+
     /**
      Calcul new  column Gr_hydroF
      - Parameter grHydroS:Column GR_HYDROs
@@ -96,7 +96,7 @@ class UtilCalcul {
     private static func calcGrHydroF(grHydroS: Int, modifGrHySurf: Int, modifGrHyProfil: Int) -> Int {
         grHydroS + modifGrHySurf + modifGrHyProfil
     }
-    
+
     /**
      Calcul new column Gr_hydroF2
      - Parameter grHydroF: Column Gr_hydroF create with function calcGrHydroF
@@ -105,7 +105,7 @@ class UtilCalcul {
     private static func calcGrHydroF2(grHydroF: Int) -> Int {
         grHydroF > 9 ? 9 : grHydroF
     }
-    
+
     /**
      Calcul value of new column Qsurf
      - Parameter domUtilTerr: value from column  Util_terr
@@ -126,57 +126,93 @@ class UtilCalcul {
             return 3.4175 * pow(Double(grHydroDrain), 2) - 7.9543 * Double(grHydroDrain) + 30.76
         }
     }
-    
-    private static func calcQsurf2preMaiMar(domUtilTerr: DomUtilTerr, grHydroDrain: Int, domCondHydro: DomCondHydro, domDrainSurf: DomDrainSurf, qSurf: Double) -> Double? {
-        
-        if (domUtilTerr == .MAI || domUtilTerr == .MAR) && domCondHydro == .bonne && domDrainSurf == .bon && grHydroDrain == 1 {
+
+    private static func calcQsurf2preMaiMar(
+        domUtilTerr: DomUtilTerr,
+        grHydroDrain: Int,
+        domCondHydro: DomCondHydro,
+        domDrainSurf: DomDrainSurf,
+        qSurf: Double
+    ) -> Double? {
+
+        if (domUtilTerr == .MAI || domUtilTerr == .MAR) &&
+            domCondHydro == .bonne &&
+            domDrainSurf == .bon &&
+            grHydroDrain == 1 {
             return 0 + 0 + qSurf
         }
-        
-        if (domUtilTerr == .MAI || domUtilTerr == .MAR) && domCondHydro == .bonne && domDrainSurf == .bon && grHydroDrain > 1 {
+
+        if (domUtilTerr == .MAI || domUtilTerr == .MAR) &&
+            domCondHydro == .bonne &&
+            domDrainSurf == .bon &&
+            grHydroDrain > 1 {
             return 0 - 56.2 + qSurf
         }
-        
-        if  (domUtilTerr == .MAI || domUtilTerr == .MAR) && domCondHydro == .bonne && domDrainSurf == .moyen {
+
+        if  (domUtilTerr == .MAI || domUtilTerr == .MAR) &&
+            domCondHydro == .bonne &&
+            domDrainSurf == .moyen {
             return 0 + 0 + qSurf
         }
-        
-        if (domUtilTerr == .MAI || domUtilTerr == .MAR) && domCondHydro == .bonne && domDrainSurf == .deficient {
+
+        if (domUtilTerr == .MAI || domUtilTerr == .MAR) &&
+            domCondHydro == .bonne &&
+            domDrainSurf == .deficient {
             return 0 + 56.2 + qSurf
         }
-        
-        if (domUtilTerr == .MAI || domUtilTerr == .MAR) && domCondHydro == .presenceZoneRisque && domDrainSurf == .bon && grHydroDrain == 1 {
+
+        if (domUtilTerr == .MAI || domUtilTerr == .MAR) &&
+            domCondHydro == .presenceZoneRisque &&
+            domDrainSurf == .bon &&
+            grHydroDrain == 1 {
             return 28.1 + 0 + qSurf
         }
-        
-        if (domUtilTerr == .MAI || domUtilTerr == .MAR) && domCondHydro == .presenceZoneRisque && domDrainSurf == .bon && grHydroDrain > 1 {
+
+        if (domUtilTerr == .MAI || domUtilTerr == .MAR) &&
+            domCondHydro == .presenceZoneRisque &&
+            domDrainSurf == .bon &&
+            grHydroDrain > 1 {
             return 28.1 - 56.2 + qSurf
         }
-        
-        if (domUtilTerr == .MAI || domUtilTerr == .MAR) && domCondHydro == .presenceZoneRisque && domDrainSurf == .moyen {
+
+        if (domUtilTerr == .MAI || domUtilTerr == .MAR) &&
+            domCondHydro == .presenceZoneRisque &&
+            domDrainSurf == .moyen {
             return 28.1 + 0 + qSurf
         }
-        
-        if (domUtilTerr == .MAI || domUtilTerr == .MAR) && domCondHydro == .presenceZoneRisque && domDrainSurf == .deficient {
+
+        if (domUtilTerr == .MAI || domUtilTerr == .MAR) &&
+            domCondHydro == .presenceZoneRisque &&
+            domDrainSurf == .deficient {
             return 28.1 + 56.2 + qSurf
         }
-        
-        if (domUtilTerr == .MAI || domUtilTerr == .MAR) && domCondHydro == .dominanceZoneRisque && domDrainSurf == .bon && grHydroDrain == 1 {
+
+        if (domUtilTerr == .MAI || domUtilTerr == .MAR) &&
+            domCondHydro == .dominanceZoneRisque &&
+            domDrainSurf == .bon &&
+            grHydroDrain == 1 {
             return 56.2 + 0 + qSurf
         }
-        
-        if (domUtilTerr == .MAI || domUtilTerr == .MAR) && domCondHydro == .dominanceZoneRisque && domDrainSurf == .bon && grHydroDrain > 1 {
+
+        if (domUtilTerr == .MAI || domUtilTerr == .MAR) &&
+            domCondHydro == .dominanceZoneRisque &&
+            domDrainSurf == .bon &&
+            grHydroDrain > 1 {
             return 56.2 - 56.2 + qSurf
         }
-        
-        if (domUtilTerr == .MAI || domUtilTerr == .MAR) && domCondHydro == .dominanceZoneRisque && domDrainSurf == .moyen {
+
+        if (domUtilTerr == .MAI || domUtilTerr == .MAR) &&
+            domCondHydro == .dominanceZoneRisque &&
+            domDrainSurf == .moyen {
             return 56.2 + 0 + qSurf
         }
-        
-        if (domUtilTerr == .MAI || domUtilTerr == .MAR) && domCondHydro == .dominanceZoneRisque && domDrainSurf == .deficient {
+
+        if (domUtilTerr == .MAI || domUtilTerr == .MAR) &&
+            domCondHydro == .dominanceZoneRisque &&
+            domDrainSurf == .deficient {
             return 56.2 + 56.2 + qSurf
         }
-        
+
         return nil
     }
 }
@@ -186,7 +222,7 @@ enum DomCondHydro: Int {
     case bonne
     case presenceZoneRisque
     case dominanceZoneRisque
-    
+
     init(rawValue: Int) {
         switch rawValue {
         case 1:
@@ -199,7 +235,7 @@ enum DomCondHydro: Int {
             self = .none
         }
     }
-    
+
     func getValue() -> String {
         switch self {
         case .bonne:
@@ -212,7 +248,7 @@ enum DomCondHydro: Int {
             return "Unknown value"
         }
     }
-    
+
     static func getValues() -> [(value: String, rawValue: Int)] {
         [
             (DomCondHydro.bonne.getValue(), DomCondHydro.bonne.rawValue),
@@ -222,15 +258,14 @@ enum DomCondHydro: Int {
     }
 }
 
-
 enum DomUtilTerr: String {
     case AUC = "Autre culture"
     case AVO = "Avoine"
     case BLE = "Blé, triticale, épeautre"
-    case Brsh = "Broussailles"
+    case BRSH = "Broussailles"
     case CNL = "Canola"
     case EAU = "Plan d'eau"
-    case F = "Forêt"
+    case FOO = "Forêt"
     case FOI = "Foin"
     case ILE = "Île"
     case MAI = "Maïs"
@@ -240,14 +275,13 @@ enum DomUtilTerr: String {
     case NPv = "Route non-pavée"
     case ORG = "Orge"
     case PTF = "Petits fruits"
-    case Pve = "Route pavée"
-    case ResL = "Zone urbaine - Densité faible"
-    case ResM = "Zone urbaine - Densité élevée"
+    case PVE = "Route pavée"
+    case RESL = "Zone urbaine - Densité faible"
+    case RESM = "Zone urbaine - Densité élevée"
     case SOY = "Soya"
-    case Wet = "Milieu humide"
-    
-}
+    case WET = "Milieu humide"
 
+}
 
 // dom_drain_sout
 enum DomDrainSout: Int {
@@ -255,7 +289,7 @@ enum DomDrainSout: Int {
     case systematique
     case partiel
     case absent
-    
+
     init(rawValue: Int) {
         switch rawValue {
         case 1:
@@ -268,7 +302,7 @@ enum DomDrainSout: Int {
             self = .none
         }
     }
-    
+
     func getValue() -> String {
         switch self {
         case .systematique :
@@ -281,7 +315,7 @@ enum DomDrainSout: Int {
             return "Unknown value"
         }
     }
-    
+
     static func getValues() -> [(value: String, rawValue: Int)] {
         [
             (DomDrainSout.systematique.getValue(), DomDrainSout.systematique.rawValue ),
@@ -296,7 +330,7 @@ enum DomDrainSurf: Int {
     case bon
     case moyen
     case deficient
-    
+
     init(rawValue: Int) {
         switch rawValue {
         case 1:
@@ -309,7 +343,7 @@ enum DomDrainSurf: Int {
             self = .none
         }
     }
-    
+
     func getValue() -> String {
         switch self {
         case .bon:
@@ -322,7 +356,7 @@ enum DomDrainSurf: Int {
             return "Unknown value"
         }
     }
-    
+
     static func getValues() -> [(value: String, rawValue: Int)] {
         [
             (DomDrainSurf.bon.getValue(), DomDrainSurf.bon.rawValue),
@@ -330,6 +364,5 @@ enum DomDrainSurf: Int {
             (DomDrainSurf.deficient.getValue(), DomDrainSurf.deficient.rawValue)
         ]
     }
-    
-    
+
 }

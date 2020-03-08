@@ -11,8 +11,8 @@ import UIKit
 
 class Util {
     static func getOppositeColorBlackOrWhite() -> UIColor {
-        UIColor {(tr: UITraitCollection) -> UIColor in
-            switch tr.userInterfaceStyle {
+        UIColor {(trait: UITraitCollection) -> UIColor in
+            switch trait.userInterfaceStyle {
             case .dark:
                 return .white
             default:
@@ -20,10 +20,10 @@ class Util {
             }
         }
     }
-    
+
     static func getColorBlackOrWhite() -> UIColor {
-        UIColor {(tr: UITraitCollection) -> UIColor in
-            switch tr.userInterfaceStyle {
+        UIColor {(trait: UITraitCollection) -> UIColor in
+            switch trait.userInterfaceStyle {
             case .dark:
                 return .darkText
             default:
