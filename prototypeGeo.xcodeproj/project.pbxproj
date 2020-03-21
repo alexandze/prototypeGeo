@@ -29,6 +29,9 @@
 		98363B5523DEF0EC00AFFC63 /* MapFieldInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98363B5423DEF0EC00AFFC63 /* MapFieldInteraction.swift */; };
 		98363B6023DFF7EA00AFFC63 /* MapFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98363B5F23DFF7EA00AFFC63 /* MapFieldView.swift */; };
 		98363B6223E028BD00AFFC63 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98363B6123E028BD00AFFC63 /* Util.swift */; };
+		98457B622415E75D00AF4C90 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98457B612415E75D00AF4C90 /* MapKit.framework */; };
+		98457B662423E5FA00AF4C90 /* CulturalPraticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98457B652423E5FA00AF4C90 /* CulturalPraticeViewController.swift */; };
+		98457B682423E64F00AF4C90 /* CulturalPraticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98457B672423E64F00AF4C90 /* CulturalPraticeView.swift */; };
 		9854BFD52408F53400E5AB8A /* FieldListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFD42408F53400E5AB8A /* FieldListViewController.swift */; };
 		9854BFD72408F5F700E5AB8A /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFD62408F5F700E5AB8A /* TitleView.swift */; };
 		9854BFDD2409000E00E5AB8A /* ContainerFieldNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFDC2409000E00E5AB8A /* ContainerFieldNavigationView.swift */; };
@@ -41,7 +44,7 @@
 		9854BFF3240B668F00E5AB8A /* MapDependecyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFF2240B668F00E5AB8A /* MapDependecyContainer.swift */; };
 		9854BFF5240B7A9F00E5AB8A /* FieldListInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFF4240B7A9F00E5AB8A /* FieldListInteraction.swift */; };
 		9854BFF7240B8FA800E5AB8A /* FieldCuturalPracticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFF6240B8FA800E5AB8A /* FieldCuturalPracticeViewController.swift */; };
-		9854BFF9240B901A00E5AB8A /* FieldCulturalPracticeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFF8240B901A00E5AB8A /* FieldCulturalPracticeViewModel.swift */; };
+		9854BFF9240B901A00E5AB8A /* CulturalPracticeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFF8240B901A00E5AB8A /* CulturalPracticeViewModel.swift */; };
 		9854BFFB240B956400E5AB8A /* CulturalPracticeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFFA240B956400E5AB8A /* CulturalPracticeState.swift */; };
 		9854BFFF240B9DD500E5AB8A /* FieldCuturalPracticeInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFFE240B9DD500E5AB8A /* FieldCuturalPracticeInteraction.swift */; };
 		9854C001240BC1C100E5AB8A /* Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854C000240BC1C100E5AB8A /* Identifier.swift */; };
@@ -122,6 +125,9 @@
 		98363B5423DEF0EC00AFFC63 /* MapFieldInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFieldInteraction.swift; sourceTree = "<group>"; };
 		98363B5F23DFF7EA00AFFC63 /* MapFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFieldView.swift; sourceTree = "<group>"; };
 		98363B6123E028BD00AFFC63 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		98457B612415E75D00AF4C90 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		98457B652423E5FA00AF4C90 /* CulturalPraticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalPraticeViewController.swift; sourceTree = "<group>"; };
+		98457B672423E64F00AF4C90 /* CulturalPraticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalPraticeView.swift; sourceTree = "<group>"; };
 		9854BFD42408F53400E5AB8A /* FieldListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldListViewController.swift; sourceTree = "<group>"; };
 		9854BFD62408F5F700E5AB8A /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		9854BFDC2409000E00E5AB8A /* ContainerFieldNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerFieldNavigationView.swift; sourceTree = "<group>"; };
@@ -137,7 +143,7 @@
 		9854BFF2240B668F00E5AB8A /* MapDependecyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDependecyContainer.swift; sourceTree = "<group>"; };
 		9854BFF4240B7A9F00E5AB8A /* FieldListInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldListInteraction.swift; sourceTree = "<group>"; };
 		9854BFF6240B8FA800E5AB8A /* FieldCuturalPracticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldCuturalPracticeViewController.swift; sourceTree = "<group>"; };
-		9854BFF8240B901A00E5AB8A /* FieldCulturalPracticeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldCulturalPracticeViewModel.swift; sourceTree = "<group>"; };
+		9854BFF8240B901A00E5AB8A /* CulturalPracticeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalPracticeViewModel.swift; sourceTree = "<group>"; };
 		9854BFFA240B956400E5AB8A /* CulturalPracticeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalPracticeState.swift; sourceTree = "<group>"; };
 		9854BFFE240B9DD500E5AB8A /* FieldCuturalPracticeInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldCuturalPracticeInteraction.swift; sourceTree = "<group>"; };
 		9854C000240BC1C100E5AB8A /* Identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifier.swift; sourceTree = "<group>"; };
@@ -194,6 +200,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				98457B622415E75D00AF4C90 /* MapKit.framework in Frameworks */,
 				AF45707174C76E537F6FAC77 /* libPods-prototypeGeo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -213,6 +220,7 @@
 		886D2C89F000E97D8D9822B3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				98457B612415E75D00AF4C90 /* MapKit.framework */,
 				0D913FCD2E376EA77076135B /* libPods-prototypeGeo.a */,
 			);
 			name = Frameworks;
@@ -246,6 +254,7 @@
 				9854BFE0240A1C3C00E5AB8A /* ContainerMapAndListFieldViewController.swift */,
 				9854BFF6240B8FA800E5AB8A /* FieldCuturalPracticeViewController.swift */,
 				98BA0D7A240CDC2800948A26 /* ContainerFieldNavigationViewController.swift */,
+				98457B652423E5FA00AF4C90 /* CulturalPraticeViewController.swift */,
 			);
 			path = viewControllers;
 			sourceTree = "<group>";
@@ -255,7 +264,7 @@
 			children = (
 				98363B2F23DECA9F00AFFC63 /* MapFieldViewModel.swift */,
 				9854BFE2240A1D6200E5AB8A /* FieldListViewModelImpl.swift */,
-				9854BFF8240B901A00E5AB8A /* FieldCulturalPracticeViewModel.swift */,
+				9854BFF8240B901A00E5AB8A /* CulturalPracticeViewModel.swift */,
 			);
 			path = viewModels;
 			sourceTree = "<group>";
@@ -359,6 +368,7 @@
 				98BA0D7E240CE41F00948A26 /* ContainerMapAndListFieldView.swift */,
 				98943407240F901D003C0110 /* SelectedFieldRightCalloutView.swift */,
 				9894340B2410FAF0003C0110 /* FieldSelectedViewCell.swift */,
+				98457B672423E64F00AF4C90 /* CulturalPraticeView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -697,10 +707,12 @@
 				98363B4E23DEEABA00AFFC63 /* GetAllFieldsService.swift in Sources */,
 				9860400C23BD8EEB00D5B538 /* FarmerState.swift in Sources */,
 				98B9990A23B5076000CA7EF9 /* ViewController.swift in Sources */,
+				98457B662423E5FA00AF4C90 /* CulturalPraticeViewController.swift in Sources */,
 				98363B3C23DED00900AFFC63 /* FieldGeoJsonArray.swift in Sources */,
 				98BA0D7F240CE41F00948A26 /* ContainerMapAndListFieldView.swift in Sources */,
 				98B9991D23B50ACC00CA7EF9 /* FarmerTableViewController.swift in Sources */,
 				98304AD423EE19A400510FFE /* UtilAreaPolygon.swift in Sources */,
+				98457B682423E64F00AF4C90 /* CulturalPraticeView.swift in Sources */,
 				98304AD623EE21E200510FFE /* ErrorValueEnum.swift in Sources */,
 				9854BFF5240B7A9F00E5AB8A /* FieldListInteraction.swift in Sources */,
 				98B9990623B5076000CA7EF9 /* AppDelegate.swift in Sources */,
@@ -727,7 +739,7 @@
 				9854BFE3240A1D6200E5AB8A /* FieldListViewModelImpl.swift in Sources */,
 				98A13FBF23C5A75D0087BB22 /* FarmerAddViewController.swift in Sources */,
 				9854BFDF2409047C00E5AB8A /* FieldListView.swift in Sources */,
-				9854BFF9240B901A00E5AB8A /* FieldCulturalPracticeViewModel.swift in Sources */,
+				9854BFF9240B901A00E5AB8A /* CulturalPracticeViewModel.swift in Sources */,
 				98363B5123DEEC7A00AFFC63 /* mapFieldMiddleware.swift in Sources */,
 				9860400423BD868A00D5B538 /* FarmerTableVIewControllerState.swift in Sources */,
 				98D1929B23C034A600BF9A7A /* FamerViewCell.swift in Sources */,
@@ -966,6 +978,7 @@
 			baseConfigurationReference = 9428EB9698A6FF02520EC6F6 /* Pods-prototypeGeo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2W2XM22BW2;
 				INFOPLIST_FILE = prototypeGeo/Info.plist;
@@ -973,8 +986,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = uqtr.prototypeGeo;
+				PRODUCT_BUNDLE_IDENTIFIER = ca.uqtr.prototypegeo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -985,6 +999,7 @@
 			baseConfigurationReference = 4BAA8035D400A8326AEA6A20 /* Pods-prototypeGeo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2W2XM22BW2;
 				INFOPLIST_FILE = prototypeGeo/Info.plist;
@@ -992,8 +1007,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = uqtr.prototypeGeo;
+				PRODUCT_BUNDLE_IDENTIFIER = ca.uqtr.prototypegeo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -9,10 +9,11 @@
 import Foundation
 import RxSwift
 
-class FieldCulturalPraticeViewModelImpl: FieldCulturalPraticeViewModel {
+class CulturalPraticeViewModelImpl: CulturalPraticeViewModel {
 
     let fieldCulturalPracticeStateObs: Observable<CulturalPracticeState>
     let fieldCulturalPracticeInteraction: FieldCulturalPracticeInteraction
+    var tableView: UITableView?
 
     init(
         fieldCulturalPracticeStateObs: Observable<CulturalPracticeState>,
@@ -24,6 +25,6 @@ class FieldCulturalPraticeViewModelImpl: FieldCulturalPraticeViewModel {
 
 }
 
-protocol FieldCulturalPraticeViewModel {
-
+protocol CulturalPraticeViewModel {
+    var tableView: UITableView? {get set}
 }

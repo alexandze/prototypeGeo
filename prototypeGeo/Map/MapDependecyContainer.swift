@@ -89,8 +89,8 @@ public class MapDependencyContainerImpl: MapDependencyContainer {
         FieldCulturalPracticeInteractionImpl(actionDispatcher: self.stateStore)
     }
 
-    func makeCulturalPracticeViewModel() -> FieldCulturalPraticeViewModel {
-        FieldCulturalPraticeViewModelImpl(
+    func makeCulturalPracticeViewModel() -> CulturalPraticeViewModel {
+        CulturalPraticeViewModelImpl(
             fieldCulturalPracticeStateObs: self.makeCurrentFieldObservable(),
             fieldCulturalPracticeInteraction: self.makeCulturalPracticeInteraction()
         )

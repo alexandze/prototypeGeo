@@ -11,13 +11,13 @@ import UIKit
 class FieldCuturalPracticeViewController: UIViewController, Identifier {
     static var identifier: String = "FieldCuturalPracticeViewController"
 
-    let fieldCulturalPracticeViewModel: FieldCulturalPraticeViewModel
+    let fieldCulturalPracticeViewModel: CulturalPraticeViewModel
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(fieldCulturalPracticeViewModel: FieldCulturalPraticeViewModel) {
+    init(fieldCulturalPracticeViewModel: CulturalPraticeViewModel) {
         self.fieldCulturalPracticeViewModel = fieldCulturalPracticeViewModel
         super.init(nibName: nil, bundle: nil)
     }
