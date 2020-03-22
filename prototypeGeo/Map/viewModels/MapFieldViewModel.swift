@@ -101,8 +101,11 @@ class MapFieldViewModel {
     }
 
     func subscribeToTableViewControllerState() {
-        self.disposableMapFieldAllState = self.mapFieldAllFieldStateObs.subscribe(onNext: { state  in
-            self.proccessInitMap(
+        self.disposableMapFieldAllState = self.mapFieldAllFieldStateObs
+       //.subscribeOn(ConcurrentDispatchQueueScheduler(queue: DispatchQueue.global()))
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: {state  in
+                self.proccessInitMap(
                 with: state.fieldPolygonAnnotation,
                 and: state.fieldMultiPolygonAnnotation
             )

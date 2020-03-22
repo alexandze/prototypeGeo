@@ -20,6 +20,20 @@
                ReferencedContainer = "container:prototypeGeo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "NO"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "98457B7B2427264C00AF4C90"
+               BuildableName = "prototypeGeoTests1.xctest"
+               BlueprintName = "prototypeGeoTests1"
+               ReferencedContainer = "container:prototypeGeo.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -28,6 +42,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "98457B9A24272BE000AF4C90"
+               BuildableName = "prototypeGeoTests.xctest"
+               BlueprintName = "prototypeGeoTests"
+               ReferencedContainer = "container:prototypeGeo.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "98457B6C242724F600AF4C90"
+               BuildableName = "prototypeGeoDataTests.xctest"
+               BlueprintName = "prototypeGeoDataTests"
+               ReferencedContainer = "container:prototypeGeo.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

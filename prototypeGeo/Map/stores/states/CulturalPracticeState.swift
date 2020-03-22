@@ -14,5 +14,5 @@ struct CulturalPracticeState: Equatable {
 
     var uuidState: String
     var currentField: FieldType?
-    var culturalPracticeType: CulturalPracticeType?
+    var culturalPracticeType: CulturalPracticeElement?
 }

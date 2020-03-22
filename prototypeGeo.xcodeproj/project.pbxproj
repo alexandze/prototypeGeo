@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4AB193EA1EAA77CE4EE59AD4 /* libPods-prototypeGeo-prototypeGeoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FD3A7AF19FD7353661F1AF0 /* libPods-prototypeGeo-prototypeGeoTests.a */; };
 		9805683423B92DD40056D199 /* FarmerFormated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9805683323B92DD40056D199 /* FarmerFormated.swift */; };
 		9805683823B954630056D199 /* FarmerTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9805683723B954630056D199 /* FarmerTableViewModel.swift */; };
 		98304AD423EE19A400510FFE /* UtilAreaPolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98304AD323EE19A400510FFE /* UtilAreaPolygon.swift */; };
@@ -32,6 +33,8 @@
 		98457B622415E75D00AF4C90 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98457B612415E75D00AF4C90 /* MapKit.framework */; };
 		98457B662423E5FA00AF4C90 /* CulturalPraticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98457B652423E5FA00AF4C90 /* CulturalPraticeViewController.swift */; };
 		98457B682423E64F00AF4C90 /* CulturalPraticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98457B672423E64F00AF4C90 /* CulturalPraticeView.swift */; };
+		98457BA8242734E900AF4C90 /* prototypeGeoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98457B9D24272BE000AF4C90 /* prototypeGeoTests.swift */; };
+		98457BAA2427353B00AF4C90 /* CulturalPractice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFE6240A224600E5AB8A /* CulturalPractice.swift */; };
 		9854BFD52408F53400E5AB8A /* FieldListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFD42408F53400E5AB8A /* FieldListViewController.swift */; };
 		9854BFD72408F5F700E5AB8A /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFD62408F5F700E5AB8A /* TitleView.swift */; };
 		9854BFDD2409000E00E5AB8A /* ContainerFieldNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFDC2409000E00E5AB8A /* ContainerFieldNavigationView.swift */; };
@@ -39,7 +42,6 @@
 		9854BFE1240A1C3C00E5AB8A /* ContainerMapAndListFieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFE0240A1C3C00E5AB8A /* ContainerMapAndListFieldViewController.swift */; };
 		9854BFE3240A1D6200E5AB8A /* FieldListViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFE2240A1D6200E5AB8A /* FieldListViewModelImpl.swift */; };
 		9854BFE5240A1FA500E5AB8A /* FieldListState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFE4240A1FA500E5AB8A /* FieldListState.swift */; };
-		9854BFE7240A224600E5AB8A /* CulturalPractice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFE6240A224600E5AB8A /* CulturalPractice.swift */; };
 		9854BFEC240A2B9900E5AB8A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9854BFEE240A2B9900E5AB8A /* Localizable.strings */; };
 		9854BFF3240B668F00E5AB8A /* MapDependecyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFF2240B668F00E5AB8A /* MapDependecyContainer.swift */; };
 		9854BFF5240B7A9F00E5AB8A /* FieldListInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFF4240B7A9F00E5AB8A /* FieldListInteraction.swift */; };
@@ -89,7 +91,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		98304AE023EE3FD000510FFE /* PBXContainerItemProxy */ = {
+		98457BA024272BE000AF4C90 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 98B998FA23B5076000CA7EF9 /* Project object */;
 			proxyType = 1;
@@ -100,13 +102,14 @@
 
 /* Begin PBXFileReference section */
 		0D913FCD2E376EA77076135B /* libPods-prototypeGeo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-prototypeGeo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2FD3A7AF19FD7353661F1AF0 /* libPods-prototypeGeo-prototypeGeoTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-prototypeGeo-prototypeGeoTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		432C7E9B9F9D0D16149B323E /* Pods-prototypeGeo-prototypeGeoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-prototypeGeo-prototypeGeoTests.release.xcconfig"; path = "Target Support Files/Pods-prototypeGeo-prototypeGeoTests/Pods-prototypeGeo-prototypeGeoTests.release.xcconfig"; sourceTree = "<group>"; };
 		4BAA8035D400A8326AEA6A20 /* Pods-prototypeGeo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-prototypeGeo.release.xcconfig"; path = "Target Support Files/Pods-prototypeGeo/Pods-prototypeGeo.release.xcconfig"; sourceTree = "<group>"; };
 		9428EB9698A6FF02520EC6F6 /* Pods-prototypeGeo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-prototypeGeo.debug.xcconfig"; path = "Target Support Files/Pods-prototypeGeo/Pods-prototypeGeo.debug.xcconfig"; sourceTree = "<group>"; };
 		9805683323B92DD40056D199 /* FarmerFormated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FarmerFormated.swift; sourceTree = "<group>"; };
 		9805683723B954630056D199 /* FarmerTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FarmerTableViewModel.swift; sourceTree = "<group>"; };
 		98304AD323EE19A400510FFE /* UtilAreaPolygon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilAreaPolygon.swift; sourceTree = "<group>"; };
 		98304AD523EE21E200510FFE /* ErrorValueEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorValueEnum.swift; sourceTree = "<group>"; };
-		98304ADB23EE3FD000510FFE /* prototypeGeoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = prototypeGeoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		98363B2C23DECA3F00AFFC63 /* MapFieldViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFieldViewController.swift; sourceTree = "<group>"; };
 		98363B2F23DECA9F00AFFC63 /* MapFieldViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFieldViewModel.swift; sourceTree = "<group>"; };
 		98363B3523DECD7500AFFC63 /* MapFieldReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFieldReducer.swift; sourceTree = "<group>"; };
@@ -128,6 +131,9 @@
 		98457B612415E75D00AF4C90 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		98457B652423E5FA00AF4C90 /* CulturalPraticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalPraticeViewController.swift; sourceTree = "<group>"; };
 		98457B672423E64F00AF4C90 /* CulturalPraticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalPraticeView.swift; sourceTree = "<group>"; };
+		98457B9B24272BE000AF4C90 /* prototypeGeoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = prototypeGeoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		98457B9D24272BE000AF4C90 /* prototypeGeoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = prototypeGeoTests.swift; sourceTree = "<group>"; };
+		98457B9F24272BE000AF4C90 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9854BFD42408F53400E5AB8A /* FieldListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldListViewController.swift; sourceTree = "<group>"; };
 		9854BFD62408F5F700E5AB8A /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		9854BFDC2409000E00E5AB8A /* ContainerFieldNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerFieldNavigationView.swift; sourceTree = "<group>"; };
@@ -186,13 +192,15 @@
 		98D1929A23C034A600BF9A7A /* FamerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamerViewCell.swift; sourceTree = "<group>"; };
 		98D1929D23C03CF900BF9A7A /* FarmerMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FarmerMiddleware.swift; sourceTree = "<group>"; };
 		98D1929F23C03E0800BF9A7A /* GetFarmersMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFarmersMiddleware.swift; sourceTree = "<group>"; };
+		D78A7AAE61F5B11A4606C400 /* Pods-prototypeGeo-prototypeGeoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-prototypeGeo-prototypeGeoTests.debug.xcconfig"; path = "Target Support Files/Pods-prototypeGeo-prototypeGeoTests/Pods-prototypeGeo-prototypeGeoTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		98304AD823EE3FD000510FFE /* Frameworks */ = {
+		98457B9824272BE000AF4C90 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AB193EA1EAA77CE4EE59AD4 /* libPods-prototypeGeo-prototypeGeoTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -213,6 +221,8 @@
 			children = (
 				9428EB9698A6FF02520EC6F6 /* Pods-prototypeGeo.debug.xcconfig */,
 				4BAA8035D400A8326AEA6A20 /* Pods-prototypeGeo.release.xcconfig */,
+				D78A7AAE61F5B11A4606C400 /* Pods-prototypeGeo-prototypeGeoTests.debug.xcconfig */,
+				432C7E9B9F9D0D16149B323E /* Pods-prototypeGeo-prototypeGeoTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -222,6 +232,7 @@
 			children = (
 				98457B612415E75D00AF4C90 /* MapKit.framework */,
 				0D913FCD2E376EA77076135B /* libPods-prototypeGeo.a */,
+				2FD3A7AF19FD7353661F1AF0 /* libPods-prototypeGeo-prototypeGeoTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -324,9 +335,9 @@
 		98363B3A23DECFB400AFFC63 /* models */ = {
 			isa = PBXGroup;
 			children = (
+				9854BFE6240A224600E5AB8A /* CulturalPractice.swift */,
 				98363B3B23DED00900AFFC63 /* FieldGeoJsonArray.swift */,
 				98363B3D23DED25A00AFFC63 /* Field.swift */,
-				9854BFE6240A224600E5AB8A /* CulturalPractice.swift */,
 				98A2C549240E6BD9002A884B /* PayloadFieldAnnotation.swift */,
 			);
 			path = models;
@@ -371,6 +382,15 @@
 				98457B672423E64F00AF4C90 /* CulturalPraticeView.swift */,
 			);
 			path = views;
+			sourceTree = "<group>";
+		};
+		98457B9C24272BE000AF4C90 /* prototypeGeoTests */ = {
+			isa = PBXGroup;
+			children = (
+				98457B9D24272BE000AF4C90 /* prototypeGeoTests.swift */,
+				98457B9F24272BE000AF4C90 /* Info.plist */,
+			);
+			path = prototypeGeoTests;
 			sourceTree = "<group>";
 		};
 		98603FFE23BD854400D5B538 /* store */ = {
@@ -444,6 +464,7 @@
 				9894341524156067003C0110 /* .swiftlint.yml */,
 				98B9990423B5076000CA7EF9 /* prototypeGeo */,
 				98B9990323B5076000CA7EF9 /* Products */,
+				98457B9C24272BE000AF4C90 /* prototypeGeoTests */,
 				6B0D84C65D87E2DC46C8C46C /* Pods */,
 				886D2C89F000E97D8D9822B3 /* Frameworks */,
 			);
@@ -453,7 +474,7 @@
 			isa = PBXGroup;
 			children = (
 				98B9990223B5076000CA7EF9 /* prototypeGeo.app */,
-				98304ADB23EE3FD000510FFE /* prototypeGeoTests.xctest */,
+				98457B9B24272BE000AF4C90 /* prototypeGeoTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -549,22 +570,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		98304ADA23EE3FD000510FFE /* prototypeGeoTests */ = {
+		98457B9A24272BE000AF4C90 /* prototypeGeoTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 98304AE223EE3FD000510FFE /* Build configuration list for PBXNativeTarget "prototypeGeoTests" */;
+			buildConfigurationList = 98457BA224272BE000AF4C90 /* Build configuration list for PBXNativeTarget "prototypeGeoTests" */;
 			buildPhases = (
-				98304AD723EE3FD000510FFE /* Sources */,
-				98304AD823EE3FD000510FFE /* Frameworks */,
-				98304AD923EE3FD000510FFE /* Resources */,
+				133AF3EDD31A12F9A2146975 /* [CP] Check Pods Manifest.lock */,
+				98457B9724272BE000AF4C90 /* Sources */,
+				98457B9824272BE000AF4C90 /* Frameworks */,
+				98457B9924272BE000AF4C90 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				98304AE123EE3FD000510FFE /* PBXTargetDependency */,
+				98457BA124272BE000AF4C90 /* PBXTargetDependency */,
 			);
 			name = prototypeGeoTests;
 			productName = prototypeGeoTests;
-			productReference = 98304ADB23EE3FD000510FFE /* prototypeGeoTests.xctest */;
+			productReference = 98457B9B24272BE000AF4C90 /* prototypeGeoTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		98B9990123B5076000CA7EF9 /* prototypeGeo */ = {
@@ -596,7 +618,7 @@
 				LastUpgradeCheck = 1120;
 				ORGANIZATIONNAME = "Alexandre Andze Kande";
 				TargetAttributes = {
-					98304ADA23EE3FD000510FFE = {
+					98457B9A24272BE000AF4C90 = {
 						CreatedOnToolsVersion = 11.2.1;
 						TestTargetID = 98B9990123B5076000CA7EF9;
 					};
@@ -620,13 +642,13 @@
 			projectRoot = "";
 			targets = (
 				98B9990123B5076000CA7EF9 /* prototypeGeo */,
-				98304ADA23EE3FD000510FFE /* prototypeGeoTests */,
+				98457B9A24272BE000AF4C90 /* prototypeGeoTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		98304AD923EE3FD000510FFE /* Resources */ = {
+		98457B9924272BE000AF4C90 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -649,6 +671,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		133AF3EDD31A12F9A2146975 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-prototypeGeo-prototypeGeoTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		608F8C3082615F7AE7B06F77 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -691,10 +735,11 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		98304AD723EE3FD000510FFE /* Sources */ = {
+		98457B9724272BE000AF4C90 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				98457BA8242734E900AF4C90 /* prototypeGeoTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -764,6 +809,7 @@
 				9860400A23BD8BC800D5B538 /* FarmerReducer.swift in Sources */,
 				98363B3923DECDA500AFFC63 /* MapState.swift in Sources */,
 				9894340C2410FAF0003C0110 /* FieldSelectedViewCell.swift in Sources */,
+				98457BAA2427353B00AF4C90 /* CulturalPractice.swift in Sources */,
 				98363B3023DECA9F00AFFC63 /* MapFieldViewModel.swift in Sources */,
 				98D1929023BFFF7C00BF9A7A /* Actions.swift in Sources */,
 				98B9990823B5076000CA7EF9 /* SceneDelegate.swift in Sources */,
@@ -771,7 +817,6 @@
 				98363B3623DECD7500AFFC63 /* MapFieldReducer.swift in Sources */,
 				9854BFF7240B8FA800E5AB8A /* FieldCuturalPracticeViewController.swift in Sources */,
 				98363B4C23DEE57A00AFFC63 /* MapFieldService.swift in Sources */,
-				9854BFE7240A224600E5AB8A /* CulturalPractice.swift in Sources */,
 				98363B4A23DEE3C900AFFC63 /* UtilFileReader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -779,10 +824,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		98304AE123EE3FD000510FFE /* PBXTargetDependency */ = {
+		98457BA124272BE000AF4C90 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 98B9990123B5076000CA7EF9 /* prototypeGeo */;
-			targetProxy = 98304AE023EE3FD000510FFE /* PBXContainerItemProxy */;
+			targetProxy = 98457BA024272BE000AF4C90 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -817,8 +862,9 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		98304AE323EE3FD000510FFE /* Debug */ = {
+		98457BA324272BE000AF4C90 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D78A7AAE61F5B11A4606C400 /* Pods-prototypeGeo-prototypeGeoTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -837,8 +883,9 @@
 			};
 			name = Debug;
 		};
-		98304AE423EE3FD000510FFE /* Release */ = {
+		98457BA424272BE000AF4C90 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 432C7E9B9F9D0D16149B323E /* Pods-prototypeGeo-prototypeGeoTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -1018,11 +1065,11 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		98304AE223EE3FD000510FFE /* Build configuration list for PBXNativeTarget "prototypeGeoTests" */ = {
+		98457BA224272BE000AF4C90 /* Build configuration list for PBXNativeTarget "prototypeGeoTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				98304AE323EE3FD000510FFE /* Debug */,
-				98304AE423EE3FD000510FFE /* Release */,
+				98457BA324272BE000AF4C90 /* Debug */,
+				98457BA424272BE000AF4C90 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
