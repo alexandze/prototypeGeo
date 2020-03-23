@@ -16,7 +16,7 @@ class FieldListViewController: UIViewController, UITableViewDelegate, UITableVie
 
     var fields: [FieldType] = []
 
-    let fieldListViewModel: FieldListViewModel
+    var fieldListViewModel: FieldListViewModel
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -31,6 +31,7 @@ class FieldListViewController: UIViewController, UITableViewDelegate, UITableVie
         super.init(nibName: nil, bundle: nil)
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.fieldListViewModel.viewController = self
         self.fieldListViewModel.setTableView(tableView: tableView)
     }
 
@@ -84,6 +85,11 @@ class FieldListViewController: UIViewController, UITableViewDelegate, UITableVie
         let image = UIImage(named: "location")?.withTintColor(Util.getOppositeColorBlackOrWhite())
         cell.imageView?.image = image
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        fieldListViewModel.handle(didSelectRowAt: indexPath)
+        
     }
 
 }

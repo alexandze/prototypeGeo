@@ -80,12 +80,12 @@ internal struct CulturalPractice {
                     CulturalPracticeInputMultiSelectContainer(
                         key: .container,
                         title: "Fumier",
-                        titleInput: [
+                        culturalInputElement: [
+                            DoseFumier.getCulturalPracticeElement(id: index, culturalPractice: culturalPractice)
+                        ],
+                        culturalPracticeMultiSelectElement: [
                             PeriodeApplicationFumier.getCulturalPracticeElement(id: index, culturalPractice: culturalPractice),
                             DelaiIncorporationFumier.getCulturalPracticeElement(id: index, culturalPractice: culturalPractice)
-                        ],
-                        culturalPracticeMultiSelect: [
-                            DoseFumier.getCulturalPracticeElement(id: index, culturalPractice: culturalPractice)
                         ]
                     )
                 )
@@ -94,7 +94,7 @@ internal struct CulturalPractice {
             }
         }
         
-        return culturalPracticeElements.isEmpty ? culturalPracticeElements : nil
+        return !(culturalPracticeElements.isEmpty) ? culturalPracticeElements : nil
     }
     
     private static func hasValueDoseFumier(culturalPractice: CulturalPractice, index: Int) -> Bool {
@@ -961,8 +961,8 @@ struct CulturalPracticeAddElement {
 struct CulturalPracticeInputMultiSelectContainer {
     let key: KeyCulturalPracticeData
     let title: String
-    let titleInput: [CulturalPracticeElement]
-    let culturalPracticeMultiSelect: [CulturalPracticeElement]
+    let culturalInputElement: [CulturalPracticeElement]
+    let culturalPracticeMultiSelectElement: [CulturalPracticeElement]
 }
 
 struct CulturalPracticeMultiSelectElement {

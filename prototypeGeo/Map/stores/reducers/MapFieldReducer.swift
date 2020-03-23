@@ -29,6 +29,8 @@ extension Reducers {
                 .map {
                     state.fieldListState = $0
                 }
+        case let selectedFieldOnList as MapFieldAction.SelectedFieldOnListAction:
+            state.culturalPracticeState = MapFieldReducerHandler.handle(selectedFieldOnListAction: selectedFieldOnList)
         default:
             break
         }
@@ -46,6 +48,7 @@ class MapFieldReducerHandler {
         var firstArray = [selectedFieldOnMapAction.fieldType]
         firstArray += secondArray
         let uuid = UUID().uuidString
+        
         return FieldListState(
             uuidState: uuid,
             fieldList: firstArray,
@@ -75,8 +78,47 @@ class MapFieldReducerHandler {
             }
         }
     }
+    
+    static func handle(selectedFieldOnListAction: MapFieldAction.SelectedFieldOnListAction) -> CulturalPracticeState {
+        switch selectedFieldOnListAction.fieldType {
+        case .polygon(let fieldPolygone):
+            let culturalPracticeElements = CulturalPractice.getCulturalPracticeElement(culturalPractice: fieldPolygone.culturalPratice)
+            
+            return CulturalPracticeState(
+                uuidState: UUID().uuidString,
+                currentField: selectedFieldOnListAction.fieldType,
+                culturalPraticeElement: culturalPracticeElements,
+                sections: createSection(by: culturalPracticeElements)
+            )
+            
+        case .multiPolygon(let fieldMultiPolygon):
+            let culturalPracticeElements = CulturalPractice.getCulturalPracticeElement(culturalPractice: fieldMultiPolygon.culturalPratice)
 
-    static func handleRemoveFieldInState(fieldList: [FieldType], index: Int) -> FieldListState {
+            return CulturalPracticeState(
+                uuidState: UUID().uuidString,
+                currentField: selectedFieldOnListAction.fieldType,
+                culturalPraticeElement: CulturalPractice.getCulturalPracticeElement(culturalPractice: fieldMultiPolygon.culturalPratice),
+                sections: createSection(by: culturalPracticeElements)
+            )
+        }
+    }
+    
+    private static func createSection(by culturalPracticeElements: [CulturalPracticeElement]) -> [Section<CulturalPracticeElement>] {
+        culturalPracticeElements.map { (culturalPracticeElement: CulturalPracticeElement) -> Section<CulturalPracticeElement> in
+            switch culturalPracticeElement {
+            case .culturalPracticeMultiSelectElement(let multiSelectElement):
+                return Section<CulturalPracticeElement>(sectionName: multiSelectElement.title, rowData: [culturalPracticeElement])
+            case .culturalPracticeAddElement(let addElement):
+                return Section<CulturalPracticeElement>(sectionName: addElement.title, rowData: [culturalPracticeElement])
+            case .culturalPracticeInputElement(let inputElement):
+                return Section<CulturalPracticeElement>(sectionName: inputElement.titleInput, rowData: [culturalPracticeElement])
+            case .culturalPracticeInputMultiSelectContainer(let containerInputMultiSelect):
+                return Section<CulturalPracticeElement>(sectionName: containerInputMultiSelect.title, rowData: [culturalPracticeElement])
+            }
+        }
+    }
+
+    private static func handleRemoveFieldInState(fieldList: [FieldType], index: Int) -> FieldListState {
         let uuid = UUID().uuidString
         var fieldArray = fieldList
         let removed = fieldArray.remove(at: index)
@@ -89,7 +131,7 @@ class MapFieldReducerHandler {
         )
     }
 
-    static func findIndexFieldByIdField(idField: Int, fieldList: [FieldType]) -> Int? {
+    private static func findIndexFieldByIdField(idField: Int, fieldList: [FieldType]) -> Int? {
         fieldList.firstIndex {
             switch $0 {
             case .polygon(let fieldPolygon):

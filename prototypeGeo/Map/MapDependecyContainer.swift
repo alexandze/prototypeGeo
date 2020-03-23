@@ -64,7 +64,7 @@ public class MapDependencyContainerImpl: MapDependencyContainer {
     func makeFieldListViewModel() -> FieldListViewModel {
         return FieldListViewModelImpl(
             fieldListStateObs: self.makeFieldListStateObservable(),
-            fieldListInteraction: self.makeFieldListInteraction()
+            actionDispatcher: self.stateStore
         )
     }
 
@@ -91,15 +91,13 @@ public class MapDependencyContainerImpl: MapDependencyContainer {
 
     func makeCulturalPracticeViewModel() -> CulturalPraticeViewModel {
         CulturalPraticeViewModelImpl(
-            fieldCulturalPracticeStateObs: self.makeCurrentFieldObservable(),
-            fieldCulturalPracticeInteraction: self.makeCulturalPracticeInteraction()
+            culturalPracticeStateObs: self.makeCurrentFieldObservable(),
+            actionDispatcher: self.stateStore
         )
     }
 
-    func makeFieldCulturalPracticeViewController() -> FieldCuturalPracticeViewController {
-        FieldCuturalPracticeViewController(
-            fieldCulturalPracticeViewModel: self.makeCulturalPracticeViewModel()
-        )
+    func makeCulturalPracticeViewController() -> CulturalPraticeViewController {
+        CulturalPraticeViewController(culturalPraticeViewModel: self.makeCulturalPracticeViewModel())
     }
 
     func makeContainerFieldNavigationViewController() -> ContainerFieldNavigationViewController {
@@ -139,7 +137,7 @@ public class MapDependencyContainerImpl: MapDependencyContainer {
 protocol MapDependencyContainer {
     func makeMapFieldNavigationController() -> UINavigationController
     func makeFieldListNavigationController() -> UINavigationController
-    func makeFieldCulturalPracticeViewController() -> FieldCuturalPracticeViewController
+    func makeCulturalPracticeViewController() -> CulturalPraticeViewController
     func makeFieldListViewController() -> FieldListViewController
     func processInitContainerMapAndFieldNavigation() -> ContainerMapAndListFieldViewController
     func processInitMapField() -> UINavigationController
