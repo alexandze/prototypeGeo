@@ -101,7 +101,7 @@ class AppDependencyContainerImpl: AppDependencyContainer {
     func processInitContainerMapAndFieldNavigation() -> ContainerMapAndListFieldViewController {
         mapDependencyContainer.processInitContainerMapAndFieldNavigation()
     }
-    
+
     func processInitCulturalPracticeViewController() -> CulturalPraticeViewController {
         mapDependencyContainer.makeCulturalPracticeViewController()
     }

@@ -86,10 +86,10 @@ class FieldListViewController: UIViewController, UITableViewDelegate, UITableVie
         cell.imageView?.image = image
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         fieldListViewModel.handle(didSelectRowAt: indexPath)
-        
+
     }
 
 }

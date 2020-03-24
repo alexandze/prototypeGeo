@@ -87,6 +87,7 @@
 		98D192A023C03E0800BF9A7A /* GetFarmersMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D1929F23C03E0800BF9A7A /* GetFarmersMiddleware.swift */; };
 		98DB0F4B242866C50065963B /* SubtitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DB0F4A242866C50065963B /* SubtitleTableViewCell.swift */; };
 		98DB0F4D24286CED0065963B /* UIButtonWithData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DB0F4C24286CED0065963B /* UIButtonWithData.swift */; };
+		98DB0F5724297F960065963B /* TableState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DB0F5624297F960065963B /* TableState.swift */; };
 		AF45707174C76E537F6FAC77 /* libPods-prototypeGeo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D913FCD2E376EA77076135B /* libPods-prototypeGeo.a */; };
 		BEAD991B09FB740A2C3DAAD1 /* libPods-prototypeGeoTests1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58AB89FDEEF3C034DC04AA91 /* libPods-prototypeGeoTests1.a */; };
 /* End PBXBuildFile section */
@@ -195,6 +196,7 @@
 		98D1929F23C03E0800BF9A7A /* GetFarmersMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFarmersMiddleware.swift; sourceTree = "<group>"; };
 		98DB0F4A242866C50065963B /* SubtitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleTableViewCell.swift; sourceTree = "<group>"; };
 		98DB0F4C24286CED0065963B /* UIButtonWithData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonWithData.swift; sourceTree = "<group>"; };
+		98DB0F5624297F960065963B /* TableState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableState.swift; sourceTree = "<group>"; };
 		B2D6DDF844B90F4D992924D2 /* Pods-prototypeGeoTests1.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-prototypeGeoTests1.debug.xcconfig"; path = "Target Support Files/Pods-prototypeGeoTests1/Pods-prototypeGeoTests1.debug.xcconfig"; sourceTree = "<group>"; };
 		E52AF9ACD2CD3CF679ADC9C8 /* Pods-prototypeGeo-prototypeGeoTests1.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-prototypeGeo-prototypeGeoTests1.release.xcconfig"; path = "Target Support Files/Pods-prototypeGeo-prototypeGeoTests1/Pods-prototypeGeo-prototypeGeoTests1.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -552,6 +554,7 @@
 				98A2C547240E696C002A884B /* AnnotationWithData.swift */,
 				989434092410C76D003C0110 /* PolygonWithData.swift */,
 				98DB0F4C24286CED0065963B /* UIButtonWithData.swift */,
+				98DB0F5624297F960065963B /* TableState.swift */,
 			);
 			path = libs;
 			sourceTree = "<group>";
@@ -794,6 +797,7 @@
 				98A13FBF23C5A75D0087BB22 /* FarmerAddViewController.swift in Sources */,
 				9854BFDF2409047C00E5AB8A /* FieldListView.swift in Sources */,
 				9854BFF9240B901A00E5AB8A /* CulturalPracticeViewModel.swift in Sources */,
+				98DB0F5724297F960065963B /* TableState.swift in Sources */,
 				98363B5123DEEC7A00AFFC63 /* mapFieldMiddleware.swift in Sources */,
 				9860400423BD868A00D5B538 /* FarmerTableVIewControllerState.swift in Sources */,
 				98D1929B23C034A600BF9A7A /* FamerViewCell.swift in Sources */,

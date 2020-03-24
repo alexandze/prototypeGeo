@@ -43,9 +43,9 @@ class MapFieldViewModel {
     func handle(mkAnnotation: MKAnnotation) -> MKAnnotationView? {
         if mkAnnotation is AnnotationWithData<PayloadFieldAnnotation> {
             let markerAnnotationView = mapView.dequeueReusableAnnotationView(
-                withIdentifier:
-                self.idAnnotationView,
-                for: mkAnnotation
+                    withIdentifier:
+                    self.idAnnotationView,
+                    for: mkAnnotation
                 ) as? MKMarkerAnnotationView
             config(markerAnnotationView: markerAnnotationView!)
             configRightCalloutAccessoryView(

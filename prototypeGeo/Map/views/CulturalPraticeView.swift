@@ -18,7 +18,7 @@ class CulturalPraticeView: UIView {
         super.init(frame: .zero)
         initConstraintTableView()
     }
-    
+
     public let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -27,7 +27,7 @@ class CulturalPraticeView: UIView {
         tableView.rowHeight = 80
         return tableView
     }()
-    
+
     private func initConstraintTableView() {
         addSubview(tableView)
 

@@ -11,7 +11,7 @@ import UIKit
 
 struct Section<T> {
     let sectionName: String
-    let rowData: [T]
+    var rowData: [T]
 }
 
 extension UIImage {

@@ -31,6 +31,11 @@ extension Reducers {
                 }
         case let selectedFieldOnList as MapFieldAction.SelectedFieldOnListAction:
             state.culturalPracticeState = MapFieldReducerHandler.handle(selectedFieldOnListAction: selectedFieldOnList)
+        case let addCulturalPracticeContainerAction as MapFieldAction.AddCulturalPracticeInputMultiSelectContainer:
+                MapFieldReducerHandler.handle(
+                    addCulturalPracticeContainerAction: addCulturalPracticeContainerAction,
+                    state: state.culturalPracticeState
+                ).map { state.culturalPracticeState = $0 }
         default:
             break
         }
@@ -48,7 +53,7 @@ class MapFieldReducerHandler {
         var firstArray = [selectedFieldOnMapAction.fieldType]
         firstArray += secondArray
         let uuid = UUID().uuidString
-        
+
         return FieldListState(
             uuidState: uuid,
             fieldList: firstArray,
@@ -78,31 +83,81 @@ class MapFieldReducerHandler {
             }
         }
     }
-    
+
     static func handle(selectedFieldOnListAction: MapFieldAction.SelectedFieldOnListAction) -> CulturalPracticeState {
         switch selectedFieldOnListAction.fieldType {
         case .polygon(let fieldPolygone):
             let culturalPracticeElements = CulturalPractice.getCulturalPracticeElement(culturalPractice: fieldPolygone.culturalPratice)
-            
+
             return CulturalPracticeState(
                 uuidState: UUID().uuidString,
                 currentField: selectedFieldOnListAction.fieldType,
-                culturalPraticeElement: culturalPracticeElements,
-                sections: createSection(by: culturalPracticeElements)
+                sections: createSection(by: culturalPracticeElements),
+                tableState: .reloadData
             )
-            
+
         case .multiPolygon(let fieldMultiPolygon):
             let culturalPracticeElements = CulturalPractice.getCulturalPracticeElement(culturalPractice: fieldMultiPolygon.culturalPratice)
 
             return CulturalPracticeState(
                 uuidState: UUID().uuidString,
                 currentField: selectedFieldOnListAction.fieldType,
-                culturalPraticeElement: CulturalPractice.getCulturalPracticeElement(culturalPractice: fieldMultiPolygon.culturalPratice),
-                sections: createSection(by: culturalPracticeElements)
+                sections: createSection(by: culturalPracticeElements),
+                tableState: .reloadData
             )
         }
     }
-    
+
+    static func handle(
+        addCulturalPracticeContainerAction: MapFieldAction.AddCulturalPracticeInputMultiSelectContainer,
+        state: CulturalPracticeState
+    ) -> CulturalPracticeState? {
+        let sectionIndex = findAddElementIndex(from: state.sections!)
+
+        if sectionIndex != nil {
+            let inputMultiSelectContainer = CulturalPractice
+            .createCulturalPracticeInputMultiSelectContainer(
+                index: addCulturalPracticeContainerAction.index
+            )
+
+            return setCulturalPractice(state: state, sectionIndex!, inputMultiSelectContainer)
+        }
+
+        return nil
+    }
+
+    private static func findAddElementIndex(from sections: [Section<CulturalPracticeElement>]) -> Int? {
+        sections.firstIndex(where: { (section: Section<CulturalPracticeElement>) -> Bool in
+            guard !(section.rowData.isEmpty),
+                case CulturalPracticeElement.culturalPracticeAddElement(_) = section.rowData[0]
+                else {
+                    return false
+                }
+
+            return true
+        })
+    }
+
+    private static func setCulturalPractice(
+        state: CulturalPracticeState,
+        _ sectionIndex: Int,
+        _ inputMultiSelectContainer: CulturalPracticeElement
+    ) -> CulturalPracticeState {
+        var copyState = state
+
+        copyState.sections![sectionIndex].rowData.append(inputMultiSelectContainer)
+        copyState.uuidState = UUID().uuidString
+        copyState.tableState = .insertRows(indexPath: [
+            IndexPath(
+                row: copyState.sections![sectionIndex].rowData.count - 1,
+                section: sectionIndex
+            )
+            ]
+        )
+
+        return copyState
+    }
+
     private static func createSection(by culturalPracticeElements: [CulturalPracticeElement]) -> [Section<CulturalPracticeElement>] {
         culturalPracticeElements.map { (culturalPracticeElement: CulturalPracticeElement) -> Section<CulturalPracticeElement> in
             switch culturalPracticeElement {

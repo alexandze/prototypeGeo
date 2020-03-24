@@ -11,11 +11,10 @@ import Foundation
 internal struct CulturalPractice {
     var avaloir: Avaloir?
     var bandeRiveraine: BandeRiveraine?
-    
     var doseFumier: [DoseFumier]?
     var periodeApplicationFumier: [PeriodeApplicationFumier]?
     var delaiIncorporationFumier: [DelaiIncorporationFumier]?
-    
+
     var travailSol: TravailSol?
     var couvertureAssociee: CouvertureAssociee?
     var couvertureDerobee: CouvertureDerobee?
@@ -27,18 +26,20 @@ internal struct CulturalPractice {
     var pMehlich3: PMehlich3?
     var alMehlich3: AlMehlich3?
     var cultureAnneeEnCoursAnterieure: CultureAnneeEnCoursAnterieure?
-    
+
+    static let MAX_DOSE_FUMIER = 3
+
     static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> [CulturalPracticeElement] {
         let culturalPracticeSingleElement = getCulturalPracticeSingleElement(from: culturalPractice)
         let culturalPracticeContainerElement = getCulturalPracticeDynamic(from: culturalPractice)
-        
+
         if culturalPracticeContainerElement != nil {
             return culturalPracticeSingleElement + culturalPracticeContainerElement!
         }
-        
+
         return culturalPracticeSingleElement
     }
-    
+
     static func getCulturalPracticeSingleElement(
         from culturalPractice: CulturalPractice?
     ) -> [CulturalPracticeElement] {
@@ -65,21 +66,37 @@ internal struct CulturalPractice {
             )
         ]
     }
-    
-    static func getCulturalPracticeDynamic(from culturalPractice: CulturalPractice?) -> [CulturalPracticeElement]? {
+
+    static func createCulturalPracticeInputMultiSelectContainer(index: Int) -> CulturalPracticeElement {
+        CulturalPracticeElement.culturalPracticeInputMultiSelectContainer(
+            CulturalPracticeInputMultiSelectContainer(
+                key: .inputMultiSelectContainer,
+                title: "Dose fumier \(index)",
+                culturalInputElement: [
+                    DoseFumier.getCulturalPracticeElement(id: index, culturalPractice: nil)
+                ],
+                culturalPracticeMultiSelectElement: [
+                    PeriodeApplicationFumier.getCulturalPracticeElement(id: index, culturalPractice: nil),
+                    DelaiIncorporationFumier.getCulturalPracticeElement(id: index, culturalPractice: nil)
+                ]
+            )
+        )
+    }
+
+    private static func getCulturalPracticeDynamic(from culturalPractice: CulturalPractice?) -> [CulturalPracticeElement]? {
         guard let culturalPractice = culturalPractice else {
             return nil
         }
-        
+
         var culturalPracticeElements: [CulturalPracticeElement] = []
-        
-        (0...2).forEach { index in
+
+        (0...(MAX_DOSE_FUMIER - 1)).forEach { index in
             if hasValueDoseFumier(culturalPractice: culturalPractice, index: index) {
                 let culturalPracticeInputMultiSelectContainer =
                         CulturalPracticeElement.culturalPracticeInputMultiSelectContainer(
                     CulturalPracticeInputMultiSelectContainer(
                         key: .container,
-                        title: "Fumier",
+                        title: "Dose fumier \(index + 1)",
                         culturalInputElement: [
                             DoseFumier.getCulturalPracticeElement(id: index, culturalPractice: culturalPractice)
                         ],
@@ -89,24 +106,24 @@ internal struct CulturalPractice {
                         ]
                     )
                 )
-                
+
                 culturalPracticeElements.append(culturalPracticeInputMultiSelectContainer)
             }
         }
-        
+
         return !(culturalPracticeElements.isEmpty) ? culturalPracticeElements : nil
     }
-    
+
     private static func hasValueDoseFumier(culturalPractice: CulturalPractice, index: Int) -> Bool {
         let countDoseFumier = culturalPractice.doseFumier?.count ?? -1
         let countPeriodeApplicationFumier = culturalPractice.periodeApplicationFumier?.count ?? -1
         let countDelaiIncorporationFumier = culturalPractice.delaiIncorporationFumier?.count ?? -1
-        
+
         return countDoseFumier > index ||
             countDelaiIncorporationFumier > index ||
             countPeriodeApplicationFumier > index
     }
-    
+
     static func createCulturalPracticeAddElement(
         title: String,
         key: KeyCulturalPracticeData
@@ -139,8 +156,6 @@ enum CulturalPracticeValue {
     case alMehlich3(AlMehlich3)
 }
 
-
-
 enum Avaloir: Int {
     case absente = 1
     case captagePartiel
@@ -162,15 +177,15 @@ enum Avaloir: Int {
             )
         ]
     }
-    
+
     static func getTitle() -> String {
         NSLocalizedString("Avaloir", comment: "Titre avaloir")
     }
-    
+
     static func getKey() -> KeyCulturalPracticeData {
         KeyCulturalPracticeData.avaloir
     }
-    
+
     static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElement {
         CulturalPracticeElement.culturalPracticeMultiSelectElement(
             CulturalPracticeMultiSelectElement(
@@ -211,15 +226,15 @@ enum BandeRiveraine: Int {
             )
         ]
     }
-    
+
     static func getTitle() -> String {
         NSLocalizedString("Bande riveraine", comment: "Titre bande riveraine")
     }
-    
+
     static func getKey() -> KeyCulturalPracticeData {
         KeyCulturalPracticeData.bandeRiveraine
     }
-    
+
     static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElement {
         CulturalPracticeElement.culturalPracticeMultiSelectElement(
             CulturalPracticeMultiSelectElement(
@@ -237,25 +252,25 @@ enum BandeRiveraine: Int {
 
 enum DoseFumier {
     case dose(quantite: Int?)
-    
+
     static func getTitle() -> String {
         NSLocalizedString(
             "Dose du fumier (jusqu'à trois doses)",
             comment: "TitreDose du fumier (jusqu'à trois doses)"
         )
     }
-    
+
     static func getKey(id: Int) -> KeyCulturalPracticeData {
         KeyCulturalPracticeData.doseFumier(id: id)
     }
-    
+
     static func getCulturalPracticeElement(id: Int, culturalPractice: CulturalPractice?) -> CulturalPracticeElement {
         let count = culturalPractice?.doseFumier?.count ?? -1
-        
+
         let doseFumier = count > id
             ? CulturalPracticeValue.doseFumier(culturalPractice!.doseFumier![id])
             : nil
-        
+
         return CulturalPracticeElement.culturalPracticeInputElement(
             CulturalPracticeInputElement(
                 key: getKey(id: id),
@@ -308,25 +323,25 @@ enum PeriodeApplicationFumier: Int {
             )
         ]
     }
-    
+
     static func getTitle() -> String {
         NSLocalizedString(
             "Période d'application du fumier (jusqu'à trois application)",
             comment: "Titre Période d'application du fumier (jusqu'à trois application)"
         )
     }
-    
+
     static func getKey(id: Int) -> KeyCulturalPracticeData {
         KeyCulturalPracticeData.periodeApplicationFumier(id: id)
     }
-    
+
     static func getCulturalPracticeElement(id: Int, culturalPractice: CulturalPractice?) -> CulturalPracticeElement {
         let count = culturalPractice?.periodeApplicationFumier?.count ?? -1
         let periodeApplicationFumier = count > id
             ? CulturalPracticeValue
                 .periodeApplicationFumier(culturalPractice!.periodeApplicationFumier![id])
             : nil
-        
+
         return CulturalPracticeElement.culturalPracticeMultiSelectElement(
             CulturalPracticeMultiSelectElement(
                 key: getKey(id: id),
@@ -380,25 +395,25 @@ enum DelaiIncorporationFumier: Int {
             )
         ]
     }
-    
+
     static func getTitle() -> String {
         NSLocalizedString(
             "Délai d'incorporation du fumier (jusqu'à trois application)",
             comment: "Title délai d'incorporation du fumier (jusqu'à trois application)"
         )
     }
-    
+
     static func getKey(id: Int) -> KeyCulturalPracticeData {
         KeyCulturalPracticeData.delaiIncorporationFumier(id: id)
     }
-    
+
     static func getCulturalPracticeElement(id: Int, culturalPractice: CulturalPractice?) -> CulturalPracticeElement {
         let count = culturalPractice?.delaiIncorporationFumier?.count ?? -1
         let delaiIncorporationFumier = count > id
             ? CulturalPracticeValue
                 .delaiIncorporationFumier(culturalPractice!.delaiIncorporationFumier![id])
             : nil
-        
+
         return CulturalPracticeElement.culturalPracticeMultiSelectElement(
             CulturalPracticeMultiSelectElement(
                 key: getKey(id: id),
@@ -452,21 +467,20 @@ enum TravailSol: Int {
             )
         ]
     }
-    
+
     static func getTitle() -> String {
         NSLocalizedString("Travail du sol", comment: "Title travail du sol")
     }
-    
+
     static func getKey() -> KeyCulturalPracticeData {
         KeyCulturalPracticeData.travailSol
     }
-    
+
     static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElement {
         let travailSol = culturalPractice?.travailSol != nil
             ? CulturalPracticeValue.travailSol(culturalPractice!.travailSol!)
             : nil
-        
-        
+
         return CulturalPracticeElement.culturalPracticeMultiSelectElement(
             CulturalPracticeMultiSelectElement(
                 key: TravailSol.getKey(),
@@ -496,23 +510,23 @@ enum CouvertureAssociee: Int {
             )
         ]
     }
-    
+
     static func getTitle() -> String {
         NSLocalizedString(
             "Couverture associée",
             comment: "Title couverture associée"
         )
     }
-    
+
     static func getKey() -> KeyCulturalPracticeData {
         KeyCulturalPracticeData.couvertureAssociee
     }
-    
+
     static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElement {
         let couvertureAssociee = culturalPractice?.couvertureAssociee != nil
             ? CulturalPracticeValue.couvertureAssociee(culturalPractice!.couvertureAssociee!)
             : nil
-        
+
         return CulturalPracticeElement.culturalPracticeMultiSelectElement(
             CulturalPracticeMultiSelectElement(
                 key: getKey(),
@@ -542,23 +556,23 @@ enum CouvertureDerobee: Int {
             )
         ]
     }
-    
+
     static func getTitle() -> String {
         NSLocalizedString(
             "Couverture dérobée",
             comment: "Title Couverture dérobée"
         )
     }
-    
+
     static func getKey() -> KeyCulturalPracticeData {
         KeyCulturalPracticeData.couvertureDerobee
     }
-    
+
     static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElement {
         let couvertureDerobee = culturalPractice?.couvertureDerobee != nil
             ? CulturalPracticeValue.couvertureDerobee(culturalPractice!.couvertureDerobee!)
             : nil
-        
+
         return CulturalPracticeElement.culturalPracticeMultiSelectElement(
             CulturalPracticeMultiSelectElement(
                 key: getKey(),
@@ -594,23 +608,23 @@ enum DrainageSouterrain: Int {
             )
         ]
     }
-    
+
     static func getTitle() -> String {
         NSLocalizedString(
             "Drainage souterrain",
             comment: "Title Drainage souterrain"
         )
     }
-    
+
     static func getKey() -> KeyCulturalPracticeData {
         KeyCulturalPracticeData.drainageSouterrain
     }
-    
+
     static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElement {
         let drainageSouterrain = culturalPractice?.drainageSouterrain != nil
             ? CulturalPracticeValue.drainageSouterrain(culturalPractice!.drainageSouterrain!)
             : nil
-        
+
         return CulturalPracticeElement.culturalPracticeMultiSelectElement(
             CulturalPracticeMultiSelectElement(
                 key: getKey(),
@@ -646,20 +660,20 @@ enum DrainageSurface: Int {
             )
         ]
     }
-    
+
     static func getTitle() -> String {
         NSLocalizedString("Drainage de surface", comment: "Titre Drainage de surface")
     }
-    
+
     static func getKey() -> KeyCulturalPracticeData {
         KeyCulturalPracticeData.drainageSurface
     }
-    
+
     static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElement {
         let drainageSurface = culturalPractice?.drainageSouterrain != nil
             ? CulturalPracticeValue.drainageSouterrain(culturalPractice!.drainageSouterrain!)
         : nil
-        
+
         return CulturalPracticeElement.culturalPracticeMultiSelectElement(
             CulturalPracticeMultiSelectElement(
                 key: getKey(),
@@ -704,23 +718,23 @@ enum ConditionProfilCultural {
             )
         ]
     }
-    
+
     static func getTitle() -> String {
         NSLocalizedString(
             "Condition du profil cultural",
             comment: "Condition du profil cultural"
         )
     }
-    
+
     static func getKey() -> KeyCulturalPracticeData {
         KeyCulturalPracticeData.conditionProfilCultural
     }
-    
+
     static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElement {
         let conditionProfilCultural = culturalPractice?.conditionProfilCultural != nil
             ? CulturalPracticeValue.conditionProfilCultural(culturalPractice!.conditionProfilCultural!)
             : nil
-        
+
         return CulturalPracticeElement.culturalPracticeMultiSelectElement(
             CulturalPracticeMultiSelectElement(
                 key: getKey(),
@@ -734,23 +748,23 @@ enum ConditionProfilCultural {
 
 enum TauxApplicationPhosphoreRang {
     case taux(KilogramPerHectare)
-    
+
     static func getTitle() -> String {
         NSLocalizedString(
             "Taux d'application de phosphore (engrais minéraux en rang)",
             comment: "Titre Taux d'application de phosphore (engrais minéraux en rang)"
         )
     }
-    
+
     static func getKey() -> KeyCulturalPracticeData {
         KeyCulturalPracticeData.tauxApplicationPhosphoreRang
     }
-    
+
     static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElement {
         let tauxApplicationPhosphoreRang = culturalPractice?.tauxApplicationPhosphoreRang != nil
             ? CulturalPracticeValue.tauxApplicationPhosphoreRang(culturalPractice!.tauxApplicationPhosphoreRang!)
         : nil
-        
+
         return CulturalPracticeElement.culturalPracticeInputElement(
             CulturalPracticeInputElement(
                 key: getKey(),
@@ -763,23 +777,23 @@ enum TauxApplicationPhosphoreRang {
 
 enum TauxApplicationPhosphoreVolee {
     case taux(KilogramPerHectare)
-    
+
     static func getTitle() -> String {
         NSLocalizedString(
             "Taux d'application de phosphore (engrais minéraux à la volée)",
             comment: "Titre Taux d'application de phosphore (engrais minéraux à la volée)"
         )
     }
-    
+
     static func getKey() -> KeyCulturalPracticeData {
         KeyCulturalPracticeData.tauxApplicationPhosphoreVolee
     }
-    
+
     static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElement {
         let tauxApplicationPhosphoreVolee = culturalPractice?.tauxApplicationPhosphoreVolee != nil
             ? CulturalPracticeValue.tauxApplicationPhosphoreVolee(culturalPractice!.tauxApplicationPhosphoreVolee!)
         : nil
-        
+
         return CulturalPracticeElement.culturalPracticeInputElement(
             CulturalPracticeInputElement(
                 key: getKey(),
@@ -792,23 +806,23 @@ enum TauxApplicationPhosphoreVolee {
 
 enum PMehlich3 {
     case taux(KilogramPerHectare)
-    
+
     static func getTitle() -> String {
         NSLocalizedString(
             "P Mehlich-3",
             comment: "Titre P Mehlich-3"
         )
     }
-    
+
     static func getKey() -> KeyCulturalPracticeData {
         KeyCulturalPracticeData.pMehlich3
     }
-    
+
     static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElement {
         let pMehlich3 = culturalPractice?.pMehlich3 != nil
             ? CulturalPracticeValue.pMehlich3(culturalPractice!.pMehlich3!)
             : nil
-        
+
         return CulturalPracticeElement.culturalPracticeInputElement(
             CulturalPracticeInputElement(
                 key: getKey(),
@@ -821,23 +835,23 @@ enum PMehlich3 {
 
 enum AlMehlich3 {
     case taux(Percentage)
-    
+
     static func getTitle() -> String {
         NSLocalizedString(
             "AL Mehlich-3",
             comment: "AL Mehlich-3"
         )
     }
-    
+
     static func getKey() -> KeyCulturalPracticeData {
         KeyCulturalPracticeData.alMehlich3
     }
-    
+
     static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElement {
         let alMehlich3 = culturalPractice?.alMehlich3 != nil
             ? CulturalPracticeValue.alMehlich3(culturalPractice!.alMehlich3!)
             : nil
-        
+
         return CulturalPracticeElement.culturalPracticeInputElement(
             CulturalPracticeInputElement(
                 key: getKey(),
@@ -860,7 +874,7 @@ enum CultureAnneeEnCoursAnterieure {
     case org
     case ptf
     case soy
-    
+
     static func getValues() -> [(CulturalPracticeValue, String)] {
         [
             (
@@ -920,26 +934,26 @@ enum CultureAnneeEnCoursAnterieure {
                 CulturalPracticeValue
                     .cultureAnneeEnCoursAnterieure(CultureAnneeEnCoursAnterieure.soy),
                 NSLocalizedString("Soya", comment: "Soya")
-            ),
+            )
         ]
     }
-    
+
     static func getTitle() -> String {
         NSLocalizedString(
             "Culture de l'année en cours et antérieure",
             comment: "Titre Culture de l'année en cours et antérieure"
         )
     }
-    
+
     static func getKey() -> KeyCulturalPracticeData {
         KeyCulturalPracticeData.cultureAnneeEnCoursAnterieure
     }
-    
+
     static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElement {
         let cultureAnneeEnCoursAnterieure = culturalPractice?.cultureAnneeEnCoursAnterieure != nil
             ? CulturalPracticeValue.cultureAnneeEnCoursAnterieure(culturalPractice!.cultureAnneeEnCoursAnterieure!)
         : nil
-        
+
         return CulturalPracticeElement.culturalPracticeInputElement(
             CulturalPracticeInputElement(
                 key: getKey(),
@@ -1003,5 +1017,6 @@ enum KeyCulturalPracticeData {
     case pMehlich3
     case alMehlich3
     case addDoseFunier
+    case inputMultiSelectContainer
     case container
-}
+} // swiftlint:disable:this force_cast

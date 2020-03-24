@@ -23,8 +23,12 @@ struct MapFieldAction {
     struct DeselectedFieldOnMapAction: Action {
         let fieldType: FieldType
     }
-    
+
     struct SelectedFieldOnListAction: Action {
         let fieldType: FieldType
+    }
+
+    struct AddCulturalPracticeInputMultiSelectContainer: Action {
+        let index: Int
     }
 }

@@ -16,7 +16,7 @@ extension UIViewController {
     func addSubviews(_ views: UIView ...) {
         views.forEach { self.view.addSubview($0) }
     }
-    
+
     func getAppDelegate() -> AppDelegate? {
         UIApplication.shared.delegate as? AppDelegate
     }
