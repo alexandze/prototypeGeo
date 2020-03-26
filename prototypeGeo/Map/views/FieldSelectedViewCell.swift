@@ -20,5 +20,4 @@ public class FieldSelectedViewCell {
     init(contentView: UIView) {
         self.contentView = contentView
     }
-
 }

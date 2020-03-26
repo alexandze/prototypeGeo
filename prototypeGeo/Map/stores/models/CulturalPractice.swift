@@ -154,6 +154,43 @@ enum CulturalPracticeValue {
     case tauxApplicationPhosphoreVolee(TauxApplicationPhosphoreVolee)
     case pMehlich3(PMehlich3)
     case alMehlich3(AlMehlich3)
+
+    func getValue() -> String {
+        switch self {
+        case .avaloir(let avaloir):
+            return avaloir.getValue()
+        case .bandeRiveraine(let bandeRiveraine):
+            return bandeRiveraine.getValue()
+        case .periodeApplicationFumier(let periodeApplicationFumier):
+            return periodeApplicationFumier.getValue()
+        case .delaiIncorporationFumier(let delaiIncorporationFumier):
+            return delaiIncorporationFumier.getValue()
+        case .travailSol(let travailSol):
+            return travailSol.getValue()
+        case .couvertureAssociee(let couvertureAssociee):
+            return couvertureAssociee.getValue()
+        case .couvertureDerobee(let couvertureDerobee):
+            return couvertureDerobee.getValue()
+        case .drainageSouterrain(let drainageSouterrain):
+            return drainageSouterrain.getValue()
+        case .drainageSurface(let drainageSurface):
+            return drainageSurface.getValue()
+        case .conditionProfilCultural(let conditionProfilCultural):
+            return conditionProfilCultural.getValue()
+        case .cultureAnneeEnCoursAnterieure(let cultureAnneeEnCoursAnterieure):
+            return cultureAnneeEnCoursAnterieure.getValue()
+        case .doseFumier(let doseFumier):
+            return doseFumier.getValue()
+        case .tauxApplicationPhosphoreRang(let tauxApplicationPhosphoreRang):
+            return tauxApplicationPhosphoreRang.getValue()
+        case .tauxApplicationPhosphoreVolee(let tauxApplicationPhosphoreVolee):
+            return tauxApplicationPhosphoreVolee.getValue()
+        case .pMehlich3(let pMehlich3):
+            return pMehlich3.getValue()
+        case .alMehlich3(let alMehlich3):
+            return alMehlich3.getValue()
+        }
+    }
 }
 
 enum Avaloir: Int {
@@ -176,6 +213,17 @@ enum Avaloir: Int {
                 NSLocalizedString("Captage systématique", comment: "Avaloir Captage systématique")
             )
         ]
+    }
+
+    func getValue() -> String {
+        switch self {
+        case .absente:
+            return NSLocalizedString("Absente", comment: "Avaloir absente")
+        case .captagePartiel:
+            return NSLocalizedString("Captage Partiel", comment: "Avaloir captage partiel")
+        case .captageSystematique:
+            return NSLocalizedString("Captage systématique", comment: "Avaloir Captage systématique")
+        }
     }
 
     static func getTitle() -> String {
@@ -227,6 +275,19 @@ enum BandeRiveraine: Int {
         ]
     }
 
+    func getValue() -> String {
+        switch self {
+        case .pasApplique:
+            return NSLocalizedString("Ne s'applique pas", comment: "Bande riveraine ne s'applique pas")
+        case .inferieura1M:
+            return NSLocalizedString("Inférieur à 1m", comment: "Bande riveraine Inférieur à 1m")
+        case .de1A3M:
+            return NSLocalizedString("1 à 3m", comment: "Bande riveraine 4m et plus")
+        case .de4MEtPlus:
+            return NSLocalizedString("4m et plus", comment: "Bande riveraine 4m et plus")
+        }
+    }
+
     static func getTitle() -> String {
         NSLocalizedString("Bande riveraine", comment: "Titre bande riveraine")
     }
@@ -251,13 +312,20 @@ enum BandeRiveraine: Int {
 }
 
 enum DoseFumier {
-    case dose(quantite: Int?)
+    case dose(quantite: Int)
 
     static func getTitle() -> String {
         NSLocalizedString(
             "Dose du fumier (jusqu'à trois doses)",
             comment: "TitreDose du fumier (jusqu'à trois doses)"
         )
+    }
+
+    func getValue() -> String {
+        switch self {
+        case .dose(quantite: let quantite):
+            return String(quantite)
+        }
     }
 
     static func getKey(id: Int) -> KeyCulturalPracticeData {
@@ -322,6 +390,31 @@ enum PeriodeApplicationFumier: Int {
                 )
             )
         ]
+    }
+
+    func getValue() -> String {
+        switch self {
+        case .preSemi:
+            return NSLocalizedString(
+                "Pré-semi",
+                comment: "Periode d'application du fumier Pré-semi"
+            )
+        case .postLevee:
+            return NSLocalizedString(
+                "Post-levée",
+                comment: "Periode d'application du fumier Post-levée"
+            )
+        case .automneHatif:
+            return NSLocalizedString(
+                "Automne hâtif",
+                comment: "Periode d'application du fumier Automne hâtif"
+            )
+        case .automneTardif:
+            return NSLocalizedString(
+                "Automne tardif",
+                comment: "Periode d'application du fumier Automne tardif"
+            )
+        }
     }
 
     static func getTitle() -> String {
@@ -396,6 +489,31 @@ enum DelaiIncorporationFumier: Int {
         ]
     }
 
+    func getValue() -> String {
+        switch self {
+        case .incorporeEn48H:
+            return NSLocalizedString(
+                "Incorporé en 48h",
+                comment: "Delai d'incorporation du fumier Incorporé en 48h"
+            )
+        case .incorporeEn48HA1Semaine:
+            return NSLocalizedString(
+                "Incorporé en 48h à 1 semaine",
+                comment: "Delai d'incorporation du fumier Incorporé en 48h à 1 semaine"
+            )
+        case .superieureA1Semaine:
+            return NSLocalizedString(
+                "Supérieur à 1 semaine",
+                comment: "Delai d'incorporation du fumier Supérieur à 1 semaine"
+            )
+        case .nonIncorpore:
+            return NSLocalizedString(
+                "Non incorporé",
+                comment: "Delai d'incorporation du fumier Non incorporé"
+            )
+        }
+    }
+
     static func getTitle() -> String {
         NSLocalizedString(
             "Délai d'incorporation du fumier (jusqu'à trois application)",
@@ -453,8 +571,8 @@ enum TravailSol: Int {
                 CulturalPracticeValue
                     .travailSol(TravailSol.dechaumageAuPrintempsTravailSecondairePrintemps),
                 NSLocalizedString(
-                "Déchaumage au printemps et travail secondaire au printemps",
-                comment: "Travail du sol Déchaumage au printemps et travail secondaire au printemps"
+                    "Déchaumage au printemps et travail secondaire au printemps",
+                    comment: "Travail du sol Déchaumage au printemps et travail secondaire au printemps"
                 )
             ),
             (
@@ -466,6 +584,31 @@ enum TravailSol: Int {
                 )
             )
         ]
+    }
+
+    func getValue() -> String {
+        switch self {
+        case .labourAutomneTravailSecondairePrintemps:
+            return NSLocalizedString(
+                "Labour à l'automne, travail secondaire au printemps",
+                comment: "Travail du sol Labour à l'automne"
+            )
+        case .chiselPulverisateurAutomneTravailSecondairePrintemps:
+            return NSLocalizedString(
+                "Chisel ou pulvérisateur à l'automne, travail secondaire au printemps",
+                comment: "Travail du sol Chisel ou pulvérisateur à l'automne, travail secondaire au printemps"
+            )
+        case .dechaumageAuPrintempsTravailSecondairePrintemps:
+            return NSLocalizedString(
+                "Déchaumage au printemps et travail secondaire au printemps",
+                comment: "Travail du sol Déchaumage au printemps et travail secondaire au printemps"
+            )
+        case .semiDirectOuBilons:
+            return NSLocalizedString(
+                "Semi direct ou bilons",
+                comment: "Travail du sol Semi direct ou bilons"
+            )
+        }
     }
 
     static func getTitle() -> String {
@@ -509,6 +652,15 @@ enum CouvertureAssociee: Int {
                 NSLocalizedString("Faux", comment: "Couverture associée faux")
             )
         ]
+    }
+
+    func getValue() -> String {
+        switch self {
+        case .vrai:
+            return NSLocalizedString("Vrai", comment: "Couverture associée vrai")
+        case .faux:
+            return NSLocalizedString("Faux", comment: "Couverture associée faux")
+        }
     }
 
     static func getTitle() -> String {
@@ -555,6 +707,15 @@ enum CouvertureDerobee: Int {
                 NSLocalizedString("Faux", comment: "Couverture dérobée faux")
             )
         ]
+    }
+
+    func getValue() -> String {
+        switch self {
+        case .vrai:
+            return NSLocalizedString("Vrai", comment: "Couverture dérobée vrai")
+        case .faux:
+            return NSLocalizedString("Faux", comment: "Couverture dérobée faux")
+        }
     }
 
     static func getTitle() -> String {
@@ -609,6 +770,17 @@ enum DrainageSouterrain: Int {
         ]
     }
 
+    func getValue() -> String {
+        switch self {
+        case .systematique:
+            return NSLocalizedString("Systématique", comment: "Drainage souterrain Systématique")
+        case .partiel:
+            return NSLocalizedString("Partiel", comment: "Drainage souterrain Partiel")
+        case .absent:
+            return NSLocalizedString("Absent", comment: "Drainage souterrain absent")
+        }
+    }
+
     static func getTitle() -> String {
         NSLocalizedString(
             "Drainage souterrain",
@@ -659,6 +831,17 @@ enum DrainageSurface: Int {
                 NSLocalizedString("Mauvais", comment: "Drainage de surface Mauvais")
             )
         ]
+    }
+
+    func getValue() -> String {
+        switch self {
+        case .bon:
+            return NSLocalizedString("Bon", comment: "Drainage de surface Bon")
+        case .moyen:
+            return NSLocalizedString("Moyen", comment: "Drainage de surface Moyen")
+        case .mauvais:
+            return NSLocalizedString("Mauvais", comment: "Drainage de surface Mauvais")
+        }
     }
 
     static func getTitle() -> String {
@@ -719,6 +902,26 @@ enum ConditionProfilCultural {
         ]
     }
 
+    func getValue() -> String {
+        switch self {
+        case .bonne:
+            return NSLocalizedString(
+                "Bonne",
+                comment: "Condition du profil cultural Bonne"
+            )
+        case .presenceZoneRisques:
+            return NSLocalizedString(
+                "Présence de zone à risque",
+                comment: "Condition du profil cultural Présence de zone à risque"
+            )
+        case .dominanceZoneRisque:
+            return NSLocalizedString(
+                "Dominance de zone à risque",
+                comment: "Condition du profil cultural Dominance de zone à risque"
+            )
+        }
+    }
+
     static func getTitle() -> String {
         NSLocalizedString(
             "Condition du profil cultural",
@@ -756,6 +959,13 @@ enum TauxApplicationPhosphoreRang {
         )
     }
 
+    func getValue() -> String {
+        switch self {
+        case .taux(let kilogramPerHectare):
+            return String(kilogramPerHectare)
+        }
+    }
+
     static func getKey() -> KeyCulturalPracticeData {
         KeyCulturalPracticeData.tauxApplicationPhosphoreRang
     }
@@ -783,6 +993,13 @@ enum TauxApplicationPhosphoreVolee {
             "Taux d'application de phosphore (engrais minéraux à la volée)",
             comment: "Titre Taux d'application de phosphore (engrais minéraux à la volée)"
         )
+    }
+
+    func getValue() -> String {
+        switch self {
+        case .taux(let kilogramPerHectare):
+            return String(kilogramPerHectare)
+        }
     }
 
     static func getKey() -> KeyCulturalPracticeData {
@@ -814,6 +1031,13 @@ enum PMehlich3 {
         )
     }
 
+    func getValue() -> String {
+        switch self {
+        case .taux(let kilogramPerHectare):
+            return String(kilogramPerHectare)
+        }
+    }
+
     static func getKey() -> KeyCulturalPracticeData {
         KeyCulturalPracticeData.pMehlich3
     }
@@ -841,6 +1065,13 @@ enum AlMehlich3 {
             "AL Mehlich-3",
             comment: "AL Mehlich-3"
         )
+    }
+
+    func getValue() -> String {
+        switch self {
+        case .taux(let percentage):
+            return String(percentage)
+        }
     }
 
     static func getKey() -> KeyCulturalPracticeData {
@@ -936,6 +1167,36 @@ enum CultureAnneeEnCoursAnterieure {
                 NSLocalizedString("Soya", comment: "Soya")
             )
         ]
+    }
+
+    func getValue() -> String {
+        switch self {
+        case .auc:
+            return NSLocalizedString("Autres céréales", comment: "Autres céréales")
+        case .avo:
+            return NSLocalizedString("Avoine", comment: "Avoine")
+        case .ble:
+            return NSLocalizedString("Blé", comment: "Blé")
+        case .cnl:
+            return NSLocalizedString("Canola", comment: "Canola")
+        case .foi:
+            return NSLocalizedString("Foin", comment: "Foin")
+        case .mai:
+            return NSLocalizedString("Maï", comment: "Maï")
+        case .mix:
+            return NSLocalizedString("Mixte", comment: "Mixte")
+        case .non:
+            return NSLocalizedString(
+                "Pas d'info, traité comme si c'était du foin",
+                comment: "Pas d'info, traité comme si c'était du foin"
+            )
+        case .org:
+            return NSLocalizedString("Orge", comment: "Orge")
+        case .ptf:
+            return NSLocalizedString("Petits fruits", comment: "Petits fruits")
+        case .soy:
+            return NSLocalizedString("Soya", comment: "Soya")
+        }
     }
 
     static func getTitle() -> String {

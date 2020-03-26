@@ -95,6 +95,7 @@ class CulturalPraticeViewController: UIViewController, UITableViewDelegate, UITa
 
         case .culturalPracticeInputMultiSelectContainer(let inputMultiSelectContainer):
             cell.textLabel?.text = inputMultiSelectContainer.title
+            culturalPraticeViewModel.initCellFor(containerElement: inputMultiSelectContainer, for: cell)
         case .culturalPracticeMultiSelectElement(let multiSelectElement):
             cell.textLabel?.text = multiSelectElement.title
         }

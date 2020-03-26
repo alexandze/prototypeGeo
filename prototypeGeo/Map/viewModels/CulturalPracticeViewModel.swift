@@ -86,9 +86,11 @@ class CulturalPraticeViewModelImpl: CulturalPraticeViewModel {
 
         return cell
     }
-    
-    func initCellFor(containerElement: CulturalPracticeInputMultiSelectContainer) {
-        
+
+    func initCellFor(containerElement: CulturalPracticeInputMultiSelectContainer, for cell: UITableViewCell ) -> UITableViewCell {
+        let container = ContainerElementView(containerElement: containerElement, contentView: cell.contentView)
+
+        return cell
     }
 
     private func createAddButton() -> UIButton {
@@ -168,4 +170,5 @@ protocol CulturalPraticeViewModel {
     func getCulturePracticeElement(by indexPath: IndexPath) -> CulturalPracticeElement
     func registerHeaderFooterViewSection()
     func initCellFor(addElement: CulturalPracticeAddElement, for cell: UITableViewCell) -> UITableViewCell
+    func initCellFor(containerElement: CulturalPracticeInputMultiSelectContainer, for cell: UITableViewCell ) -> UITableViewCell
 }
