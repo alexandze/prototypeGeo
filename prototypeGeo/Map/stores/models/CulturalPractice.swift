@@ -316,8 +316,8 @@ enum DoseFumier {
 
     static func getTitle() -> String {
         NSLocalizedString(
-            "Dose du fumier (jusqu'à trois doses)",
-            comment: "TitreDose du fumier (jusqu'à trois doses)"
+            "Dose du fumier (quantité)",
+            comment: "Dose du fumier (quantité)"
         )
     }
 

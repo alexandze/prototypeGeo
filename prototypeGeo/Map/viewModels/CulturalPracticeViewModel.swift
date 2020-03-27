@@ -76,6 +76,8 @@ class CulturalPraticeViewModelImpl: CulturalPraticeViewModel {
     }
 
     func initCellFor(addElement: CulturalPracticeAddElement, for cell: UITableViewCell) -> UITableViewCell {
+        cell.contentView.viewWithTag(ContainerElementView.TAG)?.removeFromSuperview()
+        cell.contentView.sizeToFit()
         cell.textLabel?.text = NSLocalizedString("Cliquer sur le boutton", comment: "Cliquer sur le boutton")
         cell.detailTextLabel?.textColor = .white
         cell.detailTextLabel?.text = addElement.title
@@ -88,8 +90,12 @@ class CulturalPraticeViewModelImpl: CulturalPraticeViewModel {
     }
 
     func initCellFor(containerElement: CulturalPracticeInputMultiSelectContainer, for cell: UITableViewCell ) -> UITableViewCell {
-        let container = ContainerElementView(containerElement: containerElement, contentView: cell.contentView)
-
+        cell.textLabel?.text = nil
+        cell.detailTextLabel?.text = nil
+        cell.accessoryView = nil
+        cell.contentView.viewWithTag(ContainerElementView.TAG)?.removeFromSuperview()
+        let container = ContainerElementView(containerElement: containerElement)
+        container.addViewTo(contentView: cell.contentView)
         return cell
     }
 

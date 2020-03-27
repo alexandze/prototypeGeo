@@ -74,7 +74,12 @@ class ContainerMapAndListFieldView: UIView {
             return
         }
 
-        containerFieldNavigationView.frame.origin.y = currentYPositionSlideView
+        if createPositionY()!.maxY > currentYPositionSlideView {
+            return containerFieldNavigationView.frame.origin.y = currentYPositionSlideView
+        }
+
+        return containerFieldNavigationView.frame.origin.y = createPositionY()!.maxY
+
     }
 
     private func slideTo(_ slideFunc: @escaping (UIView, PositionY) -> Void) {
