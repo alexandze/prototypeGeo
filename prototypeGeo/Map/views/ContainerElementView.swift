@@ -162,7 +162,7 @@ class ContainerElementView: UIView {
 
                 labelTitleValue.append(
                     (
-                        createLabelFor(title: culturalPracticeInputElement.titleInput),
+                        createLabelFor(title: culturalPracticeInputElement.title),
                         createLabelFor(culturalPracticeValue: culturalPracticeInputElement.value)
                     )
                 )
@@ -209,7 +209,7 @@ class ContainerElementView: UIView {
         return label
     }
 
-    private func createLabelFor(culturalPracticeValue: CulturalPracticeValue?) -> (UILabel, UIImageView) {
+    private func createLabelFor(culturalPracticeValue: CulturalPracticeValueProtocol?) -> (UILabel, UIImageView) {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0

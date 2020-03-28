@@ -20,6 +20,7 @@ class CulturalPraticeViewModelImpl: CulturalPraticeViewModel {
     var culturalPracticeStateDisposable: Disposable?
     let TAG_ADD_BUTTON = 50
     var disposableAddContainerElement: Disposable?
+    var viewController: UIViewController?
 
     init(
         culturalPracticeStateObs: Observable<CulturalPracticeState>,
@@ -74,10 +75,23 @@ class CulturalPraticeViewModelImpl: CulturalPraticeViewModel {
     func getCulturePracticeElement(by indexPath: IndexPath) -> CulturalPracticeElement {
         sections![indexPath.section].rowData[indexPath.row]
     }
+    
+    func handle(didSelectRowAt indexPath: IndexPath) {
+        
+    }
+    
+    func initCellFor(multiSelectElement: CulturalPracticeMultiSelectElement, cell: UITableViewCell) -> UITableViewCell {
+        removeContainerElementViewTo(containerView: cell.contentView)
+        config(labelTitle: cell.textLabel, culturalPracticeElementProtocol: multiSelectElement)
+        config(detailLabel: cell.detailTextLabel, culturalPracticeValueProtocol: multiSelectElement.value)
+        configAccessoryView(of: cell, culturalPracticeProtocol: multiSelectElement.value)
+        return cell
+    }
 
-    func initCellFor(addElement: CulturalPracticeAddElement, for cell: UITableViewCell) -> UITableViewCell {
-        cell.contentView.viewWithTag(ContainerElementView.TAG)?.removeFromSuperview()
-        cell.contentView.sizeToFit()
+    func initCellFor(addElement: CulturalPracticeAddElement, cell: UITableViewCell) -> UITableViewCell {
+        removeContainerElementViewTo(containerView: cell.contentView)
+        cell.detailTextLabel?.font = UIFont(name: "Arial", size: 25)
+        cell.textLabel?.font = UIFont(name: "Arial", size: 15)
         cell.textLabel?.text = NSLocalizedString("Cliquer sur le boutton", comment: "Cliquer sur le boutton")
         cell.detailTextLabel?.textColor = .white
         cell.detailTextLabel?.text = addElement.title
@@ -89,14 +103,63 @@ class CulturalPraticeViewModelImpl: CulturalPraticeViewModel {
         return cell
     }
 
-    func initCellFor(containerElement: CulturalPracticeInputMultiSelectContainer, for cell: UITableViewCell ) -> UITableViewCell {
+    func initCellFor(containerElement: CulturalPracticeInputMultiSelectContainer, cell: UITableViewCell) -> UITableViewCell {
         cell.textLabel?.text = nil
         cell.detailTextLabel?.text = nil
         cell.accessoryView = nil
-        cell.contentView.viewWithTag(ContainerElementView.TAG)?.removeFromSuperview()
+        removeContainerElementViewTo(containerView: cell.contentView)
         let container = ContainerElementView(containerElement: containerElement)
         container.addViewTo(contentView: cell.contentView)
         return cell
+    }
+    
+    func initCellFor(inputElement: CulturalPracticeInputElement, cell: UITableViewCell) -> UITableViewCell {
+        removeContainerElementViewTo(containerView: cell.contentView)
+        config(
+            labelTitle: cell.textLabel,
+            culturalPracticeElementProtocol: inputElement
+        )
+        
+        config(detailLabel: cell.detailTextLabel, culturalPracticeValueProtocol: inputElement.value)
+        configAccessoryView(of: cell, culturalPracticeProtocol: inputElement.value)
+        return cell
+    }
+    
+    private func config(labelTitle: UILabel?, culturalPracticeElementProtocol: CulturalPracticeElementProtocol) {
+        labelTitle?.font = UIFont(name: "Arial", size: 15)
+        labelTitle?.textColor = .white
+        labelTitle?.numberOfLines = 0
+        labelTitle?.text = culturalPracticeElementProtocol.title
+    }
+    
+    private func config(detailLabel: UILabel?, culturalPracticeValueProtocol: CulturalPracticeValueProtocol?) {
+        detailLabel?.font = UIFont(name: "Arial", size: 25)
+        detailLabel?.numberOfLines = 0
+        
+        if culturalPracticeValueProtocol != nil {
+            detailLabel?.text = culturalPracticeValueProtocol!.getValue()
+            detailLabel?.textColor = .green
+            return
+        }
+        
+        detailLabel?.text = NSLocalizedString("Veuillez choisir une valeur", comment: "Veuillez choisir une valuer")
+        detailLabel?.textColor = .red
+    }
+    
+    private func configAccessoryView(of cell: UITableViewCell, culturalPracticeProtocol: CulturalPracticeValueProtocol?) {
+        if culturalPracticeProtocol != nil {
+            let imageViewYes = UIImageView(image: getImageIconYes())
+            cell.accessoryView = imageViewYes
+            return imageViewYes.sizeToFit()
+        }
+        
+        let imageViewNo = UIImageView(image: getImageIconNo())
+        cell.accessoryView = imageViewNo
+        imageViewNo.sizeToFit()
+    }
+    
+    private func removeContainerElementViewTo(containerView: UIView) {
+        containerView.viewWithTag(ContainerElementView.TAG)?.removeFromSuperview()
     }
 
     private func createAddButton() -> UIButton {
@@ -117,7 +180,7 @@ class CulturalPraticeViewModelImpl: CulturalPraticeViewModel {
 
                 if count < (CulturalPractice.MAX_DOSE_FUMIER + 1) {
                     self.actionDispatcher.dispatch(
-                        MapFieldAction.AddCulturalPracticeInputMultiSelectContainer(index: count)
+                        CulturalPracticeAction.AddCulturalPracticeInputMultiSelectContainer(index: count)
                     )
                 }
             }
@@ -167,6 +230,7 @@ class CulturalPraticeViewModelImpl: CulturalPraticeViewModel {
 protocol CulturalPraticeViewModel {
     var tableView: UITableView? {get set}
     var cellId: String {get}
+    var viewController: UIViewController? {get set}
     var headerFooterSectionViewId: String {get}
     func subscribeToCulturalPracticeStateObs()
     func disposeToCulturalPracticeStateObs()
@@ -175,6 +239,9 @@ protocol CulturalPraticeViewModel {
     func registerCell()
     func getCulturePracticeElement(by indexPath: IndexPath) -> CulturalPracticeElement
     func registerHeaderFooterViewSection()
-    func initCellFor(addElement: CulturalPracticeAddElement, for cell: UITableViewCell) -> UITableViewCell
-    func initCellFor(containerElement: CulturalPracticeInputMultiSelectContainer, for cell: UITableViewCell ) -> UITableViewCell
+    func initCellFor(addElement: CulturalPracticeAddElement, cell: UITableViewCell) -> UITableViewCell
+    func initCellFor(containerElement: CulturalPracticeInputMultiSelectContainer, cell: UITableViewCell) -> UITableViewCell
+    func initCellFor(inputElement: CulturalPracticeInputElement, cell: UITableViewCell) -> UITableViewCell
+    func initCellFor(multiSelectElement: CulturalPracticeMultiSelectElement, cell: UITableViewCell) -> UITableViewCell
+    func handle(didSelectRowAt indexPath: IndexPath)
 }

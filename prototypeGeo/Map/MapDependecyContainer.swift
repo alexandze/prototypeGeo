@@ -17,6 +17,23 @@ public class MapDependencyContainerImpl: MapDependencyContainer {
     init(stateStore: Store<AppState>) {
         self.stateStore = stateStore
     }
+    // MARK: - Methods CulturalPracticeForm
+    
+    func makeCulturalPracticeFormStateObservalbe() -> Observable<CulturalPracticeFormState> {
+        self.stateStore.makeObservable { (subscription: Subscription<AppState>) -> Subscription<CulturalPracticeFormState> in
+            subscription
+                .select { $0.culturalPracticeFormState }
+                .skip { $0.uuidState == $1.uuidState }
+        }
+    }
+    
+    func makeCulturalPracticeFormViewModel() -> CulturalPracticeFormViewModel {
+        CulturalPracticeFormViewModel(culturalPracticeFormObs: makeCulturalPracticeFormStateObservalbe())
+    }
+    
+    func makeCulturalPracticeFormController() -> CulturalPracticeFormViewController {
+        CulturalPracticeFormViewController(culturalPracticeFormViewModel: makeCulturalPracticeFormViewModel())
+    }
 
     // MARK: - Methodes Map
 
@@ -79,7 +96,7 @@ public class MapDependencyContainerImpl: MapDependencyContainer {
             transform: {(subscription: Subscription<AppState>) -> Subscription<CulturalPracticeState> in
             subscription
                 .select { appState in
-                    appState.mapFieldState.culturalPracticeState
+                    appState.culturalPracticeState
             }
             .skip { $0 == $1 }
         })
@@ -141,5 +158,6 @@ protocol MapDependencyContainer {
     func makeFieldListViewController() -> FieldListViewController
     func processInitContainerMapAndFieldNavigation() -> ContainerMapAndListFieldViewController
     func processInitMapField() -> UINavigationController
+    func makeCulturalPracticeFormController() -> CulturalPracticeFormViewController
 
 }

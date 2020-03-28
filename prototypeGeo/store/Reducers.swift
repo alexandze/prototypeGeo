@@ -13,7 +13,9 @@ struct Reducers {
     public static func appReducer(action: Action, state: AppState?) -> AppState {
         return AppState(
             farmerState: Reducers.farmerReducer(action: action, state: state?.farmerState),
-            mapFieldState: Reducers.mapFieldReducer(action: action, state: state?.mapFieldState)
+            mapFieldState: Reducers.mapFieldReducer(action: action, state: state?.mapFieldState),
+            culturalPracticeState: Reducers.culturalPracticeReducer(action: action, state: state?.culturalPracticeState),
+            culturalPracticeFormState: Reducers.culturalPracticeFormReducer(action: action, state: state?.culturalPracticeFormState)
         )
     }
 }

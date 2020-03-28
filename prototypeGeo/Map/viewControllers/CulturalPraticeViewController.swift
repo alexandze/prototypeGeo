@@ -28,6 +28,7 @@ class CulturalPraticeViewController: UIViewController, UITableViewDelegate, UITa
         super.init(nibName: nil, bundle: nil)
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.culturalPraticeViewModel.viewController = self
     }
 
     override func loadView() {
@@ -36,11 +37,8 @@ class CulturalPraticeViewController: UIViewController, UITableViewDelegate, UITa
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         culturalPraticeViewModel.registerCell()
         culturalPraticeViewModel.registerHeaderFooterViewSection()
-
-        // Do any additional setup after loading the view.
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -73,7 +71,7 @@ class CulturalPraticeViewController: UIViewController, UITableViewDelegate, UITa
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let element = culturalPraticeViewModel.getCulturePracticeElement(by: indexPath)
 
-        if case CulturalPracticeElement.culturalPracticeInputMultiSelectContainer(let value) = element {
+        if case CulturalPracticeElement.culturalPracticeInputMultiSelectContainer(_) = element {
             return 350
         }
 
@@ -81,46 +79,24 @@ class CulturalPraticeViewController: UIViewController, UITableViewDelegate, UITa
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: culturalPraticeViewModel.cellId, for: indexPath) as! SubtitleTableViewCell
-        cell.contentView.viewWithTag(ContainerElementView.TAG)?.removeFromSuperview()
-        let imageYes = UIImage(named: "yes48")
-        let imageNo = UIImage(named: "no48")
-        let imageAdd = UIImage(named: "add48")?.withRenderingMode(.alwaysTemplate)
-
-        cell.detailTextLabel?.text = "Veuillez choisir une valeur"
-        cell.detailTextLabel?.font = UIFont(name: "Arial", size: 25)
-        cell.detailTextLabel?.textColor = .red
-        cell.accessoryView = UIImageView(image: imageNo)
-
-        cell.textLabel?.numberOfLines = 0
-
-        cell.textLabel?.font = UIFont(name: "Arial", size: 15)
+        let cell = tableView.dequeueReusableCell(withIdentifier: culturalPraticeViewModel.cellId, for: indexPath) as? SubtitleTableViewCell
+        
         switch culturalPraticeViewModel.getCulturePracticeElement(by: indexPath) {
         case .culturalPracticeAddElement(let addElement):
-            return culturalPraticeViewModel.initCellFor(addElement: addElement, for: cell)
+            return culturalPraticeViewModel.initCellFor(addElement: addElement, cell: cell!)
 
         case .culturalPracticeInputElement(let inputElement):
-            cell.contentView.viewWithTag(ContainerElementView.TAG)?.removeFromSuperview()
-            cell.contentView.sizeToFit()
-             cell.contentView.sizeToFit()
-            cell.textLabel?.text = inputElement.titleInput
-            cell.detailTextLabel?.textColor = .green
-            cell.accessoryView = UIImageView(image: imageYes)
-            cell.detailTextLabel?.text = "28 kg/h"
+            return culturalPraticeViewModel.initCellFor(inputElement: inputElement, cell: cell!)
 
         case .culturalPracticeInputMultiSelectContainer(let inputMultiSelectContainer):
-            return culturalPraticeViewModel.initCellFor(containerElement: inputMultiSelectContainer, for: cell)
+            return culturalPraticeViewModel.initCellFor(containerElement: inputMultiSelectContainer, cell: cell!)
         case .culturalPracticeMultiSelectElement(let multiSelectElement):
-            cell.contentView.viewWithTag(ContainerElementView.TAG)?.removeFromSuperview()
-            cell.contentView.sizeToFit()
-            let no = UIImageView(image: imageNo)
-             cell.accessoryView = no
-            no.sizeToFit()
-
-            cell.textLabel?.text = multiSelectElement.title
+            return culturalPraticeViewModel.initCellFor(multiSelectElement: multiSelectElement, cell: cell!)
         }
-
-        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        culturalPraticeViewModel.handle(didSelectRowAt: indexPath)
     }
 
 }

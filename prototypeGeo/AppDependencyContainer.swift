@@ -15,7 +15,12 @@ class AppDependencyContainerImpl: AppDependencyContainer {
     let stateStore: Store<AppState> = {
         return Store(
             reducer: Reducers.appReducer,
-            state: AppState(farmerState: FarmerState(), mapFieldState: MapState()),
+            state: AppState(
+                farmerState: FarmerState(),
+                mapFieldState: MapState(),
+                culturalPracticeState: CulturalPracticeState(uuidState: UUID().uuidString),
+                culturalPracticeFormState: CulturalPracticeFormState(uuidState: UUID().uuidString)
+            ),
             middleware: [
                 FarmerMiddleware.shared.makeGetFarmersMiddleware(),
                 MapFieldMiddleware.shared.makeGetAllFieldMiddleware()
@@ -105,10 +110,15 @@ class AppDependencyContainerImpl: AppDependencyContainer {
     func processInitCulturalPracticeViewController() -> CulturalPraticeViewController {
         mapDependencyContainer.makeCulturalPracticeViewController()
     }
+    
+    func processInitCulturalPracticeFormViewController() -> CulturalPracticeFormViewController {
+        mapDependencyContainer.makeCulturalPracticeFormController()
+    }
 }
 
 protocol AppDependencyContainer {
     func proccessInitTabBarController() -> UITabBarController
     func processInitContainerMapAndFieldNavigation() -> ContainerMapAndListFieldViewController
     func processInitCulturalPracticeViewController() -> CulturalPraticeViewController
+    func processInitCulturalPracticeFormViewController() -> CulturalPracticeFormViewController
 }

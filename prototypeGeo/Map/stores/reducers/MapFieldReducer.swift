@@ -29,13 +29,6 @@ extension Reducers {
                 .map {
                     state.fieldListState = $0
                 }
-        case let selectedFieldOnList as MapFieldAction.SelectedFieldOnListAction:
-            state.culturalPracticeState = MapFieldReducerHandler.handle(selectedFieldOnListAction: selectedFieldOnList)
-        case let addCulturalPracticeContainerAction as MapFieldAction.AddCulturalPracticeInputMultiSelectContainer:
-                MapFieldReducerHandler.handle(
-                    addCulturalPracticeContainerAction: addCulturalPracticeContainerAction,
-                    state: state.culturalPracticeState
-                ).map { state.culturalPracticeState = $0 }
         default:
             break
         }
@@ -84,60 +77,6 @@ class MapFieldReducerHandler {
         }
     }
 
-    static func handle(selectedFieldOnListAction: MapFieldAction.SelectedFieldOnListAction) -> CulturalPracticeState {
-        switch selectedFieldOnListAction.fieldType {
-        case .polygon(let fieldPolygone):
-            let culturalPracticeElements = CulturalPractice.getCulturalPracticeElement(culturalPractice: fieldPolygone.culturalPratice)
-
-            return CulturalPracticeState(
-                uuidState: UUID().uuidString,
-                currentField: selectedFieldOnListAction.fieldType,
-                sections: createSection(by: culturalPracticeElements),
-                tableState: .reloadData
-            )
-
-        case .multiPolygon(let fieldMultiPolygon):
-            let culturalPracticeElements = CulturalPractice.getCulturalPracticeElement(culturalPractice: fieldMultiPolygon.culturalPratice)
-
-            return CulturalPracticeState(
-                uuidState: UUID().uuidString,
-                currentField: selectedFieldOnListAction.fieldType,
-                sections: createSection(by: culturalPracticeElements),
-                tableState: .reloadData
-            )
-        }
-    }
-
-    static func handle(
-        addCulturalPracticeContainerAction: MapFieldAction.AddCulturalPracticeInputMultiSelectContainer,
-        state: CulturalPracticeState
-    ) -> CulturalPracticeState? {
-        let sectionIndex = findAddElementIndex(from: state.sections!)
-
-        if sectionIndex != nil {
-            let inputMultiSelectContainer = CulturalPractice
-            .createCulturalPracticeInputMultiSelectContainer(
-                index: addCulturalPracticeContainerAction.index
-            )
-
-            return setCulturalPractice(state: state, sectionIndex!, inputMultiSelectContainer)
-        }
-
-        return nil
-    }
-
-    private static func findAddElementIndex(from sections: [Section<CulturalPracticeElement>]) -> Int? {
-        sections.firstIndex(where: { (section: Section<CulturalPracticeElement>) -> Bool in
-            guard !(section.rowData.isEmpty),
-                case CulturalPracticeElement.culturalPracticeAddElement(_) = section.rowData[0]
-                else {
-                    return false
-                }
-
-            return true
-        })
-    }
-
     private static func setCulturalPractice(
         state: CulturalPracticeState,
         _ sectionIndex: Int,
@@ -156,21 +95,6 @@ class MapFieldReducerHandler {
         )
 
         return copyState
-    }
-
-    private static func createSection(by culturalPracticeElements: [CulturalPracticeElement]) -> [Section<CulturalPracticeElement>] {
-        culturalPracticeElements.map { (culturalPracticeElement: CulturalPracticeElement) -> Section<CulturalPracticeElement> in
-            switch culturalPracticeElement {
-            case .culturalPracticeMultiSelectElement(let multiSelectElement):
-                return Section<CulturalPracticeElement>(sectionName: multiSelectElement.title, rowData: [culturalPracticeElement])
-            case .culturalPracticeAddElement(let addElement):
-                return Section<CulturalPracticeElement>(sectionName: addElement.title, rowData: [culturalPracticeElement])
-            case .culturalPracticeInputElement(let inputElement):
-                return Section<CulturalPracticeElement>(sectionName: inputElement.titleInput, rowData: [culturalPracticeElement])
-            case .culturalPracticeInputMultiSelectContainer(let containerInputMultiSelect):
-                return Section<CulturalPracticeElement>(sectionName: containerInputMultiSelect.title, rowData: [culturalPracticeElement])
-            }
-        }
     }
 
     private static func handleRemoveFieldInState(fieldList: [FieldType], index: Int) -> FieldListState {
