@@ -28,7 +28,7 @@ public class MapDependencyContainerImpl: MapDependencyContainer {
     }
     
     func makeCulturalPracticeFormViewModel() -> CulturalPracticeFormViewModel {
-        CulturalPracticeFormViewModel(culturalPracticeFormObs: makeCulturalPracticeFormStateObservalbe())
+        CulturalPracticeFormViewModelImpl(culturalPracticeFormObs: makeCulturalPracticeFormStateObservalbe())
     }
     
     func makeCulturalPracticeFormController() -> CulturalPracticeFormViewController {

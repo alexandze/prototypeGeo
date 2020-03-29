@@ -10,6 +10,8 @@
 		9805683423B92DD40056D199 /* FarmerFormated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9805683323B92DD40056D199 /* FarmerFormated.swift */; };
 		9805683823B954630056D199 /* FarmerTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9805683723B954630056D199 /* FarmerTableViewModel.swift */; };
 		9809EDB92428039A00895382 /* prototypeGeoTests1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9809EDB82428039A00895382 /* prototypeGeoTests1.swift */; };
+		980ECA142430261700AAD0AB /* CuturalPracticeFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980ECA132430261700AAD0AB /* CuturalPracticeFormView.swift */; };
+		980ECA162430286D00AAD0AB /* HeaderPresentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980ECA152430286D00AAD0AB /* HeaderPresentedView.swift */; };
 		9810DA42242F0FCA00545A23 /* CulturalPracticeFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9810DA41242F0FCA00545A23 /* CulturalPracticeFormViewController.swift */; };
 		9810DA44242F0FE800545A23 /* CulturalPracticeFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9810DA43242F0FE800545A23 /* CulturalPracticeFormViewModel.swift */; };
 		9810DA46242F114700545A23 /* CulturalPracticeFormState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9810DA45242F114700545A23 /* CulturalPracticeFormState.swift */; };
@@ -122,6 +124,8 @@
 		9809EDB62428039A00895382 /* prototypeGeoTests1.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = prototypeGeoTests1.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9809EDB82428039A00895382 /* prototypeGeoTests1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = prototypeGeoTests1.swift; sourceTree = "<group>"; };
 		9809EDBA2428039A00895382 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		980ECA132430261700AAD0AB /* CuturalPracticeFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuturalPracticeFormView.swift; sourceTree = "<group>"; };
+		980ECA152430286D00AAD0AB /* HeaderPresentedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderPresentedView.swift; sourceTree = "<group>"; };
 		9810DA41242F0FCA00545A23 /* CulturalPracticeFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalPracticeFormViewController.swift; sourceTree = "<group>"; };
 		9810DA43242F0FE800545A23 /* CulturalPracticeFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalPracticeFormViewModel.swift; sourceTree = "<group>"; };
 		9810DA45242F114700545A23 /* CulturalPracticeFormState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalPracticeFormState.swift; sourceTree = "<group>"; };
@@ -421,6 +425,8 @@
 				98457B672423E64F00AF4C90 /* CulturalPraticeView.swift */,
 				98DB0F4A242866C50065963B /* SubtitleTableViewCell.swift */,
 				988F035C242B0A1B00545D59 /* ContainerElementView.swift */,
+				980ECA132430261700AAD0AB /* CuturalPracticeFormView.swift */,
+				980ECA152430286D00AAD0AB /* HeaderPresentedView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -801,6 +807,7 @@
 				98BA0D7B240CDC2800948A26 /* ContainerFieldNavigationViewController.swift in Sources */,
 				9810DA44242F0FE800545A23 /* CulturalPracticeFormViewModel.swift in Sources */,
 				98D1929E23C03CF900BF9A7A /* FarmerMiddleware.swift in Sources */,
+				980ECA162430286D00AAD0AB /* HeaderPresentedView.swift in Sources */,
 				9810DA4C242F1EEE00545A23 /* CulturalPracticeFormReducer.swift in Sources */,
 				98DB0F4D24286CED0065963B /* UIButtonWithData.swift in Sources */,
 				9854C003240BC60400E5AB8A /* ContainerVIewControllers.swift in Sources */,
@@ -813,6 +820,7 @@
 				98BA0D7D240CDDD000948A26 /* UIViewControllerExtension.swift in Sources */,
 				98363B6023DFF7EA00AFFC63 /* MapFieldView.swift in Sources */,
 				9810DA42242F0FCA00545A23 /* CulturalPracticeFormViewController.swift in Sources */,
+				980ECA142430261700AAD0AB /* CuturalPracticeFormView.swift in Sources */,
 				9805683823B954630056D199 /* FarmerTableViewModel.swift in Sources */,
 				98B9992423B50E0800CA7EF9 /* Section.swift in Sources */,
 				98B9991023B5076000CA7EF9 /* prototypeGeo.xcdatamodeld in Sources */,

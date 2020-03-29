@@ -7,8 +7,12 @@
 //
 
 import Foundation
+import ReSwift
+
 struct CulturalPracticeFormAction {
-    struct SelectedElementOnList {
+    struct SelectedElementOnList: Action  {
         let culturalPracticeElement: CulturalPracticeElement
+        let fieldType: FieldType
+        let culturalPracticeFormSubAction: CulturalPracticeFormSubAction
     }
 }

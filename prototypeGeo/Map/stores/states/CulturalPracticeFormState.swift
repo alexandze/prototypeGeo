@@ -14,4 +14,11 @@ struct CulturalPracticeFormState: Equatable {
     
     var uuidState: String
     var culturalPraticeElement: CulturalPracticeElement?
+    var fieldType: FieldType?
+    var culturalPracticeSubAction: CulturalPracticeFormSubAction?
+}
+
+enum CulturalPracticeFormSubAction {
+    case newDataForm
+    case printAlert
 }

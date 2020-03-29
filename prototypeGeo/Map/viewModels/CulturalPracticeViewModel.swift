@@ -77,7 +77,18 @@ class CulturalPraticeViewModelImpl: CulturalPraticeViewModel {
     }
     
     func handle(didSelectRowAt indexPath: IndexPath) {
+        if case CulturalPracticeElement.culturalPracticeAddElement(_) = sections![indexPath.section].rowData[indexPath.row] {
+            return
+        }
+        let selectedElement = CulturalPracticeFormAction.SelectedElementOnList(
+            culturalPracticeElement: sections![indexPath.section].rowData[indexPath.row],
+            fieldType: self.currentField!,
+            culturalPracticeFormSubAction: CulturalPracticeFormSubAction.newDataForm
+        )
         
+        self.actionDispatcher.dispatch(selectedElement)
+        let appDependency = viewController!.getAppDelegate()!.appDependencyContainer
+        viewController?.present(appDependency.processInitCulturalPracticeFormViewController(), animated: true)
     }
     
     func initCellFor(multiSelectElement: CulturalPracticeMultiSelectElement, cell: UITableViewCell) -> UITableViewCell {

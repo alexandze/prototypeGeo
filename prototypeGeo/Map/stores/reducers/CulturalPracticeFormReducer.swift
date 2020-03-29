@@ -26,6 +26,11 @@ extension Reducers {
 
 class CulturalPracticeFormReducerHandler {
     static func handle(selectedElementOnList: CulturalPracticeFormAction.SelectedElementOnList) -> CulturalPracticeFormState {
-        CulturalPracticeFormState(uuidState: UUID().uuidString, culturalPraticeElement: selectedElementOnList.culturalPracticeElement)
+        CulturalPracticeFormState(
+            uuidState: UUID().uuidString,
+            culturalPraticeElement: selectedElementOnList.culturalPracticeElement,
+            fieldType: selectedElementOnList.fieldType,
+            culturalPracticeSubAction: selectedElementOnList.culturalPracticeFormSubAction
+        )
     }
 }

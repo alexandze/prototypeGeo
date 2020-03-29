@@ -31,4 +31,12 @@ class Util {
             }
         }
     }
+    
+    static func getBackgroundColor() -> UIColor {
+        .systemGray6
+    }
+    
+    static func getAlphaValue() -> CGFloat {
+        0.95
+    }
 }
