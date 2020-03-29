@@ -20,24 +20,24 @@ class HeaderPresentedView: UIView {
         initConstraintButtonClose()
         initConstraintLabelTitle()
     }
-    
+
     public var textTitle: String = "" {
         didSet {
             titleLable.text = textTitle
         }
     }
-    
+
     func handleCloseButtonWith(_ handleFunc: @escaping (() -> Void)) {
         self.handleCloseButtonFunc = handleFunc
     }
-    
+
     private let buttonClose: UIButton  = {
         let button = UIButton(type: .close)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(handleClose(button:)), for: .touchUpInside)
         return button
     }()
-    
+
     private let titleLable: UILabel = {
         let label = UILabel()
         label.textColor = Util.getOppositeColorBlackOrWhite()
@@ -47,25 +47,25 @@ class HeaderPresentedView: UIView {
         label.numberOfLines = 0
         return label
     }()
-    
+
     private var handleCloseButtonFunc: (() -> Void)?
-    
+
     @objc private func handleClose(button: UIButton) {
         handleCloseButtonFunc?()
     }
-    
+
     private func addSubviewInSuperView() {
         addSubview(buttonClose)
         addSubview(titleLable)
     }
-    
+
     private func initConstraintButtonClose() {
         NSLayoutConstraint.activate([
             buttonClose.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
             buttonClose.topAnchor.constraint(equalTo: topAnchor, constant: 5)
         ])
     }
-    
+
     private func initConstraintLabelTitle() {
         NSLayoutConstraint.activate([
             titleLable.centerXAnchor.constraint(equalTo: centerXAnchor),

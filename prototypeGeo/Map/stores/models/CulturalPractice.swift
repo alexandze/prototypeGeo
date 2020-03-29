@@ -195,7 +195,7 @@ enum CulturalPracticeValue {
 */
 
 enum Avaloir: Int, CulturalPracticeValueProtocol {
-    
+
     case absente = 1
     case captagePartiel
     case captageSystematique
@@ -309,7 +309,7 @@ enum BandeRiveraine: Int, CulturalPracticeValueProtocol {
 }
 
 enum DoseFumier: CulturalPracticeValueProtocol {
-    
+
     case dose(quantite: Int)
 
     static func getTitle() -> String {
@@ -329,7 +329,7 @@ enum DoseFumier: CulturalPracticeValueProtocol {
     static func getKey(id: Int) -> KeyCulturalPracticeData {
         KeyCulturalPracticeData.doseFumier(id: id)
     }
-    
+
     static func getValues() -> [(CulturalPracticeValueProtocol, String)]? {
         return nil
     }
@@ -444,7 +444,7 @@ enum PeriodeApplicationFumier: Int, CulturalPracticeValueProtocol {
 }
 
 enum DelaiIncorporationFumier: Int, CulturalPracticeValueProtocol {
-    
+
     case incorporeEn48H = 1
     case incorporeEn48HA1Semaine
     case superieureA1Semaine
@@ -782,7 +782,7 @@ enum DrainageSouterrain: Int, CulturalPracticeValueProtocol {
     }
 }
 
-enum DrainageSurface: Int, CulturalPracticeValueProtocol{
+enum DrainageSurface: Int, CulturalPracticeValueProtocol {
     case bon = 1
     case moyen
     case mauvais
@@ -835,7 +835,7 @@ enum DrainageSurface: Int, CulturalPracticeValueProtocol{
     }
 }
 
-enum ConditionProfilCultural: CulturalPracticeValueProtocol{
+enum ConditionProfilCultural: CulturalPracticeValueProtocol {
     case bonne
     case presenceZoneRisques
     case dominanceZoneRisque
@@ -939,15 +939,14 @@ enum TauxApplicationPhosphoreRang: CulturalPracticeValueProtocol {
             )
         )
     }
-    
+
     static func getValues() -> [(CulturalPracticeValueProtocol, String)]? {
         nil
     }
 }
 
 enum TauxApplicationPhosphoreVolee: CulturalPracticeValueProtocol {
-    
-    
+
     case taux(KilogramPerHectare)
 
     static func getTitle() -> String {
@@ -967,7 +966,7 @@ enum TauxApplicationPhosphoreVolee: CulturalPracticeValueProtocol {
     static func getKey() -> KeyCulturalPracticeData {
         KeyCulturalPracticeData.tauxApplicationPhosphoreVolee
     }
-    
+
     static func getValues() -> [(CulturalPracticeValueProtocol, String)]? {
         nil
     }
@@ -1013,15 +1012,14 @@ enum PMehlich3: CulturalPracticeValueProtocol {
             )
         )
     }
-    
+
     static func getValues() -> [(CulturalPracticeValueProtocol, String)]? {
         nil
     }
 }
 
 enum AlMehlich3: CulturalPracticeValueProtocol {
-    
-    
+
     case taux(Percentage)
 
     static func getTitle() -> String {
@@ -1051,7 +1049,7 @@ enum AlMehlich3: CulturalPracticeValueProtocol {
             )
         )
     }
-    
+
     static func getValues() -> [(CulturalPracticeValueProtocol, String)]? {
         nil
     }

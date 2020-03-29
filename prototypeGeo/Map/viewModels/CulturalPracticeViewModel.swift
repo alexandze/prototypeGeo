@@ -75,7 +75,7 @@ class CulturalPraticeViewModelImpl: CulturalPraticeViewModel {
     func getCulturePracticeElement(by indexPath: IndexPath) -> CulturalPracticeElement {
         sections![indexPath.section].rowData[indexPath.row]
     }
-    
+
     func handle(didSelectRowAt indexPath: IndexPath) {
         if case CulturalPracticeElement.culturalPracticeAddElement(_) = sections![indexPath.section].rowData[indexPath.row] {
             return
@@ -85,12 +85,12 @@ class CulturalPraticeViewModelImpl: CulturalPraticeViewModel {
             fieldType: self.currentField!,
             culturalPracticeFormSubAction: CulturalPracticeFormSubAction.newDataForm
         )
-        
+
         self.actionDispatcher.dispatch(selectedElement)
         let appDependency = viewController!.getAppDelegate()!.appDependencyContainer
         viewController?.present(appDependency.processInitCulturalPracticeFormViewController(), animated: true)
     }
-    
+
     func initCellFor(multiSelectElement: CulturalPracticeMultiSelectElement, cell: UITableViewCell) -> UITableViewCell {
         removeContainerElementViewTo(containerView: cell.contentView)
         config(labelTitle: cell.textLabel, culturalPracticeElementProtocol: multiSelectElement)
@@ -123,52 +123,52 @@ class CulturalPraticeViewModelImpl: CulturalPraticeViewModel {
         container.addViewTo(contentView: cell.contentView)
         return cell
     }
-    
+
     func initCellFor(inputElement: CulturalPracticeInputElement, cell: UITableViewCell) -> UITableViewCell {
         removeContainerElementViewTo(containerView: cell.contentView)
         config(
             labelTitle: cell.textLabel,
             culturalPracticeElementProtocol: inputElement
         )
-        
+
         config(detailLabel: cell.detailTextLabel, culturalPracticeValueProtocol: inputElement.value)
         configAccessoryView(of: cell, culturalPracticeProtocol: inputElement.value)
         return cell
     }
-    
+
     private func config(labelTitle: UILabel?, culturalPracticeElementProtocol: CulturalPracticeElementProtocol) {
         labelTitle?.font = UIFont(name: "Arial", size: 15)
         labelTitle?.textColor = .white
         labelTitle?.numberOfLines = 0
         labelTitle?.text = culturalPracticeElementProtocol.title
     }
-    
+
     private func config(detailLabel: UILabel?, culturalPracticeValueProtocol: CulturalPracticeValueProtocol?) {
         detailLabel?.font = UIFont(name: "Arial", size: 25)
         detailLabel?.numberOfLines = 0
-        
+
         if culturalPracticeValueProtocol != nil {
             detailLabel?.text = culturalPracticeValueProtocol!.getValue()
             detailLabel?.textColor = .green
             return
         }
-        
+
         detailLabel?.text = NSLocalizedString("Veuillez choisir une valeur", comment: "Veuillez choisir une valuer")
         detailLabel?.textColor = .red
     }
-    
+
     private func configAccessoryView(of cell: UITableViewCell, culturalPracticeProtocol: CulturalPracticeValueProtocol?) {
         if culturalPracticeProtocol != nil {
             let imageViewYes = UIImageView(image: getImageIconYes())
             cell.accessoryView = imageViewYes
             return imageViewYes.sizeToFit()
         }
-        
+
         let imageViewNo = UIImageView(image: getImageIconNo())
         cell.accessoryView = imageViewNo
         imageViewNo.sizeToFit()
     }
-    
+
     private func removeContainerElementViewTo(containerView: UIView) {
         containerView.viewWithTag(ContainerElementView.TAG)?.removeFromSuperview()
     }

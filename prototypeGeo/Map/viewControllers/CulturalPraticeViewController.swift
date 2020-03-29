@@ -80,7 +80,7 @@ class CulturalPraticeViewController: UIViewController, UITableViewDelegate, UITa
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: culturalPraticeViewModel.cellId, for: indexPath) as? SubtitleTableViewCell
-        
+
         switch culturalPraticeViewModel.getCulturePracticeElement(by: indexPath) {
         case .culturalPracticeAddElement(let addElement):
             return culturalPraticeViewModel.initCellFor(addElement: addElement, cell: cell!)
@@ -94,7 +94,7 @@ class CulturalPraticeViewController: UIViewController, UITableViewDelegate, UITa
             return culturalPraticeViewModel.initCellFor(multiSelectElement: multiSelectElement, cell: cell!)
         }
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         culturalPraticeViewModel.handle(didSelectRowAt: indexPath)
     }

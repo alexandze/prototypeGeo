@@ -110,7 +110,7 @@ class AppDependencyContainerImpl: AppDependencyContainer {
     func processInitCulturalPracticeViewController() -> CulturalPraticeViewController {
         mapDependencyContainer.makeCulturalPracticeViewController()
     }
-    
+
     func processInitCulturalPracticeFormViewController() -> CulturalPracticeFormViewController {
         mapDependencyContainer.makeCulturalPracticeFormController()
     }

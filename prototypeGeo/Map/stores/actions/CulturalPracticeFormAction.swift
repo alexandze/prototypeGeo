@@ -10,7 +10,7 @@ import Foundation
 import ReSwift
 
 struct CulturalPracticeFormAction {
-    struct SelectedElementOnList: Action  {
+    struct SelectedElementOnList: Action {
         let culturalPracticeElement: CulturalPracticeElement
         let fieldType: FieldType
         let culturalPracticeFormSubAction: CulturalPracticeFormSubAction

@@ -12,7 +12,7 @@ import ReSwift
 extension Reducers {
     public static func culturalPracticeReducer(action: Action, state: CulturalPracticeState?) -> CulturalPracticeState {
         var state = state ?? CulturalPracticeState(uuidState: UUID().uuidString)
-        
+
         switch action {
         case let selectedFieldOnList as CulturalPracticeAction.SelectedFieldOnListAction:
             return CulturalPracticeReducerHandler.handle(selectedFieldOnListAction: selectedFieldOnList)
@@ -27,7 +27,7 @@ extension Reducers {
         default:
             break
         }
-        
+
         return state
     }
 }
@@ -56,7 +56,7 @@ class CulturalPracticeReducerHandler {
             )
         }
     }
-    
+
     private static func createSection(by culturalPracticeElements: [CulturalPracticeElement]) -> [Section<CulturalPracticeElement>] {
         culturalPracticeElements.map { (culturalPracticeElement: CulturalPracticeElement) -> Section<CulturalPracticeElement> in
             switch culturalPracticeElement {
@@ -71,7 +71,7 @@ class CulturalPracticeReducerHandler {
             }
         }
     }
-    
+
     static func handle(
         addCulturalPracticeContainerAction: CulturalPracticeAction.AddCulturalPracticeInputMultiSelectContainer,
         state: CulturalPracticeState
@@ -89,7 +89,7 @@ class CulturalPracticeReducerHandler {
 
         return nil
     }
-    
+
     private static func findAddElementIndex(from sections: [Section<CulturalPracticeElement>]) -> Int? {
         sections.firstIndex(where: { (section: Section<CulturalPracticeElement>) -> Bool in
             guard !(section.rowData.isEmpty),
@@ -101,7 +101,7 @@ class CulturalPracticeReducerHandler {
             return true
         })
     }
-    
+
     private static func setCulturalPractice(
         state: CulturalPracticeState,
         _ sectionIndex: Int,

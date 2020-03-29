@@ -15,32 +15,32 @@ class CulturalPracticeFormViewModelImpl: CulturalPracticeFormViewModel {
     var viewController: UIViewController?
     var multiSelectElement: CulturalPracticeMultiSelectElement?
     var hasSubscribeToState = false
-    
+
     init(culturalPracticeFormObs: Observable<CulturalPracticeFormState>) {
         self.culturalPracticeFormObs = culturalPracticeFormObs
     }
-    
+
     func subscribeToCulturalPracticeFormObs() {
         if !hasSubscribeToState {
             hasSubscribeToState = true
-            
+
             disposableCulturalPracticeFormObs = culturalPracticeFormObs.subscribe { event in
                 guard let culturalPracticeElement = event.element?.culturalPraticeElement,
                     let fieldType = event.element?.fieldType,
                     let culturalPracticeFormStateSubAction = event.element?.culturalPracticeSubAction
                     else { return }
-                
+
                 if case CulturalPracticeFormSubAction.printAlert = culturalPracticeFormStateSubAction {
                     //TODO print Alert
                 }
-                
+
                 if case CulturalPracticeFormSubAction.newDataForm = culturalPracticeFormStateSubAction {
                     self.handle(culturalPracticeElement: culturalPracticeElement, fieldType: fieldType)
                 }
             }
         }
     }
-    
+
     private func handle(culturalPracticeElement: CulturalPracticeElement, fieldType: FieldType) {
         switch culturalPracticeElement {
         case .culturalPracticeInputElement(let inputElement):
@@ -55,25 +55,32 @@ class CulturalPracticeFormViewModelImpl: CulturalPracticeFormViewModel {
             break
         }
     }
-    
+
     private func handle(multiSelectElement: CulturalPracticeMultiSelectElement, fieldType: FieldType) {
+        //TODO initialiser le picker avec la valeur courante si elle existe
         let formView = getCulturalPracticeFormView()
         self.multiSelectElement = multiSelectElement
         formView.textTitle = multiSelectElement.title
-        
+
         switch fieldType {
         case .polygon(let polygon):
             formView.textDetail = "Choisir une valeur (\(multiSelectElement.title)) pour la parcelle \(polygon.id)"
         case .multiPolygon(let multipolygon):
             formView.textDetail = "Choisir une valeur (\(multiSelectElement.title)) pour la parcelle \(multipolygon.id)"
         }
-        
+
         let pickerView = UIPickerView()
-        pickerView.delegate = getCulturalPracticeFormController()
-        pickerView.dataSource = getCulturalPracticeFormController()
+        pickerView.delegate = getCulturalPracticeFormViewController()
+        pickerView.dataSource = getCulturalPracticeFormViewController()
         getCulturalPracticeFormView().initPickerView(pickerView: pickerView)
+
+        getCulturalPracticeFormView().handleValidateButton {
+            //TODO recuperer la valeur du picker et set culturalPractice element
+            //TODO mettre a jour culturalPracticeElement dans le store
+            self.getCulturalPracticeFormViewController().dismiss(animated: true)
+        }
     }
-    
+
     func handle(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: pickerView.frame.width * 0.9, height: 90))
         label.textAlignment = .center
@@ -83,28 +90,27 @@ class CulturalPracticeFormViewModelImpl: CulturalPracticeFormViewModel {
         label.sizeToFit()
         return label
     }
-    
+
     func handle(numberOfRowsInComponent component: Int) -> Int {
         self.multiSelectElement!.tupleCulturalTypeValue.count
     }
-    
-    
+
     func handle(titleForRow row: Int) -> String {
         self.multiSelectElement!.tupleCulturalTypeValue[row].1
     }
-    
+
     private func getCulturalPracticeFormView() -> CuturalPracticeFormView {
         (viewController as! CulturalPracticeFormViewController).culturalPracticeFormView
     }
-    
-    private func getCulturalPracticeFormController() -> CulturalPracticeFormViewController {
+
+    private func getCulturalPracticeFormViewController() -> CulturalPracticeFormViewController {
         viewController as! CulturalPracticeFormViewController
     }
-    
+
     func disposeToCulturalPracticeFormObs() {
         disposableCulturalPracticeFormObs?.dispose()
     }
-    
+
     func initHandleCloseButton() {
         if let formViewController = viewController as? CulturalPracticeFormViewController {
             formViewController.culturalPracticeFormView.handleCloseButton {

@@ -18,7 +18,7 @@ public class MapDependencyContainerImpl: MapDependencyContainer {
         self.stateStore = stateStore
     }
     // MARK: - Methods CulturalPracticeForm
-    
+
     func makeCulturalPracticeFormStateObservalbe() -> Observable<CulturalPracticeFormState> {
         self.stateStore.makeObservable { (subscription: Subscription<AppState>) -> Subscription<CulturalPracticeFormState> in
             subscription
@@ -26,11 +26,11 @@ public class MapDependencyContainerImpl: MapDependencyContainer {
                 .skip { $0.uuidState == $1.uuidState }
         }
     }
-    
+
     func makeCulturalPracticeFormViewModel() -> CulturalPracticeFormViewModel {
         CulturalPracticeFormViewModelImpl(culturalPracticeFormObs: makeCulturalPracticeFormStateObservalbe())
     }
-    
+
     func makeCulturalPracticeFormController() -> CulturalPracticeFormViewController {
         CulturalPracticeFormViewController(culturalPracticeFormViewModel: makeCulturalPracticeFormViewModel())
     }

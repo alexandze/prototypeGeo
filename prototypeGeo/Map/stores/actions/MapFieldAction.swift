@@ -24,5 +24,4 @@ struct MapFieldAction {
         let fieldType: FieldType
     }
 
-    
 }

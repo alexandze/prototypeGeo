@@ -11,7 +11,7 @@ struct CulturalPracticeFormState: Equatable {
     static func == (lhs: CulturalPracticeFormState, rhs: CulturalPracticeFormState) -> Bool {
         lhs.uuidState == rhs.uuidState
     }
-    
+
     var uuidState: String
     var culturalPraticeElement: CulturalPracticeElement?
     var fieldType: FieldType?
