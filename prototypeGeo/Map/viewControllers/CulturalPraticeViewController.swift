@@ -71,27 +71,29 @@ class CulturalPraticeViewController: UIViewController, UITableViewDelegate, UITa
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let element = culturalPraticeViewModel.getCulturePracticeElement(by: indexPath)
 
-        if case CulturalPracticeElement.culturalPracticeInputMultiSelectContainer(_) = element {
+        if let _ = element as? CulturalPracticeInputMultiSelectContainer {
             return 350
         }
 
-        return 80
+        return 100
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: culturalPraticeViewModel.cellId, for: indexPath) as? SubtitleTableViewCell
 
         switch culturalPraticeViewModel.getCulturePracticeElement(by: indexPath) {
-        case .culturalPracticeAddElement(let addElement):
+        case let addElement as CulturalPracticeAddElement:
             return culturalPraticeViewModel.initCellFor(addElement: addElement, cell: cell!)
 
-        case .culturalPracticeInputElement(let inputElement):
+        case let inputElement as CulturalPracticeInputElement:
             return culturalPraticeViewModel.initCellFor(inputElement: inputElement, cell: cell!)
 
-        case .culturalPracticeInputMultiSelectContainer(let inputMultiSelectContainer):
+        case let inputMultiSelectContainer as CulturalPracticeInputMultiSelectContainer:
             return culturalPraticeViewModel.initCellFor(containerElement: inputMultiSelectContainer, cell: cell!)
-        case .culturalPracticeMultiSelectElement(let multiSelectElement):
+        case let multiSelectElement as CulturalPracticeMultiSelectElement:
             return culturalPraticeViewModel.initCellFor(multiSelectElement: multiSelectElement, cell: cell!)
+        default:
+            return cell!
         }
     }
 

@@ -154,11 +154,11 @@ class ContainerElementView: UIView {
         return (inputTitlesValues + multiSlectTitlesValues)
     }
 
-    private func initLabelTitleAndValueWith(culturalInputElement: [CulturalPracticeElement]) -> [(UILabel, (UILabel, UIImageView))] {
+    private func initLabelTitleAndValueWith(culturalInputElement: [CulturalPracticeElementProtocol]) -> [(UILabel, (UILabel, UIImageView))] {
         var labelTitleValue: [(UILabel, (UILabel, UIImageView))] = []
 
         (0..<culturalInputElement.count).forEach { index in
-            if case .culturalPracticeInputElement(let culturalPracticeInputElement) = culturalInputElement[index] {
+            if let culturalPracticeInputElement = culturalInputElement[index] as? CulturalPracticeInputElement {
 
                 labelTitleValue.append(
                     (
@@ -172,11 +172,11 @@ class ContainerElementView: UIView {
         return labelTitleValue
     }
 
-    private func initLabelTitleAndValueWith(culturalMultiSelectElement: [CulturalPracticeElement]) -> [(UILabel, (UILabel, UIImageView))] {
+    private func initLabelTitleAndValueWith(culturalMultiSelectElement: [CulturalPracticeElementProtocol]) -> [(UILabel, (UILabel, UIImageView))] {
         var labelTitleValue: [(UILabel, (UILabel, UIImageView))] = []
 
         (0..<culturalMultiSelectElement.count).forEach { index in
-            if case CulturalPracticeElement.culturalPracticeMultiSelectElement(let culturalPracticeMultiSelectElement) = culturalMultiSelectElement[index] {
+            if let culturalPracticeMultiSelectElement = culturalMultiSelectElement[index] as? CulturalPracticeMultiSelectElement {
                 labelTitleValue.append(
                     (
                         createLabelFor(title: culturalPracticeMultiSelectElement.title),

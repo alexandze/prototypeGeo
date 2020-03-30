@@ -17,4 +17,8 @@ struct CulturalPracticeAction {
     struct AddCulturalPracticeInputMultiSelectContainer: Action {
         let index: Int
     }
+
+    struct UpdateCulturalPracticeElement: Action {
+        let culturalPracticeElementProtocol: CulturalPracticeElementProtocol
+    }
 }

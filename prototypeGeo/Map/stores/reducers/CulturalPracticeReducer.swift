@@ -17,13 +17,15 @@ extension Reducers {
         case let selectedFieldOnList as CulturalPracticeAction.SelectedFieldOnListAction:
             return CulturalPracticeReducerHandler.handle(selectedFieldOnListAction: selectedFieldOnList)
         case let addCulturalPracticeContainerAction as CulturalPracticeAction.AddCulturalPracticeInputMultiSelectContainer:
-          let stateNew =  CulturalPracticeReducerHandler.handle(
+            CulturalPracticeReducerHandler.handle(
                 addCulturalPracticeContainerAction: addCulturalPracticeContainerAction,
                 state: state
-            )
-          if stateNew != nil {
-            return stateNew!
-            }
+            ).map { state = $0 }
+        case let updateCulturalPracticeElement as CulturalPracticeAction.UpdateCulturalPracticeElement:
+            CulturalPracticeReducerHandler.handle(
+                updateCulturalPracticeElement: updateCulturalPracticeElement,
+                state: state
+            ).map { state = $0 }
         default:
             break
         }
@@ -33,6 +35,56 @@ extension Reducers {
 }
 
 class CulturalPracticeReducerHandler {
+    static func handle(updateCulturalPracticeElement: CulturalPracticeAction.UpdateCulturalPracticeElement, state: CulturalPracticeState) -> CulturalPracticeState? {
+        let indexPathFind = findCulturalPracticeElementIndex(
+            by: updateCulturalPracticeElement.culturalPracticeElementProtocol,
+            state: state
+        )
+
+        return indexPathFind.map { indexPath in
+            let newSections = update(sections: state.sections!, indexPath, updateCulturalPracticeElement.culturalPracticeElementProtocol)
+
+            return CulturalPracticeState(
+                uuidState: UUID().uuidString,
+                currentField: state.currentField,
+                sections: newSections,
+                culturalPracticeSubState: .updateRows(indexPath: [indexPath])
+            )
+        }
+    }
+
+    static private func update(
+        sections: [Section<CulturalPracticeElementProtocol>],
+        _ indexPath: IndexPath,
+        _ culturalPracticeElementProtocol: CulturalPracticeElementProtocol) -> [Section<CulturalPracticeElementProtocol>] {
+        var copySection = sections
+        copySection[indexPath.section].rowData[indexPath.row] = culturalPracticeElementProtocol
+        return copySection
+    }
+
+    static private func findCulturalPracticeElementIndex(
+        by culturalPracticeElementProtocol: CulturalPracticeElementProtocol,
+        state: CulturalPracticeState
+    ) -> IndexPath? {
+        if let sections = state.sections {
+            var firstIndexRow: Int?
+
+            let firstIndexSection = sections.firstIndex { section in
+                firstIndexRow = section.rowData.firstIndex { culturalPracticeElement in
+                    return culturalPracticeElementProtocol.key == culturalPracticeElement.key
+                }
+
+                return firstIndexRow != nil
+            }
+
+            return firstIndexRow != nil && firstIndexSection != nil
+                ? IndexPath(row: firstIndexRow!, section: firstIndexSection!)
+                : nil
+        }
+
+        return nil
+    }
+
     static func handle(selectedFieldOnListAction: CulturalPracticeAction.SelectedFieldOnListAction) -> CulturalPracticeState {
         switch selectedFieldOnListAction.fieldType {
         case .polygon(let fieldPolygone):
@@ -42,7 +94,7 @@ class CulturalPracticeReducerHandler {
                 uuidState: UUID().uuidString,
                 currentField: selectedFieldOnListAction.fieldType,
                 sections: createSection(by: culturalPracticeElements),
-                tableState: .reloadData
+                culturalPracticeSubState: .reloadData
             )
 
         case .multiPolygon(let fieldMultiPolygon):
@@ -52,23 +104,14 @@ class CulturalPracticeReducerHandler {
                 uuidState: UUID().uuidString,
                 currentField: selectedFieldOnListAction.fieldType,
                 sections: createSection(by: culturalPracticeElements),
-                tableState: .reloadData
+                culturalPracticeSubState: .reloadData
             )
         }
     }
 
-    private static func createSection(by culturalPracticeElements: [CulturalPracticeElement]) -> [Section<CulturalPracticeElement>] {
-        culturalPracticeElements.map { (culturalPracticeElement: CulturalPracticeElement) -> Section<CulturalPracticeElement> in
-            switch culturalPracticeElement {
-            case .culturalPracticeMultiSelectElement(let multiSelectElement):
-                return Section<CulturalPracticeElement>(sectionName: multiSelectElement.title, rowData: [culturalPracticeElement])
-            case .culturalPracticeAddElement(let addElement):
-                return Section<CulturalPracticeElement>(sectionName: addElement.title, rowData: [culturalPracticeElement])
-            case .culturalPracticeInputElement(let inputElement):
-                return Section<CulturalPracticeElement>(sectionName: inputElement.title, rowData: [culturalPracticeElement])
-            case .culturalPracticeInputMultiSelectContainer(let containerInputMultiSelect):
-                return Section<CulturalPracticeElement>(sectionName: containerInputMultiSelect.title, rowData: [culturalPracticeElement])
-            }
+    private static func createSection(by culturalPracticeElements: [CulturalPracticeElementProtocol]) -> [Section<CulturalPracticeElementProtocol>] {
+        culturalPracticeElements.map { (culturalPracticeElement: CulturalPracticeElementProtocol) -> Section<CulturalPracticeElementProtocol> in
+            return Section<CulturalPracticeElementProtocol>(sectionName: culturalPracticeElement.title, rowData: [culturalPracticeElement])
         }
     }
 
@@ -80,8 +123,8 @@ class CulturalPracticeReducerHandler {
 
         if sectionIndex != nil {
             let inputMultiSelectContainer = CulturalPractice
-            .createCulturalPracticeInputMultiSelectContainer(
-                index: addCulturalPracticeContainerAction.index
+                .createCulturalPracticeInputMultiSelectContainer(
+                    index: addCulturalPracticeContainerAction.index
             )
 
             return setCulturalPractice(state: state, sectionIndex!, inputMultiSelectContainer)
@@ -90,10 +133,10 @@ class CulturalPracticeReducerHandler {
         return nil
     }
 
-    private static func findAddElementIndex(from sections: [Section<CulturalPracticeElement>]) -> Int? {
-        sections.firstIndex(where: { (section: Section<CulturalPracticeElement>) -> Bool in
+    private static func findAddElementIndex(from sections: [Section<CulturalPracticeElementProtocol>]) -> Int? {
+        sections.firstIndex(where: { (section: Section<CulturalPracticeElementProtocol>) -> Bool in
             guard !(section.rowData.isEmpty),
-                case CulturalPracticeElement.culturalPracticeAddElement(_) = section.rowData[0]
+                (section.rowData[0] as? CulturalPracticeAddElement) != nil
                 else {
                     return false
                 }
@@ -105,13 +148,13 @@ class CulturalPracticeReducerHandler {
     private static func setCulturalPractice(
         state: CulturalPracticeState,
         _ sectionIndex: Int,
-        _ inputMultiSelectContainer: CulturalPracticeElement
+        _ inputMultiSelectContainer: CulturalPracticeElementProtocol
     ) -> CulturalPracticeState {
         var copyState = state
 
         copyState.sections![sectionIndex].rowData.append(inputMultiSelectContainer)
         copyState.uuidState = UUID().uuidString
-        copyState.tableState = .insertRows(indexPath: [
+        copyState.culturalPracticeSubState = .insertRows(indexPath: [
             IndexPath(
                 row: copyState.sections![sectionIndex].rowData.count - 1,
                 section: sectionIndex

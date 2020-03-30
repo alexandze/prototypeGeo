@@ -12,4 +12,5 @@ enum TableState {
     case reloadData
     case insertRows(indexPath: [IndexPath])
     case deletedRows(indexPath: [IndexPath])
+    case updateRows(indexPath: [IndexPath])
 }

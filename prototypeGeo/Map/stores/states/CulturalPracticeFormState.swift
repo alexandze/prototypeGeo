@@ -13,7 +13,7 @@ struct CulturalPracticeFormState: Equatable {
     }
 
     var uuidState: String
-    var culturalPraticeElement: CulturalPracticeElement?
+    var culturalPraticeElement: CulturalPracticeElementProtocol?
     var fieldType: FieldType?
     var culturalPracticeSubAction: CulturalPracticeFormSubAction?
 }

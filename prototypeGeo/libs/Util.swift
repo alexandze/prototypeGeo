@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import RxSwift
 
 class Util {
     static func getOppositeColorBlackOrWhite() -> UIColor {
@@ -38,5 +39,9 @@ class Util {
 
     static func getAlphaValue() -> CGFloat {
         0.95
+    }
+
+    static func getSchedulerBackground() -> ConcurrentDispatchQueueScheduler {
+        ConcurrentDispatchQueueScheduler(queue: DispatchQueue.global())
     }
 }

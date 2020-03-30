@@ -80,13 +80,13 @@ class MapFieldReducerHandler {
     private static func setCulturalPractice(
         state: CulturalPracticeState,
         _ sectionIndex: Int,
-        _ inputMultiSelectContainer: CulturalPracticeElement
+        _ inputMultiSelectContainer: CulturalPracticeElementProtocol
     ) -> CulturalPracticeState {
         var copyState = state
 
         copyState.sections![sectionIndex].rowData.append(inputMultiSelectContainer)
         copyState.uuidState = UUID().uuidString
-        copyState.tableState = .insertRows(indexPath: [
+        copyState.culturalPracticeSubState = .insertRows(indexPath: [
             IndexPath(
                 row: copyState.sections![sectionIndex].rowData.count - 1,
                 section: sectionIndex
@@ -101,6 +101,7 @@ class MapFieldReducerHandler {
         let uuid = UUID().uuidString
         var fieldArray = fieldList
         let removed = fieldArray.remove(at: index)
+
         return FieldListState(
             uuidState: uuid,
             fieldList: fieldArray,

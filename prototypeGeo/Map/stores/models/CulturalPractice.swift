@@ -29,7 +29,7 @@ internal struct CulturalPractice {
 
     static let MAX_DOSE_FUMIER = 3
 
-    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> [CulturalPracticeElement] {
+    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> [CulturalPracticeElementProtocol] {
         let culturalPracticeSingleElement = getCulturalPracticeSingleElement(from: culturalPractice)
         let culturalPracticeContainerElement = getCulturalPracticeDynamic(from: culturalPractice)
 
@@ -42,7 +42,7 @@ internal struct CulturalPractice {
 
     static func getCulturalPracticeSingleElement(
         from culturalPractice: CulturalPractice?
-    ) -> [CulturalPracticeElement] {
+    ) -> [CulturalPracticeElementProtocol] {
         [
             Avaloir.getCulturalPracticeElement(culturalPractice: culturalPractice),
             BandeRiveraine.getCulturalPracticeElement(culturalPractice: culturalPractice),
@@ -62,15 +62,14 @@ internal struct CulturalPractice {
                     "Ajouter une dose du fumier",
                     comment: "Title Ajouter une dose du fumier"
                 ),
-                key: .addDoseFunier
+                key: UUID().uuidString
             )
         ]
     }
 
-    static func createCulturalPracticeInputMultiSelectContainer(index: Int) -> CulturalPracticeElement {
-        CulturalPracticeElement.culturalPracticeInputMultiSelectContainer(
+    static func createCulturalPracticeInputMultiSelectContainer(index: Int) -> CulturalPracticeElementProtocol {
             CulturalPracticeInputMultiSelectContainer(
-                key: .inputMultiSelectContainer,
+                key: UUID().uuidString,
                 title: "Dose fumier \(index)",
                 culturalInputElement: [
                     DoseFumier.getCulturalPracticeElement(id: index, culturalPractice: nil)
@@ -80,22 +79,20 @@ internal struct CulturalPractice {
                     DelaiIncorporationFumier.getCulturalPracticeElement(id: index, culturalPractice: nil)
                 ]
             )
-        )
     }
 
-    private static func getCulturalPracticeDynamic(from culturalPractice: CulturalPractice?) -> [CulturalPracticeElement]? {
+    private static func getCulturalPracticeDynamic(from culturalPractice: CulturalPractice?) -> [CulturalPracticeElementProtocol]? {
         guard let culturalPractice = culturalPractice else {
             return nil
         }
 
-        var culturalPracticeElements: [CulturalPracticeElement] = []
+        var culturalPracticeElements: [CulturalPracticeElementProtocol] = []
 
         (0...(MAX_DOSE_FUMIER - 1)).forEach { index in
             if hasValueDoseFumier(culturalPractice: culturalPractice, index: index) {
                 let culturalPracticeInputMultiSelectContainer =
-                        CulturalPracticeElement.culturalPracticeInputMultiSelectContainer(
                     CulturalPracticeInputMultiSelectContainer(
-                        key: .container,
+                        key: UUID().uuidString,
                         title: "Dose fumier \(index + 1)",
                         culturalInputElement: [
                             DoseFumier.getCulturalPracticeElement(id: index, culturalPractice: culturalPractice)
@@ -104,7 +101,6 @@ internal struct CulturalPractice {
                             PeriodeApplicationFumier.getCulturalPracticeElement(id: index, culturalPractice: culturalPractice),
                             DelaiIncorporationFumier.getCulturalPracticeElement(id: index, culturalPractice: culturalPractice)
                         ]
-                    )
                 )
 
                 culturalPracticeElements.append(culturalPracticeInputMultiSelectContainer)
@@ -126,13 +122,11 @@ internal struct CulturalPractice {
 
     static func createCulturalPracticeAddElement(
         title: String,
-        key: KeyCulturalPracticeData
-    ) -> CulturalPracticeElement {
-        CulturalPracticeElement.culturalPracticeAddElement(
-            CulturalPracticeAddElement(
-                key: key,
-                title: title
-            )
+        key: String
+    ) -> CulturalPracticeElementProtocol {
+        CulturalPracticeAddElement(
+            key: key,
+            title: title
         )
     }
 }
@@ -232,18 +226,12 @@ enum Avaloir: Int, CulturalPracticeValueProtocol {
         NSLocalizedString("Avaloir", comment: "Titre avaloir")
     }
 
-    static func getKey() -> KeyCulturalPracticeData {
-        KeyCulturalPracticeData.avaloir
-    }
-
-    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElement {
-        CulturalPracticeElement.culturalPracticeMultiSelectElement(
-            CulturalPracticeMultiSelectElement(
-                key: Avaloir.getKey(),
-                title: Avaloir.getTitle(),
-                tupleCulturalTypeValue: Avaloir.getValues()!,
-                value: culturalPractice?.avaloir
-            )
+    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
+        CulturalPracticeMultiSelectElement(
+            key: UUID().uuidString,
+            title: Avaloir.getTitle(),
+            tupleCulturalTypeValue: Avaloir.getValues()!,
+            value: culturalPractice?.avaloir
         )
     }
 }
@@ -292,18 +280,12 @@ enum BandeRiveraine: Int, CulturalPracticeValueProtocol {
         NSLocalizedString("Bande riveraine", comment: "Titre bande riveraine")
     }
 
-    static func getKey() -> KeyCulturalPracticeData {
-        KeyCulturalPracticeData.bandeRiveraine
-    }
-
-    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElement {
-        CulturalPracticeElement.culturalPracticeMultiSelectElement(
-            CulturalPracticeMultiSelectElement(
-                key: BandeRiveraine.getKey(),
-                title: BandeRiveraine.getTitle(),
-                tupleCulturalTypeValue: BandeRiveraine.getValues()!,
-                value: culturalPractice?.bandeRiveraine
-            )
+    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
+        CulturalPracticeMultiSelectElement(
+            key: UUID().uuidString,
+            title: BandeRiveraine.getTitle(),
+            tupleCulturalTypeValue: BandeRiveraine.getValues()!,
+            value: culturalPractice?.bandeRiveraine
         )
     }
 }
@@ -326,27 +308,22 @@ enum DoseFumier: CulturalPracticeValueProtocol {
         }
     }
 
-    static func getKey(id: Int) -> KeyCulturalPracticeData {
-        KeyCulturalPracticeData.doseFumier(id: id)
-    }
-
     static func getValues() -> [(CulturalPracticeValueProtocol, String)]? {
         return nil
     }
 
-    static func getCulturalPracticeElement(id: Int, culturalPractice: CulturalPractice?) -> CulturalPracticeElement {
+    static func getCulturalPracticeElement(id: Int, culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
         let count = culturalPractice?.doseFumier?.count ?? -1
 
         let doseFumier = count > id
             ? culturalPractice!.doseFumier![id]
             : nil
 
-        return CulturalPracticeElement.culturalPracticeInputElement(
-            CulturalPracticeInputElement(
-                key: getKey(id: id),
-                title: getTitle(),
-                value: doseFumier
-            )
+        return CulturalPracticeInputElement(
+            key: UUID().uuidString,
+            title: getTitle(),
+            value: doseFumier,
+            index: id
         )
     }
 }
@@ -422,23 +399,18 @@ enum PeriodeApplicationFumier: Int, CulturalPracticeValueProtocol {
         )
     }
 
-    static func getKey(id: Int) -> KeyCulturalPracticeData {
-        KeyCulturalPracticeData.periodeApplicationFumier(id: id)
-    }
-
-    static func getCulturalPracticeElement(id: Int, culturalPractice: CulturalPractice?) -> CulturalPracticeElement {
+    static func getCulturalPracticeElement(id: Int, culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
         let count = culturalPractice?.periodeApplicationFumier?.count ?? -1
         let periodeApplicationFumier = count > id
             ? culturalPractice!.periodeApplicationFumier![id]
             : nil
 
-        return CulturalPracticeElement.culturalPracticeMultiSelectElement(
-            CulturalPracticeMultiSelectElement(
-                key: getKey(id: id),
-                title: getTitle(),
-                tupleCulturalTypeValue: getValues()!,
-                value: periodeApplicationFumier
-            )
+        return CulturalPracticeMultiSelectElement(
+            key: UUID().uuidString,
+            title: getTitle(),
+            tupleCulturalTypeValue: getValues()!,
+            value: periodeApplicationFumier,
+            index: id
         )
     }
 }
@@ -515,23 +487,18 @@ enum DelaiIncorporationFumier: Int, CulturalPracticeValueProtocol {
         )
     }
 
-    static func getKey(id: Int) -> KeyCulturalPracticeData {
-        KeyCulturalPracticeData.delaiIncorporationFumier(id: id)
-    }
-
-    static func getCulturalPracticeElement(id: Int, culturalPractice: CulturalPractice?) -> CulturalPracticeElement {
+    static func getCulturalPracticeElement(id: Int, culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
         let count = culturalPractice?.delaiIncorporationFumier?.count ?? -1
         let delaiIncorporationFumier = count > id
             ? culturalPractice!.delaiIncorporationFumier![id]
             : nil
 
-        return CulturalPracticeElement.culturalPracticeMultiSelectElement(
-            CulturalPracticeMultiSelectElement(
-                key: getKey(id: id),
-                title: getTitle(),
-                tupleCulturalTypeValue: getValues()!,
-                value: delaiIncorporationFumier
-            )
+        return CulturalPracticeMultiSelectElement(
+            key: UUID().uuidString,
+            title: getTitle(),
+            tupleCulturalTypeValue: getValues()!,
+            value: delaiIncorporationFumier,
+            index: id
         )
     }
 }
@@ -604,23 +571,18 @@ enum TravailSol: Int, CulturalPracticeValueProtocol {
         NSLocalizedString("Travail du sol", comment: "Title travail du sol")
     }
 
-    static func getKey() -> KeyCulturalPracticeData {
-        KeyCulturalPracticeData.travailSol
-    }
-
-    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElement {
+    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
         let travailSol = culturalPractice?.travailSol != nil
             ? culturalPractice!.travailSol!
             : nil
 
-        return CulturalPracticeElement.culturalPracticeMultiSelectElement(
-            CulturalPracticeMultiSelectElement(
-                key: TravailSol.getKey(),
+        return CulturalPracticeMultiSelectElement(
+                key: UUID().uuidString,
                 title: TravailSol.getTitle(),
                 tupleCulturalTypeValue: getValues()!,
                 value: travailSol
-            )
         )
+
     }
 }
 
@@ -657,22 +619,17 @@ enum CouvertureAssociee: Int, CulturalPracticeValueProtocol {
         )
     }
 
-    static func getKey() -> KeyCulturalPracticeData {
-        KeyCulturalPracticeData.couvertureAssociee
-    }
-
-    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElement {
+    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
         let couvertureAssociee = culturalPractice?.couvertureAssociee != nil
             ? culturalPractice!.couvertureAssociee!
             : nil
 
-        return CulturalPracticeElement.culturalPracticeMultiSelectElement(
+        return
             CulturalPracticeMultiSelectElement(
-                key: getKey(),
+                key: UUID().uuidString,
                 title: getTitle(),
                 tupleCulturalTypeValue: getValues()!,
                 value: couvertureAssociee
-            )
         )
     }
 }
@@ -710,18 +667,12 @@ enum CouvertureDerobee: Int, CulturalPracticeValueProtocol {
         )
     }
 
-    static func getKey() -> KeyCulturalPracticeData {
-        KeyCulturalPracticeData.couvertureDerobee
-    }
-
-    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElement {
-        CulturalPracticeElement.culturalPracticeMultiSelectElement(
-            CulturalPracticeMultiSelectElement(
-                key: getKey(),
-                title: getTitle(),
-                tupleCulturalTypeValue: getValues()!,
-                value: culturalPractice?.couvertureDerobee
-            )
+    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
+        CulturalPracticeMultiSelectElement(
+            key: UUID().uuidString,
+            title: getTitle(),
+            tupleCulturalTypeValue: getValues()!,
+            value: culturalPractice?.couvertureDerobee
         )
     }
 }
@@ -766,18 +717,12 @@ enum DrainageSouterrain: Int, CulturalPracticeValueProtocol {
         )
     }
 
-    static func getKey() -> KeyCulturalPracticeData {
-        KeyCulturalPracticeData.drainageSouterrain
-    }
-
-    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElement {
-        CulturalPracticeElement.culturalPracticeMultiSelectElement(
-            CulturalPracticeMultiSelectElement(
-                key: getKey(),
-                title: getTitle(),
-                tupleCulturalTypeValue: getValues()!,
-                value: culturalPractice?.drainageSouterrain
-            )
+    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
+        CulturalPracticeMultiSelectElement(
+            key: UUID().uuidString,
+            title: getTitle(),
+            tupleCulturalTypeValue: getValues()!,
+            value: culturalPractice?.drainageSouterrain
         )
     }
 }
@@ -819,18 +764,12 @@ enum DrainageSurface: Int, CulturalPracticeValueProtocol {
         NSLocalizedString("Drainage de surface", comment: "Titre Drainage de surface")
     }
 
-    static func getKey() -> KeyCulturalPracticeData {
-        KeyCulturalPracticeData.drainageSurface
-    }
-
-    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElement {
-        return CulturalPracticeElement.culturalPracticeMultiSelectElement(
-            CulturalPracticeMultiSelectElement(
-                key: getKey(),
+    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
+        CulturalPracticeMultiSelectElement(
+                key: UUID().uuidString,
                 title: getTitle(),
                 tupleCulturalTypeValue: getValues()!,
                 value: culturalPractice?.drainageSouterrain
-            )
         )
     }
 }
@@ -893,18 +832,12 @@ enum ConditionProfilCultural: CulturalPracticeValueProtocol {
         )
     }
 
-    static func getKey() -> KeyCulturalPracticeData {
-        KeyCulturalPracticeData.conditionProfilCultural
-    }
-
-    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElement {
-        CulturalPracticeElement.culturalPracticeMultiSelectElement(
-            CulturalPracticeMultiSelectElement(
-                key: getKey(),
-                title: getTitle(),
-                tupleCulturalTypeValue: getValues()!,
-                value: culturalPractice?.conditionProfilCultural
-            )
+    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
+        CulturalPracticeMultiSelectElement(
+            key: UUID().uuidString,
+            title: getTitle(),
+            tupleCulturalTypeValue: getValues()!,
+            value: culturalPractice?.conditionProfilCultural
         )
     }
 }
@@ -926,17 +859,11 @@ enum TauxApplicationPhosphoreRang: CulturalPracticeValueProtocol {
         }
     }
 
-    static func getKey() -> KeyCulturalPracticeData {
-        KeyCulturalPracticeData.tauxApplicationPhosphoreRang
-    }
-
-    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElement {
-        CulturalPracticeElement.culturalPracticeInputElement(
-            CulturalPracticeInputElement(
-                key: getKey(),
-                title: getTitle(),
-                value: culturalPractice?.tauxApplicationPhosphoreRang
-            )
+    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
+        CulturalPracticeInputElement(
+            key: UUID().uuidString,
+            title: getTitle(),
+            value: culturalPractice?.tauxApplicationPhosphoreRang
         )
     }
 
@@ -963,21 +890,15 @@ enum TauxApplicationPhosphoreVolee: CulturalPracticeValueProtocol {
         }
     }
 
-    static func getKey() -> KeyCulturalPracticeData {
-        KeyCulturalPracticeData.tauxApplicationPhosphoreVolee
-    }
-
     static func getValues() -> [(CulturalPracticeValueProtocol, String)]? {
         nil
     }
 
-    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElement {
-        CulturalPracticeElement.culturalPracticeInputElement(
-            CulturalPracticeInputElement(
-                key: getKey(),
-                title: getTitle(),
-                value: culturalPractice?.tauxApplicationPhosphoreVolee
-            )
+    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
+        CulturalPracticeInputElement(
+            key: UUID().uuidString,
+            title: getTitle(),
+            value: culturalPractice?.tauxApplicationPhosphoreVolee
         )
     }
 }
@@ -999,17 +920,11 @@ enum PMehlich3: CulturalPracticeValueProtocol {
         }
     }
 
-    static func getKey() -> KeyCulturalPracticeData {
-        KeyCulturalPracticeData.pMehlich3
-    }
-
-    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElement {
-        CulturalPracticeElement.culturalPracticeInputElement(
-            CulturalPracticeInputElement(
-                key: getKey(),
-                title: getTitle(),
-                value: culturalPractice?.pMehlich3
-            )
+    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
+        CulturalPracticeInputElement(
+            key: UUID().uuidString,
+            title: getTitle(),
+            value: culturalPractice?.pMehlich3
         )
     }
 
@@ -1036,17 +951,11 @@ enum AlMehlich3: CulturalPracticeValueProtocol {
         }
     }
 
-    static func getKey() -> KeyCulturalPracticeData {
-        KeyCulturalPracticeData.alMehlich3
-    }
-
-    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElement {
-        CulturalPracticeElement.culturalPracticeInputElement(
-            CulturalPracticeInputElement(
-                key: getKey(),
-                title: getTitle(),
-                value: culturalPractice?.alMehlich3
-            )
+    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
+        CulturalPracticeInputElement(
+            key: UUID().uuidString,
+            title: getTitle(),
+            value: culturalPractice?.alMehlich3
         )
     }
 
@@ -1157,17 +1066,11 @@ enum CultureAnneeEnCoursAnterieure: CulturalPracticeValueProtocol {
         )
     }
 
-    static func getKey() -> KeyCulturalPracticeData {
-        KeyCulturalPracticeData.cultureAnneeEnCoursAnterieure
-    }
-
-    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElement {
-        CulturalPracticeElement.culturalPracticeInputElement(
-            CulturalPracticeInputElement(
-                key: getKey(),
-                title: getTitle(),
-                value: culturalPractice?.cultureAnneeEnCoursAnterieure
-            )
+    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
+        CulturalPracticeInputElement(
+            key: UUID().uuidString,
+            title: getTitle(),
+            value: culturalPractice?.cultureAnneeEnCoursAnterieure
         )
     }
 }
@@ -1175,38 +1078,57 @@ enum CultureAnneeEnCoursAnterieure: CulturalPracticeValueProtocol {
 typealias KilogramPerHectare = Double
 typealias Percentage = Int
 
-struct CulturalPracticeAddElement {
-    let key: KeyCulturalPracticeData
+struct CulturalPracticeAddElement: CulturalPracticeElementProtocol {
+    let key: String
     let title: String
+    var value: CulturalPracticeValueProtocol?
 }
 
 struct CulturalPracticeInputMultiSelectContainer: CulturalPracticeElementProtocol {
-    let key: KeyCulturalPracticeData
+    let key: String
     let title: String
-    let culturalInputElement: [CulturalPracticeElement]
-    let culturalPracticeMultiSelectElement: [CulturalPracticeElement]
+    let culturalInputElement: [CulturalPracticeElementProtocol]
+    let culturalPracticeMultiSelectElement: [CulturalPracticeElementProtocol]
+    var value: CulturalPracticeValueProtocol?
 }
 
 struct CulturalPracticeMultiSelectElement: CulturalPracticeElementProtocol {
-    let key: KeyCulturalPracticeData
+    let key: String
     var title: String
     var tupleCulturalTypeValue: [(CulturalPracticeValueProtocol, String)]
     var value: CulturalPracticeValueProtocol?
+    var index: Int?
 }
 
 struct CulturalPracticeInputElement: CulturalPracticeElementProtocol {
-    let key: KeyCulturalPracticeData
+    let key: String
     let title: String
     var value: CulturalPracticeValueProtocol?
+    var index: Int?
 }
 
+/*
 enum CulturalPracticeElement {
     case culturalPracticeMultiSelectElement(CulturalPracticeMultiSelectElement)
     case culturalPracticeAddElement(CulturalPracticeAddElement)
     case culturalPracticeInputElement(CulturalPracticeInputElement)
     case culturalPracticeInputMultiSelectContainer(CulturalPracticeInputMultiSelectContainer)
+    
+    func getKey() -> String {
+        switch self {
+        case .culturalPracticeAddElement(let addElement):
+            return addElement.key
+        case .culturalPracticeInputElement(let inputElement):
+            return inputElement.key
+        case .culturalPracticeInputMultiSelectContainer(let container):
+            return container.key
+        case .culturalPracticeMultiSelectElement(let multiSelect):
+            return multiSelect.key
+        }
+    }
 }
-
+ */
+/*
 enum KeyCulturalPracticeData {
     case avaloir
     case bandeRiveraine
@@ -1228,6 +1150,7 @@ enum KeyCulturalPracticeData {
     case inputMultiSelectContainer
     case container
 } // swiftlint:disable:this force_cast
+ */
 
 protocol CulturalPracticeValueProtocol {
     static func getTitle() -> String
@@ -1237,5 +1160,6 @@ protocol CulturalPracticeValueProtocol {
 
 protocol CulturalPracticeElementProtocol {
     var title: String {get}
-    var key: KeyCulturalPracticeData {get}
+    var key: String {get}
+    var value: CulturalPracticeValueProtocol? {get}
 }
