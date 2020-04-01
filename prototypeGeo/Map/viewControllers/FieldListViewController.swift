@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FieldListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+public class FieldListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     let fieldListView: FieldListView
     let tableView: UITableView
@@ -35,37 +35,37 @@ class FieldListViewController: UIViewController, UITableViewDelegate, UITableVie
         self.fieldListViewModel.setTableView(tableView: tableView)
     }
 
-    override func loadView() {
+    public override func loadView() {
         self.view = fieldListView
     }
 
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: self.cellID)
 
         // Do any additional setup after loading the view.
     }
 
-    override func viewWillAppear(_ animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.fieldListViewModel.subscribeToObservableFieldListState()
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
+    public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.fieldListViewModel.dispose()
     }
 
-    func numberOfSections(in tableView: UITableView) -> Int {
+    public func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
        // return fields.count
         return fieldListViewModel.fieldList.count
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: self.cellID, for: indexPath)
         let index = indexPath.row
         let fieldType = fieldListViewModel.fieldList[index]
@@ -87,7 +87,7 @@ class FieldListViewController: UIViewController, UITableViewDelegate, UITableVie
         return cell
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         fieldListViewModel.handle(didSelectRowAt: indexPath)
 
     }

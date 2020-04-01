@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		9805683423B92DD40056D199 /* FarmerFormated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9805683323B92DD40056D199 /* FarmerFormated.swift */; };
 		9805683823B954630056D199 /* FarmerTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9805683723B954630056D199 /* FarmerTableViewModel.swift */; };
-		9809EDB92428039A00895382 /* prototypeGeoTests1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9809EDB82428039A00895382 /* prototypeGeoTests1.swift */; };
 		980ECA142430261700AAD0AB /* CuturalPracticeFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980ECA132430261700AAD0AB /* CuturalPracticeFormView.swift */; };
 		980ECA162430286D00AAD0AB /* HeaderPresentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980ECA152430286D00AAD0AB /* HeaderPresentedView.swift */; };
 		9810DA42242F0FCA00545A23 /* CulturalPracticeFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9810DA41242F0FCA00545A23 /* CulturalPracticeFormViewController.swift */; };
@@ -39,7 +38,6 @@
 		98363B5523DEF0EC00AFFC63 /* MapFieldInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98363B5423DEF0EC00AFFC63 /* MapFieldInteraction.swift */; };
 		98363B6023DFF7EA00AFFC63 /* MapFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98363B5F23DFF7EA00AFFC63 /* MapFieldView.swift */; };
 		98363B6223E028BD00AFFC63 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98363B6123E028BD00AFFC63 /* Util.swift */; };
-		98457B622415E75D00AF4C90 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98457B612415E75D00AF4C90 /* MapKit.framework */; };
 		98457B662423E5FA00AF4C90 /* CulturalPraticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98457B652423E5FA00AF4C90 /* CulturalPraticeViewController.swift */; };
 		98457B682423E64F00AF4C90 /* CulturalPraticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98457B672423E64F00AF4C90 /* CulturalPraticeView.swift */; };
 		98457BAA2427353B00AF4C90 /* CulturalPractice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFE6240A224600E5AB8A /* CulturalPractice.swift */; };
@@ -65,11 +63,22 @@
 		9860400C23BD8EEB00D5B538 /* FarmerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9860400B23BD8EEB00D5B538 /* FarmerState.swift */; };
 		9860400F23BD976800D5B538 /* StoreSubcriberProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9860400E23BD976800D5B538 /* StoreSubcriberProxy.swift */; };
 		9860401123BD9C1700D5B538 /* StoreSubscriptionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9860401023BD9C1700D5B538 /* StoreSubscriptionExtension.swift */; };
+		9888C4D2243465A900B94A94 /* prototypeGeoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9888C4D1243465A900B94A94 /* prototypeGeoTests.swift */; };
 		988F035D242B0A1B00545D59 /* ContainerElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988F035C242B0A1B00545D59 /* ContainerElementView.swift */; };
 		98943408240F901D003C0110 /* SelectedFieldRightCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98943407240F901D003C0110 /* SelectedFieldRightCalloutView.swift */; };
 		9894340A2410C76D003C0110 /* PolygonWithData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989434092410C76D003C0110 /* PolygonWithData.swift */; };
 		9894340C2410FAF0003C0110 /* FieldSelectedViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9894340B2410FAF0003C0110 /* FieldSelectedViewCell.swift */; };
 		9894341624156067003C0110 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 9894341524156067003C0110 /* .swiftlint.yml */; };
+		989BEEB624345F7A0018F1D8 /* ReSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 989BEEB524345F7A0018F1D8 /* ReSwift.framework */; };
+		989BEEB724345F7A0018F1D8 /* ReSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 989BEEB524345F7A0018F1D8 /* ReSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		989BEEB924345F7E0018F1D8 /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 989BEEB824345F7E0018F1D8 /* RxBlocking.framework */; };
+		989BEEBA24345F7E0018F1D8 /* RxBlocking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 989BEEB824345F7E0018F1D8 /* RxBlocking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		989BEEBC24345F850018F1D8 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 989BEEBB24345F840018F1D8 /* RxCocoa.framework */; };
+		989BEEBD24345F850018F1D8 /* RxCocoa.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 989BEEBB24345F840018F1D8 /* RxCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		989BEEBF24345F890018F1D8 /* RxRelay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 989BEEBE24345F890018F1D8 /* RxRelay.framework */; };
+		989BEEC024345F890018F1D8 /* RxRelay.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 989BEEBE24345F890018F1D8 /* RxRelay.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		989BEEC224345F8E0018F1D8 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 989BEEC124345F8E0018F1D8 /* RxSwift.framework */; };
+		989BEEC324345F8E0018F1D8 /* RxSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 989BEEC124345F8E0018F1D8 /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		98A13FBF23C5A75D0087BB22 /* FarmerAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A13FBE23C5A75D0087BB22 /* FarmerAddViewController.swift */; };
 		98A2C548240E696C002A884B /* AnnotationWithData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A2C547240E696C002A884B /* AnnotationWithData.swift */; };
 		98A2C54A240E6BD9002A884B /* PayloadFieldAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A2C549240E6BD9002A884B /* PayloadFieldAnnotation.swift */; };
@@ -98,12 +107,10 @@
 		98DB0F4B242866C50065963B /* SubtitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DB0F4A242866C50065963B /* SubtitleTableViewCell.swift */; };
 		98DB0F4D24286CED0065963B /* UIButtonWithData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DB0F4C24286CED0065963B /* UIButtonWithData.swift */; };
 		98DB0F5724297F960065963B /* TableState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DB0F5624297F960065963B /* TableState.swift */; };
-		AF45707174C76E537F6FAC77 /* libPods-prototypeGeo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D913FCD2E376EA77076135B /* libPods-prototypeGeo.a */; };
-		BEAD991B09FB740A2C3DAAD1 /* libPods-prototypeGeoTests1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58AB89FDEEF3C034DC04AA91 /* libPods-prototypeGeoTests1.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		9809EDBB2428039A00895382 /* PBXContainerItemProxy */ = {
+		9888C4D4243465A900B94A94 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 98B998FA23B5076000CA7EF9 /* Project object */;
 			proxyType = 1;
@@ -112,18 +119,27 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		98B0D5802434586C005F1C42 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				989BEEC324345F8E0018F1D8 /* RxSwift.framework in Embed Frameworks */,
+				989BEEC024345F890018F1D8 /* RxRelay.framework in Embed Frameworks */,
+				989BEEBD24345F850018F1D8 /* RxCocoa.framework in Embed Frameworks */,
+				989BEEB724345F7A0018F1D8 /* ReSwift.framework in Embed Frameworks */,
+				989BEEBA24345F7E0018F1D8 /* RxBlocking.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		0D913FCD2E376EA77076135B /* libPods-prototypeGeo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-prototypeGeo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4BAA8035D400A8326AEA6A20 /* Pods-prototypeGeo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-prototypeGeo.release.xcconfig"; path = "Target Support Files/Pods-prototypeGeo/Pods-prototypeGeo.release.xcconfig"; sourceTree = "<group>"; };
-		4E97677148A63F64749F9526 /* Pods-prototypeGeoTests1.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-prototypeGeoTests1.release.xcconfig"; path = "Target Support Files/Pods-prototypeGeoTests1/Pods-prototypeGeoTests1.release.xcconfig"; sourceTree = "<group>"; };
-		51BF8D2194378E116819A25F /* Pods-prototypeGeo-prototypeGeoTests1.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-prototypeGeo-prototypeGeoTests1.debug.xcconfig"; path = "Target Support Files/Pods-prototypeGeo-prototypeGeoTests1/Pods-prototypeGeo-prototypeGeoTests1.debug.xcconfig"; sourceTree = "<group>"; };
-		58AB89FDEEF3C034DC04AA91 /* libPods-prototypeGeoTests1.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-prototypeGeoTests1.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		9428EB9698A6FF02520EC6F6 /* Pods-prototypeGeo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-prototypeGeo.debug.xcconfig"; path = "Target Support Files/Pods-prototypeGeo/Pods-prototypeGeo.debug.xcconfig"; sourceTree = "<group>"; };
 		9805683323B92DD40056D199 /* FarmerFormated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FarmerFormated.swift; sourceTree = "<group>"; };
 		9805683723B954630056D199 /* FarmerTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FarmerTableViewModel.swift; sourceTree = "<group>"; };
-		9809EDB62428039A00895382 /* prototypeGeoTests1.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = prototypeGeoTests1.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		9809EDB82428039A00895382 /* prototypeGeoTests1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = prototypeGeoTests1.swift; sourceTree = "<group>"; };
-		9809EDBA2428039A00895382 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		980ECA132430261700AAD0AB /* CuturalPracticeFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuturalPracticeFormView.swift; sourceTree = "<group>"; };
 		980ECA152430286D00AAD0AB /* HeaderPresentedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderPresentedView.swift; sourceTree = "<group>"; };
 		9810DA41242F0FCA00545A23 /* CulturalPracticeFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalPracticeFormViewController.swift; sourceTree = "<group>"; };
@@ -153,7 +169,6 @@
 		98363B5423DEF0EC00AFFC63 /* MapFieldInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFieldInteraction.swift; sourceTree = "<group>"; };
 		98363B5F23DFF7EA00AFFC63 /* MapFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFieldView.swift; sourceTree = "<group>"; };
 		98363B6123E028BD00AFFC63 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
-		98457B612415E75D00AF4C90 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		98457B652423E5FA00AF4C90 /* CulturalPraticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalPraticeViewController.swift; sourceTree = "<group>"; };
 		98457B672423E64F00AF4C90 /* CulturalPraticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalPraticeView.swift; sourceTree = "<group>"; };
 		9854BFD42408F53400E5AB8A /* FieldListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldListViewController.swift; sourceTree = "<group>"; };
@@ -182,15 +197,27 @@
 		9860400B23BD8EEB00D5B538 /* FarmerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FarmerState.swift; sourceTree = "<group>"; };
 		9860400E23BD976800D5B538 /* StoreSubcriberProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreSubcriberProxy.swift; sourceTree = "<group>"; };
 		9860401023BD9C1700D5B538 /* StoreSubscriptionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreSubscriptionExtension.swift; sourceTree = "<group>"; };
+		9888C4CF243465A900B94A94 /* prototypeGeoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = prototypeGeoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9888C4D1243465A900B94A94 /* prototypeGeoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = prototypeGeoTests.swift; sourceTree = "<group>"; };
+		9888C4D3243465A900B94A94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		988F035C242B0A1B00545D59 /* ContainerElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerElementView.swift; sourceTree = "<group>"; };
 		98943407240F901D003C0110 /* SelectedFieldRightCalloutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedFieldRightCalloutView.swift; sourceTree = "<group>"; };
 		989434092410C76D003C0110 /* PolygonWithData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolygonWithData.swift; sourceTree = "<group>"; };
 		9894340B2410FAF0003C0110 /* FieldSelectedViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldSelectedViewCell.swift; sourceTree = "<group>"; };
 		9894341524156067003C0110 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		989BEEB124345CB60018F1D8 /* prototypeGeo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = prototypeGeo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		989BEEB324345D360018F1D8 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		989BEEB524345F7A0018F1D8 /* ReSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReSwift.framework; path = Carthage/Build/iOS/ReSwift.framework; sourceTree = "<group>"; };
+		989BEEB824345F7E0018F1D8 /* RxBlocking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxBlocking.framework; path = Carthage/Build/iOS/RxBlocking.framework; sourceTree = "<group>"; };
+		989BEEBB24345F840018F1D8 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
+		989BEEBE24345F890018F1D8 /* RxRelay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxRelay.framework; path = Carthage/Build/iOS/RxRelay.framework; sourceTree = "<group>"; };
+		989BEEC124345F8E0018F1D8 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
+		989BEEC424345F920018F1D8 /* RxTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxTest.framework; path = Carthage/Build/iOS/RxTest.framework; sourceTree = "<group>"; };
+		989BEEC724345FB00018F1D8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		989BEEC9243460DB0018F1D8 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		98A13FBE23C5A75D0087BB22 /* FarmerAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FarmerAddViewController.swift; sourceTree = "<group>"; };
 		98A2C547240E696C002A884B /* AnnotationWithData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationWithData.swift; sourceTree = "<group>"; };
 		98A2C549240E6BD9002A884B /* PayloadFieldAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayloadFieldAnnotation.swift; sourceTree = "<group>"; };
-		98B9990223B5076000CA7EF9 /* prototypeGeo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = prototypeGeo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98B9990523B5076000CA7EF9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		98B9990723B5076000CA7EF9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		98B9990923B5076000CA7EF9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -217,16 +244,13 @@
 		98DB0F4A242866C50065963B /* SubtitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleTableViewCell.swift; sourceTree = "<group>"; };
 		98DB0F4C24286CED0065963B /* UIButtonWithData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonWithData.swift; sourceTree = "<group>"; };
 		98DB0F5624297F960065963B /* TableState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableState.swift; sourceTree = "<group>"; };
-		B2D6DDF844B90F4D992924D2 /* Pods-prototypeGeoTests1.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-prototypeGeoTests1.debug.xcconfig"; path = "Target Support Files/Pods-prototypeGeoTests1/Pods-prototypeGeoTests1.debug.xcconfig"; sourceTree = "<group>"; };
-		E52AF9ACD2CD3CF679ADC9C8 /* Pods-prototypeGeo-prototypeGeoTests1.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-prototypeGeo-prototypeGeoTests1.release.xcconfig"; path = "Target Support Files/Pods-prototypeGeo-prototypeGeoTests1/Pods-prototypeGeo-prototypeGeoTests1.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		9809EDB32428039A00895382 /* Frameworks */ = {
+		9888C4CC243465A900B94A94 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BEAD991B09FB740A2C3DAAD1 /* libPods-prototypeGeoTests1.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -234,46 +258,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				98457B622415E75D00AF4C90 /* MapKit.framework in Frameworks */,
-				AF45707174C76E537F6FAC77 /* libPods-prototypeGeo.a in Frameworks */,
+				989BEEBC24345F850018F1D8 /* RxCocoa.framework in Frameworks */,
+				989BEEC224345F8E0018F1D8 /* RxSwift.framework in Frameworks */,
+				989BEEB624345F7A0018F1D8 /* ReSwift.framework in Frameworks */,
+				989BEEB924345F7E0018F1D8 /* RxBlocking.framework in Frameworks */,
+				989BEEBF24345F890018F1D8 /* RxRelay.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6B0D84C65D87E2DC46C8C46C /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				9428EB9698A6FF02520EC6F6 /* Pods-prototypeGeo.debug.xcconfig */,
-				4BAA8035D400A8326AEA6A20 /* Pods-prototypeGeo.release.xcconfig */,
-				51BF8D2194378E116819A25F /* Pods-prototypeGeo-prototypeGeoTests1.debug.xcconfig */,
-				E52AF9ACD2CD3CF679ADC9C8 /* Pods-prototypeGeo-prototypeGeoTests1.release.xcconfig */,
-				B2D6DDF844B90F4D992924D2 /* Pods-prototypeGeoTests1.debug.xcconfig */,
-				4E97677148A63F64749F9526 /* Pods-prototypeGeoTests1.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
-		886D2C89F000E97D8D9822B3 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				98457B612415E75D00AF4C90 /* MapKit.framework */,
-				0D913FCD2E376EA77076135B /* libPods-prototypeGeo.a */,
-				58AB89FDEEF3C034DC04AA91 /* libPods-prototypeGeoTests1.a */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		9809EDB72428039A00895382 /* prototypeGeoTests1 */ = {
-			isa = PBXGroup;
-			children = (
-				9809EDB82428039A00895382 /* prototypeGeoTests1.swift */,
-				9809EDBA2428039A00895382 /* Info.plist */,
-			);
-			path = prototypeGeoTests1;
-			sourceTree = "<group>";
-		};
 		98304AD223EE185900510FFE /* Calcul */ = {
 			isa = PBXGroup;
 			children = (
@@ -496,25 +491,41 @@
 			path = views;
 			sourceTree = "<group>";
 		};
+		9888C4D0243465A900B94A94 /* prototypeGeoTests */ = {
+			isa = PBXGroup;
+			children = (
+				9888C4D1243465A900B94A94 /* prototypeGeoTests.swift */,
+				9888C4D3243465A900B94A94 /* Info.plist */,
+			);
+			path = prototypeGeoTests;
+			sourceTree = "<group>";
+		};
+		989BEEB224345D360018F1D8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				989BEEC9243460DB0018F1D8 /* XCTest.framework */,
+				989BEEC724345FB00018F1D8 /* UIKit.framework */,
+				989BEEC424345F920018F1D8 /* RxTest.framework */,
+				989BEEC124345F8E0018F1D8 /* RxSwift.framework */,
+				989BEEBE24345F890018F1D8 /* RxRelay.framework */,
+				989BEEBB24345F840018F1D8 /* RxCocoa.framework */,
+				989BEEB824345F7E0018F1D8 /* RxBlocking.framework */,
+				989BEEB524345F7A0018F1D8 /* ReSwift.framework */,
+				989BEEB324345D360018F1D8 /* MapKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		98B998F923B5076000CA7EF9 = {
 			isa = PBXGroup;
 			children = (
 				9894341524156067003C0110 /* .swiftlint.yml */,
 				98B9990423B5076000CA7EF9 /* prototypeGeo */,
-				9809EDB72428039A00895382 /* prototypeGeoTests1 */,
-				98B9990323B5076000CA7EF9 /* Products */,
-				6B0D84C65D87E2DC46C8C46C /* Pods */,
-				886D2C89F000E97D8D9822B3 /* Frameworks */,
+				989BEEB124345CB60018F1D8 /* prototypeGeo.app */,
+				9888C4D0243465A900B94A94 /* prototypeGeoTests */,
+				989BEEB224345D360018F1D8 /* Frameworks */,
+				9888C4CF243465A900B94A94 /* prototypeGeoTests.xctest */,
 			);
-			sourceTree = "<group>";
-		};
-		98B9990323B5076000CA7EF9 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				98B9990223B5076000CA7EF9 /* prototypeGeo.app */,
-				9809EDB62428039A00895382 /* prototypeGeoTests1.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		98B9990423B5076000CA7EF9 /* prototypeGeo */ = {
@@ -610,34 +621,34 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9809EDB52428039A00895382 /* prototypeGeoTests1 */ = {
+		9888C4CE243465A900B94A94 /* prototypeGeoTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9809EDBF2428039A00895382 /* Build configuration list for PBXNativeTarget "prototypeGeoTests1" */;
+			buildConfigurationList = 9888C4D6243465A900B94A94 /* Build configuration list for PBXNativeTarget "prototypeGeoTests" */;
 			buildPhases = (
-				D07DDE3028D58F269ABE218A /* [CP] Check Pods Manifest.lock */,
-				9809EDB22428039A00895382 /* Sources */,
-				9809EDB32428039A00895382 /* Frameworks */,
-				9809EDB42428039A00895382 /* Resources */,
+				9888C4CB243465A900B94A94 /* Sources */,
+				9888C4CC243465A900B94A94 /* Frameworks */,
+				9888C4CD243465A900B94A94 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				9809EDBC2428039A00895382 /* PBXTargetDependency */,
+				9888C4D5243465A900B94A94 /* PBXTargetDependency */,
 			);
-			name = prototypeGeoTests1;
-			productName = prototypeGeoTests1;
-			productReference = 9809EDB62428039A00895382 /* prototypeGeoTests1.xctest */;
+			name = prototypeGeoTests;
+			productName = prototypeGeoTests;
+			productReference = 9888C4CF243465A900B94A94 /* prototypeGeoTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		98B9990123B5076000CA7EF9 /* prototypeGeo */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 98B9991923B5076400CA7EF9 /* Build configuration list for PBXNativeTarget "prototypeGeo" */;
 			buildPhases = (
-				608F8C3082615F7AE7B06F77 /* [CP] Check Pods Manifest.lock */,
 				98B998FE23B5076000CA7EF9 /* Sources */,
 				98B998FF23B5076000CA7EF9 /* Frameworks */,
 				98B9990023B5076000CA7EF9 /* Resources */,
 				980E049624156495000E57BC /* ShellScript */,
+				98B0D5802434586C005F1C42 /* Embed Frameworks */,
+				98E18E18243459D700437F3D /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -645,7 +656,7 @@
 			);
 			name = prototypeGeo;
 			productName = prototypeGeo;
-			productReference = 98B9990223B5076000CA7EF9 /* prototypeGeo.app */;
+			productReference = 989BEEB124345CB60018F1D8 /* prototypeGeo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -658,7 +669,7 @@
 				LastUpgradeCheck = 1120;
 				ORGANIZATIONNAME = "Alexandre Andze Kande";
 				TargetAttributes = {
-					9809EDB52428039A00895382 = {
+					9888C4CE243465A900B94A94 = {
 						CreatedOnToolsVersion = 11.2.1;
 						TestTargetID = 98B9990123B5076000CA7EF9;
 					};
@@ -677,18 +688,18 @@
 				fr,
 			);
 			mainGroup = 98B998F923B5076000CA7EF9;
-			productRefGroup = 98B9990323B5076000CA7EF9 /* Products */;
+			productRefGroup = 98B998F923B5076000CA7EF9;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				98B9990123B5076000CA7EF9 /* prototypeGeo */,
-				9809EDB52428039A00895382 /* prototypeGeoTests1 */,
+				9888C4CE243465A900B94A94 /* prototypeGeoTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		9809EDB42428039A00895382 /* Resources */ = {
+		9888C4CD243465A900B94A94 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -711,28 +722,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		608F8C3082615F7AE7B06F77 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-prototypeGeo-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		980E049624156495000E57BC /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -750,36 +739,37 @@
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
-		D07DDE3028D58F269ABE218A /* [CP] Check Pods Manifest.lock */ = {
+		98E18E18243459D700437F3D /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
+				"$(SRCROOT)/Carthage/Build/iOS/ReSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxBlocking.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxRelay.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxTest.framework",
 			);
-			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-prototypeGeoTests1-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/usr/local/bin/carthage copy-frameworks\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		9809EDB22428039A00895382 /* Sources */ = {
+		9888C4CB243465A900B94A94 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9809EDB92428039A00895382 /* prototypeGeoTests1.swift in Sources */,
+				9888C4D2243465A900B94A94 /* prototypeGeoTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -876,10 +866,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		9809EDBC2428039A00895382 /* PBXTargetDependency */ = {
+		9888C4D5243465A900B94A94 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 98B9990123B5076000CA7EF9 /* prototypeGeo */;
-			targetProxy = 9809EDBB2428039A00895382 /* PBXContainerItemProxy */;
+			targetProxy = 9888C4D4243465A900B94A94 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -914,39 +904,20 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		9809EDBD2428039A00895382 /* Debug */ = {
+		9888C4D7243465A900B94A94 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B2D6DDF844B90F4D992924D2 /* Pods-prototypeGeoTests1.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2W2XM22BW2;
-				INFOPLIST_FILE = prototypeGeoTests1/Info.plist;
+				INFOPLIST_FILE = prototypeGeoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = uqtr.prototypeGeoTests1;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/prototypeGeo.app/prototypeGeo";
-			};
-			name = Debug;
-		};
-		9809EDBE2428039A00895382 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4E97677148A63F64749F9526 /* Pods-prototypeGeoTests1.release.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2W2XM22BW2;
-				INFOPLIST_FILE = prototypeGeoTests1/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = uqtr.prototypeGeoTests1;
+				PRODUCT_BUNDLE_IDENTIFIER = uqtr.prototypeGeoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -954,71 +925,10 @@
 			};
 			name = Release;
 		};
-		98B9991723B5076400CA7EF9 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-			};
-			name = Debug;
-		};
 		98B9991823B5076400CA7EF9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1070,35 +980,18 @@
 			};
 			name = Release;
 		};
-		98B9991A23B5076400CA7EF9 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9428EB9698A6FF02520EC6F6 /* Pods-prototypeGeo.debug.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2W2XM22BW2;
-				INFOPLIST_FILE = prototypeGeo/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = ca.uqtr.prototypegeo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
 		98B9991B23B5076400CA7EF9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4BAA8035D400A8326AEA6A20 /* Pods-prototypeGeo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2W2XM22BW2;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)/**",
+					"$(PROJECT_DIR)/Carthage/Build/iOS/**",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks/**",
+				);
 				INFOPLIST_FILE = prototypeGeo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1115,11 +1008,10 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9809EDBF2428039A00895382 /* Build configuration list for PBXNativeTarget "prototypeGeoTests1" */ = {
+		9888C4D6243465A900B94A94 /* Build configuration list for PBXNativeTarget "prototypeGeoTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9809EDBD2428039A00895382 /* Debug */,
-				9809EDBE2428039A00895382 /* Release */,
+				9888C4D7243465A900B94A94 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1127,7 +1019,6 @@
 		98B998FD23B5076000CA7EF9 /* Build configuration list for PBXProject "prototypeGeo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				98B9991723B5076400CA7EF9 /* Debug */,
 				98B9991823B5076400CA7EF9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -1136,7 +1027,6 @@
 		98B9991923B5076400CA7EF9 /* Build configuration list for PBXNativeTarget "prototypeGeo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				98B9991A23B5076400CA7EF9 /* Debug */,
 				98B9991B23B5076400CA7EF9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;

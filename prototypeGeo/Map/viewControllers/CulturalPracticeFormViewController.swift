@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CulturalPracticeFormViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+public class CulturalPracticeFormViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
 
     var culturalPracticeFormViewModel: CulturalPracticeFormViewModel
     let culturalPracticeFormView = CuturalPracticeFormView()
@@ -23,30 +23,30 @@ class CulturalPracticeFormViewController: UIViewController, UIPickerViewDataSour
         self.culturalPracticeFormViewModel.viewController = self
     }
 
-    override func loadView() {
+    public override func loadView() {
         self.view = culturalPracticeFormView
     }
 
-    override func viewWillAppear(_ animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         culturalPracticeFormViewModel.subscribeToCulturalPracticeFormObs()
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
+    public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         culturalPracticeFormViewModel.disposeToCulturalPracticeFormObs()
     }
 
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         culturalPracticeFormViewModel.initHandleCloseButton()
     }
 
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+    public func numberOfComponents(in pickerView: UIPickerView) -> Int {
         1
     }
 
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         culturalPracticeFormViewModel.handle(numberOfRowsInComponent: component)
     }
 
@@ -56,11 +56,11 @@ class CulturalPracticeFormViewController: UIViewController, UIPickerViewDataSour
     }
  */
 
-    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+    public func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
         90
     }
 
-    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+    public func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         culturalPracticeFormViewModel.handle(pickerView: pickerView, viewForRow: row, forComponent: component, reusingView: view)
     }
 

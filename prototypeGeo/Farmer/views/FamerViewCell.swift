@@ -11,7 +11,7 @@ import UIKit
 public class FarmerViewCell {
     let contentView: UIView
 
-    init(contentView: UIView) {
+    public init(contentView: UIView) {
         self.contentView = contentView
     }
 

@@ -6,11 +6,11 @@
 //  Copyright © 2020 Alexandre Andze Kande. All rights reserved.
 //
 
-import Foundation
 import ReSwift
 import RxSwift
+import UIKit
 
-class AppDependencyContainerImpl: AppDependencyContainer {
+public class AppDependencyContainerImpl: AppDependencyContainer {
 
     let stateStore: Store<AppState> = {
         return Store(
@@ -29,9 +29,9 @@ class AppDependencyContainerImpl: AppDependencyContainer {
         )
     }()
 
-    let mapDependencyContainer: MapDependencyContainer
+    public let mapDependencyContainer: MapDependencyContainer
 
-    init() {
+    public init() {
         self.mapDependencyContainer = MapDependencyContainerImpl(stateStore: self.stateStore)
     }
 
@@ -91,7 +91,7 @@ class AppDependencyContainerImpl: AppDependencyContainer {
         return farmerNavigationController
     }
 
-    func proccessInitTabBarController() -> UITabBarController {
+    public func proccessInitTabBarController() -> UITabBarController {
         let farmerNavigationController = self.processInitFarmerPackage()
         let mapFieldNavigationController = self.mapDependencyContainer.processInitMapField()
         let tabBarController = UITabBarController()
@@ -103,20 +103,20 @@ class AppDependencyContainerImpl: AppDependencyContainer {
 
         return tabBarController
     }
-    func processInitContainerMapAndFieldNavigation() -> ContainerMapAndListFieldViewController {
+    public func processInitContainerMapAndFieldNavigation() -> ContainerMapAndListFieldViewController {
         mapDependencyContainer.processInitContainerMapAndFieldNavigation()
     }
 
-    func processInitCulturalPracticeViewController() -> CulturalPraticeViewController {
+    public func processInitCulturalPracticeViewController() -> CulturalPraticeViewController {
         mapDependencyContainer.makeCulturalPracticeViewController()
     }
 
-    func processInitCulturalPracticeFormViewController() -> CulturalPracticeFormViewController {
+    public func processInitCulturalPracticeFormViewController() -> CulturalPracticeFormViewController {
         mapDependencyContainer.makeCulturalPracticeFormController()
     }
 }
 
-protocol AppDependencyContainer {
+public protocol AppDependencyContainer {
     func proccessInitTabBarController() -> UITabBarController
     func processInitContainerMapAndFieldNavigation() -> ContainerMapAndListFieldViewController
     func processInitCulturalPracticeViewController() -> CulturalPraticeViewController

@@ -6,9 +6,9 @@
 //  Copyright © 2020 Alexandre Andze Kande. All rights reserved.
 //
 
-import Foundation
 import ReSwift
 import RxSwift
+import UIKit
 
 public class MapDependencyContainerImpl: MapDependencyContainer {
     // MARK: - Properties
@@ -34,7 +34,7 @@ public class MapDependencyContainerImpl: MapDependencyContainer {
         )
     }
 
-    func makeCulturalPracticeFormController() -> CulturalPracticeFormViewController {
+    public func makeCulturalPracticeFormController() -> CulturalPracticeFormViewController {
         CulturalPracticeFormViewController(culturalPracticeFormViewModel: makeCulturalPracticeFormViewModel())
     }
 
@@ -88,7 +88,7 @@ public class MapDependencyContainerImpl: MapDependencyContainer {
         )
     }
 
-    func makeFieldListViewController() -> FieldListViewController {
+    public func makeFieldListViewController() -> FieldListViewController {
         FieldListViewController(fieldListViewModel: makeFieldListViewModel())
     }
 
@@ -116,7 +116,7 @@ public class MapDependencyContainerImpl: MapDependencyContainer {
         )
     }
 
-    func makeCulturalPracticeViewController() -> CulturalPraticeViewController {
+    public func makeCulturalPracticeViewController() -> CulturalPraticeViewController {
         CulturalPraticeViewController(culturalPraticeViewModel: self.makeCulturalPracticeViewModel())
     }
 
@@ -125,11 +125,11 @@ public class MapDependencyContainerImpl: MapDependencyContainer {
     }
 
     // MARK: - Methods navigation
-    func makeFieldListNavigationController() -> UINavigationController {
+    public func makeFieldListNavigationController() -> UINavigationController {
         UINavigationController(rootViewController: self.makeFieldListViewController())
     }
 
-    func makeMapFieldNavigationController() -> UINavigationController {
+    public func makeMapFieldNavigationController() -> UINavigationController {
         let navController = UINavigationController(rootViewController: self.makeMapFieldViewController())
         let tabBarItem = UITabBarItem(title: "Carte", image: UIImage(named: "mapsIcon"), tag: 2)
         navController.tabBarItem = tabBarItem
@@ -137,15 +137,15 @@ public class MapDependencyContainerImpl: MapDependencyContainer {
     }
 
     // MARK: - Methods process
-    func processInitMapField() -> UINavigationController {
+    public func processInitMapField() -> UINavigationController {
         makeMapFieldNavigationController()
     }
 
-    func processInitFieldListNavigation() -> UINavigationController {
+    public func processInitFieldListNavigation() -> UINavigationController {
         makeFieldListNavigationController()
     }
 
-    func processInitContainerMapAndFieldNavigation() -> ContainerMapAndListFieldViewController {
+    public func processInitContainerMapAndFieldNavigation() -> ContainerMapAndListFieldViewController {
         ContainerMapAndListFieldViewController(
             mapFieldViewController: makeMapFieldViewController(),
             containerFieldNavigationViewController: makeContainerFieldNavigationViewController()
@@ -154,7 +154,7 @@ public class MapDependencyContainerImpl: MapDependencyContainer {
 
 }
 
-protocol MapDependencyContainer {
+public protocol MapDependencyContainer {
     func makeMapFieldNavigationController() -> UINavigationController
     func makeFieldListNavigationController() -> UINavigationController
     func makeCulturalPracticeViewController() -> CulturalPraticeViewController

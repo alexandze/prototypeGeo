@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CulturalPraticeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+public class CulturalPraticeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     var culturalPraticeViewModel: CulturalPraticeViewModel
     let culturalPraticeView: CulturalPraticeView
@@ -31,44 +31,44 @@ class CulturalPraticeViewController: UIViewController, UITableViewDelegate, UITa
         self.culturalPraticeViewModel.viewController = self
     }
 
-    override func loadView() {
+    public override func loadView() {
         self.view = self.culturalPraticeView
     }
 
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         culturalPraticeViewModel.registerCell()
         culturalPraticeViewModel.registerHeaderFooterViewSection()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         culturalPraticeViewModel.subscribeToCulturalPracticeStateObs()
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
+    public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         culturalPraticeViewModel.disposeToCulturalPracticeStateObs()
     }
 
-    func numberOfSections(in tableView: UITableView) -> Int {
+    public func numberOfSections(in tableView: UITableView) -> Int {
         culturalPraticeViewModel.getNumberOfSection()
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         culturalPraticeViewModel.getNumberRow(in: section)
     }
 
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         ""
     }
 
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: culturalPraticeViewModel.headerFooterSectionViewId)
         return headerView
     }
 
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let element = culturalPraticeViewModel.getCulturePracticeElement(by: indexPath)
 
         if let _ = element as? CulturalPracticeInputMultiSelectContainer {
@@ -78,7 +78,7 @@ class CulturalPraticeViewController: UIViewController, UITableViewDelegate, UITa
         return 100
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: culturalPraticeViewModel.cellId, for: indexPath) as? SubtitleTableViewCell
 
         switch culturalPraticeViewModel.getCulturePracticeElement(by: indexPath) {
@@ -97,7 +97,7 @@ class CulturalPraticeViewController: UIViewController, UITableViewDelegate, UITa
         }
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         culturalPraticeViewModel.handle(didSelectRowAt: indexPath)
     }
 

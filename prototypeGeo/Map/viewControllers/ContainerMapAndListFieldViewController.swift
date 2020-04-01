@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ContainerMapAndListFieldViewController: UIViewController {
+public class ContainerMapAndListFieldViewController: UIViewController {
     let mapFieldViewController: MapFieldViewController
     let containerFieldNavigationViewController: ContainerFieldNavigationViewController
     var containerMapAndListFieldView: ContainerMapAndListFieldView = ContainerMapAndListFieldView()
@@ -26,11 +26,11 @@ class ContainerMapAndListFieldViewController: UIViewController {
         self.containerFieldNavigationViewController = containerFieldNavigationViewController
         super.init(nibName: nil, bundle: nil)
     }
-    override func loadView() {
+    public override func loadView() {
         view = containerMapAndListFieldView
     }
 
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         initContainerView()
         initDragGestureOnContainerFieldNavigation()
@@ -50,12 +50,12 @@ class ContainerMapAndListFieldViewController: UIViewController {
         containerMapAndListFieldView.initDragGestureFor(titleView: containerFieldNavigationViewController.getTitleView())
     }
 
-    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+    public override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
         super.willTransition(to: newCollection, with: coordinator)
         print("oklm1")
     }
 
-    override func viewDidLayoutSubviews() {
+    public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
         if firstCall {

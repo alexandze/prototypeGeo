@@ -1,17 +1,19 @@
 //
-//  prototypeGeoTests1.swift
-//  prototypeGeoTests1
+//  prototypeGeoTests.swift
+//  prototypeGeoTests
 //
-//  Created by Alexandre Andze Kande on 2020-03-22.
+//  Created by Alexandre Andze Kande on 2020-04-01.
 //  Copyright © 2020 Alexandre Andze Kande. All rights reserved.
 //
 
 import XCTest
-@testable import prototypeGeo
+import prototypeGeo
 
-class prototypeGeoTests1: XCTestCase {
-
+class prototypeGeoTests: XCTestCase {
+    var appDep: AppDependencyContainer?
     override func setUp() {
+        
+        self.appDep = AppDependencyContainerImpl()
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
 
@@ -20,6 +22,8 @@ class prototypeGeoTests1: XCTestCase {
     }
 
     func testExample() {
+        let vm =  self.appDep?.processInitCulturalPracticeViewController()
+        XCTAssertNotNil(vm, "vm is not nul")
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
