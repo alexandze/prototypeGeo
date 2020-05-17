@@ -15,4 +15,16 @@ struct CulturalPracticeFormAction {
         let fieldType: FieldType
         let culturalPracticeFormSubAction: CulturalPracticeFormSubAction
     }
+
+    struct ClosePresentedViewControllerAction: Action {
+        let indexSelected: Int
+    }
+
+    struct ClosePresentedViewControllerWithSaveAction: Action {
+        let indexSelected: Int
+    }
+
+    struct SetFormIsDirtyAction: Action {
+        let isDirty: Bool
+    }
 }

@@ -373,10 +373,10 @@
 		98363B3A23DECFB400AFFC63 /* models */ = {
 			isa = PBXGroup;
 			children = (
-				9854BFE6240A224600E5AB8A /* CulturalPractice.swift */,
 				98363B3B23DED00900AFFC63 /* FieldGeoJsonArray.swift */,
 				98363B3D23DED25A00AFFC63 /* Field.swift */,
 				98A2C549240E6BD9002A884B /* PayloadFieldAnnotation.swift */,
+				9854BFE6240A224600E5AB8A /* CulturalPractice.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";

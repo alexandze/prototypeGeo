@@ -11,6 +11,9 @@ import UIKit
 import RxSwift
 
 class Util {
+
+    private static var serialDispatchQueueScheduler: SerialDispatchQueueScheduler?
+
     static func getOppositeColorBlackOrWhite() -> UIColor {
         UIColor {(trait: UITraitCollection) -> UIColor in
             switch trait.userInterfaceStyle {
@@ -41,7 +44,17 @@ class Util {
         0.95
     }
 
-    static func getSchedulerBackground() -> ConcurrentDispatchQueueScheduler {
-        ConcurrentDispatchQueueScheduler(queue: DispatchQueue.global())
+    static func getSchedulerBackground() -> SerialDispatchQueueScheduler {
+        if serialDispatchQueueScheduler == nil {
+            let conQueue = DispatchQueue(label: "com.uqtr.conQueue", attributes: .concurrent)
+            serialDispatchQueueScheduler = SerialDispatchQueueScheduler(queue: conQueue, internalSerialQueueName: "com.uqtr.conQueue")
+            return serialDispatchQueueScheduler!
+        }
+
+        return serialDispatchQueueScheduler!
+    }
+
+    static func getSchedulerMain() -> MainScheduler {
+        MainScheduler.instance
     }
 }

@@ -28,18 +28,19 @@ public class CulturalPracticeFormViewController: UIViewController, UIPickerViewD
     }
 
     public override func viewWillAppear(_ animated: Bool) {
+        print("view will appear")
         super.viewWillAppear(animated)
         culturalPracticeFormViewModel.subscribeToCulturalPracticeFormObs()
     }
 
     public override func viewWillDisappear(_ animated: Bool) {
+        print("view will Disappear")
         super.viewWillDisappear(animated)
         culturalPracticeFormViewModel.disposeToCulturalPracticeFormObs()
     }
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-        culturalPracticeFormViewModel.initHandleCloseButton()
     }
 
     public func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -50,12 +51,6 @@ public class CulturalPracticeFormViewController: UIViewController, UIPickerViewD
         culturalPracticeFormViewModel.handle(numberOfRowsInComponent: component)
     }
 
-    /*
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        culturalPracticeFormViewModel.handle(titleForRow: row)
-    }
- */
-
     public func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
         90
     }
@@ -64,4 +59,7 @@ public class CulturalPracticeFormViewController: UIViewController, UIPickerViewD
         culturalPracticeFormViewModel.handle(pickerView: pickerView, viewForRow: row, forComponent: component, reusingView: view)
     }
 
+    public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.culturalPracticeFormViewModel.dispatchFormIsDirty()
+    }
 }

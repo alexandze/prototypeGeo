@@ -39,11 +39,6 @@ class FieldListViewModelImpl: FieldListViewModel {
                     self.deletedRow(fieldListState: state)
                 }
         }
-
-        let cul = CulturalPractice(avaloir: .absente, bandeRiveraine: .de1A3M, doseFumier: [.dose(quantite: 1), .dose(quantite: 2)], periodeApplicationFumier: [.automneHatif, .automneTardif], delaiIncorporationFumier: [.incorporeEn48H, .nonIncorpore], travailSol: .labourAutomneTravailSecondairePrintemps, couvertureAssociee: .vrai, couvertureDerobee: .faux, drainageSouterrain: .absent, drainageSurface: .bon, conditionProfilCultural: .presenceZoneRisques, tauxApplicationPhosphoreRang: .taux(10.5), tauxApplicationPhosphoreVolee: .taux(10), pMehlich3: .taux(15), alMehlich3: .taux(10), cultureAnneeEnCoursAnterieure: .mai)
-
-        let test = CulturalPractice.getCulturalPracticeElement(culturalPractice: cul)
-       // print(test)
     }
 
     func dispose() {
@@ -63,7 +58,6 @@ class FieldListViewModelImpl: FieldListViewModel {
         tableView?.beginUpdates()
         self.tableView?.deleteRows(at: [IndexPath(row: indexDeleted, section: 0)], with: .top)
         tableView?.endUpdates()
-
     }
 
     func setTableView(tableView: UITableView) {
@@ -79,9 +73,7 @@ class FieldListViewModelImpl: FieldListViewModel {
         appDelegate.map {
             viewController?.navigationController?.pushViewController($0.appDependencyContainer.processInitCulturalPracticeViewController(), animated: true)
         }
-
     }
-
 }
 
 protocol FieldListViewModel {
