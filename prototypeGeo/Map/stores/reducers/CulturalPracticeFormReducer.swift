@@ -30,6 +30,8 @@ extension Reducers {
                 closePresentedViewControllerWithSaveAction: closePresentedViewControllerWithSaveAction,
                 state: state
             )
+        case _ as CulturalPracticeFormAction.ClosePresentedViewControllerWithoutSaveAction:
+            return CulturalPracticeFormReducerHandler.handleUpdateState(state: state) {state in state.changeValue(culturalPracticeSubAction: .closeWithoutSave) }
         default:
             break
         }
@@ -76,17 +78,6 @@ class CulturalPracticeFormReducerHandler {
         state: CulturalPracticeFormState
 
     ) -> CulturalPracticeFormState {
-        let newValue = findCulturalPracticeValueByIndex(
-            culturalPraticeElementProtocol: state.culturalPraticeElement!,
-            index: closePresentedViewControllerAction.indexSelected
-        )?.1
-
-        if let previousValue = state.culturalPraticeElement?.value?.getValue(),
-            newValue != nil,
-            previousValue != newValue! {
-            return state.changeValue(culturalPracticeSubAction: .printAlert)
-        }
-
         if let isDirty = state.isDirty, isDirty {
             return state.changeValue(culturalPracticeSubAction: .printAlert)
         }
@@ -104,6 +95,7 @@ class CulturalPracticeFormReducerHandler {
         return nil
     }
 
+    //TODO util reducerHandle
     static func handleUpdateState<T>(state: T, _ updateFunction: (T) -> T) -> T {
         updateFunction(state)
     }

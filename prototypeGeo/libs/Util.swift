@@ -44,7 +44,7 @@ class Util {
         0.95
     }
 
-    static func getSchedulerBackground() -> SerialDispatchQueueScheduler {
+    static public func getSchedulerBackground() -> SerialDispatchQueueScheduler {
         if serialDispatchQueueScheduler == nil {
             let conQueue = DispatchQueue(label: "com.uqtr.conQueue", attributes: .concurrent)
             serialDispatchQueueScheduler = SerialDispatchQueueScheduler(queue: conQueue, internalSerialQueueName: "com.uqtr.conQueue")
@@ -57,4 +57,23 @@ class Util {
     static func getSchedulerMain() -> MainScheduler {
         MainScheduler.instance
     }
+
+    static public func runInSchedulerMain(_ functionWhoRunInSchedulerMain: @escaping () -> Void) -> Disposable {
+        Completable.create { completableEvent in
+            functionWhoRunInSchedulerMain()
+            completableEvent(.completed)
+            return Disposables.create()
+        }.subscribeOn(Util.getSchedulerMain())
+        .subscribe()
+    }
+
+    static public func runInSchedulerBackground(_ functionWhoRunInSchedulerBackground: @escaping () -> Void) -> Disposable {
+        Completable.create { completableEvent in
+            functionWhoRunInSchedulerBackground()
+            completableEvent(.completed)
+            return Disposables.create()
+        }.subscribeOn(Util.getSchedulerBackground())
+        .subscribe()
+    }
+
 }

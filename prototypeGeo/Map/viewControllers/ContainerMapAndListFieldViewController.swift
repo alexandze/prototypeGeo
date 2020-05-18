@@ -52,7 +52,6 @@ public class ContainerMapAndListFieldViewController: UIViewController {
 
     public override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
         super.willTransition(to: newCollection, with: coordinator)
-        print("oklm1")
     }
 
     public override func viewDidLayoutSubviews() {

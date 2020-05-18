@@ -42,6 +42,17 @@ class CuturalPracticeFormView: UIView {
         return label
     }()
 
+    let alert: UIAlertController = {
+        return UIAlertController(
+            title: NSLocalizedString(
+                "Voulez-vous enregistrer la valeur choisie ?",
+                comment: "Voulez-vous enregistrer la valeur choisie ?"
+            ),
+            message: nil,
+            preferredStyle: .alert
+        )
+    }()
+
     public var textTitle: String? {
         didSet {
             headerPresentedView.textTitle = textTitle!
@@ -66,6 +77,57 @@ class CuturalPracticeFormView: UIView {
         addSubviewToParentView()
         initConstraintHeaderPresentedView()
         initConstraintScrollView()
+    }
+
+    public func getLabelForPickerView(text: String, widthPickerView: CGFloat) -> UILabel {
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: widthPickerView * 0.9, height: 90))
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.text = text
+        label.textColor = Util.getOppositeColorBlackOrWhite()
+        label.sizeToFit()
+        return label
+    }
+
+    public func reuseLabelPickerView(label: UILabel, text: String) -> UILabel {
+        label.text = text
+        label.sizeToFit()
+        return label
+    }
+
+    public func addAlertAction(handleYesAction: @escaping () -> Void, handleNoAction: @escaping () -> Void) {
+        let alertActionYes = createAlertActionYes {
+            handleYesAction()
+        }
+
+        let alertActionNo = createAlertActionNo {
+            handleNoAction()
+        }
+
+        alert.addAction(alertActionYes)
+        alert.addAction(alertActionNo)
+    }
+
+    private func createAlertActionYes(handleFunc: @escaping () -> Void) -> UIAlertAction {
+        let alertAction = UIAlertAction(
+            title: NSLocalizedString("Oui", comment: "Oui"),
+            style: .default,
+            handler: { _ in handleFunc() }
+        )
+
+        alertAction.setValue(UIColor.green, forKey:  "titleTextColor")
+        return alertAction
+    }
+
+    private func createAlertActionNo(handleFunc: @escaping () -> Void) -> UIAlertAction {
+        let alertAction = UIAlertAction(
+            title: NSLocalizedString("Non", comment: "Non"),
+            style: .default,
+            handler: {_ in handleFunc() }
+        )
+
+        alertAction.setValue(UIColor.red, forKey:  "titleTextColor")
+        return alertAction
     }
 
     private func addSubviewToParentView() {

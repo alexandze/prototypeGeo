@@ -28,13 +28,11 @@ public class CulturalPracticeFormViewController: UIViewController, UIPickerViewD
     }
 
     public override func viewWillAppear(_ animated: Bool) {
-        print("view will appear")
         super.viewWillAppear(animated)
         culturalPracticeFormViewModel.subscribeToCulturalPracticeFormObs()
     }
 
     public override func viewWillDisappear(_ animated: Bool) {
-        print("view will Disappear")
         super.viewWillDisappear(animated)
         culturalPracticeFormViewModel.disposeToCulturalPracticeFormObs()
     }
@@ -48,7 +46,7 @@ public class CulturalPracticeFormViewController: UIViewController, UIPickerViewD
     }
 
     public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        culturalPracticeFormViewModel.handle(numberOfRowsInComponent: component)
+        culturalPracticeFormViewModel.pickerView(numberOfRowsInComponent: component)
     }
 
     public func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
@@ -56,7 +54,7 @@ public class CulturalPracticeFormViewController: UIViewController, UIPickerViewD
     }
 
     public func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-        culturalPracticeFormViewModel.handle(pickerView: pickerView, viewForRow: row, forComponent: component, reusingView: view)
+        culturalPracticeFormViewModel.pickerView(pickerView: pickerView, viewForRow: row, forComponent: component, reusingView: view)
     }
 
     public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {

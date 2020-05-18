@@ -24,6 +24,8 @@ struct CulturalPracticeFormAction {
         let indexSelected: Int
     }
 
+    struct ClosePresentedViewControllerWithoutSaveAction: Action { }
+
     struct SetFormIsDirtyAction: Action {
         let isDirty: Bool
     }
