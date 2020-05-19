@@ -23,6 +23,7 @@ public class CulturalPraticeViewController: UIViewController, UITableViewDelegat
     ) {
         self.culturalPraticeViewModel = culturalPraticeViewModel
         self.culturalPraticeView = CulturalPraticeView()
+        self.culturalPraticeViewModel.culturalPraticeView = self.culturalPraticeView
         self.culturalPraticeViewModel.tableView = self.culturalPraticeView.tableView
         self.tableView = self.culturalPraticeView.tableView
         super.init(nibName: nil, bundle: nil)
@@ -71,7 +72,7 @@ public class CulturalPraticeViewController: UIViewController, UITableViewDelegat
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let element = culturalPraticeViewModel.getCulturePracticeElement(by: indexPath)
 
-        if let _ = element as? CulturalPracticeInputMultiSelectContainer {
+        if  (element as? CulturalPracticeInputMultiSelectContainer) != nil {
             return 350
         }
 
@@ -98,7 +99,7 @@ public class CulturalPraticeViewController: UIViewController, UITableViewDelegat
     }
 
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        culturalPraticeViewModel.handle(didSelectRowAt: indexPath)
+        culturalPraticeViewModel.tableView(didSelectRowAt: indexPath)
     }
 
 }

@@ -106,8 +106,8 @@ class CulturalPracticeFormViewModelImpl: CulturalPracticeFormViewModel {
         self.getCulturalPracticeFormViewController()!.dismiss(animated: true)
     }
 
-    private func createActionUpdateCulturalPracticeElementWith(selectElement: CulturalPracticeMultiSelectElement) -> CulturalPracticeAction.UpdateCulturalPracticeElement {
-        CulturalPracticeAction.UpdateCulturalPracticeElement(culturalPracticeElementProtocol: selectElement)
+    private func createActionUpdateCulturalPracticeElementWith(selectElement: CulturalPracticeMultiSelectElement) -> CulturalPracticeListAction.UpdateCulturalPracticeElement {
+        CulturalPracticeListAction.UpdateCulturalPracticeElement(culturalPracticeElementProtocol: selectElement)
     }
 
     private func setSelectElementWithCurrentValue(currentIndexChooseValue: Int) {
@@ -250,7 +250,7 @@ extension CulturalPracticeFormViewModelImpl {
         }
     }
 
-    private func dispatchActionUpdateCulturalPracticeElement(action: CulturalPracticeAction.UpdateCulturalPracticeElement) {
+    private func dispatchActionUpdateCulturalPracticeElement(action: CulturalPracticeListAction.UpdateCulturalPracticeElement) {
         self.disposableDispatcher = Completable.create { completableEvent in
             self.actionDispatcher.dispatch(action)
             completableEvent(.completed)

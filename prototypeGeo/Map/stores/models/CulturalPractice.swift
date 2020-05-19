@@ -70,7 +70,7 @@ internal struct CulturalPractice {
     static func createCulturalPracticeInputMultiSelectContainer(index: Int) -> CulturalPracticeElementProtocol {
             CulturalPracticeInputMultiSelectContainer(
                 key: UUID().uuidString,
-                title: "Dose fumier \(index)",
+                title: "Dose fumier \(index + 1)",
                 culturalInputElement: [
                     DoseFumier.getCulturalPracticeElement(id: index, culturalPractice: nil)
                 ],

@@ -15,7 +15,7 @@
 		9810DA44242F0FE800545A23 /* CulturalPracticeFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9810DA43242F0FE800545A23 /* CulturalPracticeFormViewModel.swift */; };
 		9810DA46242F114700545A23 /* CulturalPracticeFormState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9810DA45242F114700545A23 /* CulturalPracticeFormState.swift */; };
 		9810DA48242F135300545A23 /* CulturalPracticeReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9810DA47242F135300545A23 /* CulturalPracticeReducer.swift */; };
-		9810DA4A242F184A00545A23 /* CulturalPracticeAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9810DA49242F184A00545A23 /* CulturalPracticeAction.swift */; };
+		9810DA4A242F184A00545A23 /* CulturalPracticeListAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9810DA49242F184A00545A23 /* CulturalPracticeListAction.swift */; };
 		9810DA4C242F1EEE00545A23 /* CulturalPracticeFormReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9810DA4B242F1EEE00545A23 /* CulturalPracticeFormReducer.swift */; };
 		9810DA4E242F1F9A00545A23 /* CulturalPracticeFormAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9810DA4D242F1F9A00545A23 /* CulturalPracticeFormAction.swift */; };
 		98304AD423EE19A400510FFE /* UtilAreaPolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98304AD323EE19A400510FFE /* UtilAreaPolygon.swift */; };
@@ -146,7 +146,7 @@
 		9810DA43242F0FE800545A23 /* CulturalPracticeFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalPracticeFormViewModel.swift; sourceTree = "<group>"; };
 		9810DA45242F114700545A23 /* CulturalPracticeFormState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalPracticeFormState.swift; sourceTree = "<group>"; };
 		9810DA47242F135300545A23 /* CulturalPracticeReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalPracticeReducer.swift; sourceTree = "<group>"; };
-		9810DA49242F184A00545A23 /* CulturalPracticeAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalPracticeAction.swift; sourceTree = "<group>"; };
+		9810DA49242F184A00545A23 /* CulturalPracticeListAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalPracticeListAction.swift; sourceTree = "<group>"; };
 		9810DA4B242F1EEE00545A23 /* CulturalPracticeFormReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalPracticeFormReducer.swift; sourceTree = "<group>"; };
 		9810DA4D242F1F9A00545A23 /* CulturalPracticeFormAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalPracticeFormAction.swift; sourceTree = "<group>"; };
 		98304AD323EE19A400510FFE /* UtilAreaPolygon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilAreaPolygon.swift; sourceTree = "<group>"; };
@@ -296,8 +296,8 @@
 				9854BFD42408F53400E5AB8A /* FieldListViewController.swift */,
 				9854BFE0240A1C3C00E5AB8A /* ContainerMapAndListFieldViewController.swift */,
 				98BA0D7A240CDC2800948A26 /* ContainerFieldNavigationViewController.swift */,
-				98457B652423E5FA00AF4C90 /* CulturalPraticeViewController.swift */,
 				9810DA41242F0FCA00545A23 /* CulturalPracticeFormViewController.swift */,
+				98457B652423E5FA00AF4C90 /* CulturalPraticeViewController.swift */,
 			);
 			path = viewControllers;
 			sourceTree = "<group>";
@@ -307,8 +307,8 @@
 			children = (
 				98363B2F23DECA9F00AFFC63 /* MapFieldViewModel.swift */,
 				9854BFE2240A1D6200E5AB8A /* FieldListViewModelImpl.swift */,
-				9854BFF8240B901A00E5AB8A /* CulturalPracticeViewModel.swift */,
 				9810DA43242F0FE800545A23 /* CulturalPracticeFormViewModel.swift */,
+				9854BFF8240B901A00E5AB8A /* CulturalPracticeViewModel.swift */,
 			);
 			path = viewModels;
 			sourceTree = "<group>";
@@ -342,8 +342,8 @@
 			isa = PBXGroup;
 			children = (
 				98363B4123DEDF6600AFFC63 /* MapFieldAction.swift */,
-				9810DA49242F184A00545A23 /* CulturalPracticeAction.swift */,
 				9810DA4D242F1F9A00545A23 /* CulturalPracticeFormAction.swift */,
+				9810DA49242F184A00545A23 /* CulturalPracticeListAction.swift */,
 			);
 			path = actions;
 			sourceTree = "<group>";
@@ -352,8 +352,8 @@
 			isa = PBXGroup;
 			children = (
 				98363B3523DECD7500AFFC63 /* MapFieldReducer.swift */,
-				9810DA47242F135300545A23 /* CulturalPracticeReducer.swift */,
 				9810DA4B242F1EEE00545A23 /* CulturalPracticeFormReducer.swift */,
+				9810DA47242F135300545A23 /* CulturalPracticeReducer.swift */,
 			);
 			path = reducers;
 			sourceTree = "<group>";
@@ -364,8 +364,8 @@
 				98363B3823DECDA500AFFC63 /* MapState.swift */,
 				98363B3F23DED70D00AFFC63 /* MapFieldState.swift */,
 				9854BFE4240A1FA500E5AB8A /* FieldListState.swift */,
-				9854BFFA240B956400E5AB8A /* CulturalPracticeState.swift */,
 				9810DA45242F114700545A23 /* CulturalPracticeFormState.swift */,
+				9854BFFA240B956400E5AB8A /* CulturalPracticeState.swift */,
 			);
 			path = states;
 			sourceTree = "<group>";
@@ -847,7 +847,7 @@
 				98363B5523DEF0EC00AFFC63 /* MapFieldInteraction.swift in Sources */,
 				9860400623BD882900D5B538 /* Reducers.swift in Sources */,
 				98363B4223DEDF6600AFFC63 /* MapFieldAction.swift in Sources */,
-				9810DA4A242F184A00545A23 /* CulturalPracticeAction.swift in Sources */,
+				9810DA4A242F184A00545A23 /* CulturalPracticeListAction.swift in Sources */,
 				98D1929223C012E300BF9A7A /* AppDependencyContainer.swift in Sources */,
 				9860400A23BD8BC800D5B538 /* FarmerReducer.swift in Sources */,
 				98363B3923DECDA500AFFC63 /* MapState.swift in Sources */,

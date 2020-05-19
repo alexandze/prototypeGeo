@@ -66,7 +66,7 @@ class FieldListViewModelImpl: FieldListViewModel {
 
     public func handle(didSelectRowAt indexPath: IndexPath) {
         let currentFieldSelected = fieldList[indexPath.row]
-        let action = CulturalPracticeAction.SelectedFieldOnListAction(fieldType: currentFieldSelected)
+        let action = CulturalPracticeListAction.SelectedFieldOnListAction(fieldType: currentFieldSelected)
         actionDispatcher.dispatch(action)
 
         let appDelegate = viewController!.getAppDelegate()

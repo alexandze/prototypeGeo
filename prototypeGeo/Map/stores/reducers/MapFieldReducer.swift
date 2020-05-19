@@ -86,7 +86,7 @@ class MapFieldReducerHandler {
 
         copyState.sections![sectionIndex].rowData.append(inputMultiSelectContainer)
         copyState.uuidState = UUID().uuidString
-        copyState.culturalPracticeSubState = .insertRows(indexPath: [
+        copyState.subAction = .insertRows(indexPath: [
             IndexPath(
                 row: copyState.sections![sectionIndex].rowData.count - 1,
                 section: sectionIndex

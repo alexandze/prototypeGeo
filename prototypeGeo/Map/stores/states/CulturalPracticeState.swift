@@ -15,5 +15,32 @@ struct CulturalPracticeState: Equatable {
     var uuidState: String
     var currentField: FieldType?
     var sections: [Section<CulturalPracticeElementProtocol>]?
-    var culturalPracticeSubState: TableState?
+    var subAction: CulturalPracticeSubAction?
+
+    public func changeValues(
+        currentField: FieldType? = nil,
+        sections: [Section<CulturalPracticeElementProtocol>]? = nil,
+        subAction: CulturalPracticeSubAction? = nil
+    ) -> CulturalPracticeState {
+        CulturalPracticeState(
+            uuidState: UUID().uuidString,
+            currentField: currentField ?? self.currentField,
+            sections: sections ?? self.sections,
+            subAction: subAction ?? self.subAction
+        )
+    }
+}
+
+enum CulturalPracticeSubAction {
+    case reloadData
+    case insertRows(indexPath: [IndexPath])
+    case deletedRows(indexPath: [IndexPath])
+    case updateRows(indexPath: [IndexPath])
+    case selectElementOnList(
+        culturalPracticeElement: CulturalPracticeElementProtocol,
+        fieldType: FieldType
+    )
+
+    case canNotSelectElementOnList(culturalPracticeElement: CulturalPracticeElementProtocol)
+
 }

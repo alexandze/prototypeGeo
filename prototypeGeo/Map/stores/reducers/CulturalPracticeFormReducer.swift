@@ -14,7 +14,7 @@ extension Reducers {
         let state = state ?? CulturalPracticeFormState(uuidState: UUID().uuidString)
 
         switch action {
-        case let selectedElementOnList as CulturalPracticeFormAction.SelectedElementOnList:
+        case let selectedElementOnList as CulturalPracticeFormAction.ElementSelectedOnList:
             return CulturalPracticeFormReducerHandler.handle(selectedElementOnList: selectedElementOnList)
         case let setFormIsDirtyAction as CulturalPracticeFormAction.SetFormIsDirtyAction:
             return CulturalPracticeFormReducerHandler.handleUpdateState(state: state) { (state: CulturalPracticeFormState) -> CulturalPracticeFormState in
@@ -64,7 +64,7 @@ class CulturalPracticeFormReducerHandler {
         }
     }
 
-    static func handle(selectedElementOnList: CulturalPracticeFormAction.SelectedElementOnList) -> CulturalPracticeFormState {
+    static func handle(selectedElementOnList: CulturalPracticeFormAction.ElementSelectedOnList) -> CulturalPracticeFormState {
         CulturalPracticeFormState(
             uuidState: UUID().uuidString,
             culturalPraticeElement: selectedElementOnList.culturalPracticeElement,

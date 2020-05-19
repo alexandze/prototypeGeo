@@ -19,10 +19,10 @@ class CulturalPraticeViewModelImpl: CulturalPraticeViewModel {
     let actionDispatcher: ActionDispatcher
     var tableView: UITableView?
     var culturalPracticeStateDisposable: Disposable?
-    let TAG_ADD_BUTTON = 50
-    var disposableAddContainerElement: Disposable?
-    var disposableDispathActionSelectedElement: Disposable?
-    var viewController: UIViewController?
+    var culturalPraticeView: CulturalPraticeView?
+
+    var disposableDispatcher: Disposable?
+    var viewController: CulturalPraticeViewController?
 
     init(
         culturalPracticeStateObs: Observable<CulturalPracticeState>,
@@ -40,29 +40,38 @@ class CulturalPraticeViewModelImpl: CulturalPraticeViewModel {
                     guard let culturalPracticeState = element.element,
                         let currentFieldType = culturalPracticeState.currentField,
                         let sections = culturalPracticeState.sections,
-                        let tableState = culturalPracticeState.culturalPracticeSubState
+                        let tableState = culturalPracticeState.subAction
                         else { return }
 
                     self.setStateProperties(currentFieldType, sections)
 
                     switch tableState {
                     case .reloadData:
-                        self.processReloadData()
+                        self.handleReloadData()
                     case .deletedRows(indexPath: let indexPaths):
                         //TODO effecer la cell en question
                         break
                     case .insertRows(indexPath: let indexPaths):
-                        self.processInsertRows(indexPaths: indexPaths, sections: sections)
+                        self.handleInsertRows(indexPaths: indexPaths, sections: sections)
                     case .updateRows(indexPath: let indexPaths):
-                        self.proccessUpdateRowAt(indexPath: indexPaths[0])
+                        self.handleUpdateRowAt(indexPath: indexPaths[0])
+                    case .selectElementOnList(
+                        culturalPracticeElement: let culturalPracticeElementSelected,
+                        fieldType: let fieldType
+                        ):
+                        self.handleSelectElementOnList(
+                            culturalParacticeElementSelected: culturalPracticeElementSelected,
+                            fieldType: fieldType
+                        )
+                    case .canNotSelectElementOnList(culturalPracticeElement: _):
+                        print("can not select")
                     }
         }
     }
 
     func disposeToCulturalPracticeStateObs() {
         self.culturalPracticeStateDisposable?.dispose()
-        self.disposableDispathActionSelectedElement?.dispose()
-        self.disposableAddContainerElement?.dispose()
+        self.disposableDispatcher?.dispose()
     }
 
     func getNumberOfSection() -> Int {
@@ -85,83 +94,18 @@ class CulturalPraticeViewModelImpl: CulturalPraticeViewModel {
         sections![indexPath.section].rowData[indexPath.row]
     }
 
-    func handle(didSelectRowAt indexPath: IndexPath) {
-        switch sections![indexPath.section].rowData[indexPath.row] {
-        case _ as CulturalPracticeMultiSelectElement:
-            // TODO refactorer le code
-            let selectedElementAction = createSelectedElementOnListAction(indexPath: indexPath)
-            dispatchActionSelectedElementOnList(selectedElementAction)
-            presentedCulturalPracticeFormController()
-            // TODO form input
-            // TODO form container input and select
-        default:
-            break
-        }
-    }
-
-    func initCellFor(multiSelectElement: CulturalPracticeMultiSelectElement, cell: UITableViewCell) -> UITableViewCell {
-        removeContainerElementViewTo(containerView: cell.contentView)
-        config(labelTitle: cell.textLabel, culturalPracticeElementProtocol: multiSelectElement)
-        config(detailLabel: cell.detailTextLabel, culturalPracticeValueProtocol: multiSelectElement.value)
-        configAccessoryView(of: cell, culturalPracticeProtocol: multiSelectElement.value)
-        return cell
-    }
-
-    func initCellFor(addElement: CulturalPracticeAddElement, cell: UITableViewCell) -> UITableViewCell {
-        removeContainerElementViewTo(containerView: cell.contentView)
-        cell.detailTextLabel?.font = UIFont(name: "Arial", size: 20)
-        cell.textLabel?.font = UIFont(name: "Arial", size: 15)
-        cell.textLabel?.text = NSLocalizedString("Cliquer sur le boutton", comment: "Cliquer sur le boutton")
-        cell.detailTextLabel?.textColor = .white
-        cell.detailTextLabel?.text = addElement.title
-
-        if !(cell.accessoryView is UIButton) {
-           cell.accessoryView = createAddButton()
-        }
-
-        return cell
-    }
-
-    func initCellFor(containerElement: CulturalPracticeInputMultiSelectContainer, cell: UITableViewCell) -> UITableViewCell {
-        cell.textLabel?.text = nil
-        cell.detailTextLabel?.text = nil
-        cell.accessoryView = nil
-        removeContainerElementViewTo(containerView: cell.contentView)
-        let container = ContainerElementView(containerElement: containerElement)
-        container.addViewTo(contentView: cell.contentView)
-        return cell
-    }
-
-    func initCellFor(inputElement: CulturalPracticeInputElement, cell: UITableViewCell) -> UITableViewCell {
-        removeContainerElementViewTo(containerView: cell.contentView)
-        config(
-            labelTitle: cell.textLabel,
-            culturalPracticeElementProtocol: inputElement
-        )
-
-        config(detailLabel: cell.detailTextLabel, culturalPracticeValueProtocol: inputElement.value)
-        configAccessoryView(of: cell, culturalPracticeProtocol: inputElement.value)
-        return cell
-    }
-
     private func presentedCulturalPracticeFormController() {
         let appDependency = viewController!.getAppDelegate()!.appDependencyContainer
         viewController?.present(appDependency.processInitCulturalPracticeFormViewController(), animated: true)
     }
 
-    private func dispatchActionSelectedElementOnList(_ action: CulturalPracticeFormAction.SelectedElementOnList) {
-        self.disposableDispathActionSelectedElement = Completable.create { completableEvent in
-            self.actionDispatcher.dispatch(action)
-            completableEvent(.completed)
-            return Disposables.create()
-        }.subscribeOn(Util.getSchedulerBackground())
-        .subscribe()
-    }
-
-    private func createSelectedElementOnListAction(indexPath: IndexPath) -> CulturalPracticeFormAction.SelectedElementOnList {
-        CulturalPracticeFormAction.SelectedElementOnList(
-            culturalPracticeElement: sections![indexPath.section].rowData[indexPath.row],
-            fieldType: self.currentField!,
+    private func createSelectedElementOnListAction(
+        culturalPracticeSelectElement: CulturalPracticeElementProtocol,
+        fieldType: FieldType
+    ) -> CulturalPracticeFormAction.ElementSelectedOnList {
+        CulturalPracticeFormAction.ElementSelectedOnList(
+            culturalPracticeElement: culturalPracticeSelectElement,
+            fieldType: fieldType,
             culturalPracticeFormSubAction: CulturalPracticeFormSubAction.newDataForm
         )
     }
@@ -171,114 +115,116 @@ class CulturalPraticeViewModelImpl: CulturalPraticeViewModel {
         self.sections = sections
     }
 
-    private func proccessUpdateRowAt(indexPath: IndexPath) {
-        self.tableView?.reloadRows(at: [indexPath], with: .fade)
+    public func initCellFor(
+        multiSelectElement: CulturalPracticeMultiSelectElement,
+        cell: UITableViewCell
+    ) -> UITableViewCell {
+        self.culturalPraticeView!.initCellFor(multiSelectElement: multiSelectElement, cell: cell)
     }
 
-    private func config(labelTitle: UILabel?, culturalPracticeElementProtocol: CulturalPracticeElementProtocol) {
-        labelTitle?.font = UIFont(name: "Arial", size: 15)
-        labelTitle?.textColor = .white
-        labelTitle?.numberOfLines = 2
-        labelTitle?.text = culturalPracticeElementProtocol.title
+    func initCellFor(addElement: CulturalPracticeAddElement, cell: UITableViewCell) -> UITableViewCell {
+        culturalPraticeView!.initCellFor(
+            addElement: addElement,
+            cell: cell,
+            handleAddButton: dispatchAddDoseFumier
+        )
     }
 
-    private func config(detailLabel: UILabel?, culturalPracticeValueProtocol: CulturalPracticeValueProtocol?) {
-        detailLabel?.font = UIFont(name: "Arial", size: 20)
-        detailLabel?.numberOfLines = 2
-
-        if culturalPracticeValueProtocol != nil {
-            detailLabel?.text = culturalPracticeValueProtocol!.getValue()
-            detailLabel?.textColor = .green
-            return
-        }
-
-        detailLabel?.text = NSLocalizedString("Veuillez choisir une valeur", comment: "Veuillez choisir une valuer")
-        detailLabel?.textColor = .red
+    func initCellFor(containerElement: CulturalPracticeInputMultiSelectContainer, cell: UITableViewCell) -> UITableViewCell {
+        culturalPraticeView!.initCellFor(
+            containerElement: containerElement,
+            cell: cell
+        )
     }
 
-    private func configAccessoryView(of cell: UITableViewCell, culturalPracticeProtocol: CulturalPracticeValueProtocol?) {
-        if culturalPracticeProtocol != nil {
-            let imageViewYes = UIImageView(image: getImageIconYes())
-            cell.accessoryView = imageViewYes
-            return imageViewYes.sizeToFit()
-        }
-
-        let imageViewNo = UIImageView(image: getImageIconNo())
-        cell.accessoryView = imageViewNo
-        imageViewNo.sizeToFit()
+    func initCellFor(inputElement: CulturalPracticeInputElement, cell: UITableViewCell) -> UITableViewCell {
+        culturalPraticeView!.initCellFor(inputElement: inputElement, cell: cell)
     }
+}
 
-    private func removeContainerElementViewTo(containerView: UIView) {
-        containerView.viewWithTag(ContainerElementView.TAG)?.removeFromSuperview()
-    }
-
-    private func createAddButton() -> UIButton {
-        let imageAdd = getImageIconAdd()
-        let addButton = UIButton(type: .custom)
-        addButton.setImage(imageAdd, for: .normal)
-        addButton.tintColor = Util.getOppositeColorBlackOrWhite()
-        addButton.sizeToFit()
-        addButton.tag = TAG_ADD_BUTTON
-        addButton.addTarget(self, action: #selector(addDoseFumier(sender:)), for: .touchUpInside)
-        return addButton
-    }
-
-    @objc private func addDoseFumier(sender: UIButton) {
-        self.disposableAddContainerElement = Completable.create { completable in
-            self.findSectionDoseFumier().map { sectionIndex in
-                let count = self.sections![sectionIndex].rowData.count
-
-                if count < (CulturalPractice.MAX_DOSE_FUMIER + 1) {
-                    self.actionDispatcher.dispatch(
-                        CulturalPracticeAction.AddCulturalPracticeInputMultiSelectContainer(index: count)
-                    )
-                }
-            }
-
-            completable(.completed)
-            return Disposables.create()
-        }.subscribeOn(Util.getSchedulerBackground())
-        .subscribe()
-    }
-
-    private func findSectionDoseFumier() -> Int? {
-        return self.sections?.firstIndex(where: { (section: Section<CulturalPracticeElementProtocol>) -> Bool in
-            guard !(section.rowData.isEmpty),
-                 (section.rowData[0] as? CulturalPracticeAddElement) != nil else {
-                    return false
-            }
-
-            return true
-        })
-    }
-
-    private func getImageIconYes() -> UIImage? {
-        UIImage(named: "yes48")
-    }
-
-    private func getImageIconNo() -> UIImage? {
-        UIImage(named: "no48")
-    }
-
-    private func getImageIconAdd() -> UIImage? {
-        UIImage(named: "add48")?.withRenderingMode(.alwaysTemplate)
-    }
-
-    private func processReloadData() {
+extension CulturalPraticeViewModelImpl {
+    private func handleReloadData() {
         self.tableView?.reloadData()
     }
 
-    private func processInsertRows(indexPaths: [IndexPath], sections: [Section<CulturalPracticeElementProtocol>]) {
+    private func handleInsertRows(
+        indexPaths: [IndexPath],
+        sections: [Section<CulturalPracticeElementProtocol>]
+    ) {
         self.sections = sections
         self.tableView?.insertRows(at: indexPaths, with: .right)
     }
 
+    private func handleUpdateRowAt(indexPath: IndexPath) {
+        self.tableView?.reloadRows(at: [indexPath], with: .fade)
+    }
+
+    private func handleSelectElementOnList(
+        culturalParacticeElementSelected: CulturalPracticeElementProtocol,
+        fieldType: FieldType
+    ) {
+        dispatchSelectedElementOnList(
+            culturalPracticeElement: culturalParacticeElementSelected,
+            fieldType: fieldType
+        )
+
+        switch culturalParacticeElementSelected {
+        case _ as CulturalPracticeMultiSelectElement:
+            self.presentedCulturalPracticeFormController()
+        case _ as CulturalPracticeInputElement:
+            //TODO afficher le formulaire pour les inputs
+            break
+        case _ as CulturalPracticeInputMultiSelectContainer:
+            //TODO affcher le formualaire pour les containers
+            break
+        default:
+            break
+        }
+    }
+
+    public func tableView(didSelectRowAt indexPath: IndexPath) {
+        self.dispathSelectElementOnList(indexPath: indexPath)
+    }
+
+}
+
+extension CulturalPraticeViewModelImpl {
+    private func dispatchSelectedElementOnList(
+        culturalPracticeElement: CulturalPracticeElementProtocol,
+        fieldType: FieldType
+    ) {
+       let action = createSelectedElementOnListAction(
+        culturalPracticeSelectElement: culturalPracticeElement,
+        fieldType: fieldType
+        )
+
+        self.disposableDispatcher = Util.runInSchedulerBackground {
+            self.actionDispatcher.dispatch(action)
+        }
+    }
+
+    private func dispatchAddDoseFumier() {
+        self.disposableDispatcher = Util.runInSchedulerBackground {
+            self.actionDispatcher.dispatch(
+                CulturalPracticeListAction.AddCulturalPracticeInputMultiSelectContainer()
+            )
+        }
+    }
+
+    private func dispathSelectElementOnList(indexPath: IndexPath) {
+        let action = CulturalPracticeListAction.SelectElementOnListAction(indexPath: indexPath)
+
+        self.disposableDispatcher = Util.runInSchedulerBackground {
+            self.actionDispatcher.dispatch(action)
+        }
+    }
 }
 
 protocol CulturalPraticeViewModel {
     var tableView: UITableView? {get set}
     var cellId: String {get}
-    var viewController: UIViewController? {get set}
+    var culturalPraticeView: CulturalPraticeView? {get set}
+    var viewController: CulturalPraticeViewController? {get set}
     var headerFooterSectionViewId: String {get}
     func subscribeToCulturalPracticeStateObs()
     func disposeToCulturalPracticeStateObs()
@@ -287,9 +233,9 @@ protocol CulturalPraticeViewModel {
     func registerCell()
     func getCulturePracticeElement(by indexPath: IndexPath) -> CulturalPracticeElementProtocol
     func registerHeaderFooterViewSection()
-    func initCellFor(addElement: CulturalPracticeAddElement, cell: UITableViewCell) -> UITableViewCell
+    func initCellFor(multiSelectElement: CulturalPracticeMultiSelectElement, cell: UITableViewCell) -> UITableViewCell
     func initCellFor(containerElement: CulturalPracticeInputMultiSelectContainer, cell: UITableViewCell) -> UITableViewCell
     func initCellFor(inputElement: CulturalPracticeInputElement, cell: UITableViewCell) -> UITableViewCell
-    func initCellFor(multiSelectElement: CulturalPracticeMultiSelectElement, cell: UITableViewCell) -> UITableViewCell
-    func handle(didSelectRowAt indexPath: IndexPath)
+    func initCellFor(addElement: CulturalPracticeAddElement, cell: UITableViewCell) -> UITableViewCell
+    func tableView(didSelectRowAt indexPath: IndexPath)
 }
