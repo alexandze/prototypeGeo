@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D9906770E6E2074C3379909 /* Pods_AgroApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AC948D72A5D5DE7D8A1FDB4 /* Pods_AgroApp.framework */; };
 		9805683423B92DD40056D199 /* FarmerFormated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9805683323B92DD40056D199 /* FarmerFormated.swift */; };
 		9805683823B954630056D199 /* FarmerTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9805683723B954630056D199 /* FarmerTableViewModel.swift */; };
 		980ECA142430261700AAD0AB /* CuturalPracticeFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980ECA132430261700AAD0AB /* CuturalPracticeFormView.swift */; };
@@ -18,6 +19,8 @@
 		9810DA4A242F184A00545A23 /* CulturalPracticeListAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9810DA49242F184A00545A23 /* CulturalPracticeListAction.swift */; };
 		9810DA4C242F1EEE00545A23 /* CulturalPracticeFormReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9810DA4B242F1EEE00545A23 /* CulturalPracticeFormReducer.swift */; };
 		9810DA4E242F1F9A00545A23 /* CulturalPracticeFormAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9810DA4D242F1F9A00545A23 /* CulturalPracticeFormAction.swift */; };
+		981440EB24AC38F600F0879F /* AgroAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981440EA24AC38F600F0879F /* AgroAppTests.swift */; };
+		9830049024AC2B8300CDF624 /* MapDependecyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFF2240B668F00E5AB8A /* MapDependecyContainer.swift */; };
 		98304AD423EE19A400510FFE /* UtilAreaPolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98304AD323EE19A400510FFE /* UtilAreaPolygon.swift */; };
 		98304AD623EE21E200510FFE /* ErrorValueEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98304AD523EE21E200510FFE /* ErrorValueEnum.swift */; };
 		98363B2D23DECA3F00AFFC63 /* MapFieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98363B2C23DECA3F00AFFC63 /* MapFieldViewController.swift */; };
@@ -49,7 +52,6 @@
 		9854BFE3240A1D6200E5AB8A /* FieldListViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFE2240A1D6200E5AB8A /* FieldListViewModelImpl.swift */; };
 		9854BFE5240A1FA500E5AB8A /* FieldListState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFE4240A1FA500E5AB8A /* FieldListState.swift */; };
 		9854BFEC240A2B9900E5AB8A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9854BFEE240A2B9900E5AB8A /* Localizable.strings */; };
-		9854BFF3240B668F00E5AB8A /* MapDependecyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFF2240B668F00E5AB8A /* MapDependecyContainer.swift */; };
 		9854BFF5240B7A9F00E5AB8A /* FieldListInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFF4240B7A9F00E5AB8A /* FieldListInteraction.swift */; };
 		9854BFF9240B901A00E5AB8A /* CulturalPracticeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFF8240B901A00E5AB8A /* CulturalPracticeViewModel.swift */; };
 		9854BFFB240B956400E5AB8A /* CulturalPracticeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFFA240B956400E5AB8A /* CulturalPracticeState.swift */; };
@@ -63,28 +65,16 @@
 		9860400C23BD8EEB00D5B538 /* FarmerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9860400B23BD8EEB00D5B538 /* FarmerState.swift */; };
 		9860400F23BD976800D5B538 /* StoreSubcriberProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9860400E23BD976800D5B538 /* StoreSubcriberProxy.swift */; };
 		9860401123BD9C1700D5B538 /* StoreSubscriptionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9860401023BD9C1700D5B538 /* StoreSubscriptionExtension.swift */; };
-		9888C4D2243465A900B94A94 /* prototypeGeoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9888C4D1243465A900B94A94 /* prototypeGeoTests.swift */; };
 		988F035D242B0A1B00545D59 /* ContainerElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988F035C242B0A1B00545D59 /* ContainerElementView.swift */; };
 		98943408240F901D003C0110 /* SelectedFieldRightCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98943407240F901D003C0110 /* SelectedFieldRightCalloutView.swift */; };
 		9894340A2410C76D003C0110 /* PolygonWithData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989434092410C76D003C0110 /* PolygonWithData.swift */; };
 		9894340C2410FAF0003C0110 /* FieldSelectedViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9894340B2410FAF0003C0110 /* FieldSelectedViewCell.swift */; };
 		9894341624156067003C0110 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 9894341524156067003C0110 /* .swiftlint.yml */; };
-		989BEEB624345F7A0018F1D8 /* ReSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 989BEEB524345F7A0018F1D8 /* ReSwift.framework */; };
-		989BEEB724345F7A0018F1D8 /* ReSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 989BEEB524345F7A0018F1D8 /* ReSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		989BEEB924345F7E0018F1D8 /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 989BEEB824345F7E0018F1D8 /* RxBlocking.framework */; };
-		989BEEBA24345F7E0018F1D8 /* RxBlocking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 989BEEB824345F7E0018F1D8 /* RxBlocking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		989BEEBC24345F850018F1D8 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 989BEEBB24345F840018F1D8 /* RxCocoa.framework */; };
-		989BEEBD24345F850018F1D8 /* RxCocoa.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 989BEEBB24345F840018F1D8 /* RxCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		989BEEBF24345F890018F1D8 /* RxRelay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 989BEEBE24345F890018F1D8 /* RxRelay.framework */; };
-		989BEEC024345F890018F1D8 /* RxRelay.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 989BEEBE24345F890018F1D8 /* RxRelay.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		989BEEC224345F8E0018F1D8 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 989BEEC124345F8E0018F1D8 /* RxSwift.framework */; };
-		989BEEC324345F8E0018F1D8 /* RxSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 989BEEC124345F8E0018F1D8 /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		98A13FBF23C5A75D0087BB22 /* FarmerAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A13FBE23C5A75D0087BB22 /* FarmerAddViewController.swift */; };
 		98A2C548240E696C002A884B /* AnnotationWithData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A2C547240E696C002A884B /* AnnotationWithData.swift */; };
 		98A2C54A240E6BD9002A884B /* PayloadFieldAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A2C549240E6BD9002A884B /* PayloadFieldAnnotation.swift */; };
 		98B9990623B5076000CA7EF9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B9990523B5076000CA7EF9 /* AppDelegate.swift */; };
 		98B9990823B5076000CA7EF9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B9990723B5076000CA7EF9 /* SceneDelegate.swift */; };
-		98B9990A23B5076000CA7EF9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B9990923B5076000CA7EF9 /* ViewController.swift */; };
 		98B9990D23B5076000CA7EF9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98B9990B23B5076000CA7EF9 /* Main.storyboard */; };
 		98B9991023B5076000CA7EF9 /* prototypeGeo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 98B9990E23B5076000CA7EF9 /* prototypeGeo.xcdatamodeld */; };
 		98B9991223B5076400CA7EF9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98B9991123B5076400CA7EF9 /* Assets.xcassets */; };
@@ -110,34 +100,21 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		9888C4D4243465A900B94A94 /* PBXContainerItemProxy */ = {
+		981440ED24AC38F600F0879F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 98B998FA23B5076000CA7EF9 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 98B9990123B5076000CA7EF9;
-			remoteInfo = prototypeGeo;
+			remoteInfo = AgroApp;
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		98B0D5802434586C005F1C42 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				989BEEC324345F8E0018F1D8 /* RxSwift.framework in Embed Frameworks */,
-				989BEEC024345F890018F1D8 /* RxRelay.framework in Embed Frameworks */,
-				989BEEBD24345F850018F1D8 /* RxCocoa.framework in Embed Frameworks */,
-				989BEEB724345F7A0018F1D8 /* ReSwift.framework in Embed Frameworks */,
-				989BEEBA24345F7E0018F1D8 /* RxBlocking.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
+		1A8E0A239DE89D97F4C3B7A4 /* Pods-AgroApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AgroApp.release.xcconfig"; path = "Target Support Files/Pods-AgroApp/Pods-AgroApp.release.xcconfig"; sourceTree = "<group>"; };
+		22307C639693296A2B2997D2 /* Pods-ProducerCreation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProducerCreation.release.xcconfig"; path = "Target Support Files/Pods-ProducerCreation/Pods-ProducerCreation.release.xcconfig"; sourceTree = "<group>"; };
+		227DC3BCCF3B23197DD34872 /* Pods-prototypeGeo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-prototypeGeo.release.xcconfig"; path = "Target Support Files/Pods-prototypeGeo/Pods-prototypeGeo.release.xcconfig"; sourceTree = "<group>"; };
+		7AC948D72A5D5DE7D8A1FDB4 /* Pods_AgroApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AgroApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		825DECEC2C742A323721D8B0 /* Pods_prototypeGeoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_prototypeGeoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9805683323B92DD40056D199 /* FarmerFormated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FarmerFormated.swift; sourceTree = "<group>"; };
 		9805683723B954630056D199 /* FarmerTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FarmerTableViewModel.swift; sourceTree = "<group>"; };
 		980ECA132430261700AAD0AB /* CuturalPracticeFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuturalPracticeFormView.swift; sourceTree = "<group>"; };
@@ -149,6 +126,16 @@
 		9810DA49242F184A00545A23 /* CulturalPracticeListAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalPracticeListAction.swift; sourceTree = "<group>"; };
 		9810DA4B242F1EEE00545A23 /* CulturalPracticeFormReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalPracticeFormReducer.swift; sourceTree = "<group>"; };
 		9810DA4D242F1F9A00545A23 /* CulturalPracticeFormAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalPracticeFormAction.swift; sourceTree = "<group>"; };
+		981440E824AC38F600F0879F /* AgroAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AgroAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		981440EA24AC38F600F0879F /* AgroAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgroAppTests.swift; sourceTree = "<group>"; };
+		981440EC24AC38F600F0879F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9830045824AC24E400CDF624 /* ReSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ReSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9830045924AC24E400CDF624 /* RxBlocking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxBlocking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9830045A24AC24E400CDF624 /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9830045B24AC24E400CDF624 /* RxRelay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxRelay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9830045C24AC24E400CDF624 /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9830045D24AC24E400CDF624 /* RxTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9830046B24AC250500CDF624 /* Pods_prototypeGeo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_prototypeGeo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		98304AD323EE19A400510FFE /* UtilAreaPolygon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilAreaPolygon.swift; sourceTree = "<group>"; };
 		98304AD523EE21E200510FFE /* ErrorValueEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorValueEnum.swift; sourceTree = "<group>"; };
 		98363B2C23DECA3F00AFFC63 /* MapFieldViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFieldViewController.swift; sourceTree = "<group>"; };
@@ -197,15 +184,12 @@
 		9860400B23BD8EEB00D5B538 /* FarmerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FarmerState.swift; sourceTree = "<group>"; };
 		9860400E23BD976800D5B538 /* StoreSubcriberProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreSubcriberProxy.swift; sourceTree = "<group>"; };
 		9860401023BD9C1700D5B538 /* StoreSubscriptionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreSubscriptionExtension.swift; sourceTree = "<group>"; };
-		9888C4CF243465A900B94A94 /* prototypeGeoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = prototypeGeoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		9888C4D1243465A900B94A94 /* prototypeGeoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = prototypeGeoTests.swift; sourceTree = "<group>"; };
-		9888C4D3243465A900B94A94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		988F035C242B0A1B00545D59 /* ContainerElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerElementView.swift; sourceTree = "<group>"; };
 		98943407240F901D003C0110 /* SelectedFieldRightCalloutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedFieldRightCalloutView.swift; sourceTree = "<group>"; };
 		989434092410C76D003C0110 /* PolygonWithData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolygonWithData.swift; sourceTree = "<group>"; };
 		9894340B2410FAF0003C0110 /* FieldSelectedViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldSelectedViewCell.swift; sourceTree = "<group>"; };
 		9894341524156067003C0110 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		989BEEB124345CB60018F1D8 /* prototypeGeo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = prototypeGeo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		989BEEB124345CB60018F1D8 /* AgroApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AgroApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		989BEEB324345D360018F1D8 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		989BEEB524345F7A0018F1D8 /* ReSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReSwift.framework; path = Carthage/Build/iOS/ReSwift.framework; sourceTree = "<group>"; };
 		989BEEB824345F7E0018F1D8 /* RxBlocking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxBlocking.framework; path = Carthage/Build/iOS/RxBlocking.framework; sourceTree = "<group>"; };
@@ -220,7 +204,6 @@
 		98A2C549240E6BD9002A884B /* PayloadFieldAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayloadFieldAnnotation.swift; sourceTree = "<group>"; };
 		98B9990523B5076000CA7EF9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		98B9990723B5076000CA7EF9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		98B9990923B5076000CA7EF9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		98B9990C23B5076000CA7EF9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		98B9990F23B5076000CA7EF9 /* prototypeGeo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = prototypeGeo.xcdatamodel; sourceTree = "<group>"; };
 		98B9991123B5076400CA7EF9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -244,10 +227,13 @@
 		98DB0F4A242866C50065963B /* SubtitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleTableViewCell.swift; sourceTree = "<group>"; };
 		98DB0F4C24286CED0065963B /* UIButtonWithData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonWithData.swift; sourceTree = "<group>"; };
 		98DB0F5624297F960065963B /* TableState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableState.swift; sourceTree = "<group>"; };
+		B015CD19BB679BBC10039020 /* Pods_prototypeGeo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_prototypeGeo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CDF7E29A1E56400678DCF346 /* Pods_ProducerCreation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProducerCreation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F023FF5CB64C66B02AE24C3F /* Pods-prototypeGeoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-prototypeGeoTests.release.xcconfig"; path = "Target Support Files/Pods-prototypeGeoTests/Pods-prototypeGeoTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		9888C4CC243465A900B94A94 /* Frameworks */ = {
+		981440E524AC38F600F0879F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -258,35 +244,68 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				989BEEBC24345F850018F1D8 /* RxCocoa.framework in Frameworks */,
-				989BEEC224345F8E0018F1D8 /* RxSwift.framework in Frameworks */,
-				989BEEB624345F7A0018F1D8 /* ReSwift.framework in Frameworks */,
-				989BEEB924345F7E0018F1D8 /* RxBlocking.framework in Frameworks */,
-				989BEEBF24345F890018F1D8 /* RxRelay.framework in Frameworks */,
+				1D9906770E6E2074C3379909 /* Pods_AgroApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5DE80960287A45FAED7D9C42 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				227DC3BCCF3B23197DD34872 /* Pods-prototypeGeo.release.xcconfig */,
+				F023FF5CB64C66B02AE24C3F /* Pods-prototypeGeoTests.release.xcconfig */,
+				22307C639693296A2B2997D2 /* Pods-ProducerCreation.release.xcconfig */,
+				1A8E0A239DE89D97F4C3B7A4 /* Pods-AgroApp.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		981440E324AC359E00F0879F /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				9830046B24AC250500CDF624 /* Pods_prototypeGeo.framework */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		981440E924AC38F600F0879F /* AgroAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				981440EA24AC38F600F0879F /* AgroAppTests.swift */,
+				981440EC24AC38F600F0879F /* Info.plist */,
+			);
+			path = AgroAppTests;
+			sourceTree = "<group>";
+		};
+		9830047524AC291E00CDF624 /* ProducerCreation */ = {
+			isa = PBXGroup;
+			children = (
+				98DFE6FD24AC0330007CC832 /* Data Layer */,
+				98DFE6FC24AC0316007CC832 /* Service Layer */,
+				98DFE6FB24AC0194007CC832 /* Business Logic Layer */,
+				98DFE6FA24AC0157007CC832 /* Presentation Layer */,
+				9854BFF2240B668F00E5AB8A /* MapDependecyContainer.swift */,
+			);
+			path = ProducerCreation;
+			sourceTree = "<group>";
+		};
+		9830049124AC2E9100CDF624 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				98B9991E23B50AF100CA7EF9 /* Farmer */,
+				9830047524AC291E00CDF624 /* ProducerCreation */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		98304AD223EE185900510FFE /* Calcul */ = {
 			isa = PBXGroup;
 			children = (
 				98304AD323EE19A400510FFE /* UtilAreaPolygon.swift */,
 			);
 			path = Calcul;
-			sourceTree = "<group>";
-		};
-		98363B2A23DEC70D00AFFC63 /* Map */ = {
-			isa = PBXGroup;
-			children = (
-				98363B5E23DFF7CF00AFFC63 /* views */,
-				98363B3123DECADF00AFFC63 /* stores */,
-				98363B2E23DECA6200AFFC63 /* viewModels */,
-				98363B2B23DEC75400AFFC63 /* viewControllers */,
-				9854BFF2240B668F00E5AB8A /* MapDependecyContainer.swift */,
-			);
-			path = Map;
 			sourceTree = "<group>";
 		};
 		98363B2B23DEC75400AFFC63 /* viewControllers */ = {
@@ -311,21 +330,6 @@
 				9854BFF8240B901A00E5AB8A /* CulturalPracticeViewModel.swift */,
 			);
 			path = viewModels;
-			sourceTree = "<group>";
-		};
-		98363B3123DECADF00AFFC63 /* stores */ = {
-			isa = PBXGroup;
-			children = (
-				98363B4F23DEEC4500AFFC63 /* middlewares */,
-				98363B4623DEE33300AFFC63 /* repositories */,
-				98363B4523DEE30600AFFC63 /* services */,
-				98363B3A23DECFB400AFFC63 /* models */,
-				98363B3723DECD8200AFFC63 /* states */,
-				98363B3423DECB2800AFFC63 /* reducers */,
-				98363B3323DECB1200AFFC63 /* actions */,
-				98363B3223DECAFC00AFFC63 /* interactions */,
-			);
-			path = stores;
 			sourceTree = "<group>";
 		};
 		98363B3223DECAFC00AFFC63 /* interactions */ = {
@@ -491,18 +495,15 @@
 			path = views;
 			sourceTree = "<group>";
 		};
-		9888C4D0243465A900B94A94 /* prototypeGeoTests */ = {
-			isa = PBXGroup;
-			children = (
-				9888C4D1243465A900B94A94 /* prototypeGeoTests.swift */,
-				9888C4D3243465A900B94A94 /* Info.plist */,
-			);
-			path = prototypeGeoTests;
-			sourceTree = "<group>";
-		};
 		989BEEB224345D360018F1D8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9830045824AC24E400CDF624 /* ReSwift.framework */,
+				9830045924AC24E400CDF624 /* RxBlocking.framework */,
+				9830045A24AC24E400CDF624 /* RxCocoa.framework */,
+				9830045B24AC24E400CDF624 /* RxRelay.framework */,
+				9830045C24AC24E400CDF624 /* RxSwift.framework */,
+				9830045D24AC24E400CDF624 /* RxTest.framework */,
 				989BEEC9243460DB0018F1D8 /* XCTest.framework */,
 				989BEEC724345FB00018F1D8 /* UIKit.framework */,
 				989BEEC424345F920018F1D8 /* RxTest.framework */,
@@ -512,6 +513,10 @@
 				989BEEB824345F7E0018F1D8 /* RxBlocking.framework */,
 				989BEEB524345F7A0018F1D8 /* ReSwift.framework */,
 				989BEEB324345D360018F1D8 /* MapKit.framework */,
+				B015CD19BB679BBC10039020 /* Pods_prototypeGeo.framework */,
+				825DECEC2C742A323721D8B0 /* Pods_prototypeGeoTests.framework */,
+				CDF7E29A1E56400678DCF346 /* Pods_ProducerCreation.framework */,
+				7AC948D72A5D5DE7D8A1FDB4 /* Pods_AgroApp.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -520,25 +525,25 @@
 			isa = PBXGroup;
 			children = (
 				9894341524156067003C0110 /* .swiftlint.yml */,
-				98B9990423B5076000CA7EF9 /* prototypeGeo */,
-				989BEEB124345CB60018F1D8 /* prototypeGeo.app */,
-				9888C4D0243465A900B94A94 /* prototypeGeoTests */,
+				98B9990423B5076000CA7EF9 /* AgroApp */,
+				989BEEB124345CB60018F1D8 /* AgroApp.app */,
+				981440E924AC38F600F0879F /* AgroAppTests */,
 				989BEEB224345D360018F1D8 /* Frameworks */,
-				9888C4CF243465A900B94A94 /* prototypeGeoTests.xctest */,
+				5DE80960287A45FAED7D9C42 /* Pods */,
+				981440E324AC359E00F0879F /* Recovered References */,
+				981440E824AC38F600F0879F /* AgroAppTests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
-		98B9990423B5076000CA7EF9 /* prototypeGeo */ = {
+		98B9990423B5076000CA7EF9 /* AgroApp */ = {
 			isa = PBXGroup;
 			children = (
+				9830049124AC2E9100CDF624 /* src */,
 				98304AD223EE185900510FFE /* Calcul */,
 				98603FFE23BD854400D5B538 /* store */,
 				98B9992523B50E2C00CA7EF9 /* libs */,
-				98363B2A23DEC70D00AFFC63 /* Map */,
-				98B9991E23B50AF100CA7EF9 /* Farmer */,
 				98B9990523B5076000CA7EF9 /* AppDelegate.swift */,
 				98B9990723B5076000CA7EF9 /* SceneDelegate.swift */,
-				98B9990923B5076000CA7EF9 /* ViewController.swift */,
 				98B9990B23B5076000CA7EF9 /* Main.storyboard */,
 				98B9991123B5076400CA7EF9 /* Assets.xcassets */,
 				98B9991323B5076400CA7EF9 /* LaunchScreen.storyboard */,
@@ -548,7 +553,7 @@
 				98363B4323DEE2AC00AFFC63 /* ACTU.json */,
 				9854BFEE240A2B9900E5AB8A /* Localizable.strings */,
 			);
-			path = prototypeGeo;
+			path = AgroApp;
 			sourceTree = "<group>";
 		};
 		98B9991E23B50AF100CA7EF9 /* Farmer */ = {
@@ -618,45 +623,84 @@
 			path = middlewares;
 			sourceTree = "<group>";
 		};
+		98DFE6FA24AC0157007CC832 /* Presentation Layer */ = {
+			isa = PBXGroup;
+			children = (
+				98363B5E23DFF7CF00AFFC63 /* views */,
+				98363B2E23DECA6200AFFC63 /* viewModels */,
+				98363B2B23DEC75400AFFC63 /* viewControllers */,
+			);
+			path = "Presentation Layer";
+			sourceTree = "<group>";
+		};
+		98DFE6FB24AC0194007CC832 /* Business Logic Layer */ = {
+			isa = PBXGroup;
+			children = (
+				98363B3223DECAFC00AFFC63 /* interactions */,
+				98363B4F23DEEC4500AFFC63 /* middlewares */,
+				98363B3323DECB1200AFFC63 /* actions */,
+				98363B3423DECB2800AFFC63 /* reducers */,
+				98363B3723DECD8200AFFC63 /* states */,
+				98363B3A23DECFB400AFFC63 /* models */,
+			);
+			path = "Business Logic Layer";
+			sourceTree = "<group>";
+		};
+		98DFE6FC24AC0316007CC832 /* Service Layer */ = {
+			isa = PBXGroup;
+			children = (
+				98363B4523DEE30600AFFC63 /* services */,
+			);
+			path = "Service Layer";
+			sourceTree = "<group>";
+		};
+		98DFE6FD24AC0330007CC832 /* Data Layer */ = {
+			isa = PBXGroup;
+			children = (
+				98363B4623DEE33300AFFC63 /* repositories */,
+			);
+			path = "Data Layer";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9888C4CE243465A900B94A94 /* prototypeGeoTests */ = {
+		981440E724AC38F600F0879F /* AgroAppTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9888C4D6243465A900B94A94 /* Build configuration list for PBXNativeTarget "prototypeGeoTests" */;
+			buildConfigurationList = 981440EF24AC38F600F0879F /* Build configuration list for PBXNativeTarget "AgroAppTests" */;
 			buildPhases = (
-				9888C4CB243465A900B94A94 /* Sources */,
-				9888C4CC243465A900B94A94 /* Frameworks */,
-				9888C4CD243465A900B94A94 /* Resources */,
+				981440E424AC38F600F0879F /* Sources */,
+				981440E524AC38F600F0879F /* Frameworks */,
+				981440E624AC38F600F0879F /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				9888C4D5243465A900B94A94 /* PBXTargetDependency */,
+				981440EE24AC38F600F0879F /* PBXTargetDependency */,
 			);
-			name = prototypeGeoTests;
-			productName = prototypeGeoTests;
-			productReference = 9888C4CF243465A900B94A94 /* prototypeGeoTests.xctest */;
+			name = AgroAppTests;
+			productName = AgroAppTests;
+			productReference = 981440E824AC38F600F0879F /* AgroAppTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		98B9990123B5076000CA7EF9 /* prototypeGeo */ = {
+		98B9990123B5076000CA7EF9 /* AgroApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 98B9991923B5076400CA7EF9 /* Build configuration list for PBXNativeTarget "prototypeGeo" */;
+			buildConfigurationList = 98B9991923B5076400CA7EF9 /* Build configuration list for PBXNativeTarget "AgroApp" */;
 			buildPhases = (
+				F7C5C9743E82DDD39A14F6BE /* [CP] Check Pods Manifest.lock */,
 				98B998FE23B5076000CA7EF9 /* Sources */,
 				98B998FF23B5076000CA7EF9 /* Frameworks */,
 				98B9990023B5076000CA7EF9 /* Resources */,
 				980E049624156495000E57BC /* ShellScript */,
-				98B0D5802434586C005F1C42 /* Embed Frameworks */,
-				98E18E18243459D700437F3D /* ShellScript */,
+				6024CB9A3E0B7E64FDB096CB /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = prototypeGeo;
+			name = AgroApp;
 			productName = prototypeGeo;
-			productReference = 989BEEB124345CB60018F1D8 /* prototypeGeo.app */;
+			productReference = 989BEEB124345CB60018F1D8 /* AgroApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -665,12 +709,12 @@
 		98B998FA23B5076000CA7EF9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1120;
+				LastSwiftUpdateCheck = 1150;
 				LastUpgradeCheck = 1120;
 				ORGANIZATIONNAME = "Alexandre Andze Kande";
 				TargetAttributes = {
-					9888C4CE243465A900B94A94 = {
-						CreatedOnToolsVersion = 11.2.1;
+					981440E724AC38F600F0879F = {
+						CreatedOnToolsVersion = 11.5;
 						TestTargetID = 98B9990123B5076000CA7EF9;
 					};
 					98B9990123B5076000CA7EF9 = {
@@ -678,7 +722,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 98B998FD23B5076000CA7EF9 /* Build configuration list for PBXProject "prototypeGeo" */;
+			buildConfigurationList = 98B998FD23B5076000CA7EF9 /* Build configuration list for PBXProject "AgroApp" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -692,14 +736,14 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				98B9990123B5076000CA7EF9 /* prototypeGeo */,
-				9888C4CE243465A900B94A94 /* prototypeGeoTests */,
+				98B9990123B5076000CA7EF9 /* AgroApp */,
+				981440E724AC38F600F0879F /* AgroAppTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		9888C4CD243465A900B94A94 /* Resources */ = {
+		981440E624AC38F600F0879F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -722,6 +766,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		6024CB9A3E0B7E64FDB096CB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AgroApp/Pods-AgroApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AgroApp/Pods-AgroApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AgroApp/Pods-AgroApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		980E049624156495000E57BC /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -739,37 +800,36 @@
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
-		98E18E18243459D700437F3D /* ShellScript */ = {
+		F7C5C9743E82DDD39A14F6BE /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
+			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/ReSwift.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RxBlocking.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RxRelay.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RxTest.framework",
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
+			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AgroApp-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/usr/local/bin/carthage copy-frameworks\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		9888C4CB243465A900B94A94 /* Sources */ = {
+		981440E424AC38F600F0879F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9888C4D2243465A900B94A94 /* prototypeGeoTests.swift in Sources */,
+				981440EB24AC38F600F0879F /* AgroAppTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -777,12 +837,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9854BFF3240B668F00E5AB8A /* MapDependecyContainer.swift in Sources */,
 				988F035D242B0A1B00545D59 /* ContainerElementView.swift in Sources */,
 				98A2C548240E696C002A884B /* AnnotationWithData.swift in Sources */,
 				98363B4E23DEEABA00AFFC63 /* GetAllFieldsService.swift in Sources */,
 				9860400C23BD8EEB00D5B538 /* FarmerState.swift in Sources */,
-				98B9990A23B5076000CA7EF9 /* ViewController.swift in Sources */,
 				98457B662423E5FA00AF4C90 /* CulturalPraticeViewController.swift in Sources */,
 				98363B3C23DED00900AFFC63 /* FieldGeoJsonArray.swift in Sources */,
 				98BA0D7F240CE41F00948A26 /* ContainerMapAndListFieldView.swift in Sources */,
@@ -826,6 +884,7 @@
 				9854BFDF2409047C00E5AB8A /* FieldListView.swift in Sources */,
 				9854BFF9240B901A00E5AB8A /* CulturalPracticeViewModel.swift in Sources */,
 				98DB0F5724297F960065963B /* TableState.swift in Sources */,
+				9830049024AC2B8300CDF624 /* MapDependecyContainer.swift in Sources */,
 				98363B5123DEEC7A00AFFC63 /* mapFieldMiddleware.swift in Sources */,
 				9860400423BD868A00D5B538 /* FarmerTableVIewControllerState.swift in Sources */,
 				98D1929B23C034A600BF9A7A /* FamerViewCell.swift in Sources */,
@@ -866,10 +925,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		9888C4D5243465A900B94A94 /* PBXTargetDependency */ = {
+		981440EE24AC38F600F0879F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 98B9990123B5076000CA7EF9 /* prototypeGeo */;
-			targetProxy = 9888C4D4243465A900B94A94 /* PBXContainerItemProxy */;
+			target = 98B9990123B5076000CA7EF9 /* AgroApp */;
+			targetProxy = 981440ED24AC38F600F0879F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -904,24 +963,24 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		9888C4D7243465A900B94A94 /* Release */ = {
+		981440F024AC38F600F0879F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2W2XM22BW2;
-				INFOPLIST_FILE = prototypeGeoTests/Info.plist;
+				INFOPLIST_FILE = AgroAppTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = uqtr.prototypeGeoTests;
+				PRODUCT_BUNDLE_IDENTIFIER = uqtr.ios.AgroAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/prototypeGeo.app/prototypeGeo";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AgroApp.app/AgroApp";
 			};
 			name = Release;
 		};
@@ -970,7 +1029,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -982,41 +1041,44 @@
 		};
 		98B9991B23B5076400CA7EF9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1A8E0A239DE89D97F4C3B7A4 /* Pods-AgroApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2W2XM22BW2;
+				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)/**",
 					"$(PROJECT_DIR)/Carthage/Build/iOS/**",
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks/**",
 				);
-				INFOPLIST_FILE = prototypeGeo/Info.plist;
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(inherited)";
+				INFOPLIST_FILE = AgroApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ca.uqtr.prototypegeo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = ca.uqtr.AgroApp;
+				PRODUCT_NAME = AgroApp;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9888C4D6243465A900B94A94 /* Build configuration list for PBXNativeTarget "prototypeGeoTests" */ = {
+		981440EF24AC38F600F0879F /* Build configuration list for PBXNativeTarget "AgroAppTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9888C4D7243465A900B94A94 /* Release */,
+				981440F024AC38F600F0879F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		98B998FD23B5076000CA7EF9 /* Build configuration list for PBXProject "prototypeGeo" */ = {
+		98B998FD23B5076000CA7EF9 /* Build configuration list for PBXProject "AgroApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				98B9991823B5076400CA7EF9 /* Release */,
@@ -1024,7 +1086,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		98B9991923B5076400CA7EF9 /* Build configuration list for PBXNativeTarget "prototypeGeo" */ = {
+		98B9991923B5076400CA7EF9 /* Build configuration list for PBXNativeTarget "AgroApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				98B9991B23B5076400CA7EF9 /* Release */,

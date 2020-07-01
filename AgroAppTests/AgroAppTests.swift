@@ -1,34 +1,31 @@
 //
-//  prototypeGeoTests.swift
-//  prototypeGeoTests
+//  AgroAppTests.swift
+//  AgroAppTests
 //
-//  Created by Alexandre Andze Kande on 2020-04-01.
+//  Created by Alexandre Andze Kande on 2020-06-30.
 //  Copyright © 2020 Alexandre Andze Kande. All rights reserved.
 //
 
 import XCTest
-import prototypeGeo
+@testable import AgroApp
 
-class prototypeGeoTests: XCTestCase {
-    var appDep: AppDependencyContainer?
-    override func setUp() {
-        
-        self.appDep = AppDependencyContainerImpl()
+class AgroAppTests: XCTestCase {
+
+    override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
 
-    override func tearDown() {
+    override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() {
-        let vm =  self.appDep?.processInitCulturalPracticeViewController()
-        XCTAssertNotNil(vm, "vm is not nul")
+    func testExample() throws {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
+        XCTAssertTrue(true)
     }
 
-    func testPerformanceExample() {
+    func testPerformanceExample() throws {
         // This is an example of a performance test case.
         measure {
             // Put the code you want to measure the time of here.

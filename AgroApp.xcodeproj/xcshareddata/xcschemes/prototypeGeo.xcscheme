@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "98B9990123B5076000CA7EF9"
-               BuildableName = "prototypeGeo.app"
-               BlueprintName = "prototypeGeo"
-               ReferencedContainer = "container:prototypeGeo.xcodeproj">
+               BuildableName = "AgroApp.app"
+               BlueprintName = "AgroApp"
+               ReferencedContainer = "container:AgroApp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -31,13 +31,13 @@
                BlueprintIdentifier = "9809EDB52428039A00895382"
                BuildableName = "prototypeGeoTests1.xctest"
                BlueprintName = "prototypeGeoTests1"
-               ReferencedContainer = "container:prototypeGeo.xcodeproj">
+               ReferencedContainer = "container:AgroApp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
@@ -46,46 +46,16 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "98457B9A24272BE000AF4C90"
-               BuildableName = "prototypeGeoTests.xctest"
-               BlueprintName = "prototypeGeoTests"
-               ReferencedContainer = "container:prototypeGeo.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "98457B6C242724F600AF4C90"
-               BuildableName = "prototypeGeoDataTests.xctest"
-               BlueprintName = "prototypeGeoDataTests"
-               ReferencedContainer = "container:prototypeGeo.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9809EDB52428039A00895382"
-               BuildableName = "prototypeGeoTests1.xctest"
-               BlueprintName = "prototypeGeoTests1"
-               ReferencedContainer = "container:prototypeGeo.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "981108F624344EB70022BE79"
-               BuildableName = "prototypeGeoTests99.xctest"
-               BlueprintName = "prototypeGeoTests99"
-               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+               BlueprintIdentifier = "981440E724AC38F600F0879F"
+               BuildableName = "AgroAppTests.xctest"
+               BlueprintName = "AgroAppTests"
+               ReferencedContainer = "container:AgroApp.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
@@ -99,9 +69,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "98B9990123B5076000CA7EF9"
-            BuildableName = "prototypeGeo.app"
-            BlueprintName = "prototypeGeo"
-            ReferencedContainer = "container:prototypeGeo.xcodeproj">
+            BuildableName = "AgroApp.app"
+            BlueprintName = "AgroApp"
+            ReferencedContainer = "container:AgroApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -116,9 +86,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "98B9990123B5076000CA7EF9"
-            BuildableName = "prototypeGeo.app"
-            BlueprintName = "prototypeGeo"
-            ReferencedContainer = "container:prototypeGeo.xcodeproj">
+            BuildableName = "AgroApp.app"
+            BlueprintName = "AgroApp"
+            ReferencedContainer = "container:AgroApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
