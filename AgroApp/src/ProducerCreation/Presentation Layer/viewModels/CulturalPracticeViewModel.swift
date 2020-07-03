@@ -94,9 +94,15 @@ class CulturalPraticeViewModelImpl: CulturalPraticeViewModel {
         sections![indexPath.section].rowData[indexPath.row]
     }
 
-    private func presentedCulturalPracticeFormController() {
+    private func presentSelectFormCulturalPracticeController() {
         let appDependency = viewController!.getAppDelegate()!.appDependencyContainer
         viewController?.present(appDependency.processInitCulturalPracticeFormViewController(), animated: true)
+    }
+
+    private func presentInputFormCulturalPracticeHostingController() {
+        guard let appDependency = Util.getAppDependency() else { return }
+        let inputFormCulturalPracticeHostingController = appDependency.processInitInputFormCulturalPracticeHostingController()
+        viewController?.present(inputFormCulturalPracticeHostingController, animated: true)
     }
 
     private func createSelectedElementOnListAction(
@@ -141,7 +147,7 @@ class CulturalPraticeViewModelImpl: CulturalPraticeViewModel {
         culturalPraticeView!.initCellFor(inputElement: inputElement, cell: cell)
     }
 }
-
+// handle methode
 extension CulturalPraticeViewModelImpl {
     private func handleReloadData() {
         self.tableView?.reloadData()
@@ -170,9 +176,9 @@ extension CulturalPraticeViewModelImpl {
 
         switch culturalParacticeElementSelected {
         case _ as CulturalPracticeMultiSelectElement:
-            self.presentedCulturalPracticeFormController()
+            self.presentSelectFormCulturalPracticeController()
         case _ as CulturalPracticeInputElement:
-            //TODO afficher le formulaire pour les inputs
+            self.presentInputFormCulturalPracticeHostingController()
             break
         case _ as CulturalPracticeInputMultiSelectContainer:
             //TODO affcher le formualaire pour les containers
@@ -185,9 +191,9 @@ extension CulturalPraticeViewModelImpl {
     public func tableView(didSelectRowAt indexPath: IndexPath) {
         self.dispathSelectElementOnList(indexPath: indexPath)
     }
-
 }
 
+// dispatcher methode
 extension CulturalPraticeViewModelImpl {
     private func dispatchSelectedElementOnList(
         culturalPracticeElement: CulturalPracticeElementProtocol,

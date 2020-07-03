@@ -76,4 +76,8 @@ class Util {
         .subscribe()
     }
 
+    static func getAppDependency() -> AppDependencyContainer? {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
+        return appDelegate.appDependencyContainer
+    }
 }

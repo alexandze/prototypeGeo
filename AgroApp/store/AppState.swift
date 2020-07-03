@@ -13,5 +13,6 @@ struct AppState: StateType {
     var farmerState: FarmerState
     var mapFieldState: MapState
     var culturalPracticeState: CulturalPracticeState
-    var culturalPracticeFormState: CulturalPracticeFormState
+    var selectFormCulturalPracticeState: SelectFormCulturalPracticeState
+    var inputFormCulturalPracticeState: InputFormCulturalPracticeState
 }

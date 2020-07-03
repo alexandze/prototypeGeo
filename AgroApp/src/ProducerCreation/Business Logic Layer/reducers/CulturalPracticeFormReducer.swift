@@ -10,14 +10,14 @@ import Foundation
 import ReSwift
 
 extension Reducers {
-    public static func culturalPracticeFormReducer(action: Action, state: CulturalPracticeFormState?) -> CulturalPracticeFormState {
-        let state = state ?? CulturalPracticeFormState(uuidState: UUID().uuidString)
+    public static func selectFormCulturalPracticeReducer(action: Action, state: SelectFormCulturalPracticeState?) -> SelectFormCulturalPracticeState {
+        let state = state ?? SelectFormCulturalPracticeState(uuidState: UUID().uuidString)
 
         switch action {
         case let selectedElementOnList as CulturalPracticeFormAction.ElementSelectedOnList:
             return CulturalPracticeFormReducerHandler.handle(selectedElementOnList: selectedElementOnList)
         case let setFormIsDirtyAction as CulturalPracticeFormAction.SetFormIsDirtyAction:
-            return CulturalPracticeFormReducerHandler.handleUpdateState(state: state) { (state: CulturalPracticeFormState) -> CulturalPracticeFormState in
+            return CulturalPracticeFormReducerHandler.handleUpdateState(state: state) { (state: SelectFormCulturalPracticeState) -> SelectFormCulturalPracticeState in
                 state.changeValue(isDirty: setFormIsDirtyAction.isDirty, culturalPracticeSubAction: .formIsDirty)
             }
         case let closedPresentedViewControllerAction as CulturalPracticeFormAction.ClosePresentedViewControllerAction:
@@ -44,12 +44,12 @@ class CulturalPracticeFormReducerHandler {
 
     static func handle(
         closePresentedViewControllerWithSaveAction: CulturalPracticeFormAction.ClosePresentedViewControllerWithSaveAction,
-        state: CulturalPracticeFormState
-    ) -> CulturalPracticeFormState {
+        state: SelectFormCulturalPracticeState
+    ) -> SelectFormCulturalPracticeState {
         let indexSelected = closePresentedViewControllerWithSaveAction.indexSelected
         let culturalPraticeValue = findCulturalPracticeValueByIndex(culturalPraticeElementProtocol: state.culturalPraticeElement!, index: indexSelected)?.0
 
-        return handleUpdateState(state: state) { (state: CulturalPracticeFormState) -> CulturalPracticeFormState in
+        return handleUpdateState(state: state) { (state: SelectFormCulturalPracticeState) -> SelectFormCulturalPracticeState in
             if culturalPraticeValue != nil,
                 var culturalPraticeSelectElement = state.culturalPraticeElement as? CulturalPracticeMultiSelectElement {
                 culturalPraticeSelectElement.value = culturalPraticeValue
@@ -64,8 +64,8 @@ class CulturalPracticeFormReducerHandler {
         }
     }
 
-    static func handle(selectedElementOnList: CulturalPracticeFormAction.ElementSelectedOnList) -> CulturalPracticeFormState {
-        CulturalPracticeFormState(
+    static func handle(selectedElementOnList: CulturalPracticeFormAction.ElementSelectedOnList) -> SelectFormCulturalPracticeState {
+        SelectFormCulturalPracticeState(
             uuidState: UUID().uuidString,
             culturalPraticeElement: selectedElementOnList.culturalPracticeElement,
             fieldType: selectedElementOnList.fieldType,
@@ -75,9 +75,9 @@ class CulturalPracticeFormReducerHandler {
 
     static func handle(
         closePresentedViewControllerAction: CulturalPracticeFormAction.ClosePresentedViewControllerAction,
-        state: CulturalPracticeFormState
+        state: SelectFormCulturalPracticeState
 
-    ) -> CulturalPracticeFormState {
+    ) -> SelectFormCulturalPracticeState {
         if let isDirty = state.isDirty, isDirty {
             return state.changeValue(culturalPracticeSubAction: .printAlert)
         }

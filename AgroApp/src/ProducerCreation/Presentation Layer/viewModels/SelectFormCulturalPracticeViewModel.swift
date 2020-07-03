@@ -10,8 +10,8 @@ import Foundation
 import RxSwift
 import UIKit
 
-class CulturalPracticeFormViewModelImpl: CulturalPracticeFormViewModel {
-    let culturalPracticeFormObs: Observable<CulturalPracticeFormState>
+class SelectFormCulturalPracticeViewModelImpl: SelectFormCulturalPracticeViewModel {
+    let culturalPracticeFormObs: Observable<SelectFormCulturalPracticeState>
     var disposableCulturalPracticeFormObs: Disposable?
     var disposableDispatcher: Disposable?
     var viewController: UIViewController?
@@ -21,7 +21,7 @@ class CulturalPracticeFormViewModelImpl: CulturalPracticeFormViewModel {
     let actionDispatcher: ActionDispatcher
 
     init(
-        culturalPracticeFormObs: Observable<CulturalPracticeFormState>,
+        culturalPracticeFormObs: Observable<SelectFormCulturalPracticeState>,
         actionDispatcher: ActionDispatcher
     ) {
         self.culturalPracticeFormObs = culturalPracticeFormObs
@@ -175,7 +175,7 @@ class CulturalPracticeFormViewModelImpl: CulturalPracticeFormViewModel {
 }
 
 // extention handler methode
-extension CulturalPracticeFormViewModelImpl {
+extension SelectFormCulturalPracticeViewModelImpl {
     private func handleNewFormData() {
         setTitle(self.multiSelectElement!.title)
         setTextDetailWith(fieldType: self.fieldType!, and: self.multiSelectElement!)
@@ -215,7 +215,7 @@ extension CulturalPracticeFormViewModelImpl {
 }
 
 // extension for dispatcher methods
-extension CulturalPracticeFormViewModelImpl {
+extension SelectFormCulturalPracticeViewModelImpl {
     public func dispatchFormIsDirty() {
         self.disposableDispatcher = Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(CulturalPracticeFormAction.SetFormIsDirtyAction(isDirty: true))
@@ -260,7 +260,7 @@ extension CulturalPracticeFormViewModelImpl {
     }
 }
 
-protocol CulturalPracticeFormViewModel {
+protocol SelectFormCulturalPracticeViewModel {
     var viewController: UIViewController? {get set}
     func subscribeToCulturalPracticeFormObs()
     func disposeToCulturalPracticeFormObs()

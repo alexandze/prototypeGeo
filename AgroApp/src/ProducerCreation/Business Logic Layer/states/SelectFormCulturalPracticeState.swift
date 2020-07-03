@@ -7,8 +7,9 @@
 //
 
 import Foundation
-struct CulturalPracticeFormState: Equatable {
-    static func == (lhs: CulturalPracticeFormState, rhs: CulturalPracticeFormState) -> Bool {
+
+struct SelectFormCulturalPracticeState: Equatable {
+    static func == (lhs: SelectFormCulturalPracticeState, rhs: SelectFormCulturalPracticeState) -> Bool {
         lhs.uuidState == rhs.uuidState
     }
 
@@ -23,8 +24,8 @@ struct CulturalPracticeFormState: Equatable {
         fieldType: FieldType? = nil,
         isDirty: Bool? = nil,
         culturalPracticeSubAction: CulturalPracticeFormSubAction? = nil
-    ) -> CulturalPracticeFormState {
-        CulturalPracticeFormState(
+    ) -> SelectFormCulturalPracticeState {
+        SelectFormCulturalPracticeState(
             uuidState: UUID().uuidString,
             culturalPraticeElement: culturalPraticeElement ?? self.culturalPraticeElement,
             fieldType: fieldType ?? self.fieldType,

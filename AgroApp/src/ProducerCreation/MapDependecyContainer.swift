@@ -9,8 +9,9 @@
 import ReSwift
 import RxSwift
 import UIKit
+import SwiftUI
 
-public class MapDependencyContainerImpl: MapDependencyContainer {
+class MapDependencyContainerImpl: MapDependencyContainer {
     // MARK: - Properties
     let stateStore: Store<AppState>
 
@@ -19,22 +20,22 @@ public class MapDependencyContainerImpl: MapDependencyContainer {
     }
     // MARK: - Methods CulturalPracticeForm
 
-    func makeCulturalPracticeFormStateObservalbe() -> Observable<CulturalPracticeFormState> {
-        self.stateStore.makeObservable { (subscription: Subscription<AppState>) -> Subscription<CulturalPracticeFormState> in
+    func makeCulturalPracticeFormStateObservalbe() -> Observable<SelectFormCulturalPracticeState> {
+        self.stateStore.makeObservable { (subscription: Subscription<AppState>) -> Subscription<SelectFormCulturalPracticeState> in
             subscription
-                .select { $0.culturalPracticeFormState }
+                .select { $0.selectFormCulturalPracticeState }
                 .skip { $0.uuidState == $1.uuidState }
         }
     }
 
-    func makeCulturalPracticeFormViewModel() -> CulturalPracticeFormViewModel {
-        CulturalPracticeFormViewModelImpl(
+    func makeCulturalPracticeFormViewModel() -> SelectFormCulturalPracticeViewModel {
+        SelectFormCulturalPracticeViewModelImpl(
             culturalPracticeFormObs: makeCulturalPracticeFormStateObservalbe(),
             actionDispatcher: stateStore
         )
     }
 
-    public func makeCulturalPracticeFormController() -> CulturalPracticeFormViewController {
+    func makeCulturalPracticeFormController() -> CulturalPracticeFormViewController {
         CulturalPracticeFormViewController(culturalPracticeFormViewModel: makeCulturalPracticeFormViewModel())
     }
 
@@ -88,7 +89,7 @@ public class MapDependencyContainerImpl: MapDependencyContainer {
         )
     }
 
-    public func makeFieldListViewController() -> FieldListViewController {
+    func makeFieldListViewController() -> FieldListViewController {
         FieldListViewController(fieldListViewModel: makeFieldListViewModel())
     }
 
@@ -116,7 +117,7 @@ public class MapDependencyContainerImpl: MapDependencyContainer {
         )
     }
 
-    public func makeCulturalPracticeViewController() -> CulturalPraticeViewController {
+    func makeCulturalPracticeViewController() -> CulturalPraticeViewController {
         CulturalPraticeViewController(culturalPraticeViewModel: self.makeCulturalPracticeViewModel())
     }
 
@@ -124,12 +125,35 @@ public class MapDependencyContainerImpl: MapDependencyContainer {
         ContainerFieldNavigationViewController(navigationFieldController: makeFieldListNavigationController())
     }
 
+    // MARK: - Methods InputFormCulturalPractice
+
+    func makeInputFormCuluralPracticeObservable() -> Observable<InputFormCulturalPracticeState> {
+        self.stateStore.makeObservable { (subscription: Subscription<AppState>) -> Subscription<InputFormCulturalPracticeState> in
+            subscription
+                .select { $0.inputFormCulturalPracticeState }
+                .skip { $0.uuidState == $1.uuidState }
+        }
+    }
+
+    func makeInputFormCulturalPracticeViewModel() -> InputFormCulturalPracticeViewModel {
+        InputFormCulturalPracticeViewModelImpl(
+            stateObserver: makeInputFormCuluralPracticeObservable(),
+            actionDispatcher: self.stateStore
+        )
+    }
+
+    func makeInputFormCulturalPracticeHostingController() -> SettingViewController<InputFormCulturalPracticeView> {
+        let viewModel = makeInputFormCulturalPracticeViewModel()
+        let inputFormView = InputFormCulturalPracticeView(viewModel: viewModel)
+        return SettingViewController(myView: inputFormView)
+    }
+
     // MARK: - Methods navigation
-    public func makeFieldListNavigationController() -> UINavigationController {
+    func makeFieldListNavigationController() -> UINavigationController {
         UINavigationController(rootViewController: self.makeFieldListViewController())
     }
 
-    public func makeMapFieldNavigationController() -> UINavigationController {
+    func makeMapFieldNavigationController() -> UINavigationController {
         let navController = UINavigationController(rootViewController: self.makeMapFieldViewController())
         let tabBarItem = UITabBarItem(title: "Carte", image: UIImage(named: "mapsIcon"), tag: 2)
         navController.tabBarItem = tabBarItem
@@ -137,15 +161,15 @@ public class MapDependencyContainerImpl: MapDependencyContainer {
     }
 
     // MARK: - Methods process
-    public func processInitMapField() -> UINavigationController {
+    func processInitMapField() -> UINavigationController {
         makeMapFieldNavigationController()
     }
 
-    public func processInitFieldListNavigation() -> UINavigationController {
+    func processInitFieldListNavigation() -> UINavigationController {
         makeFieldListNavigationController()
     }
 
-    public func processInitContainerMapAndFieldNavigation() -> ContainerMapAndListFieldViewController {
+    func processInitContainerMapAndFieldNavigation() -> ContainerMapAndListFieldViewController {
         ContainerMapAndListFieldViewController(
             mapFieldViewController: makeMapFieldViewController(),
             containerFieldNavigationViewController: makeContainerFieldNavigationViewController()
@@ -154,7 +178,7 @@ public class MapDependencyContainerImpl: MapDependencyContainer {
 
 }
 
-public protocol MapDependencyContainer {
+protocol MapDependencyContainer {
     func makeMapFieldNavigationController() -> UINavigationController
     func makeFieldListNavigationController() -> UINavigationController
     func makeCulturalPracticeViewController() -> CulturalPraticeViewController
@@ -162,5 +186,5 @@ public protocol MapDependencyContainer {
     func processInitContainerMapAndFieldNavigation() -> ContainerMapAndListFieldViewController
     func processInitMapField() -> UINavigationController
     func makeCulturalPracticeFormController() -> CulturalPracticeFormViewController
-
+    func makeInputFormCulturalPracticeHostingController() -> SettingViewController<InputFormCulturalPracticeView>
 }

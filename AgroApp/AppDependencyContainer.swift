@@ -10,7 +10,7 @@ import ReSwift
 import RxSwift
 import UIKit
 
-public class AppDependencyContainerImpl: AppDependencyContainer {
+class AppDependencyContainerImpl: AppDependencyContainer {
 
     let stateStore: Store<AppState> = {
         return Store(
@@ -19,7 +19,8 @@ public class AppDependencyContainerImpl: AppDependencyContainer {
                 farmerState: FarmerState(),
                 mapFieldState: MapState(),
                 culturalPracticeState: CulturalPracticeState(uuidState: UUID().uuidString),
-                culturalPracticeFormState: CulturalPracticeFormState(uuidState: UUID().uuidString)
+                selectFormCulturalPracticeState: SelectFormCulturalPracticeState(uuidState: UUID().uuidString),
+                inputFormCulturalPracticeState: InputFormCulturalPracticeState(uuidState: UUID().uuidString)
             ),
             middleware: [
                 FarmerMiddleware.shared.makeGetFarmersMiddleware(),
@@ -29,9 +30,9 @@ public class AppDependencyContainerImpl: AppDependencyContainer {
         )
     }()
 
-    public let mapDependencyContainer: MapDependencyContainer
+    let mapDependencyContainer: MapDependencyContainer
 
-    public init() {
+    init() {
         self.mapDependencyContainer = MapDependencyContainerImpl(stateStore: self.stateStore)
     }
 
@@ -91,7 +92,7 @@ public class AppDependencyContainerImpl: AppDependencyContainer {
         return farmerNavigationController
     }
 
-    public func proccessInitTabBarController() -> UITabBarController {
+    func proccessInitTabBarController() -> UITabBarController {
         let farmerNavigationController = self.processInitFarmerPackage()
         let mapFieldNavigationController = self.mapDependencyContainer.processInitMapField()
         let tabBarController = UITabBarController()
@@ -103,22 +104,28 @@ public class AppDependencyContainerImpl: AppDependencyContainer {
 
         return tabBarController
     }
-    public func processInitContainerMapAndFieldNavigation() -> ContainerMapAndListFieldViewController {
+    func processInitContainerMapAndFieldNavigation() -> ContainerMapAndListFieldViewController {
         mapDependencyContainer.processInitContainerMapAndFieldNavigation()
     }
 
-    public func processInitCulturalPracticeViewController() -> CulturalPraticeViewController {
+    func processInitCulturalPracticeViewController() -> CulturalPraticeViewController {
         mapDependencyContainer.makeCulturalPracticeViewController()
     }
 
-    public func processInitCulturalPracticeFormViewController() -> CulturalPracticeFormViewController {
+    func processInitCulturalPracticeFormViewController() -> CulturalPracticeFormViewController {
         mapDependencyContainer.makeCulturalPracticeFormController()
+    }
+
+    func processInitInputFormCulturalPracticeHostingController() -> SettingViewController<InputFormCulturalPracticeView> {
+        mapDependencyContainer.makeInputFormCulturalPracticeHostingController()
     }
 }
 
-public protocol AppDependencyContainer {
+protocol AppDependencyContainer {
+    var mapDependencyContainer: MapDependencyContainer {get}
     func proccessInitTabBarController() -> UITabBarController
     func processInitContainerMapAndFieldNavigation() -> ContainerMapAndListFieldViewController
     func processInitCulturalPracticeViewController() -> CulturalPraticeViewController
     func processInitCulturalPracticeFormViewController() -> CulturalPracticeFormViewController
+    func processInitInputFormCulturalPracticeHostingController() -> SettingViewController<InputFormCulturalPracticeView>
 }

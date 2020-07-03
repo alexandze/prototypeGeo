@@ -10,14 +10,14 @@ import UIKit
 
 public class CulturalPracticeFormViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
 
-    var culturalPracticeFormViewModel: CulturalPracticeFormViewModel
+    var culturalPracticeFormViewModel: SelectFormCulturalPracticeViewModel
     let culturalPracticeFormView = CuturalPracticeFormView()
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(culturalPracticeFormViewModel: CulturalPracticeFormViewModel) {
+    init(culturalPracticeFormViewModel: SelectFormCulturalPracticeViewModel) {
         self.culturalPracticeFormViewModel = culturalPracticeFormViewModel
         super.init(nibName: nil, bundle: nil)
         self.culturalPracticeFormViewModel.viewController = self
