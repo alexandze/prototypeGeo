@@ -184,7 +184,7 @@ class CuturalPracticeFormView: UIView {
             buttonValidate.topAnchor.constraint(equalTo: pickerView.bottomAnchor, constant: 50),
             buttonValidate.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             buttonValidate.heightAnchor.constraint(equalToConstant: 50),
-            buttonValidate.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.7)
+            buttonValidate.widthAnchor.constraint(equalToConstant: 200)
         ])
     }
 

@@ -89,6 +89,8 @@
 		98BA0D7D240CDDD000948A26 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BA0D7C240CDDD000948A26 /* UIViewControllerExtension.swift */; };
 		98BA0D7F240CE41F00948A26 /* ContainerMapAndListFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BA0D7E240CE41F00948A26 /* ContainerMapAndListFieldView.swift */; };
 		98BA0D81240CF43600948A26 /* UIViewExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BA0D80240CF43600948A26 /* UIViewExtention.swift */; };
+		98C77E7324B024AF00AA6423 /* UIButtonRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C77E7224B024AF00AA6423 /* UIButtonRepresentable.swift */; };
+		98C77E7524B06E0500AA6423 /* KeyboardFollower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C77E7424B06E0500AA6423 /* KeyboardFollower.swift */; };
 		98D1929023BFFF7C00BF9A7A /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D1928F23BFFF7C00BF9A7A /* Actions.swift */; };
 		98D1929223C012E300BF9A7A /* AppDependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D1929123C012E300BF9A7A /* AppDependencyContainer.swift */; };
 		98D1929523C020B000BF9A7A /* FarmerTableViewInteractions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D1929423C020B000BF9A7A /* FarmerTableViewInteractions.swift */; };
@@ -224,6 +226,8 @@
 		98BA0D7C240CDDD000948A26 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		98BA0D7E240CE41F00948A26 /* ContainerMapAndListFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerMapAndListFieldView.swift; sourceTree = "<group>"; };
 		98BA0D80240CF43600948A26 /* UIViewExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtention.swift; sourceTree = "<group>"; };
+		98C77E7224B024AF00AA6423 /* UIButtonRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonRepresentable.swift; sourceTree = "<group>"; };
+		98C77E7424B06E0500AA6423 /* KeyboardFollower.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardFollower.swift; sourceTree = "<group>"; };
 		98D1928F23BFFF7C00BF9A7A /* Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actions.swift; sourceTree = "<group>"; };
 		98D1929123C012E300BF9A7A /* AppDependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependencyContainer.swift; sourceTree = "<group>"; };
 		98D1929423C020B000BF9A7A /* FarmerTableViewInteractions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FarmerTableViewInteractions.swift; sourceTree = "<group>"; };
@@ -616,6 +620,8 @@
 				98DB0F4C24286CED0065963B /* UIButtonWithData.swift */,
 				98DB0F5624297F960065963B /* TableState.swift */,
 				9847564224AEC6710048A503 /* SettingViewController.swift */,
+				98C77E7224B024AF00AA6423 /* UIButtonRepresentable.swift */,
+				98C77E7424B06E0500AA6423 /* KeyboardFollower.swift */,
 			);
 			path = libs;
 			sourceTree = "<group>";
@@ -879,6 +885,7 @@
 				9860400F23BD976800D5B538 /* StoreSubcriberProxy.swift in Sources */,
 				9894340A2410C76D003C0110 /* PolygonWithData.swift in Sources */,
 				9854BFFF240B9DD500E5AB8A /* FieldCuturalPracticeInteraction.swift in Sources */,
+				98C77E7524B06E0500AA6423 /* KeyboardFollower.swift in Sources */,
 				98DB0F4B242866C50065963B /* SubtitleTableViewCell.swift in Sources */,
 				9854C001240BC1C100E5AB8A /* Identifier.swift in Sources */,
 				98BA0D7D240CDDD000948A26 /* UIViewControllerExtension.swift in Sources */,
@@ -930,6 +937,7 @@
 				9860400A23BD8BC800D5B538 /* FarmerReducer.swift in Sources */,
 				98363B3923DECDA500AFFC63 /* MapState.swift in Sources */,
 				9894340C2410FAF0003C0110 /* FieldSelectedViewCell.swift in Sources */,
+				98C77E7324B024AF00AA6423 /* UIButtonRepresentable.swift in Sources */,
 				98457BAA2427353B00AF4C90 /* CulturalPractice.swift in Sources */,
 				98363B3023DECA9F00AFFC63 /* MapFieldViewModel.swift in Sources */,
 				98D1929023BFFF7C00BF9A7A /* Actions.swift in Sources */,

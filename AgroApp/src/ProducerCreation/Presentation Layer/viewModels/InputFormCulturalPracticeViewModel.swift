@@ -25,7 +25,8 @@ class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeViewModel
 
     class ViewState {
         @State var inputValue: String = ""
-        @State var inputTitle: String = ""
+        @State var inputTitle: String = "Veuillez entrer une valeur"
+        @State var subTitle: String = "Valeur subtitle"
     }
 }
 

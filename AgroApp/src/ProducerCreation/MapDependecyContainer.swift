@@ -144,7 +144,7 @@ class MapDependencyContainerImpl: MapDependencyContainer {
 
     func makeInputFormCulturalPracticeHostingController() -> SettingViewController<InputFormCulturalPracticeView> {
         let viewModel = makeInputFormCulturalPracticeViewModel()
-        let inputFormView = InputFormCulturalPracticeView(viewModel: viewModel)
+        let inputFormView = InputFormCulturalPracticeView(viewModel: viewModel, keyboardFollower: KeyboardFollower())
         return SettingViewController(myView: inputFormView)
     }
 
@@ -187,4 +187,7 @@ protocol MapDependencyContainer {
     func processInitMapField() -> UINavigationController
     func makeCulturalPracticeFormController() -> CulturalPracticeFormViewController
     func makeInputFormCulturalPracticeHostingController() -> SettingViewController<InputFormCulturalPracticeView>
+
+    // for swift ui preview
+    func makeInputFormCulturalPracticeViewModel() -> InputFormCulturalPracticeViewModel
 }
