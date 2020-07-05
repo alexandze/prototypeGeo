@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CulturalPraticeView: UIView {
+class ListViewCulturalPractice: UIView {
 
     var handleAddButtonFunc: (() -> Void)?
 
