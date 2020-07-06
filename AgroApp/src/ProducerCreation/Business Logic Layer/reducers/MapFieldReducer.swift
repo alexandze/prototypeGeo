@@ -78,10 +78,10 @@ class MapFieldReducerHandler {
     }
 
     private static func setCulturalPractice(
-        state: CulturalPracticeState,
+        state: CulturalPracticeFormState,
         _ sectionIndex: Int,
         _ inputMultiSelectContainer: CulturalPracticeElementProtocol
-    ) -> CulturalPracticeState {
+    ) -> CulturalPracticeFormState {
         var copyState = state
 
         copyState.sections![sectionIndex].rowData.append(inputMultiSelectContainer)

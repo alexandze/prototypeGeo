@@ -8,33 +8,33 @@
 
 import UIKit
 
-public class CulturalPracticeFormViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+public class SelectFormCulturalPracticeViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
 
-    var culturalPracticeFormViewModel: SelectFormCulturalPracticeViewModel
-    let culturalPracticeFormView = CuturalPracticeFormView()
+    var selectFormCulturalPracticeViewModel: SelectFormCulturalPracticeViewModel
+    let selectFormCulturalPracticeView = SelectFormCulturalPracticeView()
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     init(culturalPracticeFormViewModel: SelectFormCulturalPracticeViewModel) {
-        self.culturalPracticeFormViewModel = culturalPracticeFormViewModel
+        self.selectFormCulturalPracticeViewModel = culturalPracticeFormViewModel
         super.init(nibName: nil, bundle: nil)
-        self.culturalPracticeFormViewModel.viewController = self
+        self.selectFormCulturalPracticeViewModel.viewController = self
     }
 
     public override func loadView() {
-        self.view = culturalPracticeFormView
+        self.view = selectFormCulturalPracticeView
     }
 
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        culturalPracticeFormViewModel.subscribeToCulturalPracticeFormObs()
+        selectFormCulturalPracticeViewModel.subscribeToCulturalPracticeFormObs()
     }
 
     public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        culturalPracticeFormViewModel.disposeToCulturalPracticeFormObs()
+        selectFormCulturalPracticeViewModel.disposeToCulturalPracticeFormObs()
     }
 
     public override func viewDidLoad() {
@@ -46,7 +46,7 @@ public class CulturalPracticeFormViewController: UIViewController, UIPickerViewD
     }
 
     public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        culturalPracticeFormViewModel.pickerView(numberOfRowsInComponent: component)
+        selectFormCulturalPracticeViewModel.pickerView(numberOfRowsInComponent: component)
     }
 
     public func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
@@ -54,10 +54,10 @@ public class CulturalPracticeFormViewController: UIViewController, UIPickerViewD
     }
 
     public func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-        culturalPracticeFormViewModel.pickerView(pickerView: pickerView, viewForRow: row, forComponent: component, reusingView: view)
+        selectFormCulturalPracticeViewModel.pickerView(pickerView: pickerView, viewForRow: row, forComponent: component, reusingView: view)
     }
 
     public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        self.culturalPracticeFormViewModel.dispatchFormIsDirty()
+        self.selectFormCulturalPracticeViewModel.dispatchFormIsDirty()
     }
 }

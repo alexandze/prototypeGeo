@@ -16,10 +16,27 @@ struct InputFormCulturalPracticeState: Equatable {
     var uuidState: String
     var inputElement: CulturalPracticeInputElement?
     var fieldType: FieldType?
-    var inputFormSubAction: InputFormSubAction?
+    var inputFormSubAction: InputFormCulturalPracticeSubAction?
     var isDirty: Bool?
+
+    func changeValue(
+        inputElement: CulturalPracticeInputElement? = nil,
+        fieldType: FieldType? = nil,
+        inputFormSubAction: InputFormCulturalPracticeSubAction? = nil,
+        isDirty: Bool? = nil
+    ) -> InputFormCulturalPracticeState {
+        InputFormCulturalPracticeState(
+            uuidState: UUID().uuidString,
+            inputElement: inputElement ?? self.inputElement,
+            fieldType: fieldType ?? self.fieldType,
+            inputFormSubAction: inputFormSubAction ?? self.inputFormSubAction,
+            isDirty: isDirty ?? self.isDirty
+        )
+    }
 }
 
-enum InputFormSubAction {
-    case test
+enum InputFormCulturalPracticeSubAction {
+    case newFormData
+    case closeWithSave
+    case noAction
 }

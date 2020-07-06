@@ -12,7 +12,7 @@ import ReSwift
 struct AppState: StateType {
     var farmerState: FarmerState
     var mapFieldState: MapState
-    var culturalPracticeState: CulturalPracticeState
+    var culturalPracticeState: CulturalPracticeFormState
     var selectFormCulturalPracticeState: SelectFormCulturalPracticeState
     var inputFormCulturalPracticeState: InputFormCulturalPracticeState
 }

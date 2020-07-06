@@ -7,15 +7,18 @@
 //
 
 import SwiftUI
+import RxSwift
 
 struct InputFormCulturalPracticeView: View, SettingViewControllerProtocol {
     var dismiss: ((FuncVoid) -> Void)?
     var setAlpha: ((CGFloat) -> Void)?
     var setBackgroundColor: ((UIColor) -> Void)?
     var setIsModalInPresentation: ((Bool) -> Void)?
+    var value: Bool?
     let viewModel: InputFormCulturalPracticeViewModel
-    let viewState: InputFormCulturalPracticeViewModelImpl.ViewState
+    @ObservedObject var viewState: InputFormCulturalPracticeViewModelImpl.ViewState
     @ObservedObject var keyboardFollower: KeyboardFollower
+    var disposableDismissForm: Disposable?
 
     init(
         viewModel: InputFormCulturalPracticeViewModel,
@@ -27,32 +30,62 @@ struct InputFormCulturalPracticeView: View, SettingViewControllerProtocol {
     }
 
     var body: some View {
-        VStack {
-            HeaderView(title: "Alexandre andze") { self.dismiss? { } }
-            Spacer()
+        GeometryReader { (geometry: GeometryProxy) in
 
-            CenterView(inputValue: viewState.$inputValue, inputTitle: viewState.inputTitle, subtitle: viewState.subTitle) {
-                // TODO action validate button
-            }.padding(.bottom, keyboardFollower.keyboardHeight)
+            VStack {
+                HeaderView(title: self.viewState.title) { self.dismiss? { } }
+                Spacer()
+
+                CenterView(
+                    inputValue: self.$viewState.inputValue,
+                    inputTitle: self.viewState.inputTitle,
+                    subtitle: self.viewState.subTitle,
+                    isInputValueValid: self.isInputValueValid,
+                    unitType: self.viewState.unitType
+                ) {
+                    self.viewModel.handleButtonValidate()
+                }
+                .padding(.bottom, self.keyboardFollower.keyboardHeight)
                 .edgesIgnoringSafeArea(
-                    keyboardFollower.isVisible ? .bottom : [])
+                    self.keyboardFollower.isVisible ? .bottom : []
+                )
+                    .animation(self.viewState.hasAnimation ? .default : nil)
 
-            Spacer()
-        }.onAppear {
-            self.configViewController()
+                Spacer()
+            }
+            .environmentObject(DimensionScreen(width: geometry.size.width, height: geometry.size.height))
+            .onAppear {
+                self.configViewController()
+                self.viewModel.subscribeToInputFormCulturalPracticeStateObs()
+            }
+            .onDisappear {
+                self.viewModel.disposeToObs()
+            }
+            .onReceive(self.viewState.$isDismissForm, perform: self.dismissForm(isDismissForm:))
         }
     }
 
     func configViewController() {
         self.setBackgroundColor?(Util.getBackgroundColor())
-        self.setAlpha?(1)
+        self.setAlpha?(Util.getAlphaValue())
         self.setIsModalInPresentation?(true)
+    }
+
+    func dismissForm(isDismissForm: Bool) {
+        if isDismissForm {
+            self.dismiss? { }
+        }
+    }
+
+    var isInputValueValid: Bool {
+        return viewModel.isInputValueValid(viewState.inputValue)
     }
 }
 
 private struct HeaderView: View {
-    let title: String
-    let actionCloseButton: () -> Void
+    var title: String
+    var actionCloseButton: () -> Void
+    @EnvironmentObject var dimensionScreen: DimensionScreen
 
     var body: some View {
         HStack(alignment: .top) {
@@ -65,10 +98,10 @@ private struct HeaderView: View {
             Text(title)
                 .font(.system(size: 25))
                 .bold()
-                .frame(width: 150, alignment: .center)
+                .frame(width: dimensionScreen.width * 0.7, alignment: .center)
                 .lineLimit(3)
                 .multilineTextAlignment(.center)
-                .offset(y: 20)
+                .offset(x: -15, y: 10)
 
             Spacer()
         }
@@ -79,26 +112,64 @@ private struct CenterView: View {
     @Binding var inputValue: String
     let inputTitle: String
     let subtitle: String
+    let isInputValueValid: Bool
+    let unitType: String
     let actionValidateButton: () -> Void
+    @EnvironmentObject var dimensionScreen: DimensionScreen
 
     var body: some View {
         VStack {
             Text(subtitle)
-                .font(.system(size: 20))
+                .font(.system(size: 15))
                 .bold()
+            .lineLimit(3)
                 .multilineTextAlignment(.center)
+                .padding(.horizontal, 10)
+                .padding(.bottom, 10)
 
             TextFieldWithStyle(inputValue: $inputValue, inputTitle: inputTitle)
+                .padding(.bottom, 10)
 
             Button(action: { self.actionValidateButton() }) {
                 Text("Valider")
+                    .frame(
+                        minWidth: getWidthValidateButton(),
+                        idealWidth: getWidthValidateButton(),
+                        maxWidth: getWidthValidateButton(),
+                        minHeight: getHeightValidateButton(),
+                        idealHeight: getHeightValidateButton(),
+                        maxHeight: getHeightValidateButton(),
+                        alignment: .center
+                )
             }
-                // .padding(.horizontal, 80)
-                .frame(width: 200, height: 50, alignment: .center)
-                .foregroundColor(.white)
-                .background(Color(UIColor(red: 34/255, green: 139/255, blue: 34/255, alpha: 1)))
-                .cornerRadius(10)
+            .frame(
+                width: getWidthValidateButton(),
+                height: getHeightValidateButton(),
+                alignment: .center
+            )
+            .foregroundColor(.white)
+            .background(Color(UIColor(red: 34/255, green: 139/255, blue: 34/255, alpha: 1)))
+            .cornerRadius(10)
+            .disabled(!self.isInputValueValid)
+
+            if !self.isInputValueValid {
+                Text("Veuillez saisir une valeur valide")
+                    .font(.system(size: 15))
+                    .bold()
+                    .foregroundColor(.red)
+                    .multilineTextAlignment(.center)
+                    .padding(.top)
+            }
+
         }
+    }
+
+    func getWidthValidateButton() -> CGFloat {
+        dimensionScreen.width * 0.6
+    }
+
+    func getHeightValidateButton() -> CGFloat {
+        dimensionScreen.height * 0.09
     }
 }
 
@@ -106,23 +177,19 @@ private struct TextFieldWithStyle: View {
     @Binding var inputValue: String
     let inputTitle: String
     @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject var dimensionScreen: DimensionScreen
 
     var body: some View {
         TextField(inputTitle, text: $inputValue)
-            .keyboardType(.decimalPad)
-            .padding(.horizontal, 20)
-            .frame(height: 80, alignment: .center)
+            .keyboardType(.numbersAndPunctuation)
+            .font(.system(size: 25))
+            .padding(.horizontal, 10)
+            .frame(
+                width: self.dimensionScreen.width * 0.3,
+                height: (self.dimensionScreen.height * 0.1),
+                alignment: .center
+        )
             .background(colorScheme == .dark ? Color.black : Color.white)
             .cornerRadius(5)
-            .padding(.horizontal, 90)
-            .padding(.vertical, 10)
     }
 }
-
-/*
- struct InputFormCulturalPractice_Previews: PreviewProvider {
- static var previews: some View {
- InputFormCulturalPracticeView(viewModel: Util.getAppDependency()!.mapDependencyContainer.makeInputFormCulturalPracticeViewModel())
- }
- }
- */

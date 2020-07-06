@@ -38,11 +38,11 @@ class SelectFormCulturalPracticeViewModelImpl: SelectFormCulturalPracticeViewMod
             .subscribe { event in
             guard let selectElement = event.element?.culturalPraticeElement as? CulturalPracticeMultiSelectElement,
                 let fieldType = event.element?.fieldType,
-                let culturalPracticeFormStateSubAction = event.element?.culturalPracticeSubAction
+                let selectFormCulturalParacticeSubAction = event.element?.selectFormCulturalParacticeSubAction
                 else { return }
             self.setValues(selectElement: selectElement, fieldType: fieldType)
 
-            switch culturalPracticeFormStateSubAction {
+            switch selectFormCulturalParacticeSubAction {
             case .newDataForm:
                 self.handleNewFormData()
             case .printAlert:
@@ -71,13 +71,13 @@ class SelectFormCulturalPracticeViewModelImpl: SelectFormCulturalPracticeViewMod
 
     public func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView {
         if let labelReuse = view as? UILabel {
-            return getCulturalPracticeFormView()!.reuseLabelPickerView(
+            return getSelectFormCulturalPracticeView()!.reuseLabelPickerView(
                 label: labelReuse,
                 text: self.multiSelectElement!.tupleCulturalTypeValue[row].1
             )
         }
 
-        return getCulturalPracticeFormView()!.getLabelForPickerView(
+        return getSelectFormCulturalPracticeView()!.getLabelForPickerView(
             text: self.multiSelectElement!.tupleCulturalTypeValue[row].1,
             widthPickerView: pickerView.frame.width
         )
@@ -93,7 +93,7 @@ class SelectFormCulturalPracticeViewModelImpl: SelectFormCulturalPracticeViewMod
     }
 
     private func initHandleValidateButton() {
-        getCulturalPracticeFormView()!.handleValidateButton {
+        getSelectFormCulturalPracticeView()!.handleValidateButton {
             self.dispatchClosePresentedViewControllerWithSave()
         }
     }
@@ -106,8 +106,8 @@ class SelectFormCulturalPracticeViewModelImpl: SelectFormCulturalPracticeViewMod
         self.getCulturalPracticeFormViewController()!.dismiss(animated: true)
     }
 
-    private func createActionUpdateCulturalPracticeElementWith(selectElement: CulturalPracticeMultiSelectElement) -> CulturalPracticeListAction.UpdateCulturalPracticeElement {
-        CulturalPracticeListAction.UpdateCulturalPracticeElement(culturalPracticeElementProtocol: selectElement)
+    private func createActionUpdateCulturalPracticeElementWith(selectElement: CulturalPracticeMultiSelectElement) -> CulturalPracticeFormAction.UpdateCulturalPracticeElementAction {
+        CulturalPracticeFormAction.UpdateCulturalPracticeElementAction(culturalPracticeElementProtocol: selectElement)
     }
 
     private func setSelectElementWithCurrentValue(currentIndexChooseValue: Int) {
@@ -136,16 +136,16 @@ class SelectFormCulturalPracticeViewModelImpl: SelectFormCulturalPracticeViewMod
     }
 
     private func setTitle(_ title: String) {
-        getCulturalPracticeFormView()!.textTitle = title
+        getSelectFormCulturalPracticeView()!.textTitle = title
     }
 
     private func setTextDetailWith(fieldType: FieldType, and culturalPracticeElementProtocol: CulturalPracticeElementProtocol) {
         switch fieldType {
         case .polygon(let polygon):
-            getCulturalPracticeFormView()!.textDetail =
+            getSelectFormCulturalPracticeView()!.textDetail =
                 "Choisir une valeur (\(culturalPracticeElementProtocol.title)) pour la parcelle \(polygon.id)"
         case .multiPolygon(let multipolygon):
-            getCulturalPracticeFormView()!.textDetail =
+            getSelectFormCulturalPracticeView()!.textDetail =
                 "Choisir une valeur (\(culturalPracticeElementProtocol.title)) pour la parcelle \(multipolygon.id)"
         }
     }
@@ -154,7 +154,7 @@ class SelectFormCulturalPracticeViewModelImpl: SelectFormCulturalPracticeViewMod
         let pickerView = UIPickerView()
         pickerView.delegate = getCulturalPracticeFormViewController()
         pickerView.dataSource = getCulturalPracticeFormViewController()
-        getCulturalPracticeFormView()!.initPickerView(pickerView: pickerView)
+        getSelectFormCulturalPracticeView()!.initPickerView(pickerView: pickerView)
         return pickerView
     }
 
@@ -165,12 +165,12 @@ class SelectFormCulturalPracticeViewModelImpl: SelectFormCulturalPracticeViewMod
         }
     }
 
-    private func getCulturalPracticeFormView() -> CuturalPracticeFormView? {
-        (viewController as? CulturalPracticeFormViewController)?.culturalPracticeFormView
+    private func getSelectFormCulturalPracticeView() -> SelectFormCulturalPracticeView? {
+        (viewController as? SelectFormCulturalPracticeViewController)?.selectFormCulturalPracticeView
     }
 
-    private func getCulturalPracticeFormViewController() -> CulturalPracticeFormViewController? {
-        viewController as? CulturalPracticeFormViewController
+    private func getCulturalPracticeFormViewController() -> SelectFormCulturalPracticeViewController? {
+        viewController as? SelectFormCulturalPracticeViewController
     }
 }
 
@@ -185,7 +185,7 @@ extension SelectFormCulturalPracticeViewModelImpl {
     }
 
     private func handlePrintAlert() {
-        presentedAlert(alertController: self.getCulturalPracticeFormView()!.alert)
+        presentedAlert(alertController: self.getSelectFormCulturalPracticeView()!.alert)
     }
 
     private func handleCloseWithSave() {
@@ -201,13 +201,13 @@ extension SelectFormCulturalPracticeViewModelImpl {
     }
 
     private func initHandleCloseButton() {
-        getCulturalPracticeFormView()!.handleCloseButton {
+        getSelectFormCulturalPracticeView()!.handleCloseButton {
             self.dispatchClosePresentedViewController()
         }
     }
 
     private func addAlertHandle() {
-        getCulturalPracticeFormView()?.addAlertAction(
+        getSelectFormCulturalPracticeView()?.addAlertAction(
             handleYesAction: {self.dispatchClosePresentedViewControllerWithSave()},
             handleNoAction: {self.dispatchClosePrensetedViewControllerWithoutSave()}
         )
@@ -218,7 +218,7 @@ extension SelectFormCulturalPracticeViewModelImpl {
 extension SelectFormCulturalPracticeViewModelImpl {
     public func dispatchFormIsDirty() {
         self.disposableDispatcher = Util.runInSchedulerBackground {
-            self.actionDispatcher.dispatch(CulturalPracticeFormAction.SetFormIsDirtyAction(isDirty: true))
+            self.actionDispatcher.dispatch(SelectFormCulturalPracticeAction.SetFormIsDirtyAction(isDirty: true))
         }
     }
 
@@ -227,7 +227,7 @@ extension SelectFormCulturalPracticeViewModelImpl {
 
         self.disposableDispatcher = Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(
-                CulturalPracticeFormAction.ClosePresentedViewControllerWithSaveAction(indexSelected: indexSelected)
+                SelectFormCulturalPracticeAction.ClosePresentedViewControllerWithSaveAction(indexSelected: indexSelected)
             )
         }
     }
@@ -235,7 +235,7 @@ extension SelectFormCulturalPracticeViewModelImpl {
     private func dispatchClosePrensetedViewControllerWithoutSave() {
         self.disposableDispatcher = Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(
-                CulturalPracticeFormAction.ClosePresentedViewControllerWithoutSaveAction()
+                SelectFormCulturalPracticeAction.ClosePresentedViewControllerWithoutSaveAction()
             )
         }
     }
@@ -245,12 +245,12 @@ extension SelectFormCulturalPracticeViewModelImpl {
 
         self.disposableDispatcher = Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(
-                CulturalPracticeFormAction.ClosePresentedViewControllerAction(indexSelected: indexSelected)
+                SelectFormCulturalPracticeAction.ClosePresentedViewControllerAction(indexSelected: indexSelected)
             )
         }
     }
 
-    private func dispatchActionUpdateCulturalPracticeElement(action: CulturalPracticeListAction.UpdateCulturalPracticeElement) {
+    private func dispatchActionUpdateCulturalPracticeElement(action: CulturalPracticeFormAction.UpdateCulturalPracticeElementAction) {
         self.disposableDispatcher = Completable.create { completableEvent in
             self.actionDispatcher.dispatch(action)
             completableEvent(.completed)

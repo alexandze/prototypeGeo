@@ -20,7 +20,7 @@ class MapDependencyContainerImpl: MapDependencyContainer {
     }
     // MARK: - Methods CulturalPracticeForm
 
-    func makeCulturalPracticeFormStateObservalbe() -> Observable<SelectFormCulturalPracticeState> {
+    func makeSelectFormCulturalPracticeStateObservable() -> Observable<SelectFormCulturalPracticeState> {
         self.stateStore.makeObservable { (subscription: Subscription<AppState>) -> Subscription<SelectFormCulturalPracticeState> in
             subscription
                 .select { $0.selectFormCulturalPracticeState }
@@ -28,15 +28,15 @@ class MapDependencyContainerImpl: MapDependencyContainer {
         }
     }
 
-    func makeCulturalPracticeFormViewModel() -> SelectFormCulturalPracticeViewModel {
+    func makeSelectFormCulturalPracticeViewModel() -> SelectFormCulturalPracticeViewModel {
         SelectFormCulturalPracticeViewModelImpl(
-            culturalPracticeFormObs: makeCulturalPracticeFormStateObservalbe(),
+            culturalPracticeFormObs: makeSelectFormCulturalPracticeStateObservable(),
             actionDispatcher: stateStore
         )
     }
 
-    func makeCulturalPracticeFormController() -> CulturalPracticeFormViewController {
-        CulturalPracticeFormViewController(culturalPracticeFormViewModel: makeCulturalPracticeFormViewModel())
+    func makeSelectFormCulturalPracticeViewController() -> SelectFormCulturalPracticeViewController {
+        SelectFormCulturalPracticeViewController(culturalPracticeFormViewModel: makeSelectFormCulturalPracticeViewModel())
     }
 
     // MARK: - Methodes Map
@@ -95,9 +95,9 @@ class MapDependencyContainerImpl: MapDependencyContainer {
 
     // MARK: - Methods FieldCultural
 
-    func makeCurrentFieldObservable() -> Observable<CulturalPracticeState> {
+    func makeCurrentFieldObservable() -> Observable<CulturalPracticeFormState> {
         self.stateStore.makeObservable(
-            transform: {(subscription: Subscription<AppState>) -> Subscription<CulturalPracticeState> in
+            transform: {(subscription: Subscription<AppState>) -> Subscription<CulturalPracticeFormState> in
             subscription
                 .select { appState in
                     appState.culturalPracticeState
@@ -110,8 +110,8 @@ class MapDependencyContainerImpl: MapDependencyContainer {
         FieldCulturalPracticeInteractionImpl(actionDispatcher: self.stateStore)
     }
 
-    func makeCulturalPracticeViewModel() -> CulturalPraticeViewModel {
-        CulturalPraticeViewModelImpl(
+    func makeCulturalPracticeViewModel() -> CulturalPraticeFormViewModel {
+        CulturalPraticeFormViewModelImpl(
             culturalPracticeStateObs: self.makeCurrentFieldObservable(),
             actionDispatcher: self.stateStore
         )
@@ -143,8 +143,9 @@ class MapDependencyContainerImpl: MapDependencyContainer {
     }
 
     func makeInputFormCulturalPracticeHostingController() -> SettingViewController<InputFormCulturalPracticeView> {
-        let viewModel = makeInputFormCulturalPracticeViewModel()
+        var viewModel = makeInputFormCulturalPracticeViewModel()
         let inputFormView = InputFormCulturalPracticeView(viewModel: viewModel, keyboardFollower: KeyboardFollower())
+        viewModel.view = inputFormView
         return SettingViewController(myView: inputFormView)
     }
 
@@ -185,7 +186,7 @@ protocol MapDependencyContainer {
     func makeFieldListViewController() -> FieldListViewController
     func processInitContainerMapAndFieldNavigation() -> ContainerMapAndListFieldViewController
     func processInitMapField() -> UINavigationController
-    func makeCulturalPracticeFormController() -> CulturalPracticeFormViewController
+    func makeSelectFormCulturalPracticeViewController() -> SelectFormCulturalPracticeViewController
     func makeInputFormCulturalPracticeHostingController() -> SettingViewController<InputFormCulturalPracticeView>
 
     // for swift ui preview

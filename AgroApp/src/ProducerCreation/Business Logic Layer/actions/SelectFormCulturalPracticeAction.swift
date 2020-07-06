@@ -13,7 +13,7 @@ struct SelectFormCulturalPracticeAction {
     struct SelectElementSelectedOnList: Action {
         let culturalPracticeElement: CulturalPracticeElementProtocol
         let fieldType: FieldType
-        let culturalPracticeFormSubAction: CulturalPracticeFormSubAction
+        let subAction: SelectFormCulturalPracticeSubAction
     }
 
     struct ClosePresentedViewControllerAction: Action {

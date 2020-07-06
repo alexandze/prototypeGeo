@@ -16,26 +16,26 @@ struct SelectFormCulturalPracticeState: Equatable {
     var uuidState: String
     var culturalPraticeElement: CulturalPracticeElementProtocol?
     var fieldType: FieldType?
-    var culturalPracticeSubAction: CulturalPracticeFormSubAction?
+    var selectFormCulturalParacticeSubAction: SelectFormCulturalPracticeSubAction?
     var isDirty: Bool?
 
     func changeValue(
         culturalPraticeElement: CulturalPracticeElementProtocol? = nil,
         fieldType: FieldType? = nil,
         isDirty: Bool? = nil,
-        culturalPracticeSubAction: CulturalPracticeFormSubAction? = nil
+        culturalPracticeSubAction: SelectFormCulturalPracticeSubAction? = nil
     ) -> SelectFormCulturalPracticeState {
         SelectFormCulturalPracticeState(
             uuidState: UUID().uuidString,
             culturalPraticeElement: culturalPraticeElement ?? self.culturalPraticeElement,
             fieldType: fieldType ?? self.fieldType,
-            culturalPracticeSubAction: culturalPracticeSubAction ?? self.culturalPracticeSubAction,
+            selectFormCulturalParacticeSubAction: culturalPracticeSubAction ?? self.selectFormCulturalParacticeSubAction,
             isDirty: isDirty ?? self.isDirty
         )
     }
 }
 
-enum CulturalPracticeFormSubAction {
+enum SelectFormCulturalPracticeSubAction {
     case newDataForm
     case printAlert
     case formIsDirty

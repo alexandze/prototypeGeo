@@ -10,22 +10,22 @@ import Foundation
 import RxSwift
 import UIKit
 
-class CulturalPraticeViewModelImpl: CulturalPraticeViewModel {
+class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
     var currentField: FieldType?
     var sections: [Section<CulturalPracticeElementProtocol>]?
     var cellId: String = UUID().uuidString
     var headerFooterSectionViewId: String = UUID().uuidString
-    let culturalPracticeStateObs: Observable<CulturalPracticeState>
+    let culturalPracticeStateObs: Observable<CulturalPracticeFormState>
     let actionDispatcher: ActionDispatcher
     var tableView: UITableView?
     var culturalPracticeStateDisposable: Disposable?
-    var culturalPraticeView: CulturalPraticeView?
+    var culturalPraticeView: ListViewCulturalPractice?
 
     var disposableDispatcher: Disposable?
     var viewController: CulturalPraticeViewController?
 
     init(
-        culturalPracticeStateObs: Observable<CulturalPracticeState>,
+        culturalPracticeStateObs: Observable<CulturalPracticeFormState>,
         actionDispatcher: ActionDispatcher
     ) {
         self.culturalPracticeStateObs = culturalPracticeStateObs
@@ -105,15 +105,25 @@ class CulturalPraticeViewModelImpl: CulturalPraticeViewModel {
         viewController?.present(inputFormCulturalPracticeHostingController, animated: true)
     }
 
-    private func createSelectedElementOnListAction(
+    private func createSelectedSelectElementOnListAction(
         culturalPracticeSelectElement: CulturalPracticeElementProtocol,
         fieldType: FieldType
-    ) -> CulturalPracticeFormAction.ElementSelectedOnList {
-        CulturalPracticeFormAction.ElementSelectedOnList(
+    ) -> SelectFormCulturalPracticeAction.SelectElementSelectedOnList {
+        SelectFormCulturalPracticeAction.SelectElementSelectedOnList(
             culturalPracticeElement: culturalPracticeSelectElement,
             fieldType: fieldType,
-            culturalPracticeFormSubAction: CulturalPracticeFormSubAction.newDataForm
+            subAction: SelectFormCulturalPracticeSubAction.newDataForm
         )
+    }
+
+    private func createSelectedInputElementOnListAction(
+        inputElement: CulturalPracticeInputElement,
+        fieldType: FieldType
+    ) -> InputFormCulturalPracticeAction.InputElementSelectedOnListAction {
+        InputFormCulturalPracticeAction.InputElementSelectedOnListAction(
+            culturalPracticeInputElement: inputElement,
+            fieldType: fieldType,
+            subAction: .newFormData)
     }
 
     private func setStateProperties(_ currentFieldType: FieldType, _ sections: [Section<CulturalPracticeElementProtocol>]) {
@@ -148,7 +158,7 @@ class CulturalPraticeViewModelImpl: CulturalPraticeViewModel {
     }
 }
 // handle methode
-extension CulturalPraticeViewModelImpl {
+extension CulturalPraticeFormViewModelImpl {
     private func handleReloadData() {
         self.tableView?.reloadData()
     }
@@ -169,17 +179,21 @@ extension CulturalPraticeViewModelImpl {
         culturalParacticeElementSelected: CulturalPracticeElementProtocol,
         fieldType: FieldType
     ) {
-        dispatchSelectedElementOnList(
-            culturalPracticeElement: culturalParacticeElementSelected,
-            fieldType: fieldType
-        )
-
         switch culturalParacticeElementSelected {
         case _ as CulturalPracticeMultiSelectElement:
+            dispatchSelectedSelectElementOnList(
+                culturalPracticeElement: culturalParacticeElementSelected,
+                fieldType: fieldType
+            )
             self.presentSelectFormCulturalPracticeController()
-        case _ as CulturalPracticeInputElement:
+
+        case let inputElement as CulturalPracticeInputElement:
+            dispatchSelectedInputElementOnList(
+                inputElement: inputElement,
+                fieldType: fieldType
+            )
             self.presentInputFormCulturalPracticeHostingController()
-            break
+
         case _ as CulturalPracticeInputMultiSelectContainer:
             //TODO affcher le formualaire pour les containers
             break
@@ -194,14 +208,29 @@ extension CulturalPraticeViewModelImpl {
 }
 
 // dispatcher methode
-extension CulturalPraticeViewModelImpl {
-    private func dispatchSelectedElementOnList(
+extension CulturalPraticeFormViewModelImpl {
+    private func dispatchSelectedSelectElementOnList(
         culturalPracticeElement: CulturalPracticeElementProtocol,
         fieldType: FieldType
     ) {
-       let action = createSelectedElementOnListAction(
+
+       let action = createSelectedSelectElementOnListAction(
         culturalPracticeSelectElement: culturalPracticeElement,
         fieldType: fieldType
+        )
+
+        self.disposableDispatcher = Util.runInSchedulerBackground {
+            self.actionDispatcher.dispatch(action)
+        }
+    }
+
+    private func dispatchSelectedInputElementOnList(
+        inputElement: CulturalPracticeInputElement,
+        fieldType: FieldType
+    ) {
+        let action = createSelectedInputElementOnListAction(
+            inputElement: inputElement,
+            fieldType: fieldType
         )
 
         self.disposableDispatcher = Util.runInSchedulerBackground {
@@ -212,13 +241,13 @@ extension CulturalPraticeViewModelImpl {
     private func dispatchAddDoseFumier() {
         self.disposableDispatcher = Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(
-                CulturalPracticeListAction.AddCulturalPracticeInputMultiSelectContainer()
+                CulturalPracticeFormAction.AddCulturalPracticeInputMultiSelectContainer()
             )
         }
     }
 
     private func dispathSelectElementOnList(indexPath: IndexPath) {
-        let action = CulturalPracticeListAction.SelectElementOnListAction(indexPath: indexPath)
+        let action = CulturalPracticeFormAction.SelectElementOnListAction(indexPath: indexPath)
 
         self.disposableDispatcher = Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(action)
@@ -226,10 +255,10 @@ extension CulturalPraticeViewModelImpl {
     }
 }
 
-protocol CulturalPraticeViewModel {
+protocol CulturalPraticeFormViewModel {
     var tableView: UITableView? {get set}
     var cellId: String {get}
-    var culturalPraticeView: CulturalPraticeView? {get set}
+    var culturalPraticeView: ListViewCulturalPractice? {get set}
     var viewController: CulturalPraticeViewController? {get set}
     var headerFooterSectionViewId: String {get}
     func subscribeToCulturalPracticeStateObs()

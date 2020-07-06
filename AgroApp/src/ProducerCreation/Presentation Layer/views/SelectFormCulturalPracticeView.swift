@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CuturalPracticeFormView: UIView {
+class SelectFormCulturalPracticeView: UIView {
 
     let headerPresentedView: HeaderPresentedView = {
         let headerPresentedView = HeaderPresentedView()
@@ -37,7 +37,7 @@ class CuturalPracticeFormView: UIView {
         label.textColor = Util.getOppositeColorBlackOrWhite()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.font = UIFont.boldSystemFont(ofSize: 15)
         label.numberOfLines = 0
         return label
     }()
@@ -183,8 +183,8 @@ class CuturalPracticeFormView: UIView {
         NSLayoutConstraint.activate([
             buttonValidate.topAnchor.constraint(equalTo: pickerView.bottomAnchor, constant: 50),
             buttonValidate.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-            buttonValidate.heightAnchor.constraint(equalToConstant: 50),
-            buttonValidate.widthAnchor.constraint(equalToConstant: 200)
+            buttonValidate.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.09),
+            buttonValidate.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.6)
         ])
     }
 

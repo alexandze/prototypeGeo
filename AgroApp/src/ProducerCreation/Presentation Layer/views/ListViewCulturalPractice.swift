@@ -60,7 +60,7 @@ class ListViewCulturalPractice: UIView {
         cell.detailTextLabel?.font = UIFont(name: "Arial", size: 20)
         cell.textLabel?.font = UIFont(name: "Arial", size: 15)
         cell.textLabel?.text = NSLocalizedString("Cliquer sur le boutton", comment: "Cliquer sur le boutton")
-        cell.detailTextLabel?.textColor = .white
+        cell.detailTextLabel?.textColor = Util.getOppositeColorBlackOrWhite()
         cell.detailTextLabel?.text = addElement.title
 
         if !(cell.accessoryView is UIButton) {
@@ -129,7 +129,7 @@ class ListViewCulturalPractice: UIView {
         detailLabel?.numberOfLines = 2
 
         if culturalPracticeValueProtocol != nil {
-            detailLabel?.text = culturalPracticeValueProtocol!.getValue()
+            detailLabel?.text = culturalPracticeValueProtocol!.getValue() + " " + getUnitFrom(culturalPracticeValueProtocol: culturalPracticeValueProtocol!)
             detailLabel?.textColor = .green
             return
         }
@@ -152,8 +152,16 @@ class ListViewCulturalPractice: UIView {
 
     private func config(labelTitle: UILabel?, culturalPracticeElementProtocol: CulturalPracticeElementProtocol) {
         labelTitle?.font = UIFont(name: "Arial", size: 15)
-        labelTitle?.textColor = .white
+        labelTitle?.textColor = Util.getOppositeColorBlackOrWhite()
         labelTitle?.numberOfLines = 2
         labelTitle?.text = culturalPracticeElementProtocol.title
+    }
+
+    private func getUnitFrom(culturalPracticeValueProtocol: CulturalPracticeValueProtocol) -> String {
+        guard let unit = culturalPracticeValueProtocol.getUnitType()?.convertToString() else {
+            return ""
+        }
+
+        return unit
     }
 }

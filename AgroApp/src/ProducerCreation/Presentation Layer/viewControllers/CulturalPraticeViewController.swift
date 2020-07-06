@@ -10,8 +10,8 @@ import UIKit
 
 public class CulturalPraticeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    var culturalPraticeViewModel: CulturalPraticeViewModel
-    let culturalPraticeView: CulturalPraticeView
+    var culturalPraticeViewModel: CulturalPraticeFormViewModel
+    let culturalPraticeView: ListViewCulturalPractice
     let tableView: UITableView
 
     required init?(coder: NSCoder) {
@@ -19,10 +19,10 @@ public class CulturalPraticeViewController: UIViewController, UITableViewDelegat
     }
 
     init(
-        culturalPraticeViewModel: CulturalPraticeViewModel
+        culturalPraticeViewModel: CulturalPraticeFormViewModel
     ) {
         self.culturalPraticeViewModel = culturalPraticeViewModel
-        self.culturalPraticeView = CulturalPraticeView()
+        self.culturalPraticeView = ListViewCulturalPractice()
         self.culturalPraticeViewModel.culturalPraticeView = self.culturalPraticeView
         self.culturalPraticeViewModel.tableView = self.culturalPraticeView.tableView
         self.tableView = self.culturalPraticeView.tableView

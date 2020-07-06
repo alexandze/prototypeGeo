@@ -18,7 +18,7 @@ class AppDependencyContainerImpl: AppDependencyContainer {
             state: AppState(
                 farmerState: FarmerState(),
                 mapFieldState: MapState(),
-                culturalPracticeState: CulturalPracticeState(uuidState: UUID().uuidString),
+                culturalPracticeState: CulturalPracticeFormState(uuidState: UUID().uuidString),
                 selectFormCulturalPracticeState: SelectFormCulturalPracticeState(uuidState: UUID().uuidString),
                 inputFormCulturalPracticeState: InputFormCulturalPracticeState(uuidState: UUID().uuidString)
             ),
@@ -112,8 +112,8 @@ class AppDependencyContainerImpl: AppDependencyContainer {
         mapDependencyContainer.makeCulturalPracticeViewController()
     }
 
-    func processInitCulturalPracticeFormViewController() -> CulturalPracticeFormViewController {
-        mapDependencyContainer.makeCulturalPracticeFormController()
+    func processInitCulturalPracticeFormViewController() -> SelectFormCulturalPracticeViewController {
+        mapDependencyContainer.makeSelectFormCulturalPracticeViewController()
     }
 
     func processInitInputFormCulturalPracticeHostingController() -> SettingViewController<InputFormCulturalPracticeView> {
@@ -126,6 +126,6 @@ protocol AppDependencyContainer {
     func proccessInitTabBarController() -> UITabBarController
     func processInitContainerMapAndFieldNavigation() -> ContainerMapAndListFieldViewController
     func processInitCulturalPracticeViewController() -> CulturalPraticeViewController
-    func processInitCulturalPracticeFormViewController() -> CulturalPracticeFormViewController
+    func processInitCulturalPracticeFormViewController() -> SelectFormCulturalPracticeViewController
     func processInitInputFormCulturalPracticeHostingController() -> SettingViewController<InputFormCulturalPracticeView>
 }

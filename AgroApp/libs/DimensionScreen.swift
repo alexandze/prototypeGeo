@@ -7,3 +7,14 @@
 //
 
 import Foundation
+import SwiftUI
+
+class DimensionScreen: ObservableObject {
+    @Published var width: CGFloat
+    @Published var height: CGFloat
+
+    init(width: CGFloat, height: CGFloat) {
+        self.width = width
+        self.height = height
+    }
+}

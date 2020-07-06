@@ -14,23 +14,23 @@ extension Reducers {
         let state = state ?? SelectFormCulturalPracticeState(uuidState: UUID().uuidString)
 
         switch action {
-        case let selectedElementOnList as CulturalPracticeFormAction.ElementSelectedOnList:
+        case let selectedElementOnList as SelectFormCulturalPracticeAction.SelectElementSelectedOnList:
             return CulturalPracticeFormReducerHandler.handle(selectedElementOnList: selectedElementOnList)
-        case let setFormIsDirtyAction as CulturalPracticeFormAction.SetFormIsDirtyAction:
+        case let setFormIsDirtyAction as SelectFormCulturalPracticeAction.SetFormIsDirtyAction:
             return CulturalPracticeFormReducerHandler.handleUpdateState(state: state) { (state: SelectFormCulturalPracticeState) -> SelectFormCulturalPracticeState in
                 state.changeValue(isDirty: setFormIsDirtyAction.isDirty, culturalPracticeSubAction: .formIsDirty)
             }
-        case let closedPresentedViewControllerAction as CulturalPracticeFormAction.ClosePresentedViewControllerAction:
+        case let closedPresentedViewControllerAction as SelectFormCulturalPracticeAction.ClosePresentedViewControllerAction:
             return CulturalPracticeFormReducerHandler.handle(
                 closePresentedViewControllerAction: closedPresentedViewControllerAction,
                 state: state
             )
-        case let closePresentedViewControllerWithSaveAction as CulturalPracticeFormAction.ClosePresentedViewControllerWithSaveAction:
+        case let closePresentedViewControllerWithSaveAction as SelectFormCulturalPracticeAction.ClosePresentedViewControllerWithSaveAction:
             return CulturalPracticeFormReducerHandler.handle(
                 closePresentedViewControllerWithSaveAction: closePresentedViewControllerWithSaveAction,
                 state: state
             )
-        case _ as CulturalPracticeFormAction.ClosePresentedViewControllerWithoutSaveAction:
+        case _ as SelectFormCulturalPracticeAction.ClosePresentedViewControllerWithoutSaveAction:
             return CulturalPracticeFormReducerHandler.handleUpdateState(state: state) {state in state.changeValue(culturalPracticeSubAction: .closeWithoutSave) }
         default:
             break
@@ -43,7 +43,7 @@ extension Reducers {
 class CulturalPracticeFormReducerHandler {
 
     static func handle(
-        closePresentedViewControllerWithSaveAction: CulturalPracticeFormAction.ClosePresentedViewControllerWithSaveAction,
+        closePresentedViewControllerWithSaveAction: SelectFormCulturalPracticeAction.ClosePresentedViewControllerWithSaveAction,
         state: SelectFormCulturalPracticeState
     ) -> SelectFormCulturalPracticeState {
         let indexSelected = closePresentedViewControllerWithSaveAction.indexSelected
@@ -64,17 +64,17 @@ class CulturalPracticeFormReducerHandler {
         }
     }
 
-    static func handle(selectedElementOnList: CulturalPracticeFormAction.ElementSelectedOnList) -> SelectFormCulturalPracticeState {
+    static func handle(selectedElementOnList: SelectFormCulturalPracticeAction.SelectElementSelectedOnList) -> SelectFormCulturalPracticeState {
         SelectFormCulturalPracticeState(
             uuidState: UUID().uuidString,
             culturalPraticeElement: selectedElementOnList.culturalPracticeElement,
             fieldType: selectedElementOnList.fieldType,
-            culturalPracticeSubAction: selectedElementOnList.culturalPracticeFormSubAction
+            selectFormCulturalParacticeSubAction: selectedElementOnList.subAction
         )
     }
 
     static func handle(
-        closePresentedViewControllerAction: CulturalPracticeFormAction.ClosePresentedViewControllerAction,
+        closePresentedViewControllerAction: SelectFormCulturalPracticeAction.ClosePresentedViewControllerAction,
         state: SelectFormCulturalPracticeState
 
     ) -> SelectFormCulturalPracticeState {

@@ -9,14 +9,14 @@
 import Foundation
 import ReSwift
 
-struct CulturalPracticeListAction {
+struct CulturalPracticeFormAction {
     struct SelectedFieldOnListAction: Action {
         let fieldType: FieldType
     }
 
     struct AddCulturalPracticeInputMultiSelectContainer: Action {}
 
-    struct UpdateCulturalPracticeElement: Action {
+    struct UpdateCulturalPracticeElementAction: Action {
         let culturalPracticeElementProtocol: CulturalPracticeElementProtocol
     }
 

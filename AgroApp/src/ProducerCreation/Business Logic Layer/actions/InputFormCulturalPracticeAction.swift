@@ -7,3 +7,17 @@
 //
 
 import Foundation
+import ReSwift
+
+struct InputFormCulturalPracticeAction {
+    struct InputElementSelectedOnListAction: Action {
+        let culturalPracticeInputElement: CulturalPracticeInputElement
+        let fieldType: FieldType
+        let subAction: InputFormCulturalPracticeSubAction
+    }
+
+    struct CloseInputFormWithSaveAction: Action {
+        let inputValue: String
+        let subAction: InputFormCulturalPracticeSubAction = .closeWithSave
+    }
+}
