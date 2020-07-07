@@ -19,6 +19,9 @@ class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeViewModel
     var disposableDispatcher: Disposable?
     var disposableActivateAnimation: Disposable?
     var inputElement: CulturalPracticeInputElement?
+    var firstInputValue: String?
+    var regularExpressionForInputValue: NSRegularExpression?
+    var fieldType: FieldType?
 
     init(
         stateObserver: Observable<InputFormCulturalPracticeState>,
@@ -37,13 +40,17 @@ class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeViewModel
                     let subAction = event.element?.inputFormSubAction
                     else { return }
 
-                self.setValue(inputElement: inputElement)
+                self.setValue(inputElement: inputElement, fieldType: fieldType)
+                self.initRegularExpression()
+                self.setFirstInputValue()
 
                 switch subAction {
                 case .newFormData:
-                    self.handleNewFormData(inputElement, fieldType)
+                    self.handleNewFormData()
                 case .closeWithSave:
-                    self.handleCloseWithSave(inputElement)
+                    self.handleCloseWithSave()
+                case .closeWithoutSave:
+                    self.handleCloseWithoutSave()
                 case .noAction:
                     break
                 }
@@ -59,57 +66,69 @@ class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeViewModel
     func isInputValueValid(_ inputValue: String) -> Bool {
         let inputValueTrim = trim(inputValue: inputValue)
 
-        if let inputElement = inputElement, !inputValueTrim.isEmpty {
-            do {
-                let regularExpression = try createRegularExpressionFrom(inputElement: inputElement)
+        guard !inputValueTrim.isEmpty,
+            let regularExpressionForInputValue =  regularExpressionForInputValue else { return false }
 
-                let matches = mathesRegularExpression(
-                    inputValueTrim: inputValueTrim,
-                    regularExpression: regularExpression
-                )
+        let matches = mathesRegularExpression(
+            inputValueTrim: inputValueTrim,
+            regularExpression: regularExpressionForInputValue
+        )
 
-                return matches.count == 1 ? true : false
-            } catch {
-                return false
-            }
+        return matches.count == 1
+    }
+
+    private func setFirstInputValue() {
+        guard firstInputValue == nil,
+            let culturalPracticeValueProtocol = inputElement?.value else {
+                firstInputValue = ""
+                return
         }
 
-        return false
+        firstInputValue = culturalPracticeValueProtocol.getValue()
     }
 
     private func trim(inputValue: String) -> String {
         inputValue.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
-    private func createRegularExpressionFrom(inputElement: CulturalPracticeInputElement) throws -> NSRegularExpression {
-        let regularExpressionString = type(of: inputElement.valueEmpty).getRegularExpression()!
+    private func createRegularExpressionFrom() throws -> NSRegularExpression {
+        let regularExpressionString = type(of: inputElement!.valueEmpty).getRegularExpression()!
         return try NSRegularExpression(pattern: regularExpressionString, options: [])
     }
 
-    private func mathesRegularExpression(inputValueTrim: String, regularExpression: NSRegularExpression) -> [NSTextCheckingResult] {
-        regularExpression.matches(in: inputValueTrim, options: [], range: NSRange(location: 0, length: inputValueTrim.count))
+    private func initRegularExpression() {
+        guard regularExpressionForInputValue == nil else { return }
+
+        do {
+            regularExpressionForInputValue = try createRegularExpressionFrom()
+        } catch { }
     }
 
-    private func setValue(inputElement: CulturalPracticeInputElement) {
+    private func mathesRegularExpression(
+        inputValueTrim: String,
+        regularExpression: NSRegularExpression
+    ) -> [NSTextCheckingResult] {
+        regularExpression.matches(
+            in: inputValueTrim, options: [],
+            range: NSRange(location: 0, length: inputValueTrim.count)
+        )
+    }
+
+    private func setValue(inputElement: CulturalPracticeInputElement, fieldType: FieldType) {
         self.inputElement = inputElement
+        self.fieldType = fieldType
     }
 
-    private func setViewStateWith(
-        title: String,
-        idField: Int,
-        inputValue: String,
-        unitType: UnitType
-    ) {
-
-        viewState.title = title
-        viewState.subTitle = "Veuillez saisir la valeur \"\(title)\" pour la parcelle \(idField)"
-        viewState.inputTitle = unitType.convertToString()
-        viewState.inputValue = inputValue
-        viewState.unitType = unitType.convertToString()
+    private func setValuesViewState() {
+        viewState.title = inputElement!.title
+        viewState.subTitle = "Veuillez saisir la valeur pour la parcelle \(getIdField())"
+        viewState.inputTitle = inputElement!.valueEmpty.getUnitType()?.convertToString() ?? ""
+        viewState.inputValue = inputElement!.value?.getValue() ?? ""
+        viewState.unitType = inputElement!.valueEmpty.getUnitType()?.convertToString() ?? ""
     }
 
-    private func getIdOf(fieldType: FieldType) -> Int {
-        switch fieldType {
+    private func getIdField() -> Int {
+        switch fieldType! {
         case .multiPolygon(let multiPolygon):
             return multiPolygon.id
         case .polygon(let polygon):
@@ -129,13 +148,25 @@ class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeViewModel
         }
     }
 
-    private func getValueFrom(inputElement: CulturalPracticeInputElement) -> String {
-        guard let inputValue = inputElement.value?.getValue() else { return "" }
+    private func getValueFromInputElement() -> String {
+        guard let inputValue = inputElement?.value?.getValue() else { return "" }
         return inputValue
     }
 
     private func dismissForm() {
         viewState.isDismissForm = true
+    }
+
+    private func isFormDirty() -> Bool {
+        return firstInputValue! != viewState.inputValue
+    }
+
+    private func printAlert() {
+        viewState.isPrintAlert = true
+    }
+
+    private func closeAlert() {
+        viewState.isPrintAlert = false
     }
 
     class ViewState: ObservableObject {
@@ -146,53 +177,65 @@ class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeViewModel
         @Published var unitType: String = ""
         @Published var hasAnimation: Bool = false
         @Published var isDismissForm: Bool = false
+        @Published var isPrintAlert: Bool = false
+        @Published var textAlert: String = "Voulez-vous enregistrer la valeur saisie ?"
+        @Published var textButtonValidate: String = "Valider"
+        @Published var textErrorMessage: String = "Veuillez saisir une valeur valide"
     }
 }
 
-// Handler methode
+// Handler
 extension InputFormCulturalPracticeViewModelImpl {
-    private func handleNewFormData(
-        _ inputElement: CulturalPracticeInputElement,
-        _ fieldType: FieldType
-    ) {
-        setViewStateWith(
-            title: inputElement.title,
-            idField: getIdOf(fieldType: fieldType),
-            inputValue: getValueFrom(inputElement: inputElement),
-            unitType: inputElement.valueEmpty.getUnitType()!
-        )
-
+    private func handleNewFormData() {
+        setValuesViewState()
         activatedAnimationOfView()
     }
 
-    private func handleCloseWithSave(_ inputElement: CulturalPracticeInputElement) {
-        dispathUpdateCulturalPracticeElementAction(culturalPracticeElementProtocol: inputElement)
+    private func handleCloseWithSave() {
+        dispathUpdateCulturalPracticeElementAction()
         dismissForm()
     }
 
     func handleButtonValidate() {
-        let inputValue = viewState.inputValue
-        dispatchCloseInputFormWithSaveAction(inputValue: inputValue)
+        dispatchCloseInputFormWithSaveAction()
+    }
+
+    func handleCloseButton() {
+        if isFormDirty() && isInputValueValid(viewState.inputValue) {
+            return printAlert()
+        }
+
+        dispatchCloseInputFormWithoutSaveAction()
+    }
+
+    func handleCloseWithoutSave() {
+        dismissForm()
+    }
+
+    func handleAlertYesButton() {
+        dispatchCloseInputFormWithSaveAction()
+    }
+
+    func handleAlertNoButton() {
+        dispatchCloseInputFormWithoutSaveAction()
     }
 }
 
 // Dispatcher
 extension InputFormCulturalPracticeViewModelImpl {
-    private func dispatchCloseInputFormWithSaveAction(inputValue: String) {
+    private func dispatchCloseInputFormWithSaveAction() {
         let closeInputFormWithSaveAction = InputFormCulturalPracticeAction
-            .CloseInputFormWithSaveAction(inputValue: inputValue)
+            .CloseInputFormWithSaveAction(inputValue: trim(inputValue: viewState.inputValue))
 
         disposableDispatcher = Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(closeInputFormWithSaveAction)
         }
     }
 
-    private func dispathUpdateCulturalPracticeElementAction(
-        culturalPracticeElementProtocol: CulturalPracticeElementProtocol
-    ) {
+    private func dispathUpdateCulturalPracticeElementAction() {
         let action = CulturalPracticeFormAction
             .UpdateCulturalPracticeElementAction(
-                culturalPracticeElementProtocol: culturalPracticeElementProtocol
+                culturalPracticeElementProtocol: inputElement!
         )
 
         disposableDispatcher = Util.runInSchedulerBackground {
@@ -200,6 +243,13 @@ extension InputFormCulturalPracticeViewModelImpl {
         }
     }
 
+    private func dispatchCloseInputFormWithoutSaveAction() {
+        let action = InputFormCulturalPracticeAction.CloseInputFormWithoutSaveAction()
+
+        disposableDispatcher = Util.runInSchedulerBackground {
+            self.actionDispatcher.dispatch(action)
+        }
+    }
 }
 
 protocol InputFormCulturalPracticeViewModel {
@@ -209,4 +259,7 @@ protocol InputFormCulturalPracticeViewModel {
     func disposeToObs()
     func handleButtonValidate()
     func isInputValueValid(_ inputValue: String) -> Bool
+    func handleCloseButton()
+    func handleAlertYesButton()
+    func handleAlertNoButton()
 }

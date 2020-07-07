@@ -39,4 +39,5 @@ enum InputFormCulturalPracticeSubAction {
     case newFormData
     case closeWithSave
     case noAction
+    case closeWithoutSave
 }

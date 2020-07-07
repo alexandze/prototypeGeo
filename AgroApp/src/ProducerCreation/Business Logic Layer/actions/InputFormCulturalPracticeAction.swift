@@ -20,4 +20,6 @@ struct InputFormCulturalPracticeAction {
         let inputValue: String
         let subAction: InputFormCulturalPracticeSubAction = .closeWithSave
     }
+
+    struct CloseInputFormWithoutSaveAction: Action { }
 }

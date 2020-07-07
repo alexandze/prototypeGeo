@@ -22,6 +22,11 @@ extension Reducers {
                 closeInputFormWithSaveAction: action,
                 state
             )
+        case let action as InputFormCulturalPracticeAction.CloseInputFormWithoutSaveAction:
+            return InputFormCulturalPracticeReducerHandler.handle(
+                closeInputFormWithoutSaveAction: action,
+                state
+            )
         default:
             break
         }
@@ -57,5 +62,12 @@ class InputFormCulturalPracticeReducerHandler {
             inputElement: inputElement,
             inputFormSubAction: closeInputFormWithSaveAction.subAction
         )
+    }
+
+    static func handle(
+        closeInputFormWithoutSaveAction: InputFormCulturalPracticeAction.CloseInputFormWithoutSaveAction,
+        _ state: InputFormCulturalPracticeState
+    ) -> InputFormCulturalPracticeState {
+        state.changeValue(inputFormSubAction: .closeWithoutSave)
     }
 }

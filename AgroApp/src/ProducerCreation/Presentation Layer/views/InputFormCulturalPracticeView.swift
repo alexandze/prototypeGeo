@@ -33,7 +33,7 @@ struct InputFormCulturalPracticeView: View, SettingViewControllerProtocol {
         GeometryReader { (geometry: GeometryProxy) in
 
             VStack {
-                HeaderView(title: self.viewState.title) { self.dismiss? { } }
+                HeaderView(title: self.viewState.title) { self.viewModel.handleCloseButton() }
                 Spacer()
 
                 CenterView(
@@ -41,7 +41,9 @@ struct InputFormCulturalPracticeView: View, SettingViewControllerProtocol {
                     inputTitle: self.viewState.inputTitle,
                     subtitle: self.viewState.subTitle,
                     isInputValueValid: self.isInputValueValid,
-                    unitType: self.viewState.unitType
+                    unitType: self.viewState.unitType,
+                    textButtonValidate: self.viewState.textButtonValidate,
+                    textErrorMessage: self.viewState.textErrorMessage
                 ) {
                     self.viewModel.handleButtonValidate()
                 }
@@ -60,6 +62,20 @@ struct InputFormCulturalPracticeView: View, SettingViewControllerProtocol {
             }
             .onDisappear {
                 self.viewModel.disposeToObs()
+            }
+            .alert(isPresented: self.$viewState.isPrintAlert) {
+                Alert(
+                    title: Text(self.viewState.textAlert),
+                    message: Text(""),
+                    primaryButton: .cancel(
+                        Text("Oui").foregroundColor(.green),
+                        action: { self.viewModel.handleAlertYesButton() }
+                    ),
+                    secondaryButton: .default(
+                        Text("Non").foregroundColor(.red),
+                        action: { self.viewModel.handleAlertNoButton() }
+                    )
+                )
             }
             .onReceive(self.viewState.$isDismissForm, perform: self.dismissForm(isDismissForm:))
         }
@@ -114,6 +130,8 @@ private struct CenterView: View {
     let subtitle: String
     let isInputValueValid: Bool
     let unitType: String
+    let textButtonValidate: String
+    let textErrorMessage: String
     let actionValidateButton: () -> Void
     @EnvironmentObject var dimensionScreen: DimensionScreen
 
@@ -122,7 +140,7 @@ private struct CenterView: View {
             Text(subtitle)
                 .font(.system(size: 15))
                 .bold()
-            .lineLimit(3)
+                .lineLimit(3)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 10)
                 .padding(.bottom, 10)
@@ -131,7 +149,7 @@ private struct CenterView: View {
                 .padding(.bottom, 10)
 
             Button(action: { self.actionValidateButton() }) {
-                Text("Valider")
+                Text(textButtonValidate)
                     .frame(
                         minWidth: getWidthValidateButton(),
                         idealWidth: getWidthValidateButton(),
@@ -147,20 +165,19 @@ private struct CenterView: View {
                 height: getHeightValidateButton(),
                 alignment: .center
             )
-            .foregroundColor(.white)
-            .background(Color(UIColor(red: 34/255, green: 139/255, blue: 34/255, alpha: 1)))
-            .cornerRadius(10)
-            .disabled(!self.isInputValueValid)
+                .foregroundColor(.white)
+                .background(Color(UIColor(red: 34/255, green: 139/255, blue: 34/255, alpha: 1)))
+                .cornerRadius(10)
+                .disabled(!self.isInputValueValid)
 
             if !self.isInputValueValid {
-                Text("Veuillez saisir une valeur valide")
+                Text(textErrorMessage)
                     .font(.system(size: 15))
                     .bold()
                     .foregroundColor(.red)
                     .multilineTextAlignment(.center)
                     .padding(.top)
             }
-
         }
     }
 

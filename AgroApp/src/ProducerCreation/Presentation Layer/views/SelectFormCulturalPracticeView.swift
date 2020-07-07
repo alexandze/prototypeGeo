@@ -115,7 +115,7 @@ class SelectFormCulturalPracticeView: UIView {
             handler: { _ in handleFunc() }
         )
 
-        alertAction.setValue(UIColor.green, forKey:  "titleTextColor")
+        // alertAction.setValue(UIColor.green, forKey:  "titleTextColor")
         return alertAction
     }
 
@@ -126,7 +126,7 @@ class SelectFormCulturalPracticeView: UIView {
             handler: {_ in handleFunc() }
         )
 
-        alertAction.setValue(UIColor.red, forKey:  "titleTextColor")
+        // alertAction.setValue(UIColor.red, forKey:  "titleTextColor")
         return alertAction
     }
 
