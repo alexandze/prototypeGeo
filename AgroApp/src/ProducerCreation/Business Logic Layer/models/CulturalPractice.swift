@@ -68,7 +68,7 @@ struct CulturalPractice {
     }
 
     static func createCulturalPracticeInputMultiSelectContainer(index: Int) -> CulturalPracticeElementProtocol {
-        CulturalPracticeInputMultiSelectContainer(
+        CulturalPracticeContainerElement(
             key: UUID().uuidString,
             title: "Dose fumier \(index + 1)",
             culturalInputElement: [
@@ -91,7 +91,7 @@ struct CulturalPractice {
         (0...(MAX_DOSE_FUMIER - 1)).forEach { index in
             if hasValueDoseFumier(culturalPractice: culturalPractice, index: index) {
                 let culturalPracticeInputMultiSelectContainer =
-                    CulturalPracticeInputMultiSelectContainer(
+                    CulturalPracticeContainerElement(
                         key: UUID().uuidString,
                         title: "Dose fumier \(index + 1)",
                         culturalInputElement: [
@@ -1247,7 +1247,7 @@ struct CulturalPracticeAddElement: CulturalPracticeElementProtocol {
     var value: CulturalPracticeValueProtocol?
 }
 
-struct CulturalPracticeInputMultiSelectContainer: CulturalPracticeElementProtocol {
+struct CulturalPracticeContainerElement: CulturalPracticeElementProtocol {
     let key: String
     let title: String
     let culturalInputElement: [CulturalPracticeElementProtocol]

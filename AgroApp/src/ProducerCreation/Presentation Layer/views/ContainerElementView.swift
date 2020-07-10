@@ -21,7 +21,7 @@ class ContainerElementView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(containerElement: CulturalPracticeInputMultiSelectContainer) {
+    init(containerElement: CulturalPracticeContainerElement) {
         super.init(frame: .zero)
         initView(containerElement: containerElement)
     }
@@ -37,12 +37,12 @@ class ContainerElementView: UIView {
         ])
     }
 
-    private func initView(containerElement: CulturalPracticeInputMultiSelectContainer) {
+    private func initView(containerElement: CulturalPracticeContainerElement) {
         let labels = createLabelsFor(containerElement: containerElement)
         initContraintOf(labelsTitleAndValue: labels, containerElement: containerElement)
     }
 
-    private func initContraintOf(labelsTitleAndValue: [(UILabel, (UILabel, UIImageView))], containerElement: CulturalPracticeInputMultiSelectContainer) {
+    private func initContraintOf(labelsTitleAndValue: [(UILabel, (UILabel, UIImageView))], containerElement: CulturalPracticeContainerElement) {
         (0..<labelsTitleAndValue.count).forEach { index in
             self.addToParentView(labelsTitleAndValue: labelsTitleAndValue[index])
 
@@ -50,6 +50,7 @@ class ContainerElementView: UIView {
                 let titleCellLabel = createLabelFor(titleCell: containerElement.title)
                 addToParentView(label: titleCellLabel)
                 NSLayoutConstraint.activate(createContraintToParentViewFor(titleCellLabel: titleCellLabel))
+
                 return NSLayoutConstraint.activate(
                     createContraintToParentViewFor(firstLabelTitleValue: labelsTitleAndValue[index], titleCellLabel: titleCellLabel)
                 )
@@ -148,7 +149,7 @@ class ContainerElementView: UIView {
         parentView.addSubview(label)
     }
 
-    private func createLabelsFor(containerElement: CulturalPracticeInputMultiSelectContainer) -> [(UILabel, (UILabel, UIImageView))] {
+    private func createLabelsFor(containerElement: CulturalPracticeContainerElement) -> [(UILabel, (UILabel, UIImageView))] {
         let inputTitlesValues = initLabelTitleAndValueWith(culturalInputElement: containerElement.culturalInputElement)
         let multiSlectTitlesValues = initLabelTitleAndValueWith(culturalMultiSelectElement: containerElement.culturalPracticeMultiSelectElement)
         return (inputTitlesValues + multiSlectTitlesValues)
@@ -213,7 +214,7 @@ class ContainerElementView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.font = UIFont(name: "Arial", size: 25)
+        label.font = UIFont(name: "Arial", size: 20)
 
         if culturalPracticeValue != nil {
             label.text = culturalPracticeValue!.getValue()
@@ -230,7 +231,6 @@ class ContainerElementView: UIView {
         let imageView = UIImageView(image: getImageIconYes())
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
-
     }
 
     private func createImageViewNo() -> UIImageView {

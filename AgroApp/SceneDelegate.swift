@@ -20,7 +20,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             self.window = UIWindow(windowScene: windowScene)
 
             //self.window!.rootViewController = appDependencyContainer.proccessInitTabBarController()
-            self.window!.rootViewController = getAppDelegate().appDependencyContainer.processInitContainerMapAndFieldNavigation()
+            self.window!.rootViewController =
+                getAppDelegate().appDependencyContainer.processInitContainerMapAndFieldNavigation()
             // self.window!.backgroundColor = .white
             self.window!.makeKeyAndVisible()
         }

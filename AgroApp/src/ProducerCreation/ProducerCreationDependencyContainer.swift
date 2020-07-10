@@ -11,7 +11,7 @@ import RxSwift
 import UIKit
 import SwiftUI
 
-class MapDependencyContainerImpl: MapDependencyContainer {
+class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContainer {
     // MARK: - Properties
     let stateStore: Store<AppState>
 
@@ -138,6 +138,7 @@ class MapDependencyContainerImpl: MapDependencyContainer {
     func makeInputFormCulturalPracticeViewModel() -> InputFormCulturalPracticeViewModel {
         InputFormCulturalPracticeViewModelImpl(
             stateObserver: makeInputFormCuluralPracticeObservable(),
+            viewState: InputFormCulturalPracticeViewModelImpl.ViewState(),
             actionDispatcher: self.stateStore
         )
     }
@@ -147,6 +148,33 @@ class MapDependencyContainerImpl: MapDependencyContainer {
         let inputFormView = InputFormCulturalPracticeView(viewModel: viewModel, keyboardFollower: KeyboardFollower())
         viewModel.view = inputFormView
         return SettingViewController(myView: inputFormView)
+    }
+    // MARK: - Methods ContainerFormCulturalPractice
+    func makeContainerFormCulturalPracticeObservable() -> Observable<ContainerFormCulturalPracticeState> {
+        self.stateStore.makeObservable { (subscription: Subscription<AppState>) -> Subscription<ContainerFormCulturalPracticeState> in
+            subscription
+                .select { $0.containerFormCulturalPracticeState }
+                .skip { $0.uuidState == $1.uuidState }
+        }
+    }
+
+    func makeContainerFormCulturalPracticeViewModel() -> ContainerFormCulturalPracticeViewModel {
+        ContainerFormCulturalPracticeViewModelImpl(
+            stateObserver: makeContainerFormCulturalPracticeObservable(),
+            viewState: ContainerFormCulturalPracticeViewModelImpl.ViewState(),
+            actionDispatcher: self.stateStore
+        )
+    }
+
+    func makeContainerFormCulturalPracticeHostingController() -> SettingViewController<ContainerFormCulturalPracticeView> {
+        let viewModel = makeContainerFormCulturalPracticeViewModel()
+
+        let containerFormView = ContainerFormCulturalPracticeView(
+            viewModel: viewModel,
+            keyboardFollower: KeyboardFollower()
+        )
+
+        return SettingViewController(myView: containerFormView)
     }
 
     // MARK: - Methods navigation
@@ -179,7 +207,7 @@ class MapDependencyContainerImpl: MapDependencyContainer {
 
 }
 
-protocol MapDependencyContainer {
+protocol ProducerCreationDependencyContainer {
     func makeMapFieldNavigationController() -> UINavigationController
     func makeFieldListNavigationController() -> UINavigationController
     func makeCulturalPracticeViewController() -> CulturalPraticeViewController
@@ -188,7 +216,5 @@ protocol MapDependencyContainer {
     func processInitMapField() -> UINavigationController
     func makeSelectFormCulturalPracticeViewController() -> SelectFormCulturalPracticeViewController
     func makeInputFormCulturalPracticeHostingController() -> SettingViewController<InputFormCulturalPracticeView>
-
-    // for swift ui preview
-    func makeInputFormCulturalPracticeViewModel() -> InputFormCulturalPracticeViewModel
+    func makeContainerFormCulturalPracticeHostingController() -> SettingViewController<ContainerFormCulturalPracticeView>
 }

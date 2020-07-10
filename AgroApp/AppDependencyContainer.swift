@@ -20,7 +20,8 @@ class AppDependencyContainerImpl: AppDependencyContainer {
                 mapFieldState: MapState(),
                 culturalPracticeState: CulturalPracticeFormState(uuidState: UUID().uuidString),
                 selectFormCulturalPracticeState: SelectFormCulturalPracticeState(uuidState: UUID().uuidString),
-                inputFormCulturalPracticeState: InputFormCulturalPracticeState(uuidState: UUID().uuidString)
+                inputFormCulturalPracticeState: InputFormCulturalPracticeState(uuidState: UUID().uuidString),
+                containerFormCulturalPracticeState: ContainerFormCulturalPracticeState(uuidState: UUID().uuidString)
             ),
             middleware: [
                 FarmerMiddleware.shared.makeGetFarmersMiddleware(),
@@ -30,10 +31,10 @@ class AppDependencyContainerImpl: AppDependencyContainer {
         )
     }()
 
-    let mapDependencyContainer: MapDependencyContainer
+    let producerCreationDependencyContainer: ProducerCreationDependencyContainer
 
     init() {
-        self.mapDependencyContainer = MapDependencyContainerImpl(stateStore: self.stateStore)
+        self.producerCreationDependencyContainer = ProducerCreationDependencyContainerImpl(stateStore: self.stateStore)
     }
 
     func makeFarmerTableViewController(
@@ -94,7 +95,7 @@ class AppDependencyContainerImpl: AppDependencyContainer {
 
     func proccessInitTabBarController() -> UITabBarController {
         let farmerNavigationController = self.processInitFarmerPackage()
-        let mapFieldNavigationController = self.mapDependencyContainer.processInitMapField()
+        let mapFieldNavigationController = self.producerCreationDependencyContainer.processInitMapField()
         let tabBarController = UITabBarController()
 
         tabBarController.viewControllers = [farmerNavigationController, mapFieldNavigationController]
@@ -105,27 +106,33 @@ class AppDependencyContainerImpl: AppDependencyContainer {
         return tabBarController
     }
     func processInitContainerMapAndFieldNavigation() -> ContainerMapAndListFieldViewController {
-        mapDependencyContainer.processInitContainerMapAndFieldNavigation()
+        producerCreationDependencyContainer.processInitContainerMapAndFieldNavigation()
     }
 
     func processInitCulturalPracticeViewController() -> CulturalPraticeViewController {
-        mapDependencyContainer.makeCulturalPracticeViewController()
+        producerCreationDependencyContainer.makeCulturalPracticeViewController()
     }
 
     func processInitCulturalPracticeFormViewController() -> SelectFormCulturalPracticeViewController {
-        mapDependencyContainer.makeSelectFormCulturalPracticeViewController()
+        producerCreationDependencyContainer.makeSelectFormCulturalPracticeViewController()
     }
 
     func processInitInputFormCulturalPracticeHostingController() -> SettingViewController<InputFormCulturalPracticeView> {
-        mapDependencyContainer.makeInputFormCulturalPracticeHostingController()
+        producerCreationDependencyContainer.makeInputFormCulturalPracticeHostingController()
+    }
+
+    func makeContainerFormCulturalPracticeHostingController() -> SettingViewController<ContainerFormCulturalPracticeView> {
+        producerCreationDependencyContainer.makeContainerFormCulturalPracticeHostingController()
     }
 }
 
 protocol AppDependencyContainer {
-    var mapDependencyContainer: MapDependencyContainer {get}
+    var producerCreationDependencyContainer: ProducerCreationDependencyContainer {get}
     func proccessInitTabBarController() -> UITabBarController
     func processInitContainerMapAndFieldNavigation() -> ContainerMapAndListFieldViewController
     func processInitCulturalPracticeViewController() -> CulturalPraticeViewController
     func processInitCulturalPracticeFormViewController() -> SelectFormCulturalPracticeViewController
     func processInitInputFormCulturalPracticeHostingController() -> SettingViewController<InputFormCulturalPracticeView>
+
+    func makeContainerFormCulturalPracticeHostingController() -> SettingViewController<ContainerFormCulturalPracticeView>
 }

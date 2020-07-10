@@ -15,4 +15,5 @@ struct AppState: StateType {
     var culturalPracticeState: CulturalPracticeFormState
     var selectFormCulturalPracticeState: SelectFormCulturalPracticeState
     var inputFormCulturalPracticeState: InputFormCulturalPracticeState
+    var containerFormCulturalPracticeState: ContainerFormCulturalPracticeState
 }

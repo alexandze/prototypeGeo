@@ -16,7 +16,8 @@ struct Reducers {
             mapFieldState: Reducers.mapFieldReducer(action: action, state: state?.mapFieldState),
             culturalPracticeState: Reducers.culturalPracticeReducer(action: action, state: state?.culturalPracticeState),
             selectFormCulturalPracticeState: Reducers.selectFormCulturalPracticeReducer(action: action, state: state?.selectFormCulturalPracticeState),
-            inputFormCulturalPracticeState: Reducers.inputFormCulturalPracticeReducer(action: action, state: state?.inputFormCulturalPracticeState)
+            inputFormCulturalPracticeState: Reducers.inputFormCulturalPracticeReducer(action: action, state: state?.inputFormCulturalPracticeState),
+            containerFormCulturalPracticeState: Reducers.containerFormCulturalPracticeReducer(action: action, state: state?.containerFormCulturalPracticeState)
         )
     }
 }

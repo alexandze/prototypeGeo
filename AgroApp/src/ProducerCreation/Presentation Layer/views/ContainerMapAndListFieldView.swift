@@ -79,7 +79,6 @@ class ContainerMapAndListFieldView: UIView {
         }
 
         return containerFieldNavigationView.frame.origin.y = createPositionY()!.maxY
-
     }
 
     private func slideTo(_ slideFunc: @escaping (UIView, PositionY) -> Void) {
@@ -89,7 +88,7 @@ class ContainerMapAndListFieldView: UIView {
 
         if containerFieldNavigationView != nil && positionY != nil {
             anim.addAnimations {
-               slideFunc(containerFieldNavigationView!, positionY!)
+                slideFunc(containerFieldNavigationView!, positionY!)
             }
 
             anim.startAnimation()
@@ -179,7 +178,7 @@ class ContainerMapAndListFieldView: UIView {
     }
 
     private func isLessThanMaxMidYAndGreaterThanMidY(currentMinY: CGFloat, maxMidY: CGFloat, midY: CGFloat) -> Bool {
-       (currentMinY < maxMidY) && (currentMinY > midY)
+        (currentMinY < maxMidY) && (currentMinY > midY)
     }
 
     private func isGreaterThanMaxMidY(currentMinY: CGFloat, maxMidY: CGFloat) -> Bool {
@@ -195,7 +194,7 @@ class ContainerMapAndListFieldView: UIView {
             return parentView.layoutMargins.top + 50
         }
 
-         return parentView.layoutMargins.top
+        return parentView.layoutMargins.top
     }
 
     private func getMaxY() -> CGFloat {

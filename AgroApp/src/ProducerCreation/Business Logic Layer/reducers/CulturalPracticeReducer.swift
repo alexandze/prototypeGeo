@@ -46,7 +46,7 @@ class CulturalPracticeReducerHandler {
 
         guard (culturalPracticeElement as? CulturalPracticeMultiSelectElement) != nil ||
             (culturalPracticeElement as? CulturalPracticeInputElement) != nil ||
-            (culturalPracticeElement as? CulturalPracticeInputMultiSelectContainer) != nil else {
+            (culturalPracticeElement as? CulturalPracticeContainerElement) != nil else {
                 return state.changeValues(
                     subAction: .canNotSelectElementOnList(culturalPracticeElement: culturalPracticeElement)
                 )
@@ -180,10 +180,10 @@ class CulturalPracticeReducerHandler {
         updateFunction(state)
     }
 
-    private static func createInputSelectContainer(totalDoseFumier: Int) -> CulturalPracticeInputMultiSelectContainer? {
+    private static func createInputSelectContainer(totalDoseFumier: Int) -> CulturalPracticeContainerElement? {
         CulturalPractice.createCulturalPracticeInputMultiSelectContainer(
                 index: totalDoseFumier
-        ) as? CulturalPracticeInputMultiSelectContainer
+        ) as? CulturalPracticeContainerElement
     }
 
     private static func isPossibleAddFumierDose(currentTotalDose: Int) -> Bool {

@@ -11,9 +11,9 @@ import RxSwift
 import SwiftUI
 
 class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeViewModel {
-    let stateObserver: Observable<InputFormCulturalPracticeState>
-    let actionDispatcher: ActionDispatcher
-    let viewState = ViewState()
+    private let stateObserver: Observable<InputFormCulturalPracticeState>
+    private let actionDispatcher: ActionDispatcher
+    let viewState: ViewState
     var view: InputFormCulturalPracticeView?
     var disposableInputFormCulturalViewState: Disposable?
     var disposableDispatcher: Disposable?
@@ -25,10 +25,12 @@ class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeViewModel
 
     init(
         stateObserver: Observable<InputFormCulturalPracticeState>,
+        viewState: ViewState,
         actionDispatcher: ActionDispatcher
     ) {
         self.stateObserver = stateObserver
         self.actionDispatcher = actionDispatcher
+        self.viewState = viewState
     }
 
     func subscribeToInputFormCulturalPracticeStateObs() {
@@ -121,19 +123,10 @@ class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeViewModel
 
     private func setValuesViewState() {
         viewState.title = inputElement!.title
-        viewState.subTitle = "Veuillez saisir la valeur pour la parcelle \(getIdField())"
+        viewState.subTitle = "Veuillez saisir la valeur pour la parcelle \(fieldType!.getId())"
         viewState.inputTitle = inputElement!.valueEmpty.getUnitType()?.convertToString() ?? ""
         viewState.inputValue = inputElement!.value?.getValue() ?? ""
         viewState.unitType = inputElement!.valueEmpty.getUnitType()?.convertToString() ?? ""
-    }
-
-    private func getIdField() -> Int {
-        switch fieldType! {
-        case .multiPolygon(let multiPolygon):
-            return multiPolygon.id
-        case .polygon(let polygon):
-            return polygon.id
-        }
     }
 
     /// Activated animation of view. There is one second timeout for activate animation

@@ -28,10 +28,8 @@ extension Reducers {
                 state
             )
         default:
-            break
+            return state
         }
-
-        return state
     }
 }
 

@@ -70,7 +70,7 @@ class ListViewCulturalPractice: UIView {
         return cell
     }
 
-    func initCellFor(containerElement: CulturalPracticeInputMultiSelectContainer, cell: UITableViewCell) -> UITableViewCell {
+    func initCellFor(containerElement: CulturalPracticeContainerElement, cell: UITableViewCell) -> UITableViewCell {
         cell.textLabel?.text = nil
         cell.detailTextLabel?.text = nil
         cell.accessoryView = nil

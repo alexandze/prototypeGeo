@@ -11,6 +11,15 @@ import Foundation
 indirect enum FieldType {
     case polygon(Field<Polygon>)
     case multiPolygon(Field<MultiPolygon>)
+
+    func getId() -> Int {
+        switch self {
+        case .multiPolygon(let multiPolygon):
+            return multiPolygon.id
+        case .polygon(let polygon):
+            return polygon.id
+        }
+    }
 }
 
 struct Field<T: GeometryShape> {

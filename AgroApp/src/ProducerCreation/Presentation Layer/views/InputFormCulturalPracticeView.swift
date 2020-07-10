@@ -14,7 +14,6 @@ struct InputFormCulturalPracticeView: View, SettingViewControllerProtocol {
     var setAlpha: ((CGFloat) -> Void)?
     var setBackgroundColor: ((UIColor) -> Void)?
     var setIsModalInPresentation: ((Bool) -> Void)?
-    var value: Bool?
     let viewModel: InputFormCulturalPracticeViewModel
     @ObservedObject var viewState: InputFormCulturalPracticeViewModelImpl.ViewState
     @ObservedObject var keyboardFollower: KeyboardFollower
@@ -148,27 +147,11 @@ private struct CenterView: View {
             TextFieldWithStyle(inputValue: $inputValue, inputTitle: inputTitle)
                 .padding(.bottom, 10)
 
-            Button(action: { self.actionValidateButton() }) {
-                Text(textButtonValidate)
-                    .frame(
-                        minWidth: getWidthValidateButton(),
-                        idealWidth: getWidthValidateButton(),
-                        maxWidth: getWidthValidateButton(),
-                        minHeight: getHeightValidateButton(),
-                        idealHeight: getHeightValidateButton(),
-                        maxHeight: getHeightValidateButton(),
-                        alignment: .center
-                )
-            }
-            .frame(
-                width: getWidthValidateButton(),
-                height: getHeightValidateButton(),
-                alignment: .center
+            ButtonValidate(
+                textButtonValidate: self.textButtonValidate,
+                actionValidateButton: self.actionValidateButton,
+                isInputValueValid: self.isInputValueValid
             )
-                .foregroundColor(.white)
-                .background(Color(UIColor(red: 34/255, green: 139/255, blue: 34/255, alpha: 1)))
-                .cornerRadius(10)
-                .disabled(!self.isInputValueValid)
 
             if !self.isInputValueValid {
                 Text(textErrorMessage)
@@ -208,5 +191,44 @@ private struct TextFieldWithStyle: View {
         )
             .background(colorScheme == .dark ? Color.black : Color.white)
             .cornerRadius(5)
+    }
+}
+
+private struct ButtonValidate: View {
+    let textButtonValidate: String
+    let actionValidateButton: () -> Void
+    let isInputValueValid: Bool
+    @EnvironmentObject var dimensionScreen: DimensionScreen
+
+    var body: some View {
+        Button(action: { self.actionValidateButton()  }) {
+            Text(textButtonValidate)
+                .frame(
+                    minWidth: self.getWidthValidateButton(),
+                    idealWidth: self.getWidthValidateButton(),
+                    maxWidth: self.getWidthValidateButton(),
+                    minHeight: self.getHeightValidateButton(),
+                    idealHeight: self.getHeightValidateButton(),
+                    maxHeight: self.getHeightValidateButton(),
+                    alignment: .center
+            )
+        }
+        .frame(
+            width: self.getWidthValidateButton(),
+            height: self.getHeightValidateButton(),
+            alignment: .center
+        )
+            .foregroundColor(.white)
+            .background(Color(UIColor(red: 34/255, green: 139/255, blue: 34/255, alpha: 1)))
+            .cornerRadius(10)
+            .disabled(!self.isInputValueValid)
+    }
+
+    func getWidthValidateButton() -> CGFloat {
+        dimensionScreen.width * 0.6
+    }
+
+    func getHeightValidateButton() -> CGFloat {
+        dimensionScreen.height * 0.09
     }
 }

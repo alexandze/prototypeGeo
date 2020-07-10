@@ -102,7 +102,16 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
     private func presentInputFormCulturalPracticeHostingController() {
         guard let appDependency = Util.getAppDependency() else { return }
         let inputFormCulturalPracticeHostingController = appDependency.processInitInputFormCulturalPracticeHostingController()
+
         viewController?.present(inputFormCulturalPracticeHostingController, animated: true)
+    }
+
+    private func presentContainerFormCulturalPracticeHostingController() {
+        guard let appDependency = Util.getAppDependency() else { return }
+        let containerFormCulturalPracticeHostingController = appDependency
+            .makeContainerFormCulturalPracticeHostingController()
+
+        viewController?.present(containerFormCulturalPracticeHostingController, animated: true)
     }
 
     private func createSelectedSelectElementOnListAction(
@@ -146,7 +155,7 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
         )
     }
 
-    func initCellFor(containerElement: CulturalPracticeInputMultiSelectContainer, cell: UITableViewCell) -> UITableViewCell {
+    func initCellFor(containerElement: CulturalPracticeContainerElement, cell: UITableViewCell) -> UITableViewCell {
         culturalPraticeView!.initCellFor(
             containerElement: containerElement,
             cell: cell
@@ -194,12 +203,19 @@ extension CulturalPraticeFormViewModelImpl {
             )
             self.presentInputFormCulturalPracticeHostingController()
 
-        case _ as CulturalPracticeInputMultiSelectContainer:
-            //TODO affcher le formualaire pour les containers
-            break
+        case let containerElement as CulturalPracticeContainerElement:
+            self.handleSelectedOnList(containerElement: containerElement, fieldType)
         default:
             break
         }
+    }
+
+    private func handleSelectedOnList(
+        containerElement: CulturalPracticeContainerElement,
+        _ fieldType: FieldType
+    ) {
+        dispatchSelectedContainerElementOnList(containerElement: containerElement, fieldType: fieldType)
+        presentContainerFormCulturalPracticeHostingController()
     }
 
     public func tableView(didSelectRowAt indexPath: IndexPath) {
@@ -214,9 +230,9 @@ extension CulturalPraticeFormViewModelImpl {
         fieldType: FieldType
     ) {
 
-       let action = createSelectedSelectElementOnListAction(
-        culturalPracticeSelectElement: culturalPracticeElement,
-        fieldType: fieldType
+        let action = createSelectedSelectElementOnListAction(
+            culturalPracticeSelectElement: culturalPracticeElement,
+            fieldType: fieldType
         )
 
         self.disposableDispatcher = Util.runInSchedulerBackground {
@@ -231,6 +247,21 @@ extension CulturalPraticeFormViewModelImpl {
         let action = createSelectedInputElementOnListAction(
             inputElement: inputElement,
             fieldType: fieldType
+        )
+
+        self.disposableDispatcher = Util.runInSchedulerBackground {
+            self.actionDispatcher.dispatch(action)
+        }
+    }
+
+    private func dispatchSelectedContainerElementOnList(
+        containerElement: CulturalPracticeContainerElement,
+        fieldType: FieldType
+    ) {
+        let action = ContainerFormCulturalPracticeAction
+            .ContainerElementSelectedOnListAction(
+                containerElement: containerElement,
+                field: fieldType
         )
 
         self.disposableDispatcher = Util.runInSchedulerBackground {
@@ -269,7 +300,7 @@ protocol CulturalPraticeFormViewModel {
     func getCulturePracticeElement(by indexPath: IndexPath) -> CulturalPracticeElementProtocol
     func registerHeaderFooterViewSection()
     func initCellFor(multiSelectElement: CulturalPracticeMultiSelectElement, cell: UITableViewCell) -> UITableViewCell
-    func initCellFor(containerElement: CulturalPracticeInputMultiSelectContainer, cell: UITableViewCell) -> UITableViewCell
+    func initCellFor(containerElement: CulturalPracticeContainerElement, cell: UITableViewCell) -> UITableViewCell
     func initCellFor(inputElement: CulturalPracticeInputElement, cell: UITableViewCell) -> UITableViewCell
     func initCellFor(addElement: CulturalPracticeAddElement, cell: UITableViewCell) -> UITableViewCell
     func tableView(didSelectRowAt indexPath: IndexPath)
