@@ -17,6 +17,7 @@ class ContainerFormCulturalPracticeViewModelImpl: ContainerFormCulturalPracticeV
     private let actionDispatcher: ActionDispatcher
     private var disposableStateObserver: Disposable?
     private var state: ContainerFormCulturalPracticeState?
+    private var disposeDispatcher: Disposable?
 
     init(
         stateObserver: Observable<ContainerFormCulturalPracticeState>,
@@ -32,19 +33,22 @@ class ContainerFormCulturalPracticeViewModelImpl: ContainerFormCulturalPracticeV
         disposableStateObserver = stateObserver
             .observeOn(Util.getSchedulerMain())
             .subscribe { event in
-            guard let state = event.element,
-                 state.containerElement != nil && state.fieldType != nil &&
-                    state.inputElements != nil && state.inputValues != nil &&
-                    state.selectElements != nil && state.selectValues != nil &&
-                    state.subAction != nil
-                else { return }
+                guard let state = event.element,
+                    state.containerElement != nil && state.fieldType != nil &&
+                        state.inputElements != nil && state.inputValues != nil &&
+                        state.selectElements != nil && state.selectValues != nil &&
+                        state.subAction != nil
+                    else { return }
 
                 self.setValue(state: state)
 
                 switch state.subAction! {
-            case .newFormData:
-                self.handleNewFormData()
-            }
+                case .newFormData:
+                    self.handleNewFormData()
+                case .newIsDirtyAndIsFormValidValue:
+                    self.handleNewIsDirtyAndIsFormValidValue()
+
+                }
         }
     }
 
@@ -66,12 +70,33 @@ class ContainerFormCulturalPracticeViewModelImpl: ContainerFormCulturalPracticeV
         self.state = state
     }
 
+    private func createCheckIfFormIsDirtyAction() -> ContainerFormCulturalPracticeAction.CheckIfFormIsDirtyAndValidAction {
+        ContainerFormCulturalPracticeAction.CheckIfFormIsDirtyAndValidAction(
+            inputValues: viewState.inputValues,
+            selectValue: viewState.selectValue
+        )
+    }
+
+    private func printAlert() {
+        viewState.presentAlert = true
+    }
+
+    private func isDirtyAndIsFormValid() -> Bool {
+        state!.isDirty! && state!.isFormValid!
+    }
+
     class ViewState: ObservableObject {
         @Published var titleForm: String = ""
         @Published var inputElements: [CulturalPracticeInputElement] = []
         @Published var selectElements: [CulturalPracticeMultiSelectElement] = []
         @Published var inputValues: [String] = []
         @Published var selectValue: [Int] = []
+        @Published var isButtonValidateActivated: Bool = false
+        @Published var presentAlert: Bool = false
+        @Published var textAlert: String = "Voulez-vous enregistrer les valeurs saisies ?"
+        @Published var textButtonValidate: String = "Valider"
+        @Published var textErrorMessage: String = "Veuillez saisir une valeur valide"
+
     }
 }
 
@@ -80,15 +105,49 @@ extension ContainerFormCulturalPracticeViewModelImpl {
     private func handleNewFormData() {
         setViewStateValue()
     }
+
+    private func handleNewIsDirtyAndIsFormValidValue() {
+        if isDirtyAndIsFormValid() {
+            printAlert()
+        }
+
+        print(isDirtyAndIsFormValid() ? "printAlert" : "not print Alert")
+    }
+
+    func handleButtonValidate() {
+        // TODO dispatch save form with save
+    }
+
+    func handleButtonClose() {
+        dispatchCheckIfFormIsDirtyAction()
+    }
+
+    func handleAlertYesButton() {
+        // TODO dispatch update form
+    }
+
+    func handleAlertNoButton() {
+        // TODO dispatch close, no save
+    }
 }
 
 // Dispatcher
 extension ContainerFormCulturalPracticeViewModelImpl {
+    private func dispatchCheckIfFormIsDirtyAction() {
+        let checkIfFormIsDirtyAction = createCheckIfFormIsDirtyAction()
 
+        disposeDispatcher = Util.runInSchedulerBackground {
+            self.actionDispatcher.dispatch(checkIfFormIsDirtyAction)
+        }
+    }
 }
 
 protocol ContainerFormCulturalPracticeViewModel {
     var viewState: ContainerFormCulturalPracticeViewModelImpl.ViewState {get}
     func subscribeToStateObserver()
     func disposeObserver()
+    func handleButtonValidate()
+    func handleButtonClose()
+    func handleAlertYesButton()
+    func handleAlertNoButton()
 }

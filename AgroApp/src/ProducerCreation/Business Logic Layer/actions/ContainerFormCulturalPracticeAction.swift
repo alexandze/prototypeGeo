@@ -15,4 +15,9 @@ struct ContainerFormCulturalPracticeAction {
         var field: FieldType
         var subAction:  ContainerFormCulturalPracticeState.SubAction = .newFormData
     }
+
+    struct CheckIfFormIsDirtyAndValidAction: Action {
+        var inputValues: [String]
+        var selectValue: [Int]
+    }
 }

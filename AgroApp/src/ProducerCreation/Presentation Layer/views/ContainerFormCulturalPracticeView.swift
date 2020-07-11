@@ -13,7 +13,7 @@ struct ContainerFormCulturalPracticeView: View, SettingViewControllerProtocol {
     var setAlpha: ((CGFloat) -> Void)?
     var setBackgroundColor: ((UIColor) -> Void)?
     var setIsModalInPresentation: ((Bool) -> Void)?
-    var viewModel: ContainerFormCulturalPracticeViewModel?
+    let viewModel: ContainerFormCulturalPracticeViewModel
     @ObservedObject var viewState: ContainerFormCulturalPracticeViewModelImpl.ViewState
     @ObservedObject var keyboardFollower: KeyboardFollower
 
@@ -28,32 +28,36 @@ struct ContainerFormCulturalPracticeView: View, SettingViewControllerProtocol {
 
     var body: some View {
         GeometryReader { (geometry: GeometryProxy) in
-
             VStack {
-                HeaderView(title: self.viewState.titleForm, actionCloseButton: {
-                    // TODO si le formulaire est dirty afficher l'alerte. l alerte va dispatcher fermer avec sauvegarde ou pas
-                    // si le formulaire est pas dirty dispather fermer sans sauvegarde
-                })
-                Spacer()
-                ScrollView {
-                    CenterView(
-                        inputValues: self.$viewState.inputValues,
-                        selecteValues: self.$viewState.selectValue,
-                        inputElements: self.viewState.inputElements,
-                        selectElements: self.viewState.selectElements
-                    )
+                HeaderView(
+                    title: self.viewState.titleForm,
+                    actionCloseButton: { self.viewModel.handleButtonClose() }
+                )
 
-                }
                 Spacer()
 
-                ButtonValidate().padding(.bottom, 10)
+                CenterView(
+                    inputValues: self.$viewState.inputValues,
+                    selecteValues: self.$viewState.selectValue,
+                    inputElements: self.viewState.inputElements,
+                    selectElements: self.viewState.selectElements
+                )
+
+                Spacer()
+
+                ButtonValidate(
+                    isButtonActivated: self.viewState.isButtonValidateActivated,
+                    handleButton: { self.viewModel.handleButtonValidate() }
+                ).padding(.bottom, 10)
+
             }.onAppear {
                 self.configViewController()
-                self.viewModel?.subscribeToStateObserver()
+                self.viewModel.subscribeToStateObserver()
             }.onDisappear {
-                self.viewModel?.disposeObserver()
-            }.environmentObject(DimensionScreen(width: geometry.size.width, height: geometry.size.height))
-
+                self.viewModel.disposeObserver()
+            }.environmentObject(
+                DimensionScreen(width: geometry.size.width, height: geometry.size.height)
+            ).alert(isPresented: self.$viewState.presentAlert, content: self.createAlert)
         }
     }
 
@@ -62,6 +66,22 @@ struct ContainerFormCulturalPracticeView: View, SettingViewControllerProtocol {
         self.setAlpha?(Util.getAlphaValue())
         self.setIsModalInPresentation?(true)
     }
+
+    func createAlert() -> Alert {
+        Alert(
+            title: Text(self.viewState.textAlert),
+            message: Text(""),
+            primaryButton: .cancel(
+                Text("Oui").foregroundColor(.green),
+                action: { self.viewModel.handleAlertYesButton() }
+            ),
+            secondaryButton: .default(
+                Text("Non").foregroundColor(.red),
+                action: { self.viewModel.handleAlertNoButton() }
+            )
+        )
+    }
+
 }
 
 private struct HeaderView: View {
@@ -95,14 +115,16 @@ private struct CenterView: View {
     @Binding var selecteValues: [Int]
     var inputElements: [CulturalPracticeInputElement]
     var selectElements: [CulturalPracticeMultiSelectElement]
+    @EnvironmentObject var dimensionScreen: DimensionScreen
 
     var body: some View {
-        VStack {
-            InputElementListView(inputElements: inputElements, inputValues: $inputValues)
-            PickerListView(selectElements: selectElements, selectValue: $selecteValues)
+        ScrollView {
+            VStack {
+                InputElementListView(inputElements: inputElements, inputValues: $inputValues)
+                PickerListView(selectElements: selectElements, selectValue: $selecteValues)
+            }
         }
     }
-
 }
 
 private struct InputElementListView: View {
@@ -153,7 +175,7 @@ private struct PickerListView: View {
                     }
                 }.frame(width: self.dimensionScreen.width * 0.1, height: self.dimensionScreen.height * 0.1, alignment: .center)
 
-                .pickerStyle(WheelPickerStyle())
+                    .pickerStyle(WheelPickerStyle())
             }.padding(.bottom, 70)
         }
     }
@@ -177,14 +199,17 @@ private struct TextFieldWithStyle: View {
         )
             .background(colorScheme == .dark ? Color.black : Color.white)
             .cornerRadius(5)
+
     }
 }
 
 private struct ButtonValidate: View {
+    var isButtonActivated: Bool
+    var handleButton: () -> Void
     @EnvironmentObject var dimensionScreen: DimensionScreen
 
     var body: some View {
-        Button(action: {  }) {
+        Button(action: { self.handleButton() }) {
             Text("Valider")
                 .frame(
                     minWidth: self.getWidthValidateButton(),
@@ -204,6 +229,7 @@ private struct ButtonValidate: View {
             .foregroundColor(.white)
             .background(Color(UIColor(red: 34/255, green: 139/255, blue: 34/255, alpha: 1)))
             .cornerRadius(10)
+            .disabled(self.isButtonActivated)
     }
 
     func getWidthValidateButton() -> CGFloat {

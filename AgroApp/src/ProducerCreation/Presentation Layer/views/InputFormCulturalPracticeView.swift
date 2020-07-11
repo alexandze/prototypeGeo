@@ -45,14 +45,31 @@ struct InputFormCulturalPracticeView: View, SettingViewControllerProtocol {
                     textErrorMessage: self.viewState.textErrorMessage
                 ) {
                     self.viewModel.handleButtonValidate()
-                }
-                .padding(.bottom, self.keyboardFollower.keyboardHeight)
-                .edgesIgnoringSafeArea(
-                    self.keyboardFollower.isVisible ? .bottom : []
+                }.animation(self.viewState.hasAnimation ? .default : nil)
+
+                Text(!self.isInputValueValid ? self.viewState.textErrorMessage : "")
+                    .font(.system(size: 15))
+                    .bold()
+                    .foregroundColor(.red)
+                    .multilineTextAlignment(.center)
+                    //.padding(.bottom, self.keyboardFollower.keyboardHeight)
+                    .animation(self.viewState.hasAnimation ? .default : nil)
+                    .edgesIgnoringSafeArea(
+                        self.keyboardFollower.isVisible ? .bottom : []
                 )
+
+                if self.keyboardFollower.keyboardHeight == 0 {
+                    Spacer()
+                }
+
+                ButtonValidate(
+                    textButtonValidate: self.viewState.textButtonValidate,
+                    actionValidateButton: {self.viewModel.handleButtonValidate()},
+                    isInputValueValid: self.isInputValueValid
+                ).padding(.bottom, 5)
+                    .padding(.bottom, self.keyboardFollower.keyboardHeight)
                     .animation(self.viewState.hasAnimation ? .default : nil)
 
-                Spacer()
             }
             .environmentObject(DimensionScreen(width: geometry.size.width, height: geometry.size.height))
             .onAppear {
@@ -77,6 +94,7 @@ struct InputFormCulturalPracticeView: View, SettingViewControllerProtocol {
                 )
             }
             .onReceive(self.viewState.$isDismissForm, perform: self.dismissForm(isDismissForm:))
+
         }
     }
 
@@ -142,25 +160,8 @@ private struct CenterView: View {
                 .lineLimit(3)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 10)
-                .padding(.bottom, 10)
 
             TextFieldWithStyle(inputValue: $inputValue, inputTitle: inputTitle)
-                .padding(.bottom, 10)
-
-            ButtonValidate(
-                textButtonValidate: self.textButtonValidate,
-                actionValidateButton: self.actionValidateButton,
-                isInputValueValid: self.isInputValueValid
-            )
-
-            if !self.isInputValueValid {
-                Text(textErrorMessage)
-                    .font(.system(size: 15))
-                    .bold()
-                    .foregroundColor(.red)
-                    .multilineTextAlignment(.center)
-                    .padding(.top)
-            }
         }
     }
 
@@ -226,6 +227,7 @@ private struct ButtonValidate: View {
 
     func getWidthValidateButton() -> CGFloat {
         dimensionScreen.width * 0.6
+
     }
 
     func getHeightValidateButton() -> CGFloat {
