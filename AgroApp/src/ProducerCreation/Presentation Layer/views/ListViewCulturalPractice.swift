@@ -130,7 +130,7 @@ class ListViewCulturalPractice: UIView {
 
         if culturalPracticeValueProtocol != nil {
             detailLabel?.text = culturalPracticeValueProtocol!.getValue() + " " + getUnitFrom(culturalPracticeValueProtocol: culturalPracticeValueProtocol!)
-            detailLabel?.textColor = .green
+            detailLabel?.textColor = Util.getGreenColor()
             return
         }
 

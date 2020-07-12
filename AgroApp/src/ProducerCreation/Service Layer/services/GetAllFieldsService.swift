@@ -18,9 +18,15 @@ extension MapFieldService {
                 [(Field<MultiPolygon>, [(MKPolygon, AnnotationWithData<PayloadFieldAnnotation> )?])]) in
             let tupleFormatFieldJson = formatFieldsGeoJson(fieldsGeoJson: fieldsGeoJsonUnwrap)
             let fieldMKPolygonMKPointAnnotation = createMKPolygonMKPointAnnotationFor(fields: tupleFormatFieldJson.0)
+
             let fieldMKMultiPolygonMKPointAnnotation = createMKMultiPolygonMKPoinAnnotationFor(fields: tupleFormatFieldJson.1)
             return (fieldMKPolygonMKPointAnnotation, fieldMKMultiPolygonMKPointAnnotation)
         }
+    }
+
+    private func cleanFieldMKPolygonMKPointAnnotationList(fieldMKPolygonMKPointAnnotation: [(Field<Polygon>, MKPolygon, AnnotationWithData<PayloadFieldAnnotation>)?]) -> [(Field<Polygon>, MKPolygon, AnnotationWithData<PayloadFieldAnnotation>)] {
+        let arrayTupleWithoutNilValue =  fieldMKPolygonMKPointAnnotation.filter { $0 != nil }
+        return arrayTupleWithoutNilValue.map { $0! }
     }
 
     private func formatFieldsGeoJson(fieldsGeoJson: FieldGeoJsonArray) -> ([Field<Polygon>], [Field<MultiPolygon>]) {
@@ -173,3 +179,9 @@ extension MapFieldService {
         return annotationWithData
     }
 }
+
+// filtrer les polygon dans le geojson    // filtrer les multipolygon dans le geojson
+// transformer les polygon fieldPolygon   // transformer les multipolygon en fieldMultipolygon
+// creer des mkPolygon avec le payload a partir de fieldPolygon   // creer plusieur mkPolygon avec payload
+// Calculer le centre du polygon
+// creer l'annotation avec son payload

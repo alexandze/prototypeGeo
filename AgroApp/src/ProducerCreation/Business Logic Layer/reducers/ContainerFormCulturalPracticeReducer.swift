@@ -18,6 +18,10 @@ extension Reducers {
             return ContainerFormCulturalPracticeHandler.handle(containerElementSelectedOnListAction: action, state)
         case let action as ContainerFormCulturalPracticeAction.CheckIfFormIsDirtyAndValidAction:
             return ContainerFormCulturalPracticeHandler.handle(checkIfFormIsDirtyAction: action, state)
+        case let action as ContainerFormCulturalPracticeAction.CheckIfInputValueIsValidAction:
+            return ContainerFormCulturalPracticeHandler.handle(checkIfInputValueIsValidAction: action, state)
+        case let action as ContainerFormCulturalPracticeAction.UpdateContainerElementAction:
+            return ContainerFormCulturalPracticeHandler.handle(updateContainerElementAction: action, state)
         default:
             return state
         }
@@ -45,6 +49,15 @@ class ContainerFormCulturalPracticeHandler {
         let selectValues = createSelectValues(for: selectElements)
         let inputRegularExpressions = createInputRegularExpression(inputElements: inputElements)
 
+        let isPrintMessageErrorInputValue = createIsPrintMessageErrorInputValues(
+            inputValues: inputValues,
+            inputRegularExpressions: inputRegularExpressions
+        )
+
+        let isFormValid = isInputValuesValid(
+            isPrintMessageErrorInputValues: isPrintMessageErrorInputValue
+        )
+
         return state.changeValue(
             containerElement: containerElement,
             fieldType: fieldType,
@@ -55,7 +68,9 @@ class ContainerFormCulturalPracticeHandler {
             selectValues: selectValues,
             previousInputValues: inputValues,
             previousSelectValues: selectValues,
-            inputRegularExpressions: inputRegularExpressions
+            isFormValid: isFormValid,
+            inputRegularExpressions: inputRegularExpressions,
+            isPrintMessageErrorInputValues: isPrintMessageErrorInputValue
         )
     }
 
@@ -80,28 +95,129 @@ class ContainerFormCulturalPracticeHandler {
 
         let isFormValid = isInputValuesValid(
             currentInputValues: currentInputValue,
-            inputRegularExpression: state.inputRegularExpressions!
+            inputRegularExpressions: state.inputRegularExpressions!
         )
 
         return state.changeValue(
             isDirty: isDirty,
-            subAction: .newIsDirtyAndIsFormValidValue,
+            subAction: .checkIfFormIsDirtyActionSuccess,
             isFormValid: isFormValid
         )
     }
 
+    static func handle(
+        checkIfInputValueIsValidAction: ContainerFormCulturalPracticeAction.CheckIfInputValueIsValidAction,
+        _ state: ContainerFormCulturalPracticeState
+    ) -> ContainerFormCulturalPracticeState {
+        let inputValues = checkIfInputValueIsValidAction.inputValues
+
+        let isInputPrintMessageErrorInputValues = createIsPrintMessageErrorInputValues(
+            inputValues: inputValues,
+            inputRegularExpressions: state.inputRegularExpressions!
+        )
+
+        let isFormValid = isInputValuesValid(
+            isPrintMessageErrorInputValues: isInputPrintMessageErrorInputValues
+        )
+
+        return state.changeValue(
+            subAction: .checkIfInputValueIsValidActionSuccess,
+            isFormValid: isFormValid,
+            isPrintMessageErrorInputValues: isInputPrintMessageErrorInputValues
+        )
+    }
+
+    static func handle(
+        updateContainerElementAction: ContainerFormCulturalPracticeAction.UpdateContainerElementAction,
+        _ state: ContainerFormCulturalPracticeState
+    ) -> ContainerFormCulturalPracticeState {
+        let selectElementsUpdated = updateSelectElement(
+            selectElements: state.selectElements!,
+            selectValues: updateContainerElementAction.selectValues
+        )
+
+        let inputElementsUpdated = updateInputElement(
+            inputElements: state.inputElements!,
+            inputValues: updateContainerElementAction.inputValues
+        )
+
+        var containerElement = state.containerElement!
+        containerElement.culturalInputElement = inputElementsUpdated
+        containerElement.culturalPracticeMultiSelectElement = selectElementsUpdated
+
+        return state.changeValue(
+            containerElement: containerElement,
+            subAction: .updateContainerElementActionSuccess,
+            inputElements: inputElementsUpdated,
+            selectElements: selectElementsUpdated,
+            inputValues: updateContainerElementAction.inputValues,
+            selectValues: updateContainerElementAction.selectValues
+        )
+    }
+
+    private static func updateSelectElement(
+        selectElements: [CulturalPracticeMultiSelectElement],
+        selectValues: [Int]
+    ) -> [CulturalPracticeMultiSelectElement] {
+        (0..<selectElements.count).map { index in
+            let culturalPracticeValue = selectElements[index].getValueBy(
+                indexSelected: selectValues[index],
+                from: selectElements[index].tupleCulturalTypeValue
+            )
+
+            var selectElement = selectElements[index]
+            selectElement.value = culturalPracticeValue
+            return selectElement
+        }
+    }
+
+    private static func updateInputElement(
+        inputElements: [CulturalPracticeInputElement],
+        inputValues: [String]
+    ) -> [CulturalPracticeInputElement] {
+        (0..<inputElements.count).map { index in
+            let value = inputElements[index].getValueBy(
+                inputValue: inputValues[index],
+                from: inputElements[index].valueEmpty
+            )
+
+            var inputElement = inputElements[index]
+            inputElement.value = value
+            return inputElement
+        }
+    }
+
+    private static func createIsPrintMessageErrorInputValues(
+        inputValues: [String],
+        inputRegularExpressions: [NSRegularExpression]
+    ) -> [Bool] {
+        (0..<inputValues.count).map { index in
+            inputValueIsValid(
+                inputValue: trim(value: inputValues[index]),
+                regularExpression: inputRegularExpressions[index]
+            )
+        }
+    }
+
+    private static func isInputValuesValid(isPrintMessageErrorInputValues: [Bool]) -> Bool {
+        guard isPrintMessageErrorInputValues.firstIndex(of: false) != nil else {
+            return true
+        }
+
+        return false
+    }
+
     private static func isInputValuesValid(
         currentInputValues: [String],
-        inputRegularExpression: [NSRegularExpression]
+        inputRegularExpressions: [NSRegularExpression]
     ) -> Bool {
         var isValid = true
         var inputValue = ""
 
         (0..<currentInputValues.count).forEach { index in
-            inputValue = currentInputValues[index].trimmingCharacters(in: .whitespacesAndNewlines)
+            inputValue = trim(value: currentInputValues[index])
 
-            guard !inputValue.isEmpty &&
-                inputRegularExpression[index].matches(in: inputValue, range: NSRange(location: 0, length: inputValue.count)).count == 1
+            guard inputValueIsValid(inputValue: inputValue, regularExpression: inputRegularExpressions[index])
                 else {
                 isValid = false
                 return
@@ -109,6 +225,15 @@ class ContainerFormCulturalPracticeHandler {
         }
 
         return isValid
+    }
+
+    private static func trim(value: String) -> String {
+        value.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    private static func inputValueIsValid(inputValue: String, regularExpression: NSRegularExpression) -> Bool {
+        !inputValue.isEmpty &&
+            regularExpression.matches(in: inputValue, range: NSRange(location: 0, length: inputValue.count)).count == 1
     }
 
     private static func createInputRegularExpression(inputElements: [CulturalPracticeInputElement]) -> [NSRegularExpression] {

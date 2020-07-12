@@ -26,10 +26,13 @@ struct ContainerFormCulturalPracticeState: Equatable {
     var previousSelectValues: [Int]?
     var isFormValid: Bool?
     var inputRegularExpressions: [NSRegularExpression]?
+    var isPrintMessageErrorInputValues: [Bool]?
 
     enum SubAction {
-        case newFormData
-        case newIsDirtyAndIsFormValidValue
+        case containerElementSelectedOnListActionSuccess
+        case checkIfFormIsDirtyActionSuccess
+        case checkIfInputValueIsValidActionSuccess
+        case updateContainerElementActionSuccess
     }
 
     func changeValue(
@@ -44,7 +47,8 @@ struct ContainerFormCulturalPracticeState: Equatable {
         previousInputValues: [String]? = nil,
         previousSelectValues: [Int]? = nil,
         isFormValid: Bool? = nil,
-        inputRegularExpressions: [NSRegularExpression]? = nil
+        inputRegularExpressions: [NSRegularExpression]? = nil,
+        isPrintMessageErrorInputValues: [Bool]? = nil
     ) -> ContainerFormCulturalPracticeState {
         ContainerFormCulturalPracticeState(
             uuidState: UUID().uuidString,
@@ -59,7 +63,8 @@ struct ContainerFormCulturalPracticeState: Equatable {
             previousInputValues: previousInputValues ?? self.previousInputValues,
             previousSelectValues: previousSelectValues ?? self.previousSelectValues,
             isFormValid: isFormValid ?? self.isFormValid,
-            inputRegularExpressions: inputRegularExpressions ?? self.inputRegularExpressions
+            inputRegularExpressions: inputRegularExpressions ?? self.inputRegularExpressions,
+            isPrintMessageErrorInputValues: isPrintMessageErrorInputValues ?? self.isPrintMessageErrorInputValues
         )
     }
 }

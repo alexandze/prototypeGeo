@@ -218,7 +218,7 @@ class ContainerElementView: UIView {
 
         if culturalPracticeValue != nil {
             label.text = culturalPracticeValue!.getValue()
-            label.textColor = Util.getOppositeColorBlackOrWhite()
+            label.textColor = Util.getGreenColor()
             return (label, createImageViewYes())
         }
 

@@ -1250,8 +1250,8 @@ struct CulturalPracticeAddElement: CulturalPracticeElementProtocol {
 struct CulturalPracticeContainerElement: CulturalPracticeElementProtocol {
     let key: String
     let title: String
-    let culturalInputElement: [CulturalPracticeElementProtocol]
-    let culturalPracticeMultiSelectElement: [CulturalPracticeElementProtocol]
+    var culturalInputElement: [CulturalPracticeElementProtocol]
+    var culturalPracticeMultiSelectElement: [CulturalPracticeElementProtocol]
     var value: CulturalPracticeValueProtocol?
 }
 
@@ -1269,7 +1269,6 @@ struct CulturalPracticeInputElement: CulturalPracticeElementProtocol {
     var valueEmpty: CulturalPracticeValueProtocol
     var value: CulturalPracticeValueProtocol?
     var index: Int?
-    
 }
 
 protocol CulturalPracticeValueProtocol {
@@ -1279,6 +1278,20 @@ protocol CulturalPracticeValueProtocol {
     func getUnitType() -> UnitType?
     static func create(value: String) -> CulturalPracticeValueProtocol?
     static func getRegularExpression() -> String?
+}
+
+extension CulturalPracticeElementProtocol {
+    func getValueBy(indexSelected: Int, from values: [(CulturalPracticeValueProtocol, String)]) -> CulturalPracticeValueProtocol? {
+        guard values.indices.contains(indexSelected) else { return nil }
+        return values[indexSelected].0
+    }
+    
+    func getValueBy(
+        inputValue: String,
+        from emptyValue: CulturalPracticeValueProtocol
+    ) -> CulturalPracticeValueProtocol? {
+        return type(of: emptyValue).create(value: inputValue)
+    }
 }
 
 protocol CulturalPracticeElementProtocol {

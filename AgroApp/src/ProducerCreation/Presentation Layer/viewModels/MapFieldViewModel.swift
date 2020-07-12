@@ -250,7 +250,9 @@ class MapFieldViewModel {
                 .subscribeOn(ConcurrentDispatchQueueScheduler(queue: DispatchQueue.global()))
                 .filter { self.filterSelectedBy(idField: idField, field: $0?.0)}
                 .flatMap { self.flapMapToNotOptional(tupleField: $0, idField: idField) }
-                .reduce([]) { self.reduce(tupleField: $1, to: $0) }
+            .take(1)
+               // .reduce([]) { self.reduce(tupleField: $1, to: $0) }
+
                 .flatMap { self.getOverlayRendererAndAddTo(tupleField: $0)}
         }
 
@@ -286,10 +288,10 @@ class MapFieldViewModel {
     }
 
     private func getOverlayRendererAndAddTo(
-        tupleField: [(FieldType, AnnotationWithData<PayloadFieldAnnotation>, MKPolygon)]
+        tupleField: (FieldType, AnnotationWithData<PayloadFieldAnnotation>, MKPolygon)
     ) -> Observable<(FieldType, AnnotationWithData<PayloadFieldAnnotation>, MKPolygon, MKOverlayRenderer)> {
-        if let over =  self.mapView.renderer(for: tupleField[0].2 ) {
-            return Observable.just((tupleField[0].0, tupleField[0].1, tupleField[0].2, over))
+        if let over =  self.mapView.renderer(for: tupleField.2 ) {
+            return Observable.just((tupleField.0, tupleField.1, tupleField.2, over))
         }
 
         return Observable.error(NSError(domain: "", code: 1))

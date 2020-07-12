@@ -26,7 +26,7 @@ class SelectFormCulturalPracticeView: UIView {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(NSLocalizedString("Valider", comment: "Valider button"), for: .normal)
-        button.backgroundColor =  UIColor(red: 34/255, green: 139/255, blue: 34/255, alpha: 1)
+        button.backgroundColor =  Util.getGreenColor()
         button.layer.cornerRadius = 10
         button.addTarget(self, action: #selector(handle(buttonValidate:)), for: .touchUpInside)
         return button

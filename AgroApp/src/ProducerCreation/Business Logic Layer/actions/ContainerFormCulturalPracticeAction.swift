@@ -13,11 +13,25 @@ struct ContainerFormCulturalPracticeAction {
     struct ContainerElementSelectedOnListAction: Action {
         var containerElement: CulturalPracticeContainerElement
         var field: FieldType
-        var subAction:  ContainerFormCulturalPracticeState.SubAction = .newFormData
+        var subAction:  ContainerFormCulturalPracticeState.SubAction = .containerElementSelectedOnListActionSuccess
     }
 
     struct CheckIfFormIsDirtyAndValidAction: Action {
         var inputValues: [String]
         var selectValue: [Int]
+    }
+
+    struct CheckIfInputValueIsValidAction: Action {
+        var inputValues: [String]
+    }
+
+    struct CheckIfFormIsValidAction: Action {
+        var inputValues: [String]
+        var selectValue: [Int]
+    }
+
+    struct UpdateContainerElementAction: Action {
+        var inputValues: [String]
+        var selectValues: [Int]
     }
 }

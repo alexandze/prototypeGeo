@@ -40,48 +40,57 @@ struct ContainerFormCulturalPracticeView: View, SettingViewControllerProtocol {
                     inputValues: self.$viewState.inputValues,
                     selecteValues: self.$viewState.selectValue,
                     inputElements: self.viewState.inputElements,
-                    selectElements: self.viewState.selectElements
+                    selectElements: self.viewState.selectElements,
+                    isPrintMessageErrorInputValues: self.viewState.isPrintMessageErrorInputValues,
+                    textErrorMessage: self.viewState.textErrorMessage
                 )
 
                 Spacer()
 
                 ButtonValidate(
-                    isButtonActivated: self.viewState.isButtonValidateActivated,
+                    isButtonActivated: self.viewState.isFormValid,
                     handleButton: { self.viewModel.handleButtonValidate() }
                 ).padding(.bottom, 10)
 
             }.onAppear {
                 self.configViewController()
                 self.viewModel.subscribeToStateObserver()
+                self.viewModel.subscribeToChangeInputValue()
             }.onDisappear {
                 self.viewModel.disposeObserver()
             }.environmentObject(
                 DimensionScreen(width: geometry.size.width, height: geometry.size.height)
             ).alert(isPresented: self.$viewState.presentAlert, content: self.createAlert)
+                .onReceive(self.viewState.$isDismissForm, perform: self.shouldDismissForm(isDismissForm:))
         }
     }
 
-    func configViewController() {
+    private func configViewController() {
         self.setBackgroundColor?(Util.getBackgroundColor())
         self.setAlpha?(Util.getAlphaValue())
         self.setIsModalInPresentation?(true)
     }
 
-    func createAlert() -> Alert {
+    private func createAlert() -> Alert {
         Alert(
             title: Text(self.viewState.textAlert),
             message: Text(""),
             primaryButton: .cancel(
-                Text("Oui").foregroundColor(.green),
+                Text("Oui"),
                 action: { self.viewModel.handleAlertYesButton() }
             ),
             secondaryButton: .default(
-                Text("Non").foregroundColor(.red),
+                Text("Non"),
                 action: { self.viewModel.handleAlertNoButton() }
             )
         )
     }
 
+    private func shouldDismissForm(isDismissForm: Bool) {
+        if isDismissForm {
+            dismiss? { }
+        }
+    }
 }
 
 private struct HeaderView: View {
@@ -116,11 +125,19 @@ private struct CenterView: View {
     var inputElements: [CulturalPracticeInputElement]
     var selectElements: [CulturalPracticeMultiSelectElement]
     @EnvironmentObject var dimensionScreen: DimensionScreen
+    var isPrintMessageErrorInputValues: [Bool]
+    var textErrorMessage: String
 
     var body: some View {
         ScrollView {
             VStack {
-                InputElementListView(inputElements: inputElements, inputValues: $inputValues)
+                InputElementListView(
+                    inputElements: inputElements,
+                    inputValues: $inputValues,
+                    isPrintMessageErrorInputValues: isPrintMessageErrorInputValues,
+                    textErrorMessage: textErrorMessage
+                )
+
                 PickerListView(selectElements: selectElements, selectValue: $selecteValues)
             }
         }
@@ -130,6 +147,8 @@ private struct CenterView: View {
 private struct InputElementListView: View {
     var inputElements: [CulturalPracticeInputElement]
     @Binding var inputValues: [String]
+    var isPrintMessageErrorInputValues: [Bool]
+    var textErrorMessage: String
 
     var body: some View {
         ForEach((0..<inputElements.count), id: \.self) { index in
@@ -144,8 +163,20 @@ private struct InputElementListView: View {
 
                 TextFieldWithStyle(
                     inputValue: self.$inputValues[index],
-                    inputTitle:self.inputElements[index].valueEmpty.getUnitType()!.convertToString())
-            }.padding(.vertical, 35)
+                    inputTitle:self.inputElements[index].valueEmpty.getUnitType()!.convertToString()
+                )
+
+                Text(!self.isPrintMessageErrorInputValues[index] ? self.textErrorMessage : "")
+                    .font(.system(size: 15))
+                    .bold()
+                    .foregroundColor(.red)
+                    .multilineTextAlignment(.center)
+                    .animation(.default)
+
+            }.padding(
+                index == 0 ? .vertical : .bottom,
+                30
+            )
         }
     }
 }
@@ -183,6 +214,7 @@ private struct PickerListView: View {
 
 private struct TextFieldWithStyle: View {
     @Binding var inputValue: String
+
     let inputTitle: String
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var dimensionScreen: DimensionScreen
@@ -227,9 +259,9 @@ private struct ButtonValidate: View {
             alignment: .center
         )
             .foregroundColor(.white)
-            .background(Color(UIColor(red: 34/255, green: 139/255, blue: 34/255, alpha: 1)))
+            .background(Color(Util.getGreenColor()))
             .cornerRadius(10)
-            .disabled(self.isButtonActivated)
+            .disabled(!self.isButtonActivated)
     }
 
     func getWidthValidateButton() -> CGFloat {

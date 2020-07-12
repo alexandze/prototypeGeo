@@ -84,11 +84,11 @@ struct InputFormCulturalPracticeView: View, SettingViewControllerProtocol {
                     title: Text(self.viewState.textAlert),
                     message: Text(""),
                     primaryButton: .cancel(
-                        Text("Oui").foregroundColor(.green),
+                        Text("Oui"),
                         action: { self.viewModel.handleAlertYesButton() }
                     ),
                     secondaryButton: .default(
-                        Text("Non").foregroundColor(.red),
+                        Text("Non"),
                         action: { self.viewModel.handleAlertNoButton() }
                     )
                 )
@@ -220,7 +220,7 @@ private struct ButtonValidate: View {
             alignment: .center
         )
             .foregroundColor(.white)
-            .background(Color(UIColor(red: 34/255, green: 139/255, blue: 34/255, alpha: 1)))
+            .background(Color(Util.getGreenColor()))
             .cornerRadius(10)
             .disabled(!self.isInputValueValid)
     }
