@@ -73,7 +73,7 @@ class ContainerElementView: UIView {
 
     private func createContraintToParentViewFor(titleCellLabel: UILabel) -> [NSLayoutConstraint] {
         [
-            titleCellLabel.topAnchor.constraint(equalTo: parentView.topAnchor, constant: 30),
+            titleCellLabel.topAnchor.constraint(equalTo: parentView.topAnchor, constant: 0),
             titleCellLabel.leadingAnchor.constraint(equalTo: parentView.leadingAnchor)
         ]
     }
@@ -84,7 +84,7 @@ class ContainerElementView: UIView {
         let imageView = firstLabelTitleValue.1.1
 
         return [
-            titleLabel.topAnchor.constraint(equalTo: titleCellLabel.bottomAnchor, constant: 20),
+            titleLabel.topAnchor.constraint(equalTo: titleCellLabel.bottomAnchor, constant: 0),
             titleLabel.leadingAnchor.constraint(equalTo: parentView.leadingAnchor),
             titleLabel.widthAnchor.constraint(equalTo: parentView.widthAnchor, multiplier: 0.8),
             valueLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
@@ -194,7 +194,7 @@ class ContainerElementView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.font = UIFont(name: "Arial", size: 35)
+        label.font = UIFont(name: "Arial", size: 30)
         label.textColor = Util.getOppositeColorBlackOrWhite()
         label.text = titleCell
         return label

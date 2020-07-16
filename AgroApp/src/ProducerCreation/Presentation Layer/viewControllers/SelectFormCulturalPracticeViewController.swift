@@ -50,7 +50,11 @@ public class SelectFormCulturalPracticeViewController: UIViewController, UIPicke
     }
 
     public func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        90
+        self.selectFormCulturalPracticeViewModel.pickerView(pickerView, rowHeightForComponent: component)
+    }
+
+    public func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
+        self.selectFormCulturalPracticeViewModel.pickerView(pickerView, widthForComponent: component)
     }
 
     public func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {

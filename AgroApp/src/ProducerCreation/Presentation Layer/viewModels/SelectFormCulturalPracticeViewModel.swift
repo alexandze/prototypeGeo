@@ -14,7 +14,7 @@ class SelectFormCulturalPracticeViewModelImpl: SelectFormCulturalPracticeViewMod
     let culturalPracticeFormObs: Observable<SelectFormCulturalPracticeState>
     var disposableCulturalPracticeFormObs: Disposable?
     var disposableDispatcher: Disposable?
-    var viewController: UIViewController?
+    weak var viewController: UIViewController?
     var multiSelectElement: CulturalPracticeMultiSelectElement?
     var fieldType: FieldType?
     var pickerView: UIPickerView?
@@ -61,28 +61,6 @@ class SelectFormCulturalPracticeViewModelImpl: SelectFormCulturalPracticeViewMod
         getCulturalPracticeFormViewController()!.isModalInPresentation = true
     }
 
-    public func pickerView(numberOfRowsInComponent component: Int) -> Int {
-        self.multiSelectElement!.tupleCulturalTypeValue.count
-    }
-
-    public func pickerView(titleForRow row: Int) -> String {
-        self.multiSelectElement!.tupleCulturalTypeValue[row].1
-    }
-
-    public func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView {
-        if let labelReuse = view as? UILabel {
-            return getSelectFormCulturalPracticeView()!.reuseLabelPickerView(
-                label: labelReuse,
-                text: self.multiSelectElement!.tupleCulturalTypeValue[row].1
-            )
-        }
-
-        return getSelectFormCulturalPracticeView()!.getLabelForPickerView(
-            text: self.multiSelectElement!.tupleCulturalTypeValue[row].1,
-            widthPickerView: pickerView.frame.width
-        )
-    }
-
     public func disposeToCulturalPracticeFormObs() {
         disposableCulturalPracticeFormObs?.dispose()
         disposableDispatcher?.dispose()
@@ -93,8 +71,8 @@ class SelectFormCulturalPracticeViewModelImpl: SelectFormCulturalPracticeViewMod
     }
 
     private func initHandleValidateButton() {
-        getSelectFormCulturalPracticeView()!.handleValidateButton {
-            self.dispatchClosePresentedViewControllerWithSave()
+        getSelectFormCulturalPracticeView()!.handleValidateButton { [weak self] in
+            self?.dispatchClosePresentedViewControllerWithSave()
         }
     }
 
@@ -143,10 +121,10 @@ class SelectFormCulturalPracticeViewModelImpl: SelectFormCulturalPracticeViewMod
         switch fieldType {
         case .polygon(let polygon):
             getSelectFormCulturalPracticeView()!.textDetail =
-                "Choisir une valeur (\(culturalPracticeElementProtocol.title)) pour la parcelle \(polygon.id)"
+                "Choisir une valeur pour la parcelle \(polygon.id)"
         case .multiPolygon(let multipolygon):
             getSelectFormCulturalPracticeView()!.textDetail =
-                "Choisir une valeur (\(culturalPracticeElementProtocol.title)) pour la parcelle \(multipolygon.id)"
+                "Choisir une valeur pour la parcelle \(multipolygon.id)"
         }
     }
 
@@ -159,9 +137,9 @@ class SelectFormCulturalPracticeViewModelImpl: SelectFormCulturalPracticeViewMod
     }
 
     private func initCurrentValueOfPickerView() {
-        self.multiSelectElement?.value.map { valueElement in
+        self.multiSelectElement?.value.map { [weak self] valueElement in
             let firstIndex = type(of: valueElement).getValues()?.firstIndex { $0.0.getValue() == valueElement.getValue() }
-            firstIndex.map { self.pickerView?.selectRow($0, inComponent: 0, animated: false) }
+            firstIndex.map { self?.pickerView?.selectRow($0, inComponent: 0, animated: false) }
         }
     }
 
@@ -171,6 +149,10 @@ class SelectFormCulturalPracticeViewModelImpl: SelectFormCulturalPracticeViewMod
 
     private func getCulturalPracticeFormViewController() -> SelectFormCulturalPracticeViewController? {
         viewController as? SelectFormCulturalPracticeViewController
+    }
+
+    deinit {
+        print("*** deinit SelectFormCulturalPracticeViewModelImpl ****")
     }
 }
 
@@ -208,9 +190,39 @@ extension SelectFormCulturalPracticeViewModelImpl {
 
     private func addAlertHandle() {
         getSelectFormCulturalPracticeView()?.addAlertAction(
-            handleYesAction: {self.dispatchClosePresentedViewControllerWithSave()},
-            handleNoAction: {self.dispatchClosePrensetedViewControllerWithoutSave()}
+            handleYesAction: {[weak self] in self?.dispatchClosePresentedViewControllerWithSave()},
+            handleNoAction: {[weak self] in self?.dispatchClosePrensetedViewControllerWithoutSave()}
         )
+    }
+
+    public func pickerView(numberOfRowsInComponent component: Int) -> Int {
+        self.multiSelectElement!.tupleCulturalTypeValue.count
+    }
+
+    public func pickerView(titleForRow row: Int) -> String {
+        self.multiSelectElement!.tupleCulturalTypeValue[row].1
+    }
+
+    public func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView {
+        if let labelReuse = view as? UILabel {
+            return getSelectFormCulturalPracticeView()!.reuseLabelPickerView(
+                label: labelReuse,
+                text: self.multiSelectElement!.tupleCulturalTypeValue[row].1
+            )
+        }
+
+        return getSelectFormCulturalPracticeView()!.getLabelForPickerView(
+            text: self.multiSelectElement!.tupleCulturalTypeValue[row].1,
+            widthPickerView: pickerView.frame.width
+        )
+    }
+
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        45
+    }
+
+    func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
+        pickerView.frame.size.width
     }
 }
 
@@ -268,4 +280,6 @@ protocol SelectFormCulturalPracticeViewModel {
     func pickerView(titleForRow row: Int) -> String
     func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView
     func dispatchFormIsDirty()
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat
+    func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat
 }

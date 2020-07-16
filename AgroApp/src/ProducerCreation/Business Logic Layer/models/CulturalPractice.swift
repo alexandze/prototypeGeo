@@ -374,8 +374,8 @@ enum PeriodeApplicationFumier: Int, CulturalPracticeValueProtocol {
 
     static func getTitle() -> String {
         NSLocalizedString(
-            "Période d'application du fumier (jusqu'à trois application)",
-            comment: "Titre Période d'application du fumier (jusqu'à trois application)"
+            "Période d'application du fumier",
+            comment: "Titre Période d'application du fumier"
         )
     }
 
@@ -474,8 +474,8 @@ enum DelaiIncorporationFumier: Int, CulturalPracticeValueProtocol {
 
     static func getTitle() -> String {
         NSLocalizedString(
-            "Délai d'incorporation du fumier (jusqu'à trois application)",
-            comment: "Title délai d'incorporation du fumier (jusqu'à trois application)"
+            "Délai d'incorporation du fumier",
+            comment: "Title délai d'incorporation du fumier"
         )
     }
 

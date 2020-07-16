@@ -73,7 +73,7 @@ public class CulturalPraticeViewController: UIViewController, UITableViewDelegat
         let element = culturalPraticeViewModel.getCulturePracticeElement(by: indexPath)
 
         if  (element as? CulturalPracticeContainerElement) != nil {
-            return 350
+            return 300
         }
 
         return 100

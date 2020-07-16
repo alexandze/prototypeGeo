@@ -76,15 +76,17 @@ class SelectFormCulturalPracticeView: UIView {
         configView()
         addSubviewToParentView()
         initConstraintHeaderPresentedView()
+        initButtonValidate()
         initConstraintScrollView()
     }
 
     public func getLabelForPickerView(text: String, widthPickerView: CGFloat) -> UILabel {
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: widthPickerView * 0.9, height: 90))
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: widthPickerView * 0.9, height: 60))
         label.textAlignment = .center
         label.numberOfLines = 0
         label.text = text
         label.textColor = Util.getOppositeColorBlackOrWhite()
+        label.font =  label.font.withSize(15)
         label.sizeToFit()
         return label
     }
@@ -149,7 +151,7 @@ class SelectFormCulturalPracticeView: UIView {
             scrollView.topAnchor.constraint(equalTo: headerPresentedView.bottomAnchor),
             scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            scrollView.bottomAnchor.constraint(equalTo: buttonValidate.topAnchor)
         ])
     }
 
@@ -157,7 +159,7 @@ class SelectFormCulturalPracticeView: UIView {
         scrollView.addSubview(labelDetail)
 
         NSLayoutConstraint.activate([
-            labelDetail.bottomAnchor.constraint(equalTo: pickerView.topAnchor, constant: 20),
+            labelDetail.bottomAnchor.constraint(equalTo: pickerView.topAnchor, constant: 50),
             labelDetail.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             labelDetail.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.7)
         ])
@@ -168,23 +170,24 @@ class SelectFormCulturalPracticeView: UIView {
         pickerView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            pickerView.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor, constant: -80),
+            pickerView.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor),
             pickerView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-            pickerView.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 0.25),
-            pickerView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.8)
+            //pickerView.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 0.20),
+            pickerView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.7)
         ])
+
         initLabelDetail(pickerView: pickerView)
-        initButtonValidate(pickerView: pickerView)
+
     }
 
-    private func initButtonValidate(pickerView: UIPickerView) {
-        scrollView.addSubview(buttonValidate)
+    private func initButtonValidate() {
+        addSubview(buttonValidate)
 
         NSLayoutConstraint.activate([
-            buttonValidate.topAnchor.constraint(equalTo: pickerView.bottomAnchor, constant: 50),
-            buttonValidate.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             buttonValidate.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.09),
-            buttonValidate.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.6)
+            buttonValidate.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.6),
+            buttonValidate.bottomAnchor.constraint(equalTo: layoutMarginsGuide.bottomAnchor, constant: -10),
+            buttonValidate.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
     }
 
@@ -203,5 +206,10 @@ class SelectFormCulturalPracticeView: UIView {
     private func configView() {
         backgroundColor = Util.getBackgroundColor()
         alpha = Util.getAlphaValue()
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
     }
 }

@@ -87,10 +87,10 @@ class ContainerFormCulturalPracticeViewModelImpl: ContainerFormCulturalPracticeV
 
     private func createCheckIfFormIsDirtyAction()
         -> ContainerFormCulturalPracticeAction.CheckIfFormIsDirtyAndValidAction {
-        ContainerFormCulturalPracticeAction.CheckIfFormIsDirtyAndValidAction(
-            inputValues: viewState.inputValues,
-            selectValue: viewState.selectValue
-        )
+            ContainerFormCulturalPracticeAction.CheckIfFormIsDirtyAndValidAction(
+                inputValues: viewState.inputValues,
+                selectValue: viewState.selectValue
+            )
     }
 
     private func printAlert() {
@@ -116,19 +116,20 @@ class ContainerFormCulturalPracticeViewModelImpl: ContainerFormCulturalPracticeV
 
     private func createUpdateContainerElementAction()
         -> ContainerFormCulturalPracticeAction.UpdateContainerElementAction {
-        ContainerFormCulturalPracticeAction.UpdateContainerElementAction(
-            inputValues: viewState.inputValues,
-            selectValues: viewState.selectValue
-        )
+            ContainerFormCulturalPracticeAction.UpdateContainerElementAction(
+                inputValues: viewState.inputValues,
+                selectValues: viewState.selectValue
+            )
     }
 
-    private func createUpdateCulturalPracticeElementAction() -> CulturalPracticeFormAction.UpdateCulturalPracticeElementAction {
-        CulturalPracticeFormAction.UpdateCulturalPracticeElementAction(
-            culturalPracticeElementProtocol: state!.containerElement!
-        )
+    private func createUpdateCulturalPracticeElementAction()
+        -> CulturalPracticeFormAction.UpdateCulturalPracticeElementAction {
+            CulturalPracticeFormAction.UpdateCulturalPracticeElementAction(
+                culturalPracticeElementProtocol: state!.containerElement!
+            )
     }
 
-    private func dismissForm () {
+    private func dismissForm() {
         viewState.isDismissForm = true
     }
 
@@ -162,11 +163,13 @@ extension ContainerFormCulturalPracticeViewModelImpl {
     }
 
     func handleAlertYesButton() {
-        // TODO dispatch update form
+        dispatchUpdateContainerElementAction(
+            updateContainerElementAction: createUpdateContainerElementAction()
+        )
     }
 
     func handleAlertNoButton() {
-        // TODO dispatch close, no save
+        dismissForm()
     }
 
     private func handleChangeInputValues(inputValues: [String]) {
@@ -181,10 +184,10 @@ extension ContainerFormCulturalPracticeViewModelImpl {
 
     private func handleCheckIfFormIsDirtyActionSuccess() {
         if isDirtyAndIsFormValid() {
-            printAlert()
+            return printAlert()
         }
 
-        print(isDirtyAndIsFormValid() ? "printAlert" : "not print Alert")
+        dismissForm()
     }
 
     private func handleCheckIfInputValueIsValidActionSuccess() {
@@ -234,7 +237,7 @@ extension ContainerFormCulturalPracticeViewModelImpl {
 }
 
 protocol ContainerFormCulturalPracticeViewModel {
-    var viewState: ContainerFormCulturalPracticeViewModelImpl.ViewState {get}
+    var viewState: ContainerFormCulturalPracticeViewModelImpl.ViewState { get }
     func subscribeToStateObserver()
     func disposeObserver()
     func handleButtonValidate()

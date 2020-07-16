@@ -8,6 +8,7 @@
 
 import Foundation
 import MapKit
+import RxSwift
 
 extension MapFieldService {
     public func getFields() -> ([(Field<Polygon>, MKPolygon, AnnotationWithData<PayloadFieldAnnotation>)?], [(Field<MultiPolygon>, [(MKPolygon, AnnotationWithData<PayloadFieldAnnotation> )?])])? {
@@ -185,3 +186,124 @@ extension MapFieldService {
 // creer des mkPolygon avec le payload a partir de fieldPolygon   // creer plusieur mkPolygon avec payload
 // Calculer le centre du polygon
 // creer l'annotation avec son payload
+
+/*
+class MyService {
+    
+    func getGeoDataForMapKit() {
+        getFieldGeoJsonArrayObs()
+            .flatMap {self.createFeatureStreamFrom(fieldGeoJson: $0) }
+            .skipWhile { self.isFeatureHasNilCoordinates(feature: $0) }
+            
+            .flatMap { self.createMKMapPointWrapper(feature: $0) }
+            
+            
+    }
+    
+    func getFieldGeoJsonArrayObs() -> Observable<FieldGeoJsonArray> {
+        let fieldGeoJson = MapFieldRepository.shared.getFieldGeoJsonArray()
+        
+        if let fieldGeoJson = fieldGeoJson {
+            return Observable.just(fieldGeoJson)
+        }
+        
+        return Observable.error(GeoDataForMapkitError.getFieldGeoJson)
+    }
+    
+    func isFeatureHasNilCoordinates(feature: Feature) -> Bool {
+        feature.geometry.coordinates == nil || feature.geometry.coordinates!.count == 0
+    }
+    
+    func createFeatureStreamFrom(fieldGeoJson: FieldGeoJsonArray) -> Observable<Feature> {
+        Observable.from(fieldGeoJson.features)
+    }
+    
+    func createMKMapPointWrapper(feature: Feature) -> Single<TupleMKMapPointArrayFeature> {
+        Single.create { observer in
+            let mkMapPointArray = self.createMKMapPoint(feature.geometry.coordinates![0])
+            let tuple = (mkMapPointArray, feature)
+            observer(.success(tuple))
+            return Disposables.create()
+        }
+    }
+    
+    func createMKMapPoint(_ coordinatePolygon: CoordinatePolygon) -> [MKMapPoint] {
+        coordinatePolygon.map { (longitudeLatitude: [Double]) -> MKMapPoint in
+            MKMapPoint(
+                CLLocationCoordinate2D(
+                    latitude: longitudeLatitude[1],
+                    longitude: longitudeLatitude[0]
+                )
+            )
+        }
+    }
+    
+    func calculCenterOfMKMapPointsWrapper(tupleMKMapPointArrayFeature: TupleMKMapPointArrayFeature) {
+        
+    }
+    
+    
+    
+    func calculCenterOfMKMapPoints(_ mkMapPoints: [MKMapPoint]) -> CLLocationCoordinate2D {
+        let minLatitude = getMinLatitude(from: mkMapPoints)
+        let maxLatitude = getMaxLatitude(from: mkMapPoints)
+        let minLongitude = getMinLongitude(from: mkMapPoints)
+        let maxLongitude = getMaxLongitude(from: mkMapPoints)
+        let centerLatitude = minLatitude + ((maxLatitude - minLatitude) / 2)
+        let centerLongitude = minLongitude + ((maxLongitude - minLongitude) / 2)
+        return CLLocationCoordinate2D(latitude: centerLatitude, longitude: centerLongitude)
+    }
+    
+    
+    
+    
+    func createGeoDataPolygon(feature: Feature) -> Observable<GeoDataPolygon> {
+        let id = feature.id
+        let polygonCoordinate = feature.geometry.coordinates![0]
+        
+        
+    }
+    
+    private func getMaxLatitude(from mkMapPoint: [MKMapPoint]) -> Double {
+        let max = mkMapPoint.max {$0.coordinate.latitude < $1.coordinate.latitude }
+        return max!.coordinate.latitude
+    }
+    
+    private func getMinLatitude(from mkMapPoint: [MKMapPoint]) -> Double {
+        let min  = mkMapPoint.min {$0.coordinate.latitude < $1.coordinate.latitude }
+        return min!.coordinate.latitude
+    }
+    
+    private func getMinLongitude(from mkMapPoint: [MKMapPoint]) -> Double {
+        let min  = mkMapPoint.min {$0.coordinate.longitude < $1.coordinate.longitude }
+        return min!.coordinate.longitude
+    }
+    
+    private func getMaxLongitude(from mkMapPoint: [MKMapPoint]) -> Double {
+        let max = mkMapPoint.max {$0.coordinate.longitude < $1.coordinate.longitude }
+        return max!.coordinate.longitude
+    }
+}
+
+struct GeoDataForMapkit {
+    var mkPolygon: [MKPolygon]?
+    var fieldPolygon: [Field<Polygon>]?
+}
+
+struct GeoDataPolygon {
+    var id: Int?
+    var polygonWithData: PolygonWithData<PayloadFieldAnnotation>?
+}
+
+enum GeoDataForMapkitError: Error {
+    case getFieldGeoJson
+}
+
+typealias TuplePolygon = (Field<Polygon>, MKPolygon)
+typealias TupleMultiPolygon = (Field<MultiPolygon>, [MKPolygon])
+typealias TuplePolygonAndMultipolygon = (TuplePolygon, TupleMultiPolygon)
+typealias PolygonArray = [[Double]]
+typealias TupleMKMapPointArrayFeature = ([MKMapPoint], Feature)
+typealias TupleMKMapPointArrayFeatureCenterPolygon = ([MKMapPoint], Feature, CLLocationCoordinate2D)
+typealias CoordinatePolygon = [[Double]]
+*/
