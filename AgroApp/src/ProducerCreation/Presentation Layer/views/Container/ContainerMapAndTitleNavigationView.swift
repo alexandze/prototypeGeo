@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ContainerMapAndListFieldView: UIView {
+class ContainerMapAndTitleNavigationView: UIView {
 
     var constraintNavigationViewControllerView: [NSLayoutConstraint]?
     var constraintFieldViewController: [NSLayoutConstraint]?
@@ -37,16 +37,16 @@ class ContainerMapAndListFieldView: UIView {
         NSLayoutConstraint.activate(constraintFieldViewController!)
     }
 
-    public func initViewOf(containerFieldNavigationView: UIView) {
-        addSubview(containerFieldNavigationView)
-        containerFieldNavigationView.tag = ContainerFieldNavigationView.VIEW_TAG
-        containerFieldNavigationView.translatesAutoresizingMaskIntoConstraints = false
+    public func initViewOf(containerTitleNavigationView: UIView) {
+        addSubview(containerTitleNavigationView)
+        containerTitleNavigationView.tag = ContainerTitleNavigationView.VIEW_TAG
+        containerTitleNavigationView.translatesAutoresizingMaskIntoConstraints = false
 
         constraintNavigationViewControllerView = [
-            leadingAnchor.constraint(equalTo: containerFieldNavigationView.leadingAnchor),
-            trailingAnchor.constraint(equalTo: containerFieldNavigationView.trailingAnchor),
-            safeAreaLayoutGuide.topAnchor.constraint(equalTo: containerFieldNavigationView.topAnchor),
-            bottomAnchor.constraint(equalTo: containerFieldNavigationView.bottomAnchor)
+            leadingAnchor.constraint(equalTo: containerTitleNavigationView.leadingAnchor),
+            trailingAnchor.constraint(equalTo: containerTitleNavigationView.trailingAnchor),
+            safeAreaLayoutGuide.topAnchor.constraint(equalTo: containerTitleNavigationView.topAnchor),
+            bottomAnchor.constraint(equalTo: containerTitleNavigationView.bottomAnchor)
         ]
 
         NSLayoutConstraint.activate(constraintNavigationViewControllerView!)
@@ -70,7 +70,7 @@ class ContainerMapAndListFieldView: UIView {
     }
 
     public func setminYContainerFieldNavigationViewToCurrentPosition() {
-        guard let containerFieldNavigationView = getContainerFieldNavigationView() else {
+        guard let containerFieldNavigationView = getContainerTitleNavigationView() else {
             return
         }
 
@@ -82,7 +82,7 @@ class ContainerMapAndListFieldView: UIView {
     }
 
     private func slideTo(_ slideFunc: @escaping (UIView, PositionY) -> Void) {
-        let containerFieldNavigationView = getContainerFieldNavigationView()
+        let containerFieldNavigationView = getContainerTitleNavigationView()
         let positionY = createPositionY()
         let anim = createViewPropertyAnimator(duration: 2, dampingRatio: 0.8)
 
@@ -99,8 +99,8 @@ class ContainerMapAndListFieldView: UIView {
         viewWithTag(MapFieldView.VIEW_TAG)
     }
 
-    private func getContainerFieldNavigationView() -> UIView? {
-        viewWithTag(ContainerFieldNavigationView.VIEW_TAG)
+    private func getContainerTitleNavigationView() -> UIView? {
+        viewWithTag(ContainerTitleNavigationView.VIEW_TAG)
     }
 
     private func createPanGestureRecognizer() -> UIPanGestureRecognizer {
@@ -115,7 +115,7 @@ class ContainerMapAndListFieldView: UIView {
         let delta = panGestureRecognizer.translation(in: superview)
         let positionY = createPositionY()
 
-        guard let containerNavigationView = getContainerFieldNavigationView(), positionY != nil else {
+        guard let containerNavigationView = getContainerTitleNavigationView(), positionY != nil else {
             return
         }
 

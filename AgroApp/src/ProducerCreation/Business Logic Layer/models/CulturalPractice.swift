@@ -11,9 +11,9 @@ import Foundation
 struct CulturalPractice {
     var avaloir: Avaloir?
     var bandeRiveraine: BandeRiveraine?
-    var doseFumier: [DoseFumier]?
-    var periodeApplicationFumier: [PeriodeApplicationFumier]?
-    var delaiIncorporationFumier: [DelaiIncorporationFumier]?
+    var doseFumier: [DoseFumier?]?
+    var periodeApplicationFumier: [PeriodeApplicationFumier?]?
+    var delaiIncorporationFumier: [DelaiIncorporationFumier?]?
 
     var travailSol: TravailSol?
     var couvertureAssociee: CouvertureAssociee?
@@ -26,6 +26,22 @@ struct CulturalPractice {
     var pMehlich3: PMehlich3?
     var alMehlich3: AlMehlich3?
     var cultureAnneeEnCoursAnterieure: CultureAnneeEnCoursAnterieure?
+
+    init() {
+        initArrayValue()
+    }
+
+    mutating func initArrayValue() {
+        doseFumier = []
+        periodeApplicationFumier = []
+        delaiIncorporationFumier = []
+
+        (0..<CulturalPractice.MAX_DOSE_FUMIER).forEach { _ in
+            doseFumier?.append(nil)
+            periodeApplicationFumier?.append(nil)
+            delaiIncorporationFumier?.append(nil)
+        }
+    }
 
     static let MAX_DOSE_FUMIER = 3
 
@@ -89,7 +105,7 @@ struct CulturalPractice {
         var culturalPracticeElements: [CulturalPracticeElementProtocol] = []
 
         (0...(MAX_DOSE_FUMIER - 1)).forEach { index in
-            if hasValueDoseFumier(culturalPractice: culturalPractice, index: index) {
+            if hasValueArray(culturalPractice: culturalPractice, index: index) {
                 let culturalPracticeInputMultiSelectContainer =
                     CulturalPracticeContainerElement(
                         key: UUID().uuidString,
@@ -110,14 +126,36 @@ struct CulturalPractice {
         return !(culturalPracticeElements.isEmpty) ? culturalPracticeElements : nil
     }
 
-    private static func hasValueDoseFumier(culturalPractice: CulturalPractice, index: Int) -> Bool {
-        let countDoseFumier = culturalPractice.doseFumier?.count ?? -1
-        let countPeriodeApplicationFumier = culturalPractice.periodeApplicationFumier?.count ?? -1
-        let countDelaiIncorporationFumier = culturalPractice.delaiIncorporationFumier?.count ?? -1
+    private static func hasValueArray(culturalPractice: CulturalPractice, index: Int) -> Bool {
+        let hasDoseFumier = checkArrayValue(
+            culturalPractice: culturalPractice,
+            index: index,
+            key: \.doseFumier
+        )
 
-        return countDoseFumier > index ||
-            countDelaiIncorporationFumier > index ||
-            countPeriodeApplicationFumier > index
+        let hasPeriodeApplicationFumier = checkArrayValue(
+            culturalPractice: culturalPractice,
+            index: index,
+            key: \.periodeApplicationFumier
+        )
+
+        let hasDelaiIncorporationFumier = checkArrayValue(
+            culturalPractice: culturalPractice,
+            index: index,
+            key: \.delaiIncorporationFumier
+        )
+
+        return hasDoseFumier || hasPeriodeApplicationFumier || hasDelaiIncorporationFumier
+    }
+
+    private static func checkArrayValue<T>(
+        culturalPractice: CulturalPractice,
+        index: Int,
+        key: KeyPath<CulturalPractice, [T?]?>
+    ) -> Bool {
+        let count = culturalPractice[keyPath: key]!.count
+        let arrayValue = culturalPractice[keyPath: key]!
+        return index < count && arrayValue[index] != nil
     }
 
     private static func createCulturalPracticeAddElement(
@@ -188,6 +226,12 @@ enum Avaloir: Int, CulturalPracticeValueProtocol {
     static func getRegularExpression() -> String? {
         nil
     }
+
+    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
+        var newCulturalPractice = culturalPractice
+        newCulturalPractice.avaloir = self
+        return newCulturalPractice
+    }
 }
 
 enum BandeRiveraine: Int, CulturalPracticeValueProtocol {
@@ -254,6 +298,12 @@ enum BandeRiveraine: Int, CulturalPracticeValueProtocol {
     static func getRegularExpression() -> String? {
         nil
     }
+
+    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
+        var newCulturalPractice = culturalPractice
+        newCulturalPractice.bandeRiveraine = self
+        return newCulturalPractice
+    }
 }
 
 enum DoseFumier: CulturalPracticeValueProtocol {
@@ -305,6 +355,16 @@ enum DoseFumier: CulturalPracticeValueProtocol {
 
     static func getRegularExpression() -> String? {
         "^\\d*$"
+    }
+
+    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
+        var newCulturalPractice = culturalPractice
+
+        if let index = index {
+            newCulturalPractice.doseFumier?[index] = self
+        }
+
+        return newCulturalPractice
     }
 }
 
@@ -405,6 +465,16 @@ enum PeriodeApplicationFumier: Int, CulturalPracticeValueProtocol {
     static func getRegularExpression() -> String? {
         nil
     }
+
+    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
+        var newCulturalPractice = culturalPractice
+
+        if let index = index {
+            newCulturalPractice.periodeApplicationFumier?[index] = self
+        }
+
+        return newCulturalPractice
+    }
 }
 
 enum DelaiIncorporationFumier: Int, CulturalPracticeValueProtocol {
@@ -482,7 +552,7 @@ enum DelaiIncorporationFumier: Int, CulturalPracticeValueProtocol {
     static func getCulturalPracticeElement(id: Int, culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
         let count = culturalPractice?.delaiIncorporationFumier?.count ?? -1
         let delaiIncorporationFumier = count > id
-            ? culturalPractice!.delaiIncorporationFumier![id]
+            ? culturalPractice?.delaiIncorporationFumier?[id]
             : nil
 
         return CulturalPracticeMultiSelectElement(
@@ -504,6 +574,16 @@ enum DelaiIncorporationFumier: Int, CulturalPracticeValueProtocol {
 
     static func getRegularExpression() -> String? {
         nil
+    }
+
+    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
+        var newCulturalPractice = culturalPractice
+
+        if let index = index {
+            newCulturalPractice.delaiIncorporationFumier?[index] = self
+        }
+
+        return newCulturalPractice
     }
 }
 
@@ -600,6 +680,12 @@ enum TravailSol: Int, CulturalPracticeValueProtocol {
     static func getRegularExpression() -> String? {
         nil
     }
+
+    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
+        var newCulturalPractice = culturalPractice
+        newCulturalPractice.travailSol = self
+        return newCulturalPractice
+    }
 }
 
 enum CouvertureAssociee: Int, CulturalPracticeValueProtocol {
@@ -660,6 +746,12 @@ enum CouvertureAssociee: Int, CulturalPracticeValueProtocol {
     static func getRegularExpression() -> String? {
         nil
     }
+
+    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
+        var newCulturalPractice = culturalPractice
+        newCulturalPractice.couvertureAssociee = self
+        return newCulturalPractice
+    }
 }
 
 enum CouvertureDerobee: Int, CulturalPracticeValueProtocol {
@@ -714,6 +806,12 @@ enum CouvertureDerobee: Int, CulturalPracticeValueProtocol {
 
     static func getRegularExpression() -> String? {
         nil
+    }
+
+    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
+        var newCulturalPractice = culturalPractice
+        newCulturalPractice.couvertureDerobee = self
+        return newCulturalPractice
     }
 }
 
@@ -777,6 +875,12 @@ enum DrainageSouterrain: Int, CulturalPracticeValueProtocol {
     static func getRegularExpression() -> String? {
         nil
     }
+
+    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
+        var newCulturalPractice = culturalPractice
+        newCulturalPractice.drainageSouterrain = self
+        return newCulturalPractice
+    }
 }
 
 enum DrainageSurface: Int, CulturalPracticeValueProtocol {
@@ -835,6 +939,12 @@ enum DrainageSurface: Int, CulturalPracticeValueProtocol {
 
     static func getRegularExpression() -> String? {
         nil
+    }
+
+    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
+        var newCulturalPractice = culturalPractice
+        newCulturalPractice.drainageSurface = self
+        return newCulturalPractice
     }
 }
 
@@ -916,6 +1026,12 @@ enum ConditionProfilCultural: CulturalPracticeValueProtocol {
     static func getRegularExpression() -> String? {
         nil
     }
+
+    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
+        var newCulturalPractice = culturalPractice
+        newCulturalPractice.conditionProfilCultural = self
+        return newCulturalPractice
+    }
 }
 
 enum TauxApplicationPhosphoreRang: CulturalPracticeValueProtocol {
@@ -959,6 +1075,12 @@ enum TauxApplicationPhosphoreRang: CulturalPracticeValueProtocol {
 
     static func getRegularExpression() -> String? {
         "^\\d*\\.?\\d*$"
+    }
+
+    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
+        var newCulturalPractice = culturalPractice
+        newCulturalPractice.tauxApplicationPhosphoreRang = self
+        return newCulturalPractice
     }
 }
 
@@ -1005,6 +1127,12 @@ enum TauxApplicationPhosphoreVolee: CulturalPracticeValueProtocol {
     static func getRegularExpression() -> String? {
         "^\\d*\\.?\\d*$"
     }
+
+    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
+        var newCulturalPractice = culturalPractice
+        newCulturalPractice.tauxApplicationPhosphoreVolee = self
+        return newCulturalPractice
+    }
 }
 
 enum PMehlich3: CulturalPracticeValueProtocol {
@@ -1048,6 +1176,12 @@ enum PMehlich3: CulturalPracticeValueProtocol {
 
     static func getRegularExpression() -> String? {
         "^\\d*\\.?\\d*$"
+    }
+
+    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
+        var newCulturalPractice = culturalPractice
+        newCulturalPractice.pMehlich3 = self
+        return newCulturalPractice
     }
 }
 
@@ -1094,9 +1228,15 @@ enum AlMehlich3: CulturalPracticeValueProtocol {
     static func getRegularExpression() -> String? {
         "^\\d*\\.?\\d*$"
     }
+
+    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
+        var newCulturalPractice = culturalPractice
+        newCulturalPractice.alMehlich3 = self
+        return newCulturalPractice
+    }
 }
 
-enum CultureAnneeEnCoursAnterieure: CulturalPracticeValueProtocol {
+enum CultureAnneeEnCoursAnterieure: String, CulturalPracticeValueProtocol {
     case auc
     case avo
     case ble
@@ -1212,6 +1352,12 @@ enum CultureAnneeEnCoursAnterieure: CulturalPracticeValueProtocol {
         nil
     }
     
+    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
+        var newCulturalPractice = culturalPractice
+        newCulturalPractice.cultureAnneeEnCoursAnterieure = self
+        return newCulturalPractice
+    }
+    
     static func create(value: String) -> CulturalPracticeValueProtocol? {
         nil
     }
@@ -1245,6 +1391,10 @@ struct CulturalPracticeAddElement: CulturalPracticeElementProtocol {
     let key: String
     let title: String
     var value: CulturalPracticeValueProtocol?
+    
+    func getIndex() -> Int? {
+        nil
+    }
 }
 
 struct CulturalPracticeContainerElement: CulturalPracticeElementProtocol {
@@ -1253,6 +1403,10 @@ struct CulturalPracticeContainerElement: CulturalPracticeElementProtocol {
     var culturalInputElement: [CulturalPracticeElementProtocol]
     var culturalPracticeMultiSelectElement: [CulturalPracticeElementProtocol]
     var value: CulturalPracticeValueProtocol?
+    
+    func getIndex() -> Int? {
+        nil
+    }
 }
 
 struct CulturalPracticeMultiSelectElement: CulturalPracticeElementProtocol {
@@ -1261,6 +1415,10 @@ struct CulturalPracticeMultiSelectElement: CulturalPracticeElementProtocol {
     var tupleCulturalTypeValue: [(CulturalPracticeValueProtocol, String)]
     var value: CulturalPracticeValueProtocol?
     var index: Int?
+    
+    func getIndex() -> Int? {
+        index
+    }
 }
 
 struct CulturalPracticeInputElement: CulturalPracticeElementProtocol {
@@ -1269,6 +1427,10 @@ struct CulturalPracticeInputElement: CulturalPracticeElementProtocol {
     var valueEmpty: CulturalPracticeValueProtocol
     var value: CulturalPracticeValueProtocol?
     var index: Int?
+    
+    func getIndex() -> Int? {
+        index
+    }
 }
 
 protocol CulturalPracticeValueProtocol {
@@ -1278,6 +1440,7 @@ protocol CulturalPracticeValueProtocol {
     func getUnitType() -> UnitType?
     static func create(value: String) -> CulturalPracticeValueProtocol?
     static func getRegularExpression() -> String?
+    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice
 }
 
 extension CulturalPracticeElementProtocol {
@@ -1298,4 +1461,5 @@ protocol CulturalPracticeElementProtocol {
     var title: String {get}
     var key: String {get}
     var value: CulturalPracticeValueProtocol? {get}
+    func getIndex() -> Int?
 }

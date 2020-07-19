@@ -15,7 +15,9 @@ extension Reducers {
 
         switch action {
         case let selectedFieldOnList as CulturalPracticeFormAction.SelectedFieldOnListAction:
-            return CulturalPracticeReducerHandler.handle(selectedFieldOnListAction: selectedFieldOnList)
+            return CulturalPracticeReducerHandler.handle(
+                selectedFieldOnListAction: selectedFieldOnList
+            )
         case let addCulturalPracticeContainerAction as CulturalPracticeFormAction.AddCulturalPracticeInputMultiSelectContainer:
             CulturalPracticeReducerHandler.handle(
                 addCulturalPracticeContainerAction: addCulturalPracticeContainerAction,
@@ -26,8 +28,9 @@ extension Reducers {
                 updateCulturalPracticeElement: updateCulturalPracticeElement,
                 state: state
             ).map { state = $0 }
-        case let selectElementOnList as CulturalPracticeFormAction.SelectElementOnListAction:
-            return CulturalPracticeReducerHandler.handle(selectElementOnList: selectElementOnList, state: state)
+        case let selectElementOnList as CulturalPracticeFormAction.WillSelectElementOnListAction:
+            return CulturalPracticeReducerHandler.handle(willSelectElementOnList: selectElementOnList, state: state
+            )
         default:
             break
         }
@@ -38,10 +41,10 @@ extension Reducers {
 
 class CulturalPracticeReducerHandler {
     static func handle(
-        selectElementOnList: CulturalPracticeFormAction.SelectElementOnListAction,
+        willSelectElementOnList: CulturalPracticeFormAction.WillSelectElementOnListAction,
         state: CulturalPracticeFormState
     ) -> CulturalPracticeFormState {
-        let indexPathSelected = selectElementOnList.indexPath
+        let indexPathSelected = willSelectElementOnList.indexPath
         let culturalPracticeElement = state.sections![indexPathSelected.section].rowData[indexPathSelected.row]
 
         guard (culturalPracticeElement as? CulturalPracticeMultiSelectElement) != nil ||
@@ -52,7 +55,7 @@ class CulturalPracticeReducerHandler {
                 )
         }
 
-        return state.changeValues(subAction: .selectElementOnList(
+        return state.changeValues(subAction: .willSelectElementOnList(
             culturalPracticeElement: culturalPracticeElement,
             fieldType: state.currentField!
             )
@@ -66,15 +69,27 @@ class CulturalPracticeReducerHandler {
         )
 
         return indexPathFind.map { indexPath in
-            let newSections = update(sections: state.sections!, indexPath, updateCulturalPracticeElement.culturalPracticeElementProtocol)
+            let newSections = update(
+                sections: state.sections!,
+                indexPath,
+                updateCulturalPracticeElement.culturalPracticeElementProtocol
+            )
 
-            return CulturalPracticeFormState(
-                uuidState: UUID().uuidString,
+            let isContainer = isContainerElement(
+                culturalPracticeElement: updateCulturalPracticeElement.culturalPracticeElementProtocol
+            )
+
+            return state.changeValues(
                 currentField: state.currentField,
                 sections: newSections,
-                subAction: .updateRows(indexPath: [indexPath])
+                subAction: .updateRows(indexPath: [indexPath]),
+                isFinishCompletedCurrentContainer: isContainer ? true : state.isFinishCompletedCurrentContainer
             )
         }
+    }
+
+    private static func isContainerElement(culturalPracticeElement: CulturalPracticeElementProtocol) -> Bool {
+        (culturalPracticeElement as? CulturalPracticeContainerElement) != nil
     }
 
     static private func update(
@@ -112,13 +127,15 @@ class CulturalPracticeReducerHandler {
     static func handle(selectedFieldOnListAction: CulturalPracticeFormAction.SelectedFieldOnListAction) -> CulturalPracticeFormState {
         switch selectedFieldOnListAction.fieldType {
         case .polygon(let fieldPolygone):
-            let culturalPracticeElements = CulturalPractice.getCulturalPracticeElement(culturalPractice: fieldPolygone.culturalPratice)
+            let culturalPracticeElements = CulturalPractice
+                .getCulturalPracticeElement(culturalPractice: fieldPolygone.culturalPratice)
 
             return CulturalPracticeFormState(
                 uuidState: UUID().uuidString,
                 currentField: selectedFieldOnListAction.fieldType,
                 sections: createSection(by: culturalPracticeElements),
-                subAction: .reloadData
+                subAction: .reloadData,
+                title: "Pratiques culturelles parcelle \(fieldPolygone.id)"
             )
 
         case .multiPolygon(let fieldMultiPolygon):
@@ -128,15 +145,45 @@ class CulturalPracticeReducerHandler {
                 uuidState: UUID().uuidString,
                 currentField: selectedFieldOnListAction.fieldType,
                 sections: createSection(by: culturalPracticeElements),
-                subAction: .reloadData
+                subAction: .reloadData,
+                title: "Pratiques culturelles parcelle \(fieldMultiPolygon.id)"
             )
         }
     }
 
     private static func createSection(by culturalPracticeElements: [CulturalPracticeElementProtocol]) -> [Section<CulturalPracticeElementProtocol>] {
-        culturalPracticeElements.map { (culturalPracticeElement: CulturalPracticeElementProtocol) -> Section<CulturalPracticeElementProtocol> in
-            return Section<CulturalPracticeElementProtocol>(sectionName: culturalPracticeElement.title, rowData: [culturalPracticeElement])
+        var sections: [Section<CulturalPracticeElementProtocol>] = []
+        let countElement = culturalPracticeElements.count
+        var indexSectionAdd: Int?
+        // TODO refactoring
+        (0..<countElement).forEach { index in
+            switch culturalPracticeElements[index] {
+            case let inputElement as CulturalPracticeInputElement:
+                sections.append(Section(
+                    sectionName: inputElement.title,
+                    rowData: [inputElement]
+                ))
+            case let selectElement as CulturalPracticeMultiSelectElement:
+                sections.append(Section(
+                    sectionName: selectElement.title,
+                    rowData: [selectElement]
+                ))
+            case let addElement as CulturalPracticeAddElement:
+                sections.append(Section(
+                    sectionName: addElement.title,
+                    rowData: [addElement]
+                ))
+
+                indexSectionAdd = sections.count - 1
+            case let containerElement as CulturalPracticeContainerElement:
+                guard indexSectionAdd != nil else { return }
+                sections[indexSectionAdd!].rowData.append(containerElement)
+            default:
+                break
+            }
         }
+
+        return sections
     }
 
     static func handle(
@@ -146,6 +193,11 @@ class CulturalPracticeReducerHandler {
 
         guard let indexSectionDoseFumier = findSectionDoseFumier(sections: state.sections!) else {
             //TODO subAction not have section dose fumier
+            return nil
+        }
+
+        guard state.isFinishCompletedCurrentContainer == nil || state.isFinishCompletedCurrentContainer! else {
+            // TODO sub Action not completed container
             return nil
         }
 
@@ -171,7 +223,9 @@ class CulturalPracticeReducerHandler {
                             row: copySection[indexSectionDoseFumier].rowData.count - 1,
                             section: indexSectionDoseFumier
                         )
-                ]))
+                ]),
+                isFinishCompletedCurrentContainer: false
+            )
         }
     }
 
@@ -182,8 +236,8 @@ class CulturalPracticeReducerHandler {
 
     private static func createInputSelectContainer(totalDoseFumier: Int) -> CulturalPracticeContainerElement? {
         CulturalPractice.createCulturalPracticeInputMultiSelectContainer(
-                index: totalDoseFumier
-        ) as? CulturalPracticeContainerElement
+            index: totalDoseFumier
+            ) as? CulturalPracticeContainerElement
     }
 
     private static func isPossibleAddFumierDose(currentTotalDose: Int) -> Bool {

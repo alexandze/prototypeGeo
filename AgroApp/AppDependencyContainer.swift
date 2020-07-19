@@ -17,11 +17,13 @@ class AppDependencyContainerImpl: AppDependencyContainer {
             reducer: Reducers.appReducer,
             state: AppState(
                 farmerState: FarmerState(),
-                mapFieldState: MapState(),
+                mapFieldState: MapFieldState(uuidState: UUID().uuidString),
+                fieldListState: FieldListState(uuidState: UUID().uuidString),
                 culturalPracticeState: CulturalPracticeFormState(uuidState: UUID().uuidString),
                 selectFormCulturalPracticeState: SelectFormCulturalPracticeState(uuidState: UUID().uuidString),
                 inputFormCulturalPracticeState: InputFormCulturalPracticeState(uuidState: UUID().uuidString),
-                containerFormCulturalPracticeState: ContainerFormCulturalPracticeState(uuidState: UUID().uuidString)
+                containerFormCulturalPracticeState: ContainerFormCulturalPracticeState(uuidState: UUID().uuidString),
+                containerTitleNavigationState: ContainerTitleNavigationState(uuidState: UUID().uuidString)
             ),
             middleware: [
                 FarmerMiddleware.shared.makeGetFarmersMiddleware(),
@@ -105,8 +107,8 @@ class AppDependencyContainerImpl: AppDependencyContainer {
 
         return tabBarController
     }
-    func processInitContainerMapAndFieldNavigation() -> ContainerMapAndListFieldViewController {
-        producerCreationDependencyContainer.processInitContainerMapAndFieldNavigation()
+    func processInitContainerMapAndTitleNavigationController() -> ContainerMapAndTitleNavigationController {
+        producerCreationDependencyContainer.processInitContainerMapAndTitleNavigationController()
     }
 
     func processInitCulturalPracticeViewController() -> CulturalPraticeViewController {
@@ -129,7 +131,7 @@ class AppDependencyContainerImpl: AppDependencyContainer {
 protocol AppDependencyContainer {
     var producerCreationDependencyContainer: ProducerCreationDependencyContainer {get}
     func proccessInitTabBarController() -> UITabBarController
-    func processInitContainerMapAndFieldNavigation() -> ContainerMapAndListFieldViewController
+    func processInitContainerMapAndTitleNavigationController() -> ContainerMapAndTitleNavigationController
     func processInitCulturalPracticeViewController() -> CulturalPraticeViewController
     func processInitCulturalPracticeFormViewController() -> SelectFormCulturalPracticeViewController
     func processInitInputFormCulturalPracticeHostingController() -> SettingViewController<InputFormCulturalPracticeView>

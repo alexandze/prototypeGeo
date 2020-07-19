@@ -20,7 +20,7 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
     var tableView: UITableView?
     var culturalPracticeStateDisposable: Disposable?
     var culturalPraticeView: ListViewCulturalPractice?
-
+    var title: String?
     var disposableDispatcher: Disposable?
     var viewController: CulturalPraticeViewController?
 
@@ -40,14 +40,17 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
                     guard let culturalPracticeState = element.element,
                         let currentFieldType = culturalPracticeState.currentField,
                         let sections = culturalPracticeState.sections,
-                        let tableState = culturalPracticeState.subAction
+                        let tableState = culturalPracticeState.subAction,
+                        let title = culturalPracticeState.title
                         else { return }
 
-                    self.setStateProperties(currentFieldType, sections)
+                    self.setStateProperties(currentFieldType, sections, title)
 
                     switch tableState {
                     case .reloadData:
                         self.handleReloadData()
+                        self.dispatchSetCurrentViewControllerInNavigationAction()
+                        self.dispatchSetTitleAction()
                     case .deletedRows(indexPath: let indexPaths):
                         //TODO effecer la cell en question
                         break
@@ -55,11 +58,11 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
                         self.handleInsertRows(indexPaths: indexPaths, sections: sections)
                     case .updateRows(indexPath: let indexPaths):
                         self.handleUpdateRowAt(indexPath: indexPaths[0])
-                    case .selectElementOnList(
+                    case .willSelectElementOnList(
                         culturalPracticeElement: let culturalPracticeElementSelected,
                         fieldType: let fieldType
                         ):
-                        self.handleSelectElementOnList(
+                        self.handleWillSelectElementOnList(
                             culturalParacticeElementSelected: culturalPracticeElementSelected,
                             fieldType: fieldType
                         )
@@ -70,8 +73,9 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
     }
 
     func disposeToCulturalPracticeStateObs() {
-        self.culturalPracticeStateDisposable?.dispose()
-        self.disposableDispatcher?.dispose()
+        _ = Util.runInSchedulerBackground {
+            self.culturalPracticeStateDisposable?.dispose()
+        }
     }
 
     func getNumberOfSection() -> Int {
@@ -135,9 +139,10 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
             subAction: .newFormData)
     }
 
-    private func setStateProperties(_ currentFieldType: FieldType, _ sections: [Section<CulturalPracticeElementProtocol>]) {
+    private func setStateProperties(_ currentFieldType: FieldType, _ sections: [Section<CulturalPracticeElementProtocol>], _ title: String) {
         self.currentField = currentFieldType
         self.sections = sections
+        self.title = title
     }
 
     public func initCellFor(
@@ -184,103 +189,137 @@ extension CulturalPraticeFormViewModelImpl {
         self.tableView?.reloadRows(at: [indexPath], with: .fade)
     }
 
-    private func handleSelectElementOnList(
+    private func handleWillSelectElementOnList(
         culturalParacticeElementSelected: CulturalPracticeElementProtocol,
         fieldType: FieldType
     ) {
         switch culturalParacticeElementSelected {
-        case _ as CulturalPracticeMultiSelectElement:
-            dispatchSelectedSelectElementOnList(
-                culturalPracticeElement: culturalParacticeElementSelected,
-                fieldType: fieldType
-            )
-            self.presentSelectFormCulturalPracticeController()
-
+        case let selectElement as CulturalPracticeMultiSelectElement:
+            self.handleSelectedSelectElementOnList(selectElement: selectElement, fieldType)
         case let inputElement as CulturalPracticeInputElement:
-            dispatchSelectedInputElementOnList(
-                inputElement: inputElement,
-                fieldType: fieldType
-            )
-            self.presentInputFormCulturalPracticeHostingController()
-
+            self.handleSelectedInputElement(inputElement: inputElement, fieldType)
         case let containerElement as CulturalPracticeContainerElement:
-            self.handleSelectedOnList(containerElement: containerElement, fieldType)
+            self.handleSelectedContainerOnList(containerElement: containerElement, fieldType)
         default:
             break
         }
     }
 
-    private func handleSelectedOnList(
+    private func handleSelectedContainerOnList(
         containerElement: CulturalPracticeContainerElement,
         _ fieldType: FieldType
     ) {
-        dispatchSelectedContainerElementOnList(containerElement: containerElement, fieldType: fieldType)
-        presentContainerFormCulturalPracticeHostingController()
+        _ = dispatchSelectedContainerElementOnListObs(containerElement: containerElement, fieldType: fieldType)
+            .subscribe { _ in
+                self.presentContainerFormCulturalPracticeHostingController()
+        }
+    }
+
+    private func handleSelectedInputElement(
+        inputElement: CulturalPracticeInputElement,
+        _ fieldType: FieldType
+    ) {
+        _ = dispatchSelectedInputElementOnListObs(
+            inputElement: inputElement,
+            fieldType: fieldType
+        ).subscribe { _ in
+            self.presentInputFormCulturalPracticeHostingController()
+        }
+    }
+
+    private func handleSelectedSelectElementOnList(
+        selectElement: CulturalPracticeMultiSelectElement,
+        _ fieldType: FieldType
+    ) {
+        _ = dispatchSelectedSelectElementOnListObs(
+            culturalPracticeElement: selectElement,
+            fieldType: fieldType
+        ).subscribe { _ in
+            self.presentSelectFormCulturalPracticeController()
+        }
     }
 
     public func tableView(didSelectRowAt indexPath: IndexPath) {
-        self.dispathSelectElementOnList(indexPath: indexPath)
+        self.dispathWillSelectElementOnList(indexPath: indexPath)
     }
 }
 
 // dispatcher methode
 extension CulturalPraticeFormViewModelImpl {
-    private func dispatchSelectedSelectElementOnList(
+
+    func dispatchSetCurrentViewControllerInNavigationAction() {
+        let action = ContainerTitleNavigationAction
+            .SetCurrentViewControllerInNavigationAction(currentViewControllerInNavigation: .fieldList)
+        _ = Util.runInSchedulerBackground {
+            self.actionDispatcher.dispatch(action)
+        }
+    }
+
+    /// action for set title of TitleNavigationViewController
+    func dispatchSetTitleAction() {
+        let action = ContainerTitleNavigationAction.SetTitleAction(title: title ?? "")
+
+        _ = Util.runInSchedulerBackground {
+            self.actionDispatcher.dispatch(action)
+        }
+
+    }
+
+    private func dispatchSelectedSelectElementOnListObs(
         culturalPracticeElement: CulturalPracticeElementProtocol,
         fieldType: FieldType
-    ) {
+    ) -> Completable {
+        Util.createRunCompletable {
+            let action = self.createSelectedSelectElementOnListAction(
+                culturalPracticeSelectElement: culturalPracticeElement,
+                fieldType: fieldType
+            )
 
-        let action = createSelectedSelectElementOnListAction(
-            culturalPracticeSelectElement: culturalPracticeElement,
-            fieldType: fieldType
-        )
-
-        self.disposableDispatcher = Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(action)
         }
     }
 
-    private func dispatchSelectedInputElementOnList(
+    private func dispatchSelectedInputElementOnListObs(
         inputElement: CulturalPracticeInputElement,
         fieldType: FieldType
-    ) {
-        let action = createSelectedInputElementOnListAction(
-            inputElement: inputElement,
-            fieldType: fieldType
-        )
+    ) -> Completable {
+        Util.createRunCompletable {
+            let action = self.createSelectedInputElementOnListAction(
+                inputElement: inputElement,
+                fieldType: fieldType
+            )
 
-        self.disposableDispatcher = Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(action)
         }
     }
 
-    private func dispatchSelectedContainerElementOnList(
+    private func dispatchSelectedContainerElementOnListObs(
         containerElement: CulturalPracticeContainerElement,
         fieldType: FieldType
-    ) {
-        let action = ContainerFormCulturalPracticeAction
-            .ContainerElementSelectedOnListAction(
-                containerElement: containerElement,
-                field: fieldType
-        )
+    ) -> Completable {
+        Util.createRunCompletable {
+            let action = ContainerFormCulturalPracticeAction
+                .ContainerElementSelectedOnListAction(
+                    containerElement: containerElement,
+                    field: fieldType
+            )
 
-        self.disposableDispatcher = Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(action)
         }
     }
 
     private func dispatchAddDoseFumier() {
-        self.disposableDispatcher = Util.runInSchedulerBackground {
+        _ = Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(
                 CulturalPracticeFormAction.AddCulturalPracticeInputMultiSelectContainer()
             )
         }
     }
 
-    private func dispathSelectElementOnList(indexPath: IndexPath) {
-        let action = CulturalPracticeFormAction.SelectElementOnListAction(indexPath: indexPath)
+    private func dispathWillSelectElementOnList(indexPath: IndexPath) {
+        let action = CulturalPracticeFormAction.WillSelectElementOnListAction(indexPath: indexPath)
 
-        self.disposableDispatcher = Util.runInSchedulerBackground {
+        _ = Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(action)
         }
     }

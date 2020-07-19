@@ -20,6 +20,26 @@ indirect enum FieldType {
             return polygon.id
         }
     }
+
+    func getCulturalPractice() -> CulturalPractice? {
+        switch self {
+        case .multiPolygon(let multipolygon):
+            return multipolygon.culturalPratice
+        case .polygon(let polygon):
+            return polygon.culturalPratice
+        }
+    }
+
+    func changeValue(culturalPractice: CulturalPractice) -> FieldType {
+        switch self {
+        case .multiPolygon(var multipolygon):
+            multipolygon.culturalPratice = culturalPractice
+            return .multiPolygon(multipolygon)
+        case .polygon(var polygon):
+            polygon.culturalPratice = culturalPractice
+            return .polygon(polygon)
+        }
+    }
 }
 
 struct Field<T: GeometryShape> {

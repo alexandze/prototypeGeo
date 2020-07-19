@@ -8,9 +8,9 @@
 
 import UIKit
 
-class ContainerFieldNavigationViewController: UIViewController {
+class ContainerTitleNavigationViewController: UIViewController {
 
-    let containerFieldNavigationView = ContainerFieldNavigationView()
+    let containerTitleNavigationView = ContainerTitleNavigationView()
     let navigationFieldController: UINavigationController
 
     required init?(coder: NSCoder) {
@@ -25,7 +25,7 @@ class ContainerFieldNavigationViewController: UIViewController {
     }
 
     override func loadView() {
-        self.view = self.containerFieldNavigationView
+        self.view = self.containerTitleNavigationView
     }
 
     override func viewDidLoad() {
@@ -37,12 +37,12 @@ class ContainerFieldNavigationViewController: UIViewController {
     func initNavigationControllerView() {
         self.addChild(self.navigationFieldController)
         navigationFieldController.isNavigationBarHidden = true
-        containerFieldNavigationView.initNavigationControllerView(navigationControllerView: navigationFieldController.view)
+        containerTitleNavigationView.initNavigationControllerView(navigationControllerView: navigationFieldController.view)
         self.navigationFieldController.didMove(toParent: self)
     }
 
     /// Get view who content title
     func getTitleView() -> TitleView {
-        containerFieldNavigationView.titleView!
+        containerTitleNavigationView.titleView!
     }
 }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxSwift
 
 public class MapFieldInteractionImpl: MapFieldInteraction {
 
@@ -19,17 +20,26 @@ public class MapFieldInteractionImpl: MapFieldInteraction {
     }
 
     public func getAllField() {
-        self.actionDispatcher.dispatch(MapFieldAction.GetAllField())
+        _ = Util.runInSchedulerBackground {
+            self.actionDispatcher.dispatch(MapFieldAction.GetAllField())
+        }
     }
 
     func selectedField(field: FieldType) {
         let selectedFieldOnMapAction = MapFieldAction.SelectedFieldOnMapAction(fieldType: field)
-        self.actionDispatcher.dispatch(selectedFieldOnMapAction)
+
+       _ =  Util.runInSchedulerBackground {
+            self.actionDispatcher.dispatch(selectedFieldOnMapAction)
+        }
     }
 
     func deselectedField(field: FieldType) {
         let deselectedFieldOnMapAction = MapFieldAction.DeselectedFieldOnMapAction(fieldType: field)
-        self.actionDispatcher.dispatch(deselectedFieldOnMapAction)
+
+        _ = Util.runInSchedulerBackground {
+            self.actionDispatcher.dispatch(deselectedFieldOnMapAction)
+        }
+
     }
 
 }

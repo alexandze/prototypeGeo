@@ -62,8 +62,9 @@ class SelectFormCulturalPracticeViewModelImpl: SelectFormCulturalPracticeViewMod
     }
 
     public func disposeToCulturalPracticeFormObs() {
-        disposableCulturalPracticeFormObs?.dispose()
-        disposableDispatcher?.dispose()
+        _ = Util.runInSchedulerBackground {
+            self.disposableCulturalPracticeFormObs?.dispose()
+        }
     }
 
     private func presentedAlert(alertController: UIAlertController) {
@@ -85,7 +86,7 @@ class SelectFormCulturalPracticeViewModelImpl: SelectFormCulturalPracticeViewMod
     }
 
     private func createActionUpdateCulturalPracticeElementWith(selectElement: CulturalPracticeMultiSelectElement) -> CulturalPracticeFormAction.UpdateCulturalPracticeElementAction {
-        CulturalPracticeFormAction.UpdateCulturalPracticeElementAction(culturalPracticeElementProtocol: selectElement)
+        CulturalPracticeFormAction.UpdateCulturalPracticeElementAction(culturalPracticeElementProtocol: selectElement, fieldType: self.fieldType!)
     }
 
     private func setSelectElementWithCurrentValue(currentIndexChooseValue: Int) {
@@ -101,15 +102,7 @@ class SelectFormCulturalPracticeViewModelImpl: SelectFormCulturalPracticeViewMod
     }
 
     private func setValues(selectElement: CulturalPracticeMultiSelectElement, fieldType: FieldType) {
-        self.setSelectElement(selectElement: selectElement)
-        self.setFieldType(fieldType: fieldType)
-    }
-
-    private func setSelectElement(selectElement: CulturalPracticeMultiSelectElement) {
         self.multiSelectElement = selectElement
-    }
-
-    private func setFieldType(fieldType: FieldType) {
         self.fieldType = fieldType
     }
 
@@ -152,7 +145,7 @@ class SelectFormCulturalPracticeViewModelImpl: SelectFormCulturalPracticeViewMod
     }
 
     deinit {
-        print("*** deinit SelectFormCulturalPracticeViewModelImpl ****")
+       // print("*** deinit SelectFormCulturalPracticeViewModelImpl ****")
     }
 }
 
@@ -229,15 +222,16 @@ extension SelectFormCulturalPracticeViewModelImpl {
 // extension for dispatcher methods
 extension SelectFormCulturalPracticeViewModelImpl {
     public func dispatchFormIsDirty() {
-        self.disposableDispatcher = Util.runInSchedulerBackground {
+        _ = Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(SelectFormCulturalPracticeAction.SetFormIsDirtyAction(isDirty: true))
         }
+
     }
 
     private func dispatchClosePresentedViewControllerWithSave() {
         let indexSelected = self.getSelectedIndexOfPickerView()
 
-        self.disposableDispatcher = Util.runInSchedulerBackground {
+        _ = Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(
                 SelectFormCulturalPracticeAction.ClosePresentedViewControllerWithSaveAction(indexSelected: indexSelected)
             )
@@ -245,7 +239,7 @@ extension SelectFormCulturalPracticeViewModelImpl {
     }
 
     private func dispatchClosePrensetedViewControllerWithoutSave() {
-        self.disposableDispatcher = Util.runInSchedulerBackground {
+        _ = Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(
                 SelectFormCulturalPracticeAction.ClosePresentedViewControllerWithoutSaveAction()
             )
@@ -255,7 +249,7 @@ extension SelectFormCulturalPracticeViewModelImpl {
     private func dispatchClosePresentedViewController() {
         let indexSelected = self.getSelectedIndexOfPickerView()
 
-        self.disposableDispatcher = Util.runInSchedulerBackground {
+        Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(
                 SelectFormCulturalPracticeAction.ClosePresentedViewControllerAction(indexSelected: indexSelected)
             )

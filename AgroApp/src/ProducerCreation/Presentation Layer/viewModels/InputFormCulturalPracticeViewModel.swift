@@ -60,9 +60,11 @@ class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeViewModel
     }
 
     func disposeToObs() {
-        disposableInputFormCulturalViewState?.dispose()
+        _ = Util.runInSchedulerBackground {
+            self.disposableInputFormCulturalViewState?.dispose()
+        }
+
         disposableActivateAnimation?.dispose()
-        // disposableDispatcher?.dispose()
     }
 
     func isInputValueValid(_ inputValue: String) -> Bool {
@@ -219,8 +221,7 @@ extension InputFormCulturalPracticeViewModelImpl {
     private func dispatchCloseInputFormWithSaveAction() {
         let closeInputFormWithSaveAction = InputFormCulturalPracticeAction
             .CloseInputFormWithSaveAction(inputValue: trim(inputValue: viewState.inputValue))
-
-        disposableDispatcher = Util.runInSchedulerBackground {
+        _ = Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(closeInputFormWithSaveAction)
         }
     }
@@ -228,18 +229,17 @@ extension InputFormCulturalPracticeViewModelImpl {
     private func dispathUpdateCulturalPracticeElementAction() {
         let action = CulturalPracticeFormAction
             .UpdateCulturalPracticeElementAction(
-                culturalPracticeElementProtocol: inputElement!
+                culturalPracticeElementProtocol: inputElement!,
+                fieldType: fieldType!
         )
-
-        disposableDispatcher = Util.runInSchedulerBackground {
+        _ = Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(action)
         }
     }
 
     private func dispatchCloseInputFormWithoutSaveAction() {
         let action = InputFormCulturalPracticeAction.CloseInputFormWithoutSaveAction()
-
-        disposableDispatcher = Util.runInSchedulerBackground {
+        _ = Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(action)
         }
     }

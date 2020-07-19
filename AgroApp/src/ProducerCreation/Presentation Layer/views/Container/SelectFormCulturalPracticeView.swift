@@ -17,7 +17,7 @@ class SelectFormCulturalPracticeView: UIView {
     }()
 
     let scrollView: UIScrollView = {
-       let scrollView = UIScrollView()
+        let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         return scrollView
     }()

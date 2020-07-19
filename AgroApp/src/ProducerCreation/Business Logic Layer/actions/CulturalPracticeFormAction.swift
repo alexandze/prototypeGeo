@@ -18,9 +18,10 @@ struct CulturalPracticeFormAction {
 
     struct UpdateCulturalPracticeElementAction: Action {
         let culturalPracticeElementProtocol: CulturalPracticeElementProtocol
+        let fieldType: FieldType
     }
 
-    struct SelectElementOnListAction: Action {
+    struct WillSelectElementOnListAction: Action {
         let indexPath: IndexPath
     }
 }

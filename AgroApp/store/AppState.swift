@@ -11,9 +11,11 @@ import ReSwift
 
 struct AppState: StateType {
     var farmerState: FarmerState
-    var mapFieldState: MapState
+    var mapFieldState: MapFieldState
+    var fieldListState: FieldListState
     var culturalPracticeState: CulturalPracticeFormState
     var selectFormCulturalPracticeState: SelectFormCulturalPracticeState
     var inputFormCulturalPracticeState: InputFormCulturalPracticeState
     var containerFormCulturalPracticeState: ContainerFormCulturalPracticeState
+    var containerTitleNavigationState: ContainerTitleNavigationState
 }

@@ -13,9 +13,6 @@ public class FieldListViewController: UIViewController, UITableViewDelegate, UIT
     let fieldListView: FieldListView
     let tableView: UITableView
     let cellID = "my cell id"
-
-    var fields: [FieldType] = []
-
     var fieldListViewModel: FieldListViewModel
 
     required init?(coder: NSCoder) {
@@ -42,17 +39,16 @@ public class FieldListViewController: UIViewController, UITableViewDelegate, UIT
     public override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: self.cellID)
-
-        // Do any additional setup after loading the view.
     }
 
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.fieldListViewModel.subscribeToObservableFieldListState()
+        fieldListViewModel.subscribeToObservableFieldListState()
     }
 
     public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+
         self.fieldListViewModel.dispose()
     }
 
@@ -61,7 +57,6 @@ public class FieldListViewController: UIViewController, UITableViewDelegate, UIT
     }
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       // return fields.count
         return fieldListViewModel.fieldList.count
     }
 
@@ -78,7 +73,6 @@ public class FieldListViewController: UIViewController, UITableViewDelegate, UIT
             fieldId = polygon.id
         }
 
-        // let fieldSelected = fields[index]
         cell.textLabel?.text = "Parcelle avec le id \(fieldId!)"
         cell.backgroundColor = .systemGray6
         cell.alpha = 0.95
@@ -89,7 +83,6 @@ public class FieldListViewController: UIViewController, UITableViewDelegate, UIT
 
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         fieldListViewModel.handle(didSelectRowAt: indexPath)
-
     }
 
 }

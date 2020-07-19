@@ -166,7 +166,10 @@ private struct InputElementListView: View {
                     inputTitle:self.inputElements[index].valueEmpty.getUnitType()!.convertToString()
                 )
 
-                Text(!self.isPrintMessageErrorInputValues[index] ? self.textErrorMessage : "")
+                Text(self.isPrintMessageErrorInputValues.count > index
+                    ? !self.isPrintMessageErrorInputValues[index] ? self.textErrorMessage : ""
+                    : ""
+                )
                     .font(.system(size: 15))
                     .bold()
                     .foregroundColor(.red)

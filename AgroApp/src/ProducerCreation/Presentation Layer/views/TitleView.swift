@@ -16,8 +16,10 @@ class TitleView: UIView {
 
     init() {
         super.init(frame: .zero)
-        configView(view: self)
-        centerLabel(parentView: self, label: self.labelTitle)
+        configView()
+        centerLabelTitle()
+        initPositionButton()
+        printCloseButton()
     }
 
     let labelTitle: UILabel = {
@@ -30,21 +32,55 @@ class TitleView: UIView {
         return label
     }()
 
-    private func configView(view: UIView) {
-        view.backgroundColor = .systemGray6
-        view.alpha = 0.95
+    let closeButton: UIButton = {
+        let closeButton = UIButton(type: .close)
+        closeButton.translatesAutoresizingMaskIntoConstraints = false
+        return closeButton
+    }()
+
+    var handleCloseButtonFunc: (() -> Void)?
+
+    private func configView() {
+        backgroundColor = .systemGray6
+        alpha = 0.95
     }
 
-    private func centerLabel(parentView: UIView, label: UILabel) {
-        addSubview(label)
+    private func centerLabelTitle() {
+        addSubview(labelTitle)
 
         NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: parentView.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: parentView.centerYAnchor)
+            labelTitle.centerXAnchor.constraint(equalTo: centerXAnchor),
+            labelTitle.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
 
-    public func setTitle(title: String) {
+    private func initPositionButton() {
+        addSubview(closeButton)
+
+        NSLayoutConstraint.activate([
+            closeButton.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            closeButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10)
+        ])
+    }
+
+    func initHandleCloseButton(_ handleCloseButton: @escaping () -> Void) {
+        handleCloseButtonFunc = handleCloseButton
+        closeButton.addTarget(self, action: #selector(self.handleCloseButton(sender:)), for: .touchUpInside)
+    }
+
+    @objc private func handleCloseButton(sender: UIButton) {
+        self.handleCloseButtonFunc?()
+    }
+
+    func setTitle(_ title: String) {
         self.labelTitle.text = title
+    }
+
+    func hideCloseButton() {
+        closeButton.isHidden = true
+    }
+
+    func printCloseButton() {
+        closeButton.isHidden = false
     }
 }

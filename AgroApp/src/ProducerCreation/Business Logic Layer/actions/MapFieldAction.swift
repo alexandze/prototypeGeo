@@ -23,5 +23,4 @@ struct MapFieldAction {
     struct DeselectedFieldOnMapAction: Action {
         let fieldType: FieldType
     }
-
 }

@@ -8,10 +8,10 @@
 
 import UIKit
 
-public class ContainerMapAndListFieldViewController: UIViewController {
+public class ContainerMapAndTitleNavigationController: UIViewController {
     let mapFieldViewController: MapFieldViewController
-    let containerFieldNavigationViewController: ContainerFieldNavigationViewController
-    var containerMapAndListFieldView: ContainerMapAndListFieldView = ContainerMapAndListFieldView()
+    let containerTitleNavigationViewController: ContainerTitleNavigationViewController
+    var containerMapAndTitleNavigationView: ContainerMapAndTitleNavigationView = ContainerMapAndTitleNavigationView()
     var firstCall: Bool = true
 
     required init?(coder: NSCoder) {
@@ -20,14 +20,14 @@ public class ContainerMapAndListFieldViewController: UIViewController {
 
     init(
         mapFieldViewController: MapFieldViewController,
-        containerFieldNavigationViewController: ContainerFieldNavigationViewController
+        containerTitleNavigationViewController: ContainerTitleNavigationViewController
     ) {
         self.mapFieldViewController = mapFieldViewController
-        self.containerFieldNavigationViewController = containerFieldNavigationViewController
+        self.containerTitleNavigationViewController = containerTitleNavigationViewController
         super.init(nibName: nil, bundle: nil)
     }
     public override func loadView() {
-        view = containerMapAndListFieldView
+        view = containerMapAndTitleNavigationView
     }
 
     public override func viewDidLoad() {
@@ -39,15 +39,15 @@ public class ContainerMapAndListFieldViewController: UIViewController {
     }
 
     private func initContainerView() {
-        self.addChilds(mapFieldViewController, containerFieldNavigationViewController)
-        containerMapAndListFieldView.initViewOf(viewOfMapFieldController: mapFieldViewController.view)
-        containerMapAndListFieldView.initViewOf(containerFieldNavigationView: containerFieldNavigationViewController.view)
+        self.addChilds(mapFieldViewController, containerTitleNavigationViewController)
+        containerMapAndTitleNavigationView.initViewOf(viewOfMapFieldController: mapFieldViewController.view)
+        containerMapAndTitleNavigationView.initViewOf(containerTitleNavigationView: containerTitleNavigationViewController.view)
         mapFieldViewController.didMove(toParent: self)
-        containerFieldNavigationViewController.didMove(toParent: self)
+        containerTitleNavigationViewController.didMove(toParent: self)
     }
 
     private func initDragGestureOnContainerFieldNavigation() {
-        containerMapAndListFieldView.initDragGestureFor(titleView: containerFieldNavigationViewController.getTitleView())
+        containerMapAndTitleNavigationView.initDragGestureFor(titleView: containerTitleNavigationViewController.getTitleView())
     }
 
     public override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -58,10 +58,10 @@ public class ContainerMapAndListFieldViewController: UIViewController {
         super.viewDidLayoutSubviews()
 
         if firstCall {
-            self.containerMapAndListFieldView.slideContainerFieldNavigationViewToMaxPosition()
+            self.containerMapAndTitleNavigationView.slideContainerFieldNavigationViewToMaxPosition()
             firstCall = false
         } else {
-            self.containerMapAndListFieldView.setminYContainerFieldNavigationViewToCurrentPosition()
+            self.containerMapAndTitleNavigationView.setminYContainerFieldNavigationViewToCurrentPosition()
         }
     }
 }

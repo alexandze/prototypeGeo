@@ -18,6 +18,9 @@ public class FarmerTableViewInteractionsImpl: FarmerTableViewInteractions {
     }
 
     public func getFamers(offset: Int, limit: Int) {
-        self.actionDispatcher.dispatch(GetFamersAction(offset: offset, limit: limit))
+        _ = Util.runInSchedulerBackground {
+            self.actionDispatcher.dispatch(GetFamersAction(offset: offset, limit: limit))
+        }
+
     }
 }

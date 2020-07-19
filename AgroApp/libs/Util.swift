@@ -76,6 +76,16 @@ class Util {
         .subscribe()
     }
 
+    static public func createRunCompletable(_ funcRun: @escaping () -> Void) -> Completable {
+        Completable.create { completableEvent in
+            funcRun()
+            completableEvent(.completed)
+            return Disposables.create()
+        }.subscribeOn(getSchedulerBackground())
+        .observeOn(getSchedulerMain())
+
+    }
+
     static func getAppDependency() -> AppDependencyContainer? {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
         return appDelegate.appDependencyContainer

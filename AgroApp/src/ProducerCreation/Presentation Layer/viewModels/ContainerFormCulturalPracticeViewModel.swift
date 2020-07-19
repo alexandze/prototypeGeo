@@ -65,17 +65,20 @@ class ContainerFormCulturalPracticeViewModelImpl: ContainerFormCulturalPracticeV
     }
 
     func disposeObserver() {
-        disposableStateObserver?.dispose()
+        _ = Util.runInSchedulerBackground {
+            self.disposableStateObserver?.dispose()
+        }
+
         self.inputValuesAnyCancellable?.cancel()
     }
 
     private func setViewStateValue() {
+        viewState.selectValue = state!.selectValues!
+        viewState.isPrintMessageErrorInputValues = state!.isPrintMessageErrorInputValues!
+        viewState.inputValues = state!.inputValues!
         viewState.titleForm = state!.containerElement!.title
         viewState.inputElements = state!.inputElements!
         viewState.selectElements = state!.selectElements!
-        viewState.inputValues = state!.inputValues!
-        viewState.selectValue = state!.selectValues!
-        viewState.isPrintMessageErrorInputValues = state!.isPrintMessageErrorInputValues!
         viewState.isFormValid = state!.isFormValid!
     }
 
@@ -125,7 +128,8 @@ class ContainerFormCulturalPracticeViewModelImpl: ContainerFormCulturalPracticeV
     private func createUpdateCulturalPracticeElementAction()
         -> CulturalPracticeFormAction.UpdateCulturalPracticeElementAction {
             CulturalPracticeFormAction.UpdateCulturalPracticeElementAction(
-                culturalPracticeElementProtocol: state!.containerElement!
+                culturalPracticeElementProtocol: state!.containerElement!,
+                fieldType: state!.fieldType!
             )
     }
 
@@ -230,9 +234,10 @@ extension ContainerFormCulturalPracticeViewModelImpl {
     }
 
     private func dispachAction(action: Action) {
-        disposeDispatcher = Util.runInSchedulerBackground {
+        _ = Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(action)
         }
+
     }
 }
 

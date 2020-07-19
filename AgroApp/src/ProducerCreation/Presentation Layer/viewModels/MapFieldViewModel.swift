@@ -96,14 +96,14 @@ class MapFieldViewModel {
     func configTabBarItem(of viewController: UIViewController) {
         let barIttem = UITabBarItem(title: "Carte", image: nil, tag: 25)
         barIttem.title = "Carte"
-       // viewController.title = "Carte"
+       //viewController.title = "Carte"
         viewController.tabBarItem = barIttem
     }
 
     func subscribeToTableViewControllerState() {
         self.disposableMapFieldAllState = self.mapFieldAllFieldStateObs
             .observeOn(MainScheduler.instance)
-            .subscribe(onNext: {state  in
+            .subscribe(onNext: { state  in
                 self.proccessInitMap(
                 with: state.fieldPolygonAnnotation,
                 and: state.fieldMultiPolygonAnnotation
@@ -112,7 +112,9 @@ class MapFieldViewModel {
     }
 
     func disposeToTableViewControllerState() {
-        self.disposableMapFieldAllState?.dispose()
+        _ = Util.runInSchedulerBackground {
+            self.disposableMapFieldAllState?.dispose()
+        }
     }
 
     public func handleAnnotationViewSelected(annotationView: MKAnnotationView) {
