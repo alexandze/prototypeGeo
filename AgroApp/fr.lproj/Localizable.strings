@@ -1,0 +1,70 @@
+/* 
+  Localizable.strings
+  prototypeGeo
+
+  Created by Alexandre Andze Kande on 2020-02-29.
+  Copyright © 2020 Alexandre Andze Kande. All rights reserved.
+*/
+
+"Absente" = "Absente";
+"Captage Partiel" = "Captage Partiel";
+"Captage systématique" = "Captage systématique";
+"Ne s'applique pas" = "Ne s'applique pas";
+"1 à 3m" = "1 à 3m";
+"4m et plus" = "4m et plus";
+"Pré-semi" = "Pré-semi";
+"Post-levée" = "Post-levée";
+"Automne hâtif" = "Automne hâtif";
+"Automne tardif" = "Automne tardif";
+"Incorporé en 48h" = "Incorporé en 48h";
+"Incorporé en 48h à 1 semaine" = "Incorporé en 48h à 1 semaine";
+"Supérieur à 1 semaine" = "Supérieur à 1 semaine";
+"Non incorporé" = "Non incorporé";
+"Labour à l'automne, travail secondaire au printemps" = "Labour à l'automne, travail secondaire au printemps";
+"Chisel ou pulvérisateur à l'automne, travail secondaire au printemps" = "Chisel ou pulvérisateur à l'automne, travail secondaire au printemps";
+"Déchaumage au printemps et travail secondaire au printemps" = "Déchaumage au printemps et travail secondaire au printemps";
+"Semi direct ou bilons" = "Semi direct ou bilons";
+"Oui" = "Oui";
+"Non" = "Non";
+"Vrai" = "Vrai";
+"Faux" = "Faux";
+"Systématique" = "Systématique";
+"Partiel" = "Partiel";
+"Absent" = "Absent";
+"Bon" = "Bon";
+"Moyen" = "Moyen";
+"Mauvais" = "Mauvais";
+"Bonne" = "Bonne";
+"Présence de zone à risque" = "Présence de zone à risque";
+"Dominance de zone à risque" = "Dominance de zone à risque";
+"Parcelle avec le id" = "Parcelle avec le id";
+"Avaloir" = "Avaloir";
+"Bande riveraine" = "Bande riveraine";
+"Dose du fumier (quantité)" = "Dose du fumier (quantité)";
+"Période d'application du fumier" = "Période d'application du fumier";
+"Délai d'incorporation du fumier" = "Délai d'incorporation du fumier";
+"Travail du sol" = "Travail du sol";
+"Couverture associée" = "Couverture associée";
+"Couverture dérobée" = "Couverture dérobée";
+"Drainage souterrain" = "Drainage souterrain";
+"Drainage de surface" = "Drainage de surface";
+"Condition du profil cultural" = "Condition du profil cultural";
+"Taux d'application de phosphore (engrais minéraux en rang)" = "Taux d'application de phosphore (engrais minéraux en rang)";
+"Taux d'application de phosphore (engrais minéraux à la volée)" = "Taux d'application de phosphore (engrais minéraux à la volée)";
+"P Mehlich-3" = "P Mehlich-3";
+"Autres céréales" = "Autres céréales";
+"Avoine" = "Avoine";
+"Blé" = "Blé";
+"Canola" = "Canola";
+"Foin" = "Foin";
+"Maï" = "Maï";
+"Mixte" = "Mixte";
+"Pas d'info, traité comme si c'était du foin" = "Pas d'info, traité comme si c'était du foin";
+"Orge" = "Orge";
+"Petits fruits" = "Petits fruits";
+"Soya" = "Soya";
+"Culture de l'année en cours et antérieure" = "Culture de l'année en cours et antérieure";
+"Ajouter une dose du fumier" = "Ajouter une dose du fumier";
+"Cliquer sur le boutton" = "Cliquer sur le boutton";
+"Veuillez choisir une valeur" = "Veuillez choisir une valeur";
+"Voulez-vous enregistrer la valeur choisie ?" = "Voulez-vous enregister la valeur choisie ?";
