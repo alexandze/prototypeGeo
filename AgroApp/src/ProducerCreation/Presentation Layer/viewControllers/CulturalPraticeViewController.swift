@@ -101,7 +101,7 @@ public class CulturalPraticeViewController: UIViewController, UITableViewDelegat
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         culturalPraticeViewModel.tableView(didSelectRowAt: indexPath)
     }
-    
+
     deinit {
         print("***** denit CulturalPraticeViewController *******")
     }

@@ -29,7 +29,7 @@ class SettingViewController<T: View>: UIHostingController<T> {
       //  rootView.setAlpha = nil
       //  rootView.setIsModalInPresentation = nil
         self.dismiss(animated: true, completion: completion)
-        
+
     }
 
     func setBackgroundColor(_ color: UIColor) {

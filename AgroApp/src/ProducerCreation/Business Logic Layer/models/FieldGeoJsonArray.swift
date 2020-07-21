@@ -58,11 +58,11 @@ struct Properties: Decodable {
     var pMehlich3: PMehlich3?
     var alMehlich3: AlMehlich3?
     var cultureAnneeEnCoursAnterieure: CultureAnneeEnCoursAnterieure?
-    
+
     init(from decoder: Decoder) throws {
-        
+
     }
-    
+
     private enum CodingKeys: String, CodingKey {
         case id = "OBJECTID"
         case avaloir = "Avaloir"

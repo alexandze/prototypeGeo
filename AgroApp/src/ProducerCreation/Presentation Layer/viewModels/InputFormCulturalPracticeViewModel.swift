@@ -61,7 +61,7 @@ final class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeVie
 
     func disposeToObs() {
         settingViewController = nil
-        
+
         _ = Util.runInSchedulerBackground {
             self.disposableInputFormCulturalViewState?.dispose()
         }
@@ -82,7 +82,7 @@ final class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeVie
 
         return matches.count == 1
     }
-    
+
     func configView() {
         self.settingViewController?.setBackgroundColor(Util.getBackgroundColor())
         self.settingViewController?.setAlpha(Util.getAlphaValue())
@@ -185,7 +185,7 @@ final class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeVie
         @Published var textButtonValidate: String = "Valider"
         @Published var textErrorMessage: String = "Veuillez saisir une valeur valide"
     }
-    
+
     deinit {
         print("***** denit InputFormCulturalPracticeViewModelImpl *******")
     }

@@ -170,7 +170,7 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
     func initCellFor(inputElement: CulturalPracticeInputElement, cell: UITableViewCell) -> UITableViewCell {
         culturalPraticeView!.initCellFor(inputElement: inputElement, cell: cell)
     }
-    
+
     deinit {
         print("***** denit CulturalPraticeFormViewModelImpl *******")
     }

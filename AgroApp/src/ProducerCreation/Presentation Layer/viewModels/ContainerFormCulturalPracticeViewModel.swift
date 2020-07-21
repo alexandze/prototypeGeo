@@ -21,7 +21,7 @@ class ContainerFormCulturalPracticeViewModelImpl: ContainerFormCulturalPracticeV
     private var disposeDispatcher: Disposable?
     private var inputValuesAnyCancellable: AnyCancellable?
     var settingViewController: SettingViewController<ContainerFormCulturalPracticeView>?
-    
+
     init(
         stateObserver: Observable<ContainerFormCulturalPracticeState>,
         viewState: ViewState,
@@ -66,14 +66,14 @@ class ContainerFormCulturalPracticeViewModelImpl: ContainerFormCulturalPracticeV
 
     func disposeObserver() {
         settingViewController = nil
-        
+
         _ = Util.runInSchedulerBackground {
             self.disposableStateObserver?.dispose()
         }
 
         self.inputValuesAnyCancellable?.cancel()
     }
-    
+
     func configView() {
         self.settingViewController?.setBackgroundColor(Util.getBackgroundColor())
         self.settingViewController?.setAlpha(Util.getAlphaValue())
@@ -160,7 +160,7 @@ class ContainerFormCulturalPracticeViewModelImpl: ContainerFormCulturalPracticeV
         @Published var isPrintMessageErrorInputValues: [Bool] = []
         @Published var isDismissForm: Bool = false
     }
-    
+
     deinit {
         print("***** dinit ContainerFormCulturalPracticeViewModelImpl *******")
     }

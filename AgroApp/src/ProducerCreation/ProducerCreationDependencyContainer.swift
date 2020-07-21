@@ -168,12 +168,12 @@ class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContain
 
     func makeInputFormCulturalPracticeHostingController() -> SettingViewController<InputFormCulturalPracticeView> {
         let viewModel = makeInputFormCulturalPracticeViewModel()
-        
+
         let inputFormView = InputFormCulturalPracticeView(
             viewModel: viewModel,
             keyboardFollower: KeyboardFollower()
         )
-        
+
         let settingViewController = SettingViewController(myView: inputFormView)
         viewModel.settingViewController = settingViewController
         return  settingViewController
@@ -202,7 +202,7 @@ class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContain
             viewModel: viewModel,
             keyboardFollower: KeyboardFollower()
         )
-        
+
         let settingViewController = SettingViewController(myView: containerFormView)
         viewModel.settingViewController = settingViewController
         return settingViewController

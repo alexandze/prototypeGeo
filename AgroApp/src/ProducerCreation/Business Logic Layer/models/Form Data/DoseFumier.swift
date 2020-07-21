@@ -69,4 +69,3 @@ enum DoseFumier: CulturalPracticeValueProtocol {
         return newCulturalPractice
     }
 }
-
