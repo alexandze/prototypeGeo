@@ -145,7 +145,7 @@ class SelectFormCulturalPracticeViewModelImpl: SelectFormCulturalPracticeViewMod
     }
 
     deinit {
-       // print("*** deinit SelectFormCulturalPracticeViewModelImpl ****")
+        print("*** deinit SelectFormCulturalPracticeViewModelImpl ****")
     }
 }
 

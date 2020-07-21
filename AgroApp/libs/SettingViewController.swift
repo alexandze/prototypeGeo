@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-class SettingViewController<T: View & SettingViewControllerProtocol>: UIHostingController<T> {
+class SettingViewController<T: View>: UIHostingController<T> {
 
     @objc required dynamic init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -17,14 +17,19 @@ class SettingViewController<T: View & SettingViewControllerProtocol>: UIHostingC
 
     init(myView: T) {
         super.init(rootView: myView)
-        rootView.dismiss = self.dismissVC
-        rootView.setBackgroundColor = self.setBackgroundColor
-        rootView.setAlpha = self.setAlpha
-        rootView.setIsModalInPresentation = self.setIsModalInPresentation
+       // rootView.dismiss = self.dismissVC
+       // rootView.setBackgroundColor = self.setBackgroundColor
+      //  rootView.setAlpha = self.setAlpha
+       // rootView.setIsModalInPresentation = self.setIsModalInPresentation
     }
 
     func dismissVC(completion: (() -> Void)?) {
+       // rootView.dismiss = nil
+      //  rootView.setBackgroundColor = nil
+      //  rootView.setAlpha = nil
+      //  rootView.setIsModalInPresentation = nil
         self.dismiss(animated: true, completion: completion)
+        
     }
 
     func setBackgroundColor(_ color: UIColor) {

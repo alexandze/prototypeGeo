@@ -22,7 +22,7 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
     var culturalPraticeView: ListViewCulturalPractice?
     var title: String?
     var disposableDispatcher: Disposable?
-    var viewController: CulturalPraticeViewController?
+    weak var viewController: CulturalPraticeViewController?
 
     init(
         culturalPracticeStateObs: Observable<CulturalPracticeFormState>,
@@ -169,6 +169,10 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
 
     func initCellFor(inputElement: CulturalPracticeInputElement, cell: UITableViewCell) -> UITableViewCell {
         culturalPraticeView!.initCellFor(inputElement: inputElement, cell: cell)
+    }
+    
+    deinit {
+        print("***** denit CulturalPraticeFormViewModelImpl *******")
     }
 }
 // handle methode

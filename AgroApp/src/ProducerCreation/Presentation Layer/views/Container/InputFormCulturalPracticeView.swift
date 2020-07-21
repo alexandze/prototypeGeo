@@ -73,7 +73,7 @@ struct InputFormCulturalPracticeView: View, SettingViewControllerProtocol {
             }
             .environmentObject(DimensionScreen(width: geometry.size.width, height: geometry.size.height))
             .onAppear {
-                self.configViewController()
+                self.viewModel.configView()
                 self.viewModel.subscribeToInputFormCulturalPracticeStateObs()
             }
             .onDisappear {
@@ -96,12 +96,6 @@ struct InputFormCulturalPracticeView: View, SettingViewControllerProtocol {
             .onReceive(self.viewState.$isDismissForm, perform: self.dismissForm(isDismissForm:))
 
         }
-    }
-
-    func configViewController() {
-        self.setBackgroundColor?(Util.getBackgroundColor())
-        self.setAlpha?(Util.getAlphaValue())
-        self.setIsModalInPresentation?(true)
     }
 
     func dismissForm(isDismissForm: Bool) {

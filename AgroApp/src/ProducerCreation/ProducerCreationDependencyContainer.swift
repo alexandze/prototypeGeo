@@ -158,7 +158,7 @@ class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContain
         }.subscribeOn(Util.getSchedulerBackground())
     }
 
-    func makeInputFormCulturalPracticeViewModel() -> InputFormCulturalPracticeViewModel {
+    func makeInputFormCulturalPracticeViewModel() -> InputFormCulturalPracticeViewModelImpl {
         InputFormCulturalPracticeViewModelImpl(
             stateObserver: makeInputFormCuluralPracticeObservable(),
             viewState: InputFormCulturalPracticeViewModelImpl.ViewState(),
@@ -167,10 +167,16 @@ class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContain
     }
 
     func makeInputFormCulturalPracticeHostingController() -> SettingViewController<InputFormCulturalPracticeView> {
-        var viewModel = makeInputFormCulturalPracticeViewModel()
-        let inputFormView = InputFormCulturalPracticeView(viewModel: viewModel, keyboardFollower: KeyboardFollower())
-        viewModel.view = inputFormView
-        return SettingViewController(myView: inputFormView)
+        let viewModel = makeInputFormCulturalPracticeViewModel()
+        
+        let inputFormView = InputFormCulturalPracticeView(
+            viewModel: viewModel,
+            keyboardFollower: KeyboardFollower()
+        )
+        
+        let settingViewController = SettingViewController(myView: inputFormView)
+        viewModel.settingViewController = settingViewController
+        return  settingViewController
     }
     // MARK: - Methods ContainerFormCulturalPractice
     func makeContainerFormCulturalPracticeObservable() -> Observable<ContainerFormCulturalPracticeState> {
@@ -181,7 +187,7 @@ class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContain
         }.subscribeOn(Util.getSchedulerBackground())
     }
 
-    func makeContainerFormCulturalPracticeViewModel() -> ContainerFormCulturalPracticeViewModel {
+    func makeContainerFormCulturalPracticeViewModel() -> ContainerFormCulturalPracticeViewModelImpl {
         ContainerFormCulturalPracticeViewModelImpl(
             stateObserver: makeContainerFormCulturalPracticeObservable(),
             viewState: ContainerFormCulturalPracticeViewModelImpl.ViewState(),
@@ -196,8 +202,10 @@ class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContain
             viewModel: viewModel,
             keyboardFollower: KeyboardFollower()
         )
-
-        return SettingViewController(myView: containerFormView)
+        
+        let settingViewController = SettingViewController(myView: containerFormView)
+        viewModel.settingViewController = settingViewController
+        return settingViewController
     }
 
     // MARK: - Methods navigation

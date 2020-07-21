@@ -14,14 +14,14 @@ import ReSwift
 
 class ContainerFormCulturalPracticeViewModelImpl: ContainerFormCulturalPracticeViewModel {
     let viewState: ViewState
-    var view: ContainerElementView?
     private let stateObserver: Observable<ContainerFormCulturalPracticeState>
     private let actionDispatcher: ActionDispatcher
     private var disposableStateObserver: Disposable?
     private var state: ContainerFormCulturalPracticeState?
     private var disposeDispatcher: Disposable?
     private var inputValuesAnyCancellable: AnyCancellable?
-
+    var settingViewController: SettingViewController<ContainerFormCulturalPracticeView>?
+    
     init(
         stateObserver: Observable<ContainerFormCulturalPracticeState>,
         viewState: ViewState,
@@ -65,11 +65,19 @@ class ContainerFormCulturalPracticeViewModelImpl: ContainerFormCulturalPracticeV
     }
 
     func disposeObserver() {
+        settingViewController = nil
+        
         _ = Util.runInSchedulerBackground {
             self.disposableStateObserver?.dispose()
         }
 
         self.inputValuesAnyCancellable?.cancel()
+    }
+    
+    func configView() {
+        self.settingViewController?.setBackgroundColor(Util.getBackgroundColor())
+        self.settingViewController?.setAlpha(Util.getAlphaValue())
+        self.settingViewController?.setIsModalInPresentation(true)
     }
 
     private func setViewStateValue() {
@@ -134,7 +142,8 @@ class ContainerFormCulturalPracticeViewModelImpl: ContainerFormCulturalPracticeV
     }
 
     private func dismissForm() {
-        viewState.isDismissForm = true
+        // viewState.isDismissForm = true
+        settingViewController?.dismissVC(completion: nil)
     }
 
     class ViewState: ObservableObject {
@@ -150,6 +159,10 @@ class ContainerFormCulturalPracticeViewModelImpl: ContainerFormCulturalPracticeV
         @Published var textErrorMessage: String = "Veuillez saisir une valeur valide"
         @Published var isPrintMessageErrorInputValues: [Bool] = []
         @Published var isDismissForm: Bool = false
+    }
+    
+    deinit {
+        print("***** dinit ContainerFormCulturalPracticeViewModelImpl *******")
     }
 }
 
@@ -237,7 +250,6 @@ extension ContainerFormCulturalPracticeViewModelImpl {
         _ = Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(action)
         }
-
     }
 }
 
@@ -250,4 +262,5 @@ protocol ContainerFormCulturalPracticeViewModel {
     func handleAlertYesButton()
     func handleAlertNoButton()
     func subscribeToChangeInputValue()
+    func configView()
 }

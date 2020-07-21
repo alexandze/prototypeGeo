@@ -26,6 +26,10 @@ struct UIButtonRepresentable: UIViewRepresentable {
     func updateUIView(_ uiView: UIButton, context: Context) {
 
     }
+    
+    static func dismantleUIView(_ uiView: UIButton, coordinator: Coordinator) {
+        print("***** deinit close button *****")
+    }
 
     class Coordinator: NSObject {
         var parent: UIButtonRepresentable

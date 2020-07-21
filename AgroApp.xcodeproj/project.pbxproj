@@ -117,6 +117,17 @@
 		98EBA95224B1600300D233D0 /* DimensionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EBA95124B1600300D233D0 /* DimensionScreen.swift */; };
 		98EBA95424B1654A00D233D0 /* InputFormCulturalPracticeAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EBA95324B1654A00D233D0 /* InputFormCulturalPracticeAction.swift */; };
 		98EBA95A24B1DEA800D233D0 /* CulturalPracticeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EBA95924B1DEA800D233D0 /* CulturalPracticeTests.swift */; };
+		98F1269B24C56200001853D5 /* PRATIQUES_2018_LATLONG.json in Resources */ = {isa = PBXBuildFile; fileRef = 98F1269A24C56200001853D5 /* PRATIQUES_2018_LATLONG.json */; };
+		98F1269E24C6F029001853D5 /* Avaloir.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F1269D24C6F029001853D5 /* Avaloir.swift */; };
+		98F126A024C6F1D4001853D5 /* BandeRiveraine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F1269F24C6F1D4001853D5 /* BandeRiveraine.swift */; };
+		98F126A224C70795001853D5 /* DoseFumier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F126A124C70795001853D5 /* DoseFumier.swift */; };
+		98F126A424C71130001853D5 /* PeriodeApplicationFumier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F126A324C71130001853D5 /* PeriodeApplicationFumier.swift */; };
+		98F126A624C712CB001853D5 /* DelaiIncorporationFumier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F126A524C712CB001853D5 /* DelaiIncorporationFumier.swift */; };
+		98F126A824C715EC001853D5 /* TravailSol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F126A724C715EC001853D5 /* TravailSol.swift */; };
+		98F126AA24C71658001853D5 /* CouvertureAssociee.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F126A924C71658001853D5 /* CouvertureAssociee.swift */; };
+		98F126AC24C71D98001853D5 /* DrainageSouterrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F126AB24C71D98001853D5 /* DrainageSouterrain.swift */; };
+		98F126AE24C71EE3001853D5 /* DrainageSurface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F126AD24C71EE3001853D5 /* DrainageSurface.swift */; };
+		98F126B024C71F2C001853D5 /* ConditionProfilCultural.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F126AF24C71F2C001853D5 /* ConditionProfilCultural.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -267,6 +278,17 @@
 		98EBA95124B1600300D233D0 /* DimensionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DimensionScreen.swift; sourceTree = "<group>"; };
 		98EBA95324B1654A00D233D0 /* InputFormCulturalPracticeAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFormCulturalPracticeAction.swift; sourceTree = "<group>"; };
 		98EBA95924B1DEA800D233D0 /* CulturalPracticeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalPracticeTests.swift; sourceTree = "<group>"; };
+		98F1269A24C56200001853D5 /* PRATIQUES_2018_LATLONG.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PRATIQUES_2018_LATLONG.json; sourceTree = "<group>"; };
+		98F1269D24C6F029001853D5 /* Avaloir.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Avaloir.swift; sourceTree = "<group>"; };
+		98F1269F24C6F1D4001853D5 /* BandeRiveraine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandeRiveraine.swift; sourceTree = "<group>"; };
+		98F126A124C70795001853D5 /* DoseFumier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoseFumier.swift; sourceTree = "<group>"; };
+		98F126A324C71130001853D5 /* PeriodeApplicationFumier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodeApplicationFumier.swift; sourceTree = "<group>"; };
+		98F126A524C712CB001853D5 /* DelaiIncorporationFumier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelaiIncorporationFumier.swift; sourceTree = "<group>"; };
+		98F126A724C715EC001853D5 /* TravailSol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravailSol.swift; sourceTree = "<group>"; };
+		98F126A924C71658001853D5 /* CouvertureAssociee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouvertureAssociee.swift; sourceTree = "<group>"; };
+		98F126AB24C71D98001853D5 /* DrainageSouterrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrainageSouterrain.swift; sourceTree = "<group>"; };
+		98F126AD24C71EE3001853D5 /* DrainageSurface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrainageSurface.swift; sourceTree = "<group>"; };
+		98F126AF24C71F2C001853D5 /* ConditionProfilCultural.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionProfilCultural.swift; sourceTree = "<group>"; };
 		B015CD19BB679BBC10039020 /* Pods_prototypeGeo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_prototypeGeo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDF7E29A1E56400678DCF346 /* Pods_ProducerCreation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProducerCreation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F023FF5CB64C66B02AE24C3F /* Pods-prototypeGeoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-prototypeGeoTests.release.xcconfig"; path = "Target Support Files/Pods-prototypeGeoTests/Pods-prototypeGeoTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -431,6 +453,7 @@
 		98363B3A23DECFB400AFFC63 /* models */ = {
 			isa = PBXGroup;
 			children = (
+				98F1269C24C6F00D001853D5 /* Form Data */,
 				98363B3B23DED00900AFFC63 /* FieldGeoJsonArray.swift */,
 				98363B3D23DED25A00AFFC63 /* Field.swift */,
 				98A2C549240E6BD9002A884B /* PayloadFieldAnnotation.swift */,
@@ -615,6 +638,7 @@
 				98B9990E23B5076000CA7EF9 /* prototypeGeo.xcdatamodeld */,
 				98D1929123C012E300BF9A7A /* AppDependencyContainer.swift */,
 				98363B4323DEE2AC00AFFC63 /* ACTU.json */,
+				98F1269A24C56200001853D5 /* PRATIQUES_2018_LATLONG.json */,
 				9854BFEE240A2B9900E5AB8A /* Localizable.strings */,
 			);
 			path = AgroApp;
@@ -762,6 +786,23 @@
 			path = models;
 			sourceTree = "<group>";
 		};
+		98F1269C24C6F00D001853D5 /* Form Data */ = {
+			isa = PBXGroup;
+			children = (
+				98F1269D24C6F029001853D5 /* Avaloir.swift */,
+				98F1269F24C6F1D4001853D5 /* BandeRiveraine.swift */,
+				98F126A124C70795001853D5 /* DoseFumier.swift */,
+				98F126A324C71130001853D5 /* PeriodeApplicationFumier.swift */,
+				98F126A524C712CB001853D5 /* DelaiIncorporationFumier.swift */,
+				98F126A724C715EC001853D5 /* TravailSol.swift */,
+				98F126A924C71658001853D5 /* CouvertureAssociee.swift */,
+				98F126AB24C71D98001853D5 /* DrainageSouterrain.swift */,
+				98F126AD24C71EE3001853D5 /* DrainageSurface.swift */,
+				98F126AF24C71F2C001853D5 /* ConditionProfilCultural.swift */,
+			);
+			path = "Form Data";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -860,6 +901,7 @@
 				98B9991223B5076400CA7EF9 /* Assets.xcassets in Resources */,
 				98363B4423DEE2AC00AFFC63 /* ACTU.json in Resources */,
 				98B9990D23B5076000CA7EF9 /* Main.storyboard in Resources */,
+				98F1269B24C56200001853D5 /* PRATIQUES_2018_LATLONG.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -946,6 +988,7 @@
 				98457B662423E5FA00AF4C90 /* CulturalPraticeViewController.swift in Sources */,
 				98363B3C23DED00900AFFC63 /* FieldGeoJsonArray.swift in Sources */,
 				98BA0D7F240CE41F00948A26 /* ContainerMapAndTitleNavigationView.swift in Sources */,
+				98F126B024C71F2C001853D5 /* ConditionProfilCultural.swift in Sources */,
 				98B9991D23B50ACC00CA7EF9 /* FarmerTableViewController.swift in Sources */,
 				98304AD423EE19A400510FFE /* UtilAreaPolygon.swift in Sources */,
 				98CB79CF24B817EA00EFFF19 /* ContainerFormCulturalPracticeAction.swift in Sources */,
@@ -959,16 +1002,19 @@
 				9847564324AEC6710048A503 /* SettingViewController.swift in Sources */,
 				98BA0D7B240CDC2800948A26 /* ContainerTitleNavigationViewController.swift in Sources */,
 				9810DA44242F0FE800545A23 /* SelectFormCulturalPracticeViewModel.swift in Sources */,
+				98F126A824C715EC001853D5 /* TravailSol.swift in Sources */,
 				98D1929E23C03CF900BF9A7A /* FarmerMiddleware.swift in Sources */,
 				980ECA162430286D00AAD0AB /* HeaderPresentedView.swift in Sources */,
 				9810DA4C242F1EEE00545A23 /* SelectFormCulturalPracticeReducer.swift in Sources */,
 				98DB0F4D24286CED0065963B /* UIButtonWithData.swift in Sources */,
 				9854C003240BC60400E5AB8A /* ContainerVIewControllers.swift in Sources */,
 				98CB79D324B827AC00EFFF19 /* ContainerFormCulturalPracticeView.swift in Sources */,
+				98F126A024C6F1D4001853D5 /* BandeRiveraine.swift in Sources */,
 				98363B5323DEED2100AFFC63 /* GetAllFieldMiddleware.swift in Sources */,
 				9860400F23BD976800D5B538 /* StoreSubcriberProxy.swift in Sources */,
 				9894340A2410C76D003C0110 /* PolygonWithData.swift in Sources */,
 				989090AA24C1530800AFC080 /* ContainerTitleNavigationAction.swift in Sources */,
+				98F126A424C71130001853D5 /* PeriodeApplicationFumier.swift in Sources */,
 				989090AE24C18F4300AFC080 /* FieldListReducer.swift in Sources */,
 				98EBA95224B1600300D233D0 /* DimensionScreen.swift in Sources */,
 				9854BFFF240B9DD500E5AB8A /* FieldCuturalPracticeInteraction.swift in Sources */,
@@ -982,6 +1028,7 @@
 				9810DA42242F0FCA00545A23 /* SelectFormCulturalPracticeViewController.swift in Sources */,
 				980ECA142430261700AAD0AB /* SelectFormCulturalPracticeView.swift in Sources */,
 				9805683823B954630056D199 /* FarmerTableViewModel.swift in Sources */,
+				98F126AA24C71658001853D5 /* CouvertureAssociee.swift in Sources */,
 				98B9992423B50E0800CA7EF9 /* Section.swift in Sources */,
 				98B9991023B5076000CA7EF9 /* prototypeGeo.xcdatamodeld in Sources */,
 				989090A624C05A4000AFC080 /* ContainerTitleNavigationState.swift in Sources */,
@@ -1000,6 +1047,7 @@
 				98DB0F5724297F960065963B /* TableState.swift in Sources */,
 				98EBA95424B1654A00D233D0 /* InputFormCulturalPracticeAction.swift in Sources */,
 				9830049024AC2B8300CDF624 /* ProducerCreationDependencyContainer.swift in Sources */,
+				98F1269E24C6F029001853D5 /* Avaloir.swift in Sources */,
 				9847564524AED2FC0048A503 /* InputFormCulturalPracticeView.swift in Sources */,
 				98363B5123DEEC7A00AFFC63 /* mapFieldMiddleware.swift in Sources */,
 				9860400423BD868A00D5B538 /* FarmerTableVIewControllerState.swift in Sources */,
@@ -1008,6 +1056,7 @@
 				9854BFFB240B956400E5AB8A /* CulturalPracticeFormState.swift in Sources */,
 				9854BFDD2409000E00E5AB8A /* ContainerTitleNavigationView.swift in Sources */,
 				98BA0D81240CF43600948A26 /* UIViewExtention.swift in Sources */,
+				98F126A624C712CB001853D5 /* DelaiIncorporationFumier.swift in Sources */,
 				98363B4823DEE34F00AFFC63 /* MapFieldRepository.swift in Sources */,
 				9805683423B92DD40056D199 /* FarmerFormated.swift in Sources */,
 				9860401123BD9C1700D5B538 /* StoreSubscriptionExtension.swift in Sources */,
@@ -1016,6 +1065,7 @@
 				9810DA46242F114700545A23 /* SelectFormCulturalPracticeState.swift in Sources */,
 				98363B6223E028BD00AFFC63 /* Util.swift in Sources */,
 				9854BFD52408F53400E5AB8A /* FieldListViewController.swift in Sources */,
+				98F126AE24C71EE3001853D5 /* DrainageSurface.swift in Sources */,
 				98D1929523C020B000BF9A7A /* FarmerTableViewInteractions.swift in Sources */,
 				98363B2D23DECA3F00AFFC63 /* MapFieldViewController.swift in Sources */,
 				98A2C54A240E6BD9002A884B /* PayloadFieldAnnotation.swift in Sources */,
@@ -1030,6 +1080,8 @@
 				9894340C2410FAF0003C0110 /* FieldSelectedViewCell.swift in Sources */,
 				989090AC24C18B9D00AFC080 /* MapFieldReducer.swift in Sources */,
 				98C77E7324B024AF00AA6423 /* UIButtonRepresentable.swift in Sources */,
+				98F126A224C70795001853D5 /* DoseFumier.swift in Sources */,
+				98F126AC24C71D98001853D5 /* DrainageSouterrain.swift in Sources */,
 				98457BAA2427353B00AF4C90 /* CulturalPractice.swift in Sources */,
 				98363B3023DECA9F00AFFC63 /* MapFieldViewModel.swift in Sources */,
 				98D1929023BFFF7C00BF9A7A /* Actions.swift in Sources */,

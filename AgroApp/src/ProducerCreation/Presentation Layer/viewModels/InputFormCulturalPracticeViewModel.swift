@@ -10,11 +10,10 @@ import Foundation
 import RxSwift
 import SwiftUI
 
-class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeViewModel {
+final class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeViewModel {
     private let stateObserver: Observable<InputFormCulturalPracticeState>
     private let actionDispatcher: ActionDispatcher
     let viewState: ViewState
-    var view: InputFormCulturalPracticeView?
     var disposableInputFormCulturalViewState: Disposable?
     var disposableDispatcher: Disposable?
     var disposableActivateAnimation: Disposable?
@@ -22,6 +21,7 @@ class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeViewModel
     var firstInputValue: String?
     var regularExpressionForInputValue: NSRegularExpression?
     var fieldType: FieldType?
+    var settingViewController: SettingViewController<InputFormCulturalPracticeView>?
 
     init(
         stateObserver: Observable<InputFormCulturalPracticeState>,
@@ -36,7 +36,7 @@ class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeViewModel
     func subscribeToInputFormCulturalPracticeStateObs() {
         self.disposableInputFormCulturalViewState = stateObserver
             .observeOn(Util.getSchedulerMain())
-            .subscribe { event in
+            .subscribe {event in
                 guard let inputElement = event.element?.inputElement,
                     let fieldType = event.element?.fieldType,
                     let subAction = event.element?.inputFormSubAction
@@ -60,6 +60,8 @@ class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeViewModel
     }
 
     func disposeToObs() {
+        settingViewController = nil
+        
         _ = Util.runInSchedulerBackground {
             self.disposableInputFormCulturalViewState?.dispose()
         }
@@ -79,6 +81,12 @@ class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeViewModel
         )
 
         return matches.count == 1
+    }
+    
+    func configView() {
+        self.settingViewController?.setBackgroundColor(Util.getBackgroundColor())
+        self.settingViewController?.setAlpha(Util.getAlphaValue())
+        self.settingViewController?.setIsModalInPresentation(true)
     }
 
     private func setFirstInputValue() {
@@ -149,7 +157,7 @@ class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeViewModel
     }
 
     private func dismissForm() {
-        viewState.isDismissForm = true
+        settingViewController?.dismissVC(completion: nil)
     }
 
     private func isFormDirty() -> Bool {
@@ -176,6 +184,10 @@ class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeViewModel
         @Published var textAlert: String = "Voulez-vous enregistrer la valeur saisie ?"
         @Published var textButtonValidate: String = "Valider"
         @Published var textErrorMessage: String = "Veuillez saisir une valeur valide"
+    }
+    
+    deinit {
+        print("***** denit InputFormCulturalPracticeViewModelImpl *******")
     }
 }
 
@@ -247,7 +259,6 @@ extension InputFormCulturalPracticeViewModelImpl {
 
 protocol InputFormCulturalPracticeViewModel {
     var viewState: InputFormCulturalPracticeViewModelImpl.ViewState {get}
-    var view: InputFormCulturalPracticeView? { get set }
     func subscribeToInputFormCulturalPracticeStateObs()
     func disposeToObs()
     func handleButtonValidate()
@@ -255,4 +266,5 @@ protocol InputFormCulturalPracticeViewModel {
     func handleCloseButton()
     func handleAlertYesButton()
     func handleAlertNoButton()
+    func configView()
 }
