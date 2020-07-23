@@ -9,8 +9,10 @@
 import Foundation
 
 struct CulturalPractice {
+    var id: Int?
     var avaloir: Avaloir?
     var bandeRiveraine: BandeRiveraine?
+
     var doseFumier: [DoseFumier?]?
     var periodeApplicationFumier: [PeriodeApplicationFumier?]?
     var delaiIncorporationFumier: [DelaiIncorporationFumier?]?
@@ -27,7 +29,10 @@ struct CulturalPractice {
     var alMehlich3: AlMehlich3?
     var cultureAnneeEnCoursAnterieure: CultureAnneeEnCoursAnterieure?
 
-    init() {
+    static let MAX_DOSE_FUMIER = 3
+
+    init(id: Int? = nil) {
+        self.id = id
         initArrayValue()
     }
 
@@ -42,8 +47,6 @@ struct CulturalPractice {
             delaiIncorporationFumier?.append(nil)
         }
     }
-
-    static let MAX_DOSE_FUMIER = 3
 
     static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> [CulturalPracticeElementProtocol] {
         let culturalPracticeSingleElement = getCulturalPracticeSingleElement(from: culturalPractice)
@@ -169,493 +172,256 @@ struct CulturalPractice {
     }
 }
 
-enum CouvertureDerobee: Int, CulturalPracticeValueProtocol {
-    case vrai = 1
-    case faux = 0
+extension CulturalPractice: Codable {
 
-    static func getValues() -> [(CulturalPracticeValueProtocol, String)]? {
-        [
-            (
-                CouvertureDerobee.vrai,
-                NSLocalizedString("Vrai", comment: "Couverture dérobée vrai")
-            ),
-            (
-                CouvertureDerobee.faux,
-                NSLocalizedString("Faux", comment: "Couverture dérobée faux")
-            )
-        ]
-    }
+    func encode(to encoder: Encoder) throws {
 
-    func getValue() -> String {
-        switch self {
-        case .vrai:
-            return NSLocalizedString("Vrai", comment: "Couverture dérobée vrai")
-        case .faux:
-            return NSLocalizedString("Faux", comment: "Couverture dérobée faux")
-        }
-    }
-
-    static func getTitle() -> String {
-        NSLocalizedString(
-            "Couverture dérobée",
-            comment: "Title Couverture dérobée"
-        )
-    }
-
-    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
-        CulturalPracticeMultiSelectElement(
-            key: UUID().uuidString,
-            title: getTitle(),
-            tupleCulturalTypeValue: getValues()!,
-            value: culturalPractice?.couvertureDerobee
-        )
-    }
-
-    func getUnitType() -> UnitType? {
-        nil
-    }
-
-    static func create(value: String) -> CulturalPracticeValueProtocol? {
-        nil
-    }
-
-    static func getRegularExpression() -> String? {
-        nil
-    }
-
-    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
-        var newCulturalPractice = culturalPractice
-        newCulturalPractice.couvertureDerobee = self
-        return newCulturalPractice
-    }
-}
-
-enum TauxApplicationPhosphoreRang: CulturalPracticeValueProtocol {
-    case taux(KilogramPerHectare)
-
-    static func getTitle() -> String {
-        NSLocalizedString(
-            "Taux d'application de phosphore (engrais minéraux en rang)",
-            comment: "Titre Taux d'application de phosphore (engrais minéraux en rang)"
-        )
-    }
-
-    func getValue() -> String {
-        switch self {
-        case .taux(let kilogramPerHectare):
-            return String(kilogramPerHectare)
-        }
-    }
-
-    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
-        CulturalPracticeInputElement(
-            key: UUID().uuidString,
-            title: getTitle(),
-            valueEmpty: TauxApplicationPhosphoreRang.taux(0),
-            value: culturalPractice?.tauxApplicationPhosphoreRang
-        )
-    }
-
-    static func getValues() -> [(CulturalPracticeValueProtocol, String)]? {
-        nil
-    }
-
-    func getUnitType() -> UnitType? {
-        .kgHa
-    }
-
-    static func create(value: String) -> CulturalPracticeValueProtocol? {
-        guard let tauxValue = Double(value) else { return nil }
-        return TauxApplicationPhosphoreRang.taux(tauxValue)
-    }
-
-    static func getRegularExpression() -> String? {
-        "^\\d*\\.?\\d*$"
-    }
-
-    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
-        var newCulturalPractice = culturalPractice
-        newCulturalPractice.tauxApplicationPhosphoreRang = self
-        return newCulturalPractice
-    }
-}
-
-enum TauxApplicationPhosphoreVolee: CulturalPracticeValueProtocol {
-
-    case taux(KilogramPerHectare)
-
-    static func getTitle() -> String {
-        NSLocalizedString(
-            "Taux d'application de phosphore (engrais minéraux à la volée)",
-            comment: "Titre Taux d'application de phosphore (engrais minéraux à la volée)"
-        )
-    }
-
-    func getValue() -> String {
-        switch self {
-        case .taux(let kilogramPerHectare):
-            return String(kilogramPerHectare)
-        }
-    }
-
-    static func getValues() -> [(CulturalPracticeValueProtocol, String)]? {
-        nil
-    }
-
-    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
-        CulturalPracticeInputElement(
-            key: UUID().uuidString,
-            title: getTitle(),
-            valueEmpty: TauxApplicationPhosphoreVolee.taux(0),
-            value: culturalPractice?.tauxApplicationPhosphoreVolee
-        )
-    }
-
-    func getUnitType() -> UnitType? {
-        .kgHa
-    }
-
-    static func create(value: String) -> CulturalPracticeValueProtocol? {
-        guard let tauxValue = Double(value) else { return nil }
-        return TauxApplicationPhosphoreVolee.taux(tauxValue)
-    }
-
-    static func getRegularExpression() -> String? {
-        "^\\d*\\.?\\d*$"
-    }
-
-    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
-        var newCulturalPractice = culturalPractice
-        newCulturalPractice.tauxApplicationPhosphoreVolee = self
-        return newCulturalPractice
-    }
-}
-
-enum PMehlich3: CulturalPracticeValueProtocol {
-    case taux(KilogramPerHectare)
-
-    static func getTitle() -> String {
-        NSLocalizedString(
-            "P Mehlich-3",
-            comment: "Titre P Mehlich-3"
-        )
-    }
-
-    func getValue() -> String {
-        switch self {
-        case .taux(let kilogramPerHectare):
-            return String(kilogramPerHectare)
-        }
-    }
-
-    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
-        CulturalPracticeInputElement(
-            key: UUID().uuidString,
-            title: getTitle(),
-            valueEmpty: PMehlich3.taux(0),
-            value: culturalPractice?.pMehlich3
-        )
-    }
-
-    static func getValues() -> [(CulturalPracticeValueProtocol, String)]? {
-        nil
-    }
-
-    func getUnitType() -> UnitType? {
-        .kgHa
-    }
-
-    static func create(value: String) -> CulturalPracticeValueProtocol? {
-        guard let tauxValue = Double(value) else { return nil }
-        return PMehlich3.taux(tauxValue)
-    }
-
-    static func getRegularExpression() -> String? {
-        "^\\d*\\.?\\d*$"
-    }
-
-    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
-        var newCulturalPractice = culturalPractice
-        newCulturalPractice.pMehlich3 = self
-        return newCulturalPractice
-    }
-}
-
-enum AlMehlich3: CulturalPracticeValueProtocol {
-
-    case taux(Percentage)
-
-    static func getTitle() -> String {
-        NSLocalizedString(
-            "AL Mehlich-3",
-            comment: "AL Mehlich-3"
-        )
-    }
-
-    func getValue() -> String {
-        switch self {
-        case .taux(let percentage):
-            return String(percentage)
-        }
-    }
-
-    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
-        CulturalPracticeInputElement(
-            key: UUID().uuidString,
-            title: getTitle(),
-            valueEmpty: AlMehlich3.taux(0),
-            value: culturalPractice?.alMehlich3
-        )
-    }
-
-    static func getValues() -> [(CulturalPracticeValueProtocol, String)]? {
-        nil
-    }
-
-    func getUnitType() -> UnitType? {
-        .percentage
-    }
-
-    static func create(value: String) -> CulturalPracticeValueProtocol? {
-        guard let tauxValue = Double(value) else { return nil }
-        return AlMehlich3.taux(tauxValue)
-    }
-
-    static func getRegularExpression() -> String? {
-        "^\\d*\\.?\\d*$"
-    }
-
-    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
-        var newCulturalPractice = culturalPractice
-        newCulturalPractice.alMehlich3 = self
-        return newCulturalPractice
-    }
-}
-
-enum CultureAnneeEnCoursAnterieure: String, CulturalPracticeValueProtocol {
-    case auc
-    case avo
-    case ble
-    case cnl
-    case foi
-    case mai
-    case mix
-    case non
-    case org
-    case ptf
-    case soy
-
-    static func getValues() -> [(CulturalPracticeValueProtocol, String)]? {
-        [
-            (
-                CultureAnneeEnCoursAnterieure.auc,
-                NSLocalizedString("Autres céréales", comment: "Autres céréales")
-            ),
-            (
-                CultureAnneeEnCoursAnterieure.avo,
-                NSLocalizedString("Avoine", comment: "Avoine")
-            ),
-            (
-                CultureAnneeEnCoursAnterieure.ble,
-                NSLocalizedString("Blé", comment: "Blé")
-            ),
-            (
-                CultureAnneeEnCoursAnterieure.cnl,
-                NSLocalizedString("Canola", comment: "Canola")
-            ),
-            (
-                CultureAnneeEnCoursAnterieure.foi,
-                NSLocalizedString("Foin", comment: "Foin")
-            ),
-            (
-                CultureAnneeEnCoursAnterieure.mai,
-                NSLocalizedString("Maï", comment: "Maï")
-            ),
-            (
-                CultureAnneeEnCoursAnterieure.mix,
-                NSLocalizedString("Mixte", comment: "Mixte")
-            ),
-            (
-                CultureAnneeEnCoursAnterieure.non,
-                NSLocalizedString(
-                    "Pas d'info, traité comme si c'était du foin",
-                    comment: "Pas d'info, traité comme si c'était du foin"
-                )
-            ),
-            (
-                CultureAnneeEnCoursAnterieure.org,
-                NSLocalizedString("Orge", comment: "Orge")
-            ),
-            (
-                CultureAnneeEnCoursAnterieure.ptf,
-                NSLocalizedString("Petits fruits", comment: "Petits fruits")
-            ),
-            (
-                CultureAnneeEnCoursAnterieure.soy,
-                NSLocalizedString("Soya", comment: "Soya")
-            )
-        ]
     }
 
     // swiftlint:disable all
-    func getValue() -> String {
-        switch self {
-        case .auc:
-            return NSLocalizedString("Autres céréales", comment: "Autres céréales")
-        case .avo:
-            return NSLocalizedString("Avoine", comment: "Avoine")
-        case .ble:
-            return NSLocalizedString("Blé", comment: "Blé")
-        case .cnl:
-            return NSLocalizedString("Canola", comment: "Canola")
-        case .foi:
-            return NSLocalizedString("Foin", comment: "Foin")
-        case .mai:
-            return NSLocalizedString("Maï", comment: "Maï")
-        case .mix:
-            return NSLocalizedString("Mixte", comment: "Mixte")
-        case .non:
-            return NSLocalizedString(
-                "Pas d'info, traité comme si c'était du foin",
-                comment: "Pas d'info, traité comme si c'était du foin"
+    init(from decoder: Decoder) throws {
+        do {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            
+            self.id = try? container.decode(
+                Int.self,
+                forKey: .id
             )
-        case .org:
-            return NSLocalizedString("Orge", comment: "Orge")
-        case .ptf:
-            return NSLocalizedString("Petits fruits", comment: "Petits fruits")
-        case .soy:
-            return NSLocalizedString("Soya", comment: "Soya")
+            
+            self.avaloir = try? container.decode(
+                Avaloir.self,
+                forKey: .avaloir
+            )
+            
+            self.bandeRiveraine = try? container.decode(
+                BandeRiveraine.self,
+                forKey: .bandeRiveraine
+            )
+            
+            self.doseFumier = decodeDoseFumier(container: container)
+            
+            self.periodeApplicationFumier = decodePeriodeApplicationFumiers(
+                container: container
+            )
+            
+            self.delaiIncorporationFumier = decodeDelaiIncorporationFumiers(
+                container: container
+            )
+            
+            self.travailSol = try? container.decode(
+                TravailSol.self,
+                forKey: .travailSol
+            )
+            
+            self.couvertureDerobee = try? container.decode(
+                CouvertureDerobee.self,
+                forKey: .couvertureDerobee
+            )
+            
+            self.couvertureAssociee = try? container.decode(
+                CouvertureAssociee.self,
+                forKey: .couvertureAssociee
+            )
+            
+            self.drainageSouterrain = try? container.decode(
+                DrainageSouterrain.self,
+                forKey: .drainageSouterrain
+            )
+            
+            self.drainageSurface = try? container.decode(
+                DrainageSurface.self,
+                forKey: .drainageSurface
+            )
+            
+            self.conditionProfilCultural = try? container.decode(
+                ConditionProfilCultural.self,
+                forKey: .conditionProfilCultural
+            )
+            
+            self.tauxApplicationPhosphoreRang = decodeInputValue(
+                container: container,
+                codingKeys: .tauxApplicationPhosphoreRang,
+                culturalPracticeValueProtocolType: TauxApplicationPhosphoreRang.self,
+                typeReturnValue: TauxApplicationPhosphoreRang.self
+            )
+            
+            self.tauxApplicationPhosphoreVolee = decodeInputValue(
+                container: container,
+                codingKeys: .tauxApplicationPhosphoreRang,
+                culturalPracticeValueProtocolType: TauxApplicationPhosphoreVolee.self,
+                typeReturnValue: TauxApplicationPhosphoreVolee.self
+            )
+            
+            self.alMehlich3 = decodeInputValue(
+                container: container,
+                codingKeys: .alMehlich3,
+                culturalPracticeValueProtocolType: AlMehlich3.self,
+                typeReturnValue: AlMehlich3.self
+            )
+            
+            self.pMehlich3 = decodeInputValue(
+                container: container,
+                codingKeys: .pMehlich3,
+                culturalPracticeValueProtocolType: PMehlich3.self,
+                typeReturnValue: PMehlich3.self
+            )
+            
+            self.cultureAnneeEnCoursAnterieure = try? container.decode(
+                CultureAnneeEnCoursAnterieure.self,
+                forKey: .cultureAnneeEnCoursAnterieure
+            )
+            
+        } catch {
+            print(error.localizedDescription)
         }
     }
     
-    static func getTitle() -> String {
-        NSLocalizedString(
-            "Culture de l'année en cours et antérieure",
-            comment: "Titre Culture de l'année en cours et antérieure"
+    private enum CodingKeys: String, CodingKey {
+        case id = "OBJECTID"
+        case avaloir = "Avaloir"
+        case bandeRiveraine = "Bande_riv"
+        case doseFumier1 = "FUMP_DOSE"
+        case doseFumier2 = "FUMP2_DOSE"
+        case doseFumier3 = "FUMP3_DOSE"
+        case periodeApplicationFumier1 = "FUM1_PER"
+        case periodeApplicationFumier2 = "FUM2_PER"
+        case periodeApplicationFumier3 = "FUM3_PER"
+        case delaiIncorporationFumier1 = "FUM1_DELAI"
+        case delaiIncorporationFumier2 = "FUM2_DELAI"
+        case delaiIncorporationFumier3 = "FUM3_DELAI"
+        case travailSol = "TRAV_SOL"
+        case couvertureAssociee = "Couv_ass"
+        case couvertureDerobee = "Couv_derob"
+        case drainageSouterrain = "Drai_Sout"
+        case drainageSurface = "Drai_surf"
+        case conditionProfilCultural = "Cond_hydro"
+        case tauxApplicationPhosphoreRang = "MINP_B"
+        case tauxApplicationPhosphoreVolee = "MINP_V"
+        case pMehlich3 = "P_M3"
+        case alMehlich3 = "AL_M3"
+        case cultureAnneeEnCoursAnterieure = "util_terr"
+    }
+    
+    private func decodeInputValue<R>(
+        container: KeyedDecodingContainer<CulturalPractice.CodingKeys>,
+        codingKeys: CodingKeys,
+        culturalPracticeValueProtocolType: CulturalPracticeValueProtocol.Type,
+        typeReturnValue: R.Type
+    ) -> R? {
+        let valueDecoded = decodeValue(container: container, codingKeys: codingKeys, typeDecode: Double.self)
+        
+        if let valueDecoded = valueDecoded {
+            return culturalPracticeValueProtocolType.create(value: String(valueDecoded)) as? R
+        }
+        
+        return nil
+    }
+    
+    private func decodeDelaiIncorporationFumiers(
+        container: KeyedDecodingContainer<CulturalPractice.CodingKeys>
+    ) -> [DelaiIncorporationFumier?]? {
+        let delaiIncorporationFumiersFromJson = decodeValues(
+            container: container,
+            codingKeys: [.delaiIncorporationFumier1, .delaiIncorporationFumier2, .delaiIncorporationFumier3],
+            typeDecode: DelaiIncorporationFumier.self
         )
+        
+        return getCodableValuesWithCheck(codableValuesFromJson: delaiIncorporationFumiersFromJson)
     }
     
-    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
-        CulturalPracticeMultiSelectElement(
-            key: UUID().uuidString,
-            title: getTitle(),
-            tupleCulturalTypeValue: getValues()!,
-            value: culturalPractice?.cultureAnneeEnCoursAnterieure
+    private func decodePeriodeApplicationFumiers(
+        container: KeyedDecodingContainer<CulturalPractice.CodingKeys>
+    ) -> [PeriodeApplicationFumier?]? {
+        let periodeApplicationFumierFromJson = decodeValues(
+            container: container,
+            codingKeys: [.periodeApplicationFumier1, .periodeApplicationFumier2, .periodeApplicationFumier3],
+            typeDecode: PeriodeApplicationFumier.self
         )
+        
+        return getCodableValuesWithCheck(codableValuesFromJson: periodeApplicationFumierFromJson)
     }
     
-    func getUnitType() -> UnitType? {
-        nil
+    private func getCodableValuesWithCheck<T: Codable>(
+        codableValuesFromJson: [T?]
+    ) -> [T?]? {
+        var codableValues = getArrayOfDoseWithNilValue(T.self)
+        let firstIndexOfNil = getIndexFirstNilValue(array: codableValuesFromJson)
+        let endLoop = firstIndexOfNil != nil ? (firstIndexOfNil! + 1) : codableValuesFromJson.count
+        
+        if codableValuesFromJson.count <= codableValues.count {
+            (0..<endLoop).forEach { index in
+                codableValues[index] = codableValuesFromJson[index]
+            }
+        }
+        
+        return codableValues
     }
     
-    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
-        var newCulturalPractice = culturalPractice
-        newCulturalPractice.cultureAnneeEnCoursAnterieure = self
-        return newCulturalPractice
-    }
-    
-    static func create(value: String) -> CulturalPracticeValueProtocol? {
-        nil
-    }
-    
-    static func getRegularExpression() -> String? {
-        nil
-    }
-}
-
-enum UnitType {
-    case kgHa
-    case percentage
-    case quantity
-    
-    func convertToString() -> String {
-        switch self {
-        case .kgHa:
-            return "kg/ha"
-        case .percentage:
-            return "%"
-        case .quantity:
-            return "quantité"
+    private func decodeValues<T: Codable>(
+        container: KeyedDecodingContainer<CulturalPractice.CodingKeys>,
+        codingKeys: [CodingKeys],
+        typeDecode: T.Type
+    ) -> [T?] {
+        codingKeys.map {
+            self.decodeValue(
+                container: container,
+                codingKeys: $0,
+                typeDecode: T.self
+            )
         }
     }
-}
-
-typealias KilogramPerHectare = Double
-typealias Percentage = Double
-
-struct CulturalPracticeAddElement: CulturalPracticeElementProtocol {
-    let key: String
-    let title: String
-    var value: CulturalPracticeValueProtocol?
     
-    func getIndex() -> Int? {
-        nil
-    }
-}
-
-struct CulturalPracticeContainerElement: CulturalPracticeElementProtocol {
-    let key: String
-    let title: String
-    var culturalInputElement: [CulturalPracticeElementProtocol]
-    var culturalPracticeMultiSelectElement: [CulturalPracticeElementProtocol]
-    var value: CulturalPracticeValueProtocol?
-    
-    func getIndex() -> Int? {
-        nil
-    }
-}
-
-struct CulturalPracticeMultiSelectElement: CulturalPracticeElementProtocol {
-    let key: String
-    var title: String
-    var tupleCulturalTypeValue: [(CulturalPracticeValueProtocol, String)]
-    var value: CulturalPracticeValueProtocol?
-    var index: Int?
-    
-    func getIndex() -> Int? {
-        index
-    }
-}
-
-struct CulturalPracticeInputElement: CulturalPracticeElementProtocol {
-    let key: String
-    let title: String
-    var valueEmpty: CulturalPracticeValueProtocol
-    var value: CulturalPracticeValueProtocol?
-    var index: Int?
-    
-    func getIndex() -> Int? {
-        index
-    }
-}
-
-protocol CulturalPracticeValueProtocol {
-    static func getTitle() -> String
-    func getValue() -> String
-    static func getValues() -> [(CulturalPracticeValueProtocol, String)]?
-    func getUnitType() -> UnitType?
-    static func create(value: String) -> CulturalPracticeValueProtocol?
-    static func getRegularExpression() -> String?
-    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice
-}
-
-extension CulturalPracticeElementProtocol {
-    func getValueBy(indexSelected: Int, from values: [(CulturalPracticeValueProtocol, String)]) -> CulturalPracticeValueProtocol? {
-        guard values.indices.contains(indexSelected) else { return nil }
-        return values[indexSelected].0
+    private func decodeValue<T: Codable>(
+        container: KeyedDecodingContainer<CulturalPractice.CodingKeys>,
+        codingKeys: CodingKeys,
+        typeDecode: T.Type
+    ) -> T? {
+        try? container.decode(typeDecode.self, forKey: codingKeys)
     }
     
-    func getValueBy(
-        inputValue: String,
-        from emptyValue: CulturalPracticeValueProtocol
-    ) -> CulturalPracticeValueProtocol? {
-        return type(of: emptyValue).create(value: inputValue)
+    private func decodeDoseFumier(container: KeyedDecodingContainer<CulturalPractice.CodingKeys>) -> [DoseFumier?]? {
+        let doseFumier1 = getDoseFumierValue(container: container, codingKeys: .doseFumier1)
+        let doseFumier2 = getDoseFumierValue(container: container, codingKeys: .doseFumier2)
+        let doseFumier3 = getDoseFumierValue(container: container, codingKeys: .doseFumier3)
+        return getAllDoseFumierUpToNilDose(doseFumierValues: [doseFumier1, doseFumier2, doseFumier3])
     }
-}
-
-protocol CulturalPracticeElementProtocol {
-    var title: String {get}
-    var key: String {get}
-    var value: CulturalPracticeValueProtocol? {get}
-    func getIndex() -> Int?
+    
+    private func getDoseFumierValue(container: KeyedDecodingContainer<CulturalPractice.CodingKeys>, codingKeys: CodingKeys) -> Int? {
+        try? container.decode(Int.self, forKey: codingKeys)
+    }
+    
+    private func getAllDoseFumierUpToNilDose(doseFumierValues: [Int?]) -> [DoseFumier?]? {
+        var doseFumiers = getArrayOfDoseWithNilValue(DoseFumier.self)
+        let indexFirstNilValue = getIndexFirstNilValue(array: doseFumierValues)
+        let endLoop = indexFirstNilValue != nil ? (indexFirstNilValue! + 1) : doseFumierValues.count
+        
+        if doseFumierValues.count <= doseFumiers.count {
+            (0..<endLoop).forEach { index in
+                doseFumiers[index] = createDoseFumier(dose: doseFumierValues[index]!)
+            }
+        }
+        
+        return doseFumiers
+    }
+    
+    private func getArrayOfDoseWithNilValue<T>(_ type: T.Type) -> [T?] {
+        var doses = [T?]()
+        
+        (0..<CulturalPractice.MAX_DOSE_FUMIER).forEach { _ in
+            doses.append(nil)
+        }
+        
+        return doses
+    }
+    
+    private func createDoseFumier(dose: Int) -> DoseFumier {
+        DoseFumier.dose(quantite: dose)
+    }
+    
+    /// get index first nil value in array.  If array not have nil, the function return nil.
+    /// - Parameter array: The array
+    /// - Returns: The first index  nil value index or nil if array not content nil value
+    private func getIndexFirstNilValue<T>(array: [T?]) -> Int? {
+        return array.firstIndex { $0 == nil }
+    }
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum CouvertureAssociee: Int, CulturalPracticeValueProtocol {
+enum CouvertureAssociee: Int, CulturalPracticeValueProtocol, Codable {
     case vrai = 1
     case faux = 0
 

@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum DrainageSouterrain: Int, CulturalPracticeValueProtocol {
+enum DrainageSouterrain: Int, CulturalPracticeValueProtocol, Codable {
     case systematique = 1
     case partiel
     case absent

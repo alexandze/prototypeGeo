@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum PeriodeApplicationFumier: Int, CulturalPracticeValueProtocol {
+enum PeriodeApplicationFumier: Int, CulturalPracticeValueProtocol, Codable {
     case preSemi = 1
     case postLevee
     case automneHatif

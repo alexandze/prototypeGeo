@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum TravailSol: Int, CulturalPracticeValueProtocol {
+enum TravailSol: Int, CulturalPracticeValueProtocol, Codable {
     case labourAutomneTravailSecondairePrintemps = 1
     case chiselPulverisateurAutomneTravailSecondairePrintemps
     case dechaumageAuPrintempsTravailSecondairePrintemps

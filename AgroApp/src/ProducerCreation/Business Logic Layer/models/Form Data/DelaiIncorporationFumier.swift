@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum DelaiIncorporationFumier: Int, CulturalPracticeValueProtocol {
+enum DelaiIncorporationFumier: Int, CulturalPracticeValueProtocol, Codable {
     case incorporeEn48H = 1
     case incorporeEn48HA1Semaine
     case superieureA1Semaine

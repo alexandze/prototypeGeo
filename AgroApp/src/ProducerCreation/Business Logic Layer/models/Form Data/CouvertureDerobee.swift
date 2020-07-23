@@ -1,48 +1,44 @@
 //
-//  DrainageSurface.swift
+//  CouvertureDerobee.swift
 //  AgroApp
 //
-//  Created by Alexandre Andze Kande on 2020-07-21.
+//  Created by Alexandre Andze Kande on 2020-07-22.
 //  Copyright © 2020 Alexandre Andze Kande. All rights reserved.
 //
 
 import Foundation
 
-enum DrainageSurface: Int, CulturalPracticeValueProtocol, Codable {
-    case bon = 1
-    case moyen
-    case mauvais
+enum CouvertureDerobee: Int, CulturalPracticeValueProtocol, Codable {
+    case vrai = 1
+    case faux = 0
 
     static func getValues() -> [(CulturalPracticeValueProtocol, String)]? {
         [
             (
-                DrainageSurface.bon,
-                NSLocalizedString("Bon", comment: "Drainage de surface Bon")
+                CouvertureDerobee.vrai,
+                NSLocalizedString("Vrai", comment: "Couverture dérobée vrai")
             ),
             (
-                DrainageSurface.moyen,
-                NSLocalizedString("Moyen", comment: "Drainage de surface Moyen")
-            ),
-            (
-                DrainageSurface.mauvais,
-                NSLocalizedString("Mauvais", comment: "Drainage de surface Mauvais")
+                CouvertureDerobee.faux,
+                NSLocalizedString("Faux", comment: "Couverture dérobée faux")
             )
         ]
     }
 
     func getValue() -> String {
         switch self {
-        case .bon:
-            return NSLocalizedString("Bon", comment: "Drainage de surface Bon")
-        case .moyen:
-            return NSLocalizedString("Moyen", comment: "Drainage de surface Moyen")
-        case .mauvais:
-            return NSLocalizedString("Mauvais", comment: "Drainage de surface Mauvais")
+        case .vrai:
+            return NSLocalizedString("Vrai", comment: "Couverture dérobée vrai")
+        case .faux:
+            return NSLocalizedString("Faux", comment: "Couverture dérobée faux")
         }
     }
 
     static func getTitle() -> String {
-        NSLocalizedString("Drainage de surface", comment: "Titre Drainage de surface")
+        NSLocalizedString(
+            "Couverture dérobée",
+            comment: "Title Couverture dérobée"
+        )
     }
 
     static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
@@ -50,7 +46,7 @@ enum DrainageSurface: Int, CulturalPracticeValueProtocol, Codable {
             key: UUID().uuidString,
             title: getTitle(),
             tupleCulturalTypeValue: getValues()!,
-            value: culturalPractice?.drainageSouterrain
+            value: culturalPractice?.couvertureDerobee
         )
     }
 
@@ -68,7 +64,7 @@ enum DrainageSurface: Int, CulturalPracticeValueProtocol, Codable {
 
     func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
         var newCulturalPractice = culturalPractice
-        newCulturalPractice.drainageSurface = self
+        newCulturalPractice.couvertureDerobee = self
         return newCulturalPractice
     }
 }

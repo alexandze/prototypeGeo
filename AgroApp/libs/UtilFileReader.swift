@@ -9,7 +9,7 @@
 import Foundation
 
 public class UtilReaderFile {
-    public static func readJsonFile<T: Codable>(
+    public static func readJsonFile<T: Decodable>(
         resource: String,
         typeRessource: String,
         _ type: T.Type

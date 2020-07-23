@@ -13,6 +13,7 @@ import RxSwift
 extension MapFieldService {
     public func getFields() -> ([(Field<Polygon>, MKPolygon, AnnotationWithData<PayloadFieldAnnotation>)?], [(Field<MultiPolygon>, [(MKPolygon, AnnotationWithData<PayloadFieldAnnotation> )?])])? {
         let fieldsGeoJson = self.mapFieldRepository.getFieldGeoJsonArray()
+        print(fieldsGeoJson?.features[0].properties)
 
         return fieldsGeoJson.map { (fieldsGeoJsonUnwrap: FieldGeoJsonArray) -> (
                 [(Field<Polygon>, MKPolygon, AnnotationWithData<PayloadFieldAnnotation>)?],

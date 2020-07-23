@@ -8,8 +8,8 @@
 
 import Foundation
 
-enum ConditionProfilCultural: CulturalPracticeValueProtocol {
-    case bonne
+enum ConditionProfilCultural: Int, CulturalPracticeValueProtocol, Codable {
+    case bonne = 1
     case presenceZoneRisques
     case dominanceZoneRisque
 

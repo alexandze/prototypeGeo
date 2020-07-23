@@ -62,10 +62,11 @@ class FieldListReducerHandler {
         let culturalPracticeValue = culturalPracticeElement.value
             else { return state }
 
-        let culturalPractice = fieldTypeFindTuple.0.getCulturalPractice() ?? CulturalPractice()
+        let culturalPractice = fieldTypeFindTuple.0.getCulturalPractice() ?? CulturalPractice(id: fieldTypeFindTuple.0.getId())
 
         let newCulturalPracticeValue = culturalPracticeValue.changeValueOfCulturalPractice(
-            culturalPractice, index: culturalPracticeElement.getIndex()
+            culturalPractice,
+            index: culturalPracticeElement.getIndex()
         )
 
         let fieldTypeNew = fieldTypeFindTuple.0.changeValue(culturalPractice: newCulturalPracticeValue)
@@ -148,19 +149,10 @@ class FieldListReducerHandler {
     ) -> FieldListState {
         let fieldToRemove = deselectedFieldOnMapAction.fieldType
         let fieldList = state.fieldList != nil ? state.fieldList! : []
-        var newFieldListState: FieldListState?
+        let index = findIndexFieldByIdField(idField: fieldToRemove.getId(), fieldList: fieldList)
 
-        switch fieldToRemove {
-        case .polygon(let fieldPolygon):
-            let index = findIndexFieldByIdField(idField: fieldPolygon.id, fieldList: fieldList)
-            newFieldListState = index.map { (index: Int) -> FieldListState in
-                return handleRemoveFieldInState(state: state, index: index)
-            }
-        case .multiPolygon(let fieldMultiPolygon):
-            let index = findIndexFieldByIdField(idField: fieldMultiPolygon.id, fieldList: fieldList)
-            newFieldListState = index.map { (index: Int) -> FieldListState in
-                return handleRemoveFieldInState(state: state, index: index)
-            }
+        let newFieldListState = index.map { (index: Int) -> FieldListState in
+            return handleRemoveFieldInState(state: state, index: index)
         }
 
         return newFieldListState != nil ? newFieldListState! : state
