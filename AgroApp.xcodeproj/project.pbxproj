@@ -33,9 +33,7 @@
 		98363B4823DEE34F00AFFC63 /* MapFieldRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98363B4723DEE34F00AFFC63 /* MapFieldRepository.swift */; };
 		98363B4A23DEE3C900AFFC63 /* UtilFileReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98363B4923DEE3C900AFFC63 /* UtilFileReader.swift */; };
 		98363B4C23DEE57A00AFFC63 /* MapFieldService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98363B4B23DEE57A00AFFC63 /* MapFieldService.swift */; };
-		98363B4E23DEEABA00AFFC63 /* GetAllFieldsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98363B4D23DEEAB900AFFC63 /* GetAllFieldsService.swift */; };
 		98363B5123DEEC7A00AFFC63 /* mapFieldMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98363B5023DEEC7A00AFFC63 /* mapFieldMiddleware.swift */; };
-		98363B5323DEED2100AFFC63 /* GetAllFieldMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98363B5223DEED2100AFFC63 /* GetAllFieldMiddleware.swift */; };
 		98363B5523DEF0EC00AFFC63 /* MapFieldInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98363B5423DEF0EC00AFFC63 /* MapFieldInteraction.swift */; };
 		98363B6023DFF7EA00AFFC63 /* MapFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98363B5F23DFF7EA00AFFC63 /* MapFieldView.swift */; };
 		98363B6223E028BD00AFFC63 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98363B6123E028BD00AFFC63 /* Util.swift */; };
@@ -187,9 +185,7 @@
 		98363B4723DEE34F00AFFC63 /* MapFieldRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFieldRepository.swift; sourceTree = "<group>"; };
 		98363B4923DEE3C900AFFC63 /* UtilFileReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilFileReader.swift; sourceTree = "<group>"; };
 		98363B4B23DEE57A00AFFC63 /* MapFieldService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFieldService.swift; sourceTree = "<group>"; };
-		98363B4D23DEEAB900AFFC63 /* GetAllFieldsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllFieldsService.swift; sourceTree = "<group>"; };
 		98363B5023DEEC7A00AFFC63 /* mapFieldMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mapFieldMiddleware.swift; sourceTree = "<group>"; };
-		98363B5223DEED2100AFFC63 /* GetAllFieldMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllFieldMiddleware.swift; sourceTree = "<group>"; };
 		98363B5423DEF0EC00AFFC63 /* MapFieldInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFieldInteraction.swift; sourceTree = "<group>"; };
 		98363B5F23DFF7EA00AFFC63 /* MapFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFieldView.swift; sourceTree = "<group>"; };
 		98363B6123E028BD00AFFC63 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
@@ -483,7 +479,6 @@
 			isa = PBXGroup;
 			children = (
 				98363B4B23DEE57A00AFFC63 /* MapFieldService.swift */,
-				98363B4D23DEEAB900AFFC63 /* GetAllFieldsService.swift */,
 			);
 			path = services;
 			sourceTree = "<group>";
@@ -500,7 +495,6 @@
 			isa = PBXGroup;
 			children = (
 				98363B5023DEEC7A00AFFC63 /* mapFieldMiddleware.swift */,
-				98363B5223DEED2100AFFC63 /* GetAllFieldMiddleware.swift */,
 			);
 			path = middlewares;
 			sourceTree = "<group>";
@@ -1009,7 +1003,6 @@
 				98F126B624C8F023001853D5 /* TauxApplicationPhosphoreVolee.swift in Sources */,
 				98CB79D524B82B3D00EFFF19 /* ContainerFormCulturalPracticeViewModel.swift in Sources */,
 				98A2C548240E696C002A884B /* AnnotationWithData.swift in Sources */,
-				98363B4E23DEEABA00AFFC63 /* GetAllFieldsService.swift in Sources */,
 				9860400C23BD8EEB00D5B538 /* FarmerState.swift in Sources */,
 				98457B662423E5FA00AF4C90 /* CulturalPraticeViewController.swift in Sources */,
 				98363B3C23DED00900AFFC63 /* FieldGeoJsonArray.swift in Sources */,
@@ -1037,7 +1030,6 @@
 				9854C003240BC60400E5AB8A /* ContainerVIewControllers.swift in Sources */,
 				98CB79D324B827AC00EFFF19 /* ContainerFormCulturalPracticeView.swift in Sources */,
 				98F126A024C6F1D4001853D5 /* BandeRiveraine.swift in Sources */,
-				98363B5323DEED2100AFFC63 /* GetAllFieldMiddleware.swift in Sources */,
 				9860400F23BD976800D5B538 /* StoreSubcriberProxy.swift in Sources */,
 				9894340A2410C76D003C0110 /* PolygonWithData.swift in Sources */,
 				989090AA24C1530800AFC080 /* ContainerTitleNavigationAction.swift in Sources */,

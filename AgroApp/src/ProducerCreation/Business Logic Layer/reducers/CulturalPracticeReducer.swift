@@ -57,7 +57,7 @@ class CulturalPracticeReducerHandler {
 
         return state.changeValues(subAction: .willSelectElementOnList(
             culturalPracticeElement: culturalPracticeElement,
-            fieldType: state.currentField!
+            field: state.currentField!
             )
         )
     }
@@ -125,30 +125,17 @@ class CulturalPracticeReducerHandler {
     }
 
     static func handle(selectedFieldOnListAction: CulturalPracticeFormAction.SelectedFieldOnListAction) -> CulturalPracticeFormState {
-        switch selectedFieldOnListAction.fieldType {
-        case .polygon(let fieldPolygone):
-            let culturalPracticeElements = CulturalPractice
-                .getCulturalPracticeElement(culturalPractice: fieldPolygone.culturalPratice)
+        let field = selectedFieldOnListAction.field
+        let culturalPracticeElements = CulturalPractice
+            .getCulturalPracticeElement(culturalPractice: field.culturalPratice)
 
-            return CulturalPracticeFormState(
-                uuidState: UUID().uuidString,
-                currentField: selectedFieldOnListAction.fieldType,
-                sections: createSection(by: culturalPracticeElements),
-                subAction: .reloadData,
-                title: "Pratiques culturelles parcelle \(fieldPolygone.id)"
-            )
-
-        case .multiPolygon(let fieldMultiPolygon):
-            let culturalPracticeElements = CulturalPractice.getCulturalPracticeElement(culturalPractice: fieldMultiPolygon.culturalPratice)
-
-            return CulturalPracticeFormState(
-                uuidState: UUID().uuidString,
-                currentField: selectedFieldOnListAction.fieldType,
-                sections: createSection(by: culturalPracticeElements),
-                subAction: .reloadData,
-                title: "Pratiques culturelles parcelle \(fieldMultiPolygon.id)"
-            )
-        }
+        return CulturalPracticeFormState(
+            uuidState: UUID().uuidString,
+            currentField: selectedFieldOnListAction.field,
+            sections: createSection(by: culturalPracticeElements),
+            subAction: .reloadData,
+            title: "Pratiques culturelles parcelle \(field.id)"
+        )
     }
 
     private static func createSection(by culturalPracticeElements: [CulturalPracticeElementProtocol]) -> [Section<CulturalPracticeElementProtocol>] {

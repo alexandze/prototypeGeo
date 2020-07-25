@@ -17,19 +17,10 @@ class SettingViewController<T: View>: UIHostingController<T> {
 
     init(myView: T) {
         super.init(rootView: myView)
-       // rootView.dismiss = self.dismissVC
-       // rootView.setBackgroundColor = self.setBackgroundColor
-      //  rootView.setAlpha = self.setAlpha
-       // rootView.setIsModalInPresentation = self.setIsModalInPresentation
     }
 
     func dismissVC(completion: (() -> Void)?) {
-       // rootView.dismiss = nil
-      //  rootView.setBackgroundColor = nil
-      //  rootView.setAlpha = nil
-      //  rootView.setIsModalInPresentation = nil
         self.dismiss(animated: true, completion: completion)
-
     }
 
     func setBackgroundColor(_ color: UIColor) {

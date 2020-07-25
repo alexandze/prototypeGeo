@@ -12,7 +12,7 @@ import ReSwift
 struct ContainerFormCulturalPracticeAction {
     struct ContainerElementSelectedOnListAction: Action {
         var containerElement: CulturalPracticeContainerElement
-        var field: FieldType
+        var field: Field
         var subAction:  ContainerFormCulturalPracticeState.SubAction = .containerElementSelectedOnListActionSuccess
     }
 

@@ -17,10 +17,10 @@ struct MapFieldAction {
     }
 
     struct SelectedFieldOnMapAction: Action {
-        let fieldType: FieldType
+        let field: Field
     }
 
     struct DeselectedFieldOnMapAction: Action {
-        let fieldType: FieldType
+        let field: Field
     }
 }

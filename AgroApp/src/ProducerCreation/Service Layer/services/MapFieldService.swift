@@ -9,6 +9,7 @@
 import Foundation
 
 class MapFieldService {
-    static let shared = MapFieldService()
-    let mapFieldRepository = MapFieldRepository.shared
+    public func getFields() -> [Int: Field]? {
+        MapFieldRepository().getFieldGeoJsonArray()
+    }
 }

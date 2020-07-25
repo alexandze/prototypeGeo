@@ -25,16 +25,16 @@ public class MapFieldInteractionImpl: MapFieldInteraction {
         }
     }
 
-    func selectedField(field: FieldType) {
-        let selectedFieldOnMapAction = MapFieldAction.SelectedFieldOnMapAction(fieldType: field)
+    func selectedField(field: Field) {
+        let selectedFieldOnMapAction = MapFieldAction.SelectedFieldOnMapAction(field: field)
 
        _ =  Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(selectedFieldOnMapAction)
         }
     }
 
-    func deselectedField(field: FieldType) {
-        let deselectedFieldOnMapAction = MapFieldAction.DeselectedFieldOnMapAction(fieldType: field)
+    func deselectedField(field: Field) {
+        let deselectedFieldOnMapAction = MapFieldAction.DeselectedFieldOnMapAction(field: field)
 
         _ = Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(deselectedFieldOnMapAction)
@@ -46,6 +46,6 @@ public class MapFieldInteractionImpl: MapFieldInteraction {
 
 protocol MapFieldInteraction {
     func getAllField()
-    func selectedField(field: FieldType)
-    func deselectedField(field: FieldType)
+    func selectedField(field: Field)
+    func deselectedField(field: Field)
 }

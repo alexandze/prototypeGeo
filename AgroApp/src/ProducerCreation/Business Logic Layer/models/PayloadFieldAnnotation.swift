@@ -9,7 +9,7 @@
 import Foundation
 
 class PayloadFieldAnnotation {
-    let idField: Int
+    var idField: Int
     var isSelected = false
 
     init(idField: Int) {

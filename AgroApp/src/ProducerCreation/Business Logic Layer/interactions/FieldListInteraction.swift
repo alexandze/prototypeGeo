@@ -16,11 +16,11 @@ class FieldListInteractionImpl: FieldListInteraction {
         self.actionDispatcher = actionDispatcher
     }
 
-    public func setCurrentField(field: FieldType) {
+    public func setCurrentField(field: Field) {
         //TODO: set current field
     }
 }
 
 protocol FieldListInteraction {
-    func setCurrentField(field: FieldType)
+    func setCurrentField(field: Field)
 }

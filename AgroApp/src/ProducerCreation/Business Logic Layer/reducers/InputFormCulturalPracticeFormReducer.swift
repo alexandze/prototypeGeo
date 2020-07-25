@@ -40,7 +40,7 @@ class InputFormCulturalPracticeReducerHandler {
     ) -> InputFormCulturalPracticeState {
         state.changeValue(
             inputElement: inputElementSelectedOnListAction.culturalPracticeInputElement,
-            fieldType: inputElementSelectedOnListAction.fieldType,
+            field: inputElementSelectedOnListAction.field,
             inputFormSubAction: inputElementSelectedOnListAction.subAction,
             isDirty: false
         )

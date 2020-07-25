@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 import RxSwift
 
+// TODO afficher les messages deinit seulement en mode debug
+// TODO deinit les states
 class Util {
 
     private static var serialDispatchQueueScheduler: SerialDispatchQueueScheduler?

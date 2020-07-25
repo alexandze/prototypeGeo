@@ -42,13 +42,13 @@ class FieldListReducerHandler {
     ) -> FieldListState {
         switch updateCulturalPracticeElementAction.culturalPracticeElementProtocol {
         case let inputElement as CulturalPracticeInputElement:
-            return handleUpdateFieldForInputAndSelect(inputElement, updateCulturalPracticeElementAction.fieldType, state)
+            return handleUpdateFieldForInputAndSelect(inputElement, updateCulturalPracticeElementAction.field, state)
         case let selectElement as CulturalPracticeMultiSelectElement:
-            return handleUpdateFieldForInputAndSelect(selectElement, updateCulturalPracticeElementAction.fieldType, state)
+            return handleUpdateFieldForInputAndSelect(selectElement, updateCulturalPracticeElementAction.field, state)
         case let containerElement as CulturalPracticeContainerElement:
             return handleUpdateFieldForContainerElement(
                 containerElement,
-                updateCulturalPracticeElementAction.fieldType,
+                updateCulturalPracticeElementAction.field,
                 state
             )
         default:
@@ -57,32 +57,36 @@ class FieldListReducerHandler {
         return state
     }
 
-    static private func handleUpdateFieldForInputAndSelect(_ culturalPracticeElement: CulturalPracticeElementProtocol, _ fieldType: FieldType, _ state: FieldListState) -> FieldListState {
-        guard let fieldTypeFindTuple = findFieldTypeById(state.fieldList!, fieldType.getId()),
+    static private func handleUpdateFieldForInputAndSelect(_ culturalPracticeElement: CulturalPracticeElementProtocol, _ field: Field, _ state: FieldListState) -> FieldListState {
+        guard let (fieldFind, indexFind) = findFieldTypeById(state.fieldList!, field.id),
         let culturalPracticeValue = culturalPracticeElement.value
             else { return state }
 
-        let culturalPractice = fieldTypeFindTuple.0.getCulturalPractice() ?? CulturalPractice(id: fieldTypeFindTuple.0.getId())
+        let culturalPractice = fieldFind.culturalPratice ?? CulturalPractice(id: fieldFind.id)
 
         let newCulturalPracticeValue = culturalPracticeValue.changeValueOfCulturalPractice(
             culturalPractice,
             index: culturalPracticeElement.getIndex()
         )
 
-        let fieldTypeNew = fieldTypeFindTuple.0.changeValue(culturalPractice: newCulturalPracticeValue)
+        let fieldNew = fieldFind.set(
+            culturalPractice: newCulturalPracticeValue,
+            of: fieldFind
+        )
+
         var newFieldList = state.fieldList!
-        newFieldList[fieldTypeFindTuple.1] = fieldTypeNew
+        newFieldList[indexFind] = fieldNew
 
         return state.changeValue(
             fieldList: newFieldList,
             subAction: .updateFieldSuccess,
-            indexForUpdate: fieldTypeFindTuple.1
+            indexForUpdate: indexFind
         )
     }
 
     static private func handleUpdateFieldForContainerElement(
         _ containerElement: CulturalPracticeContainerElement,
-        _ fieldType: FieldType,
+        _ field: Field,
         _ state: FieldListState
     ) -> FieldListState {
         // TODO refactoring
@@ -92,22 +96,22 @@ class FieldListReducerHandler {
 
         (0..<countInputElement).forEach { index in
             previousState = handleUpdateFieldForInputAndSelect(
-                containerElement.culturalInputElement[index], fieldType, previousState)
+                containerElement.culturalInputElement[index], field, previousState)
         }
 
         (0..<countSelectElement).forEach { index in
             previousState = handleUpdateFieldForInputAndSelect(
                 containerElement.culturalPracticeMultiSelectElement[index],
-                fieldType, previousState
+                field, previousState
             )
         }
 
         return previousState
     }
 
-    static private func findFieldTypeById(_ fieldTypes: [FieldType],_ id: Int) -> (FieldType, Int)? {
-        let indexFind = fieldTypes.firstIndex { $0.getId() == id }
-        return indexFind.map {  (fieldTypes[$0], $0) }
+    static private func findFieldTypeById(_ fields: [Field],_ id: Int) -> (Field, Int)? {
+        let indexFind = fields.firstIndex { $0.id == id }
+        return indexFind.map {  (fields[$0], $0) }
     }
 
     static func handle(
@@ -133,12 +137,12 @@ class FieldListReducerHandler {
         _ state: FieldListState
         ) -> FieldListState {
         let secondArray = state.fieldList != nil ? state.fieldList! : []
-        var firstArray = [selectedFieldOnMapAction.fieldType]
+        var firstArray = [selectedFieldOnMapAction.field]
         firstArray += secondArray
 
         return state.changeValue(
             fieldList: firstArray,
-            currentField: selectedFieldOnMapAction.fieldType,
+            currentField: selectedFieldOnMapAction.field,
             subAction: .selectedFieldOnMapActionSuccess
         )
     }
@@ -147,9 +151,9 @@ class FieldListReducerHandler {
         deselectedFieldOnMapAction: MapFieldAction.DeselectedFieldOnMapAction,
         _ state: FieldListState
     ) -> FieldListState {
-        let fieldToRemove = deselectedFieldOnMapAction.fieldType
+        let fieldToRemove = deselectedFieldOnMapAction.field
         let fieldList = state.fieldList != nil ? state.fieldList! : []
-        let index = findIndexFieldByIdField(idField: fieldToRemove.getId(), fieldList: fieldList)
+        let index = findIndexFieldByIdField(idField: fieldToRemove.id, fieldList: fieldList)
 
         let newFieldListState = index.map { (index: Int) -> FieldListState in
             return handleRemoveFieldInState(state: state, index: index)
@@ -190,14 +194,7 @@ class FieldListReducerHandler {
         )
     }
 
-    private static func findIndexFieldByIdField(idField: Int, fieldList: [FieldType]) -> Int? {
-        fieldList.firstIndex {
-            switch $0 {
-            case .polygon(let fieldPolygon):
-                return fieldPolygon.id == idField
-            case .multiPolygon(let multiPolygon):
-                return multiPolygon.id == idField
-            }
-        }
+    private static func findIndexFieldByIdField(idField: Int, fieldList: [Field]) -> Int? {
+        fieldList.firstIndex { $0.id == idField }
     }
 }

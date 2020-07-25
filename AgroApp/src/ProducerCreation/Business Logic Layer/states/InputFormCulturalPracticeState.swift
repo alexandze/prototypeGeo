@@ -15,20 +15,20 @@ struct InputFormCulturalPracticeState: Equatable {
 
     var uuidState: String
     var inputElement: CulturalPracticeInputElement?
-    var fieldType: FieldType?
+    var field: Field?
     var inputFormSubAction: InputFormCulturalPracticeSubAction?
     var isDirty: Bool?
 
     func changeValue(
         inputElement: CulturalPracticeInputElement? = nil,
-        fieldType: FieldType? = nil,
+        field: Field? = nil,
         inputFormSubAction: InputFormCulturalPracticeSubAction? = nil,
         isDirty: Bool? = nil
     ) -> InputFormCulturalPracticeState {
         InputFormCulturalPracticeState(
             uuidState: UUID().uuidString,
             inputElement: inputElement ?? self.inputElement,
-            fieldType: fieldType ?? self.fieldType,
+            field: field ?? self.field,
             inputFormSubAction: inputFormSubAction ?? self.inputFormSubAction,
             isDirty: isDirty ?? self.isDirty
         )

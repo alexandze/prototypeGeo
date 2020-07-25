@@ -11,7 +11,7 @@ import ReSwift
 
 struct FieldListAction {
     struct WillSelectFieldOnListAction: Action {
-        var field: FieldType
+        var field: Field
     }
 
     struct IsAppearAction: Action {

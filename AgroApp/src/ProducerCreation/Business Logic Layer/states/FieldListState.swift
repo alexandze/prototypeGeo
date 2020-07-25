@@ -14,8 +14,8 @@ struct FieldListState: Equatable {
     }
 
     var uuidState: String
-    var fieldList: [FieldType]?
-    var currentField: FieldType?
+    var fieldList: [Field]?
+    var currentField: Field?
     var indexForRemove: Int?
     var subAction: SubAction? = .initFieldList
     var title: String = "Liste des parcelles choisies"
@@ -32,8 +32,8 @@ struct FieldListState: Equatable {
     }
 
     func changeValue(
-        fieldList: [FieldType]? = nil,
-        currentField: FieldType? = nil,
+        fieldList: [Field]? = nil,
+        currentField: Field? = nil,
         indexForRemove: Int? = nil,
         subAction: SubAction? = nil,
         title: String? = nil,

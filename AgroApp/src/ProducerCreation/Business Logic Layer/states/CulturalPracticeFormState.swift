@@ -13,14 +13,14 @@ struct CulturalPracticeFormState: Equatable {
     }
 
     var uuidState: String
-    var currentField: FieldType?
+    var currentField: Field?
     var sections: [Section<CulturalPracticeElementProtocol>]?
     var subAction: CulturalPracticeSubAction?
     var title: String?
     var isFinishCompletedCurrentContainer: Bool?
 
     public func changeValues(
-        currentField: FieldType? = nil,
+        currentField: Field? = nil,
         sections: [Section<CulturalPracticeElementProtocol>]? = nil,
         subAction: CulturalPracticeSubAction? = nil,
         title: String? = nil,
@@ -44,7 +44,7 @@ enum CulturalPracticeSubAction {
     case updateRows(indexPath: [IndexPath])
     case willSelectElementOnList(
         culturalPracticeElement: CulturalPracticeElementProtocol,
-        fieldType: FieldType
+        field: Field
     )
 
     case canNotSelectElementOnList(culturalPracticeElement: CulturalPracticeElementProtocol)

@@ -173,7 +173,6 @@ struct CulturalPractice {
 }
 
 extension CulturalPractice: Codable {
-
     func encode(to encoder: Encoder) throws {
 
     }
@@ -183,90 +182,100 @@ extension CulturalPractice: Codable {
         do {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             
-            self.id = try? container.decode(
+            id = try? container.decode(
                 Int.self,
                 forKey: .id
             )
             
-            self.avaloir = try? container.decode(
+            avaloir = try? container.decode(
                 Avaloir.self,
                 forKey: .avaloir
             )
             
-            self.bandeRiveraine = try? container.decode(
+            bandeRiveraine = try? container.decode(
                 BandeRiveraine.self,
                 forKey: .bandeRiveraine
             )
             
-            self.doseFumier = decodeDoseFumier(container: container)
+            doseFumier = decodeDoseFumier(container: container)
             
-            self.periodeApplicationFumier = decodePeriodeApplicationFumiers(
+            periodeApplicationFumier = decodePeriodeApplicationFumiers(
                 container: container
             )
             
-            self.delaiIncorporationFumier = decodeDelaiIncorporationFumiers(
+            periodeApplicationFumier = cleanArrayByDoseFumier(
+                doseFumiers: doseFumier,
+                culturalPracticeValueProtocols: periodeApplicationFumier
+            )
+            
+            delaiIncorporationFumier = decodeDelaiIncorporationFumiers(
                 container: container
             )
             
-            self.travailSol = try? container.decode(
+            delaiIncorporationFumier = cleanArrayByDoseFumier(
+                doseFumiers: doseFumier,
+                culturalPracticeValueProtocols: delaiIncorporationFumier
+            )
+            
+            travailSol = try? container.decode(
                 TravailSol.self,
                 forKey: .travailSol
             )
             
-            self.couvertureDerobee = try? container.decode(
+            couvertureDerobee = try? container.decode(
                 CouvertureDerobee.self,
                 forKey: .couvertureDerobee
             )
             
-            self.couvertureAssociee = try? container.decode(
+            couvertureAssociee = try? container.decode(
                 CouvertureAssociee.self,
                 forKey: .couvertureAssociee
             )
             
-            self.drainageSouterrain = try? container.decode(
+            drainageSouterrain = try? container.decode(
                 DrainageSouterrain.self,
                 forKey: .drainageSouterrain
             )
             
-            self.drainageSurface = try? container.decode(
+            drainageSurface = try? container.decode(
                 DrainageSurface.self,
                 forKey: .drainageSurface
             )
             
-            self.conditionProfilCultural = try? container.decode(
+            conditionProfilCultural = try? container.decode(
                 ConditionProfilCultural.self,
                 forKey: .conditionProfilCultural
             )
             
-            self.tauxApplicationPhosphoreRang = decodeInputValue(
+            tauxApplicationPhosphoreRang = decodeInputValue(
                 container: container,
                 codingKeys: .tauxApplicationPhosphoreRang,
                 culturalPracticeValueProtocolType: TauxApplicationPhosphoreRang.self,
                 typeReturnValue: TauxApplicationPhosphoreRang.self
             )
             
-            self.tauxApplicationPhosphoreVolee = decodeInputValue(
+            tauxApplicationPhosphoreVolee = decodeInputValue(
                 container: container,
                 codingKeys: .tauxApplicationPhosphoreRang,
                 culturalPracticeValueProtocolType: TauxApplicationPhosphoreVolee.self,
                 typeReturnValue: TauxApplicationPhosphoreVolee.self
             )
             
-            self.alMehlich3 = decodeInputValue(
+            alMehlich3 = decodeInputValue(
                 container: container,
                 codingKeys: .alMehlich3,
                 culturalPracticeValueProtocolType: AlMehlich3.self,
                 typeReturnValue: AlMehlich3.self
             )
             
-            self.pMehlich3 = decodeInputValue(
+            pMehlich3 = decodeInputValue(
                 container: container,
                 codingKeys: .pMehlich3,
                 culturalPracticeValueProtocolType: PMehlich3.self,
                 typeReturnValue: PMehlich3.self
             )
             
-            self.cultureAnneeEnCoursAnterieure = try? container.decode(
+            cultureAnneeEnCoursAnterieure = try? container.decode(
                 CultureAnneeEnCoursAnterieure.self,
                 forKey: .cultureAnneeEnCoursAnterieure
             )
@@ -341,6 +350,23 @@ extension CulturalPractice: Codable {
         return getCodableValuesWithCheck(codableValuesFromJson: periodeApplicationFumierFromJson)
     }
     
+    private func cleanArrayByDoseFumier<T: CulturalPracticeValueProtocol>(
+        doseFumiers: [DoseFumier?]?,
+        culturalPracticeValueProtocols: [T?]?
+    ) -> [T?]? {
+        guard let doseFumiers = doseFumiers,
+            var culturalPracticeValueProtocols = culturalPracticeValueProtocols,
+            doseFumiers.count == culturalPracticeValueProtocols.count
+            else { return nil }
+        
+        (0..<doseFumiers.count).forEach { index in
+            guard doseFumiers[index] == nil else { return }
+            culturalPracticeValueProtocols[index] = nil
+        }
+        
+        return culturalPracticeValueProtocols
+    }
+    
     private func getCodableValuesWithCheck<T: Codable>(
         codableValuesFromJson: [T?]
     ) -> [T?]? {
@@ -387,13 +413,16 @@ extension CulturalPractice: Codable {
     }
     
     private func getDoseFumierValue(container: KeyedDecodingContainer<CulturalPractice.CodingKeys>, codingKeys: CodingKeys) -> Int? {
-        try? container.decode(Int.self, forKey: codingKeys)
+        guard let doseFumierValue = try? container.decode(Int.self, forKey: codingKeys),
+            doseFumierValue > 0 else { return nil }
+        
+        return doseFumierValue
     }
     
     private func getAllDoseFumierUpToNilDose(doseFumierValues: [Int?]) -> [DoseFumier?]? {
         var doseFumiers = getArrayOfDoseWithNilValue(DoseFumier.self)
         let indexFirstNilValue = getIndexFirstNilValue(array: doseFumierValues)
-        let endLoop = indexFirstNilValue != nil ? (indexFirstNilValue! + 1) : doseFumierValues.count
+        let endLoop = indexFirstNilValue ?? doseFumierValues.count
         
         if doseFumierValues.count <= doseFumiers.count {
             (0..<endLoop).forEach { index in

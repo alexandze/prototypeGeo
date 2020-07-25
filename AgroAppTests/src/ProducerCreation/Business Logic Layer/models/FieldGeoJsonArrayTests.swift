@@ -11,11 +11,11 @@ import Foundation
 @testable import AgroApp
 
 class FieldGeoJsonArrayTests: XCTestCase {
-    var sut: FieldGeoJsonArray1!
+    var sut: FieldCulturalPracticeDecodable!
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
-       sut =  UtilReaderFile.readJsonFile(resource: "ACTU", typeRessource: "json", FieldGeoJsonArray1.self)
+       sut =  UtilReaderFile.readJsonFile(resource: "PRATIQUES_2018_LATLONG", typeRessource: "json", FieldCulturalPracticeDecodable.self)
     }
 
     override func tearDownWithError() throws {
@@ -24,14 +24,15 @@ class FieldGeoJsonArrayTests: XCTestCase {
     }
 
     func testExample() throws {
-        let culturalPractice = self.sut.features[0].geometry
-        XCTAssertNotNil(culturalPractice)
+        let fieldWrappers = self.sut.fieldWrappers
+        XCTAssertNotNil(fieldWrappers)
     }
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
         self.measure {
             // Put the code you want to measure the time of here.
+            UtilReaderFile.readJsonFile(resource: "PRATIQUES_2018_LATLONG", typeRessource: "json", FieldCulturalPracticeDecodable.self)
         }
     }
 

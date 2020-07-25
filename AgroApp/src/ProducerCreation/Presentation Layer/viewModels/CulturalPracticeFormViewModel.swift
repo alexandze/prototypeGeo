@@ -11,7 +11,7 @@ import RxSwift
 import UIKit
 
 class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
-    var currentField: FieldType?
+    var currentField: Field?
     var sections: [Section<CulturalPracticeElementProtocol>]?
     var cellId: String = UUID().uuidString
     var headerFooterSectionViewId: String = UUID().uuidString
@@ -60,11 +60,11 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
                         self.handleUpdateRowAt(indexPath: indexPaths[0])
                     case .willSelectElementOnList(
                         culturalPracticeElement: let culturalPracticeElementSelected,
-                        fieldType: let fieldType
+                        field: let field
                         ):
                         self.handleWillSelectElementOnList(
                             culturalParacticeElementSelected: culturalPracticeElementSelected,
-                            fieldType: fieldType
+                            field: field
                         )
                     case .canNotSelectElementOnList(culturalPracticeElement: _):
                         print("can not select")
@@ -120,26 +120,26 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
 
     private func createSelectedSelectElementOnListAction(
         culturalPracticeSelectElement: CulturalPracticeElementProtocol,
-        fieldType: FieldType
+        field: Field
     ) -> SelectFormCulturalPracticeAction.SelectElementSelectedOnList {
         SelectFormCulturalPracticeAction.SelectElementSelectedOnList(
             culturalPracticeElement: culturalPracticeSelectElement,
-            fieldType: fieldType,
+            field: field,
             subAction: SelectFormCulturalPracticeSubAction.newDataForm
         )
     }
 
     private func createSelectedInputElementOnListAction(
         inputElement: CulturalPracticeInputElement,
-        fieldType: FieldType
+        field: Field
     ) -> InputFormCulturalPracticeAction.InputElementSelectedOnListAction {
         InputFormCulturalPracticeAction.InputElementSelectedOnListAction(
             culturalPracticeInputElement: inputElement,
-            fieldType: fieldType,
+            field: field,
             subAction: .newFormData)
     }
 
-    private func setStateProperties(_ currentFieldType: FieldType, _ sections: [Section<CulturalPracticeElementProtocol>], _ title: String) {
+    private func setStateProperties(_ currentFieldType: Field, _ sections: [Section<CulturalPracticeElementProtocol>], _ title: String) {
         self.currentField = currentFieldType
         self.sections = sections
         self.title = title
@@ -195,15 +195,15 @@ extension CulturalPraticeFormViewModelImpl {
 
     private func handleWillSelectElementOnList(
         culturalParacticeElementSelected: CulturalPracticeElementProtocol,
-        fieldType: FieldType
+        field: Field
     ) {
         switch culturalParacticeElementSelected {
         case let selectElement as CulturalPracticeMultiSelectElement:
-            self.handleSelectedSelectElementOnList(selectElement: selectElement, fieldType)
+            self.handleSelectedSelectElementOnList(selectElement: selectElement, field)
         case let inputElement as CulturalPracticeInputElement:
-            self.handleSelectedInputElement(inputElement: inputElement, fieldType)
+            self.handleSelectedInputElement(inputElement: inputElement, field)
         case let containerElement as CulturalPracticeContainerElement:
-            self.handleSelectedContainerOnList(containerElement: containerElement, fieldType)
+            self.handleSelectedContainerOnList(containerElement: containerElement, field)
         default:
             break
         }
@@ -211,9 +211,9 @@ extension CulturalPraticeFormViewModelImpl {
 
     private func handleSelectedContainerOnList(
         containerElement: CulturalPracticeContainerElement,
-        _ fieldType: FieldType
+        _ field: Field
     ) {
-        _ = dispatchSelectedContainerElementOnListObs(containerElement: containerElement, fieldType: fieldType)
+        _ = dispatchSelectedContainerElementOnListObs(containerElement: containerElement, field: field)
             .subscribe { _ in
                 self.presentContainerFormCulturalPracticeHostingController()
         }
@@ -221,11 +221,11 @@ extension CulturalPraticeFormViewModelImpl {
 
     private func handleSelectedInputElement(
         inputElement: CulturalPracticeInputElement,
-        _ fieldType: FieldType
+        _ field: Field
     ) {
         _ = dispatchSelectedInputElementOnListObs(
             inputElement: inputElement,
-            fieldType: fieldType
+            field: field
         ).subscribe { _ in
             self.presentInputFormCulturalPracticeHostingController()
         }
@@ -233,11 +233,11 @@ extension CulturalPraticeFormViewModelImpl {
 
     private func handleSelectedSelectElementOnList(
         selectElement: CulturalPracticeMultiSelectElement,
-        _ fieldType: FieldType
+        _ field: Field
     ) {
         _ = dispatchSelectedSelectElementOnListObs(
             culturalPracticeElement: selectElement,
-            fieldType: fieldType
+            field: field
         ).subscribe { _ in
             self.presentSelectFormCulturalPracticeController()
         }
@@ -271,12 +271,12 @@ extension CulturalPraticeFormViewModelImpl {
 
     private func dispatchSelectedSelectElementOnListObs(
         culturalPracticeElement: CulturalPracticeElementProtocol,
-        fieldType: FieldType
+        field: Field
     ) -> Completable {
         Util.createRunCompletable {
             let action = self.createSelectedSelectElementOnListAction(
                 culturalPracticeSelectElement: culturalPracticeElement,
-                fieldType: fieldType
+                field: field
             )
 
             self.actionDispatcher.dispatch(action)
@@ -285,12 +285,12 @@ extension CulturalPraticeFormViewModelImpl {
 
     private func dispatchSelectedInputElementOnListObs(
         inputElement: CulturalPracticeInputElement,
-        fieldType: FieldType
+        field: Field
     ) -> Completable {
         Util.createRunCompletable {
             let action = self.createSelectedInputElementOnListAction(
                 inputElement: inputElement,
-                fieldType: fieldType
+                field: field
             )
 
             self.actionDispatcher.dispatch(action)
@@ -299,13 +299,13 @@ extension CulturalPraticeFormViewModelImpl {
 
     private func dispatchSelectedContainerElementOnListObs(
         containerElement: CulturalPracticeContainerElement,
-        fieldType: FieldType
+        field: Field
     ) -> Completable {
         Util.createRunCompletable {
             let action = ContainerFormCulturalPracticeAction
                 .ContainerElementSelectedOnListAction(
                     containerElement: containerElement,
-                    field: fieldType
+                    field: field
             )
 
             self.actionDispatcher.dispatch(action)

@@ -63,17 +63,8 @@ public class FieldListViewController: UIViewController, UITableViewDelegate, UIT
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: self.cellID, for: indexPath)
         let index = indexPath.row
-        let fieldType = fieldListViewModel.fieldList[index]
-        var fieldId: Int?
-
-        switch fieldType {
-        case .multiPolygon(let multi):
-            fieldId = multi.id
-        case .polygon(let polygon):
-            fieldId = polygon.id
-        }
-
-        cell.textLabel?.text = "Parcelle avec le id \(fieldId!)"
+        let field = fieldListViewModel.fieldList[index]
+        cell.textLabel?.text = "Parcelle avec le id \(field.id)"
         cell.backgroundColor = .systemGray6
         cell.alpha = 0.95
         let image = UIImage(named: "location")?.withTintColor(Util.getOppositeColorBlackOrWhite())

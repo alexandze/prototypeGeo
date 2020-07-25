@@ -16,7 +16,7 @@ class SelectFormCulturalPracticeViewModelImpl: SelectFormCulturalPracticeViewMod
     var disposableDispatcher: Disposable?
     weak var viewController: UIViewController?
     var multiSelectElement: CulturalPracticeMultiSelectElement?
-    var fieldType: FieldType?
+    var field: Field?
     var pickerView: UIPickerView?
     let actionDispatcher: ActionDispatcher
 
@@ -37,10 +37,10 @@ class SelectFormCulturalPracticeViewModelImpl: SelectFormCulturalPracticeViewMod
             .observeOn(MainScheduler.instance)
             .subscribe { event in
             guard let selectElement = event.element?.culturalPraticeElement as? CulturalPracticeMultiSelectElement,
-                let fieldType = event.element?.fieldType,
+                let field = event.element?.field,
                 let selectFormCulturalParacticeSubAction = event.element?.selectFormCulturalParacticeSubAction
                 else { return }
-            self.setValues(selectElement: selectElement, fieldType: fieldType)
+            self.setValues(selectElement: selectElement, field: field)
 
             switch selectFormCulturalParacticeSubAction {
             case .newDataForm:
@@ -86,7 +86,7 @@ class SelectFormCulturalPracticeViewModelImpl: SelectFormCulturalPracticeViewMod
     }
 
     private func createActionUpdateCulturalPracticeElementWith(selectElement: CulturalPracticeMultiSelectElement) -> CulturalPracticeFormAction.UpdateCulturalPracticeElementAction {
-        CulturalPracticeFormAction.UpdateCulturalPracticeElementAction(culturalPracticeElementProtocol: selectElement, fieldType: self.fieldType!)
+        CulturalPracticeFormAction.UpdateCulturalPracticeElementAction(culturalPracticeElementProtocol: selectElement, field: self.field!)
     }
 
     private func setSelectElementWithCurrentValue(currentIndexChooseValue: Int) {
@@ -101,24 +101,17 @@ class SelectFormCulturalPracticeViewModelImpl: SelectFormCulturalPracticeViewMod
         self.pickerView = pickerView
     }
 
-    private func setValues(selectElement: CulturalPracticeMultiSelectElement, fieldType: FieldType) {
+    private func setValues(selectElement: CulturalPracticeMultiSelectElement, field: Field) {
         self.multiSelectElement = selectElement
-        self.fieldType = fieldType
+        self.field = field
     }
 
     private func setTitle(_ title: String) {
         getSelectFormCulturalPracticeView()!.textTitle = title
     }
 
-    private func setTextDetailWith(fieldType: FieldType, and culturalPracticeElementProtocol: CulturalPracticeElementProtocol) {
-        switch fieldType {
-        case .polygon(let polygon):
-            getSelectFormCulturalPracticeView()!.textDetail =
-                "Choisir une valeur pour la parcelle \(polygon.id)"
-        case .multiPolygon(let multipolygon):
-            getSelectFormCulturalPracticeView()!.textDetail =
-                "Choisir une valeur pour la parcelle \(multipolygon.id)"
-        }
+    private func setTextDetailWith(field: Field, and culturalPracticeElementProtocol: CulturalPracticeElementProtocol) {
+        getSelectFormCulturalPracticeView()!.textDetail = "Choisir une valeur pour la parcelle \(field.id)"
     }
 
     private func initPickerViewWith(selectElement: CulturalPracticeMultiSelectElement?) -> UIPickerView {
@@ -153,7 +146,7 @@ class SelectFormCulturalPracticeViewModelImpl: SelectFormCulturalPracticeViewMod
 extension SelectFormCulturalPracticeViewModelImpl {
     private func handleNewFormData() {
         setTitle(self.multiSelectElement!.title)
-        setTextDetailWith(fieldType: self.fieldType!, and: self.multiSelectElement!)
+        setTextDetailWith(field: self.field!, and: self.multiSelectElement!)
         setPickerView(pickerView: initPickerViewWith(selectElement: multiSelectElement))
         initCurrentValueOfPickerView()
         initHandleValidateButton()

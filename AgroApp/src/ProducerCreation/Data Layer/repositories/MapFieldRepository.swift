@@ -9,10 +9,9 @@
 import Foundation
 
 class MapFieldRepository {
-    static let shared = MapFieldRepository()
 
-    public func getFieldGeoJsonArray() -> FieldGeoJsonArray? {
-        UtilReaderFile.readJsonFile(resource: "ACTU", typeRessource: "json", FieldGeoJsonArray.self)
+    public func getFieldGeoJsonArray() -> [Int: Field]? {
+        UtilReaderFile.readJsonFile(resource: "PRATIQUES_2018_LATLONG", typeRessource: "json", FieldCulturalPracticeDecodable.self)?.getFieldDictionnary()
     }
 
 }

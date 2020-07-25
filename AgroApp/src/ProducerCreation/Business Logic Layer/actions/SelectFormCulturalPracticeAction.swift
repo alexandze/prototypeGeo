@@ -12,7 +12,7 @@ import ReSwift
 struct SelectFormCulturalPracticeAction {
     struct SelectElementSelectedOnList: Action {
         let culturalPracticeElement: CulturalPracticeElementProtocol
-        let fieldType: FieldType
+        let field: Field
         let subAction: SelectFormCulturalPracticeSubAction
     }
 

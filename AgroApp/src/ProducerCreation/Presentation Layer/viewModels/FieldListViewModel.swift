@@ -16,7 +16,7 @@ class FieldListViewModelImpl: FieldListViewModel {
     let fieldListStateObs: Observable<FieldListState>
     let actionDispatcher: ActionDispatcher
     var disposableFieldListState: Disposable?
-    var fieldList: [FieldType] = []
+    var fieldList: [Field] = []
     var tableView: UITableView?
     weak var viewController: UIViewController?
     var fieldListState: FieldListState?
@@ -162,7 +162,7 @@ extension FieldListViewModelImpl {
         guard let fieldSelected = fieldListState?.currentField else { return nil }
 
         return Util.createRunCompletable {
-            let action = CulturalPracticeFormAction.SelectedFieldOnListAction(fieldType: fieldSelected)
+            let action = CulturalPracticeFormAction.SelectedFieldOnListAction(field: fieldSelected)
             self.actionDispatcher.dispatch(action)
         }
     }
@@ -184,7 +184,7 @@ protocol FieldListViewModel {
     func subscribeToObservableFieldListState()
     func dispose()
     func setTableView(tableView: UITableView)
-    var  fieldList: [FieldType] {get}
+    var  fieldList: [Field] {get}
     var  viewController: UIViewController? {get set}
     func handle(didSelectRowAt indexPath: IndexPath)
     func dispatchIsDisappear()

@@ -15,20 +15,20 @@ struct SelectFormCulturalPracticeState: Equatable {
 
     var uuidState: String
     var culturalPraticeElement: CulturalPracticeElementProtocol?
-    var fieldType: FieldType?
+    var field: Field?
     var selectFormCulturalParacticeSubAction: SelectFormCulturalPracticeSubAction?
     var isDirty: Bool?
 
     func changeValue(
         culturalPraticeElement: CulturalPracticeElementProtocol? = nil,
-        fieldType: FieldType? = nil,
+        field: Field? = nil,
         isDirty: Bool? = nil,
         culturalPracticeSubAction: SelectFormCulturalPracticeSubAction? = nil
     ) -> SelectFormCulturalPracticeState {
         SelectFormCulturalPracticeState(
             uuidState: UUID().uuidString,
             culturalPraticeElement: culturalPraticeElement ?? self.culturalPraticeElement,
-            fieldType: fieldType ?? self.fieldType,
+            field: field ?? self.field,
             selectFormCulturalParacticeSubAction: culturalPracticeSubAction ?? self.selectFormCulturalParacticeSubAction,
             isDirty: isDirty ?? self.isDirty
         )

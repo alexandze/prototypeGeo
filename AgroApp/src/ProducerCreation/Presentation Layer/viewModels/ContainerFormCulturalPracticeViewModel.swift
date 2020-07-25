@@ -37,7 +37,7 @@ class ContainerFormCulturalPracticeViewModelImpl: ContainerFormCulturalPracticeV
             .observeOn(Util.getSchedulerMain())
             .subscribe { event in
                 guard let state = event.element,
-                    state.containerElement != nil && state.fieldType != nil &&
+                    state.containerElement != nil && state.field != nil &&
                         state.inputElements != nil && state.inputValues != nil &&
                         state.selectElements != nil && state.selectValues != nil &&
                         state.subAction != nil
@@ -137,7 +137,7 @@ class ContainerFormCulturalPracticeViewModelImpl: ContainerFormCulturalPracticeV
         -> CulturalPracticeFormAction.UpdateCulturalPracticeElementAction {
             CulturalPracticeFormAction.UpdateCulturalPracticeElementAction(
                 culturalPracticeElementProtocol: state!.containerElement!,
-                fieldType: state!.fieldType!
+                field: state!.field!
             )
     }
 

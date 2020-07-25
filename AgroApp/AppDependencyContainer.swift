@@ -27,7 +27,7 @@ class AppDependencyContainerImpl: AppDependencyContainer {
             ),
             middleware: [
                 FarmerMiddleware.shared.makeGetFarmersMiddleware(),
-                MapFieldMiddleware.shared.makeGetAllFieldMiddleware()
+                MapFieldMiddleware().makeGetAllFieldMiddleware()
             ],
             automaticallySkipsRepeats: true
         )

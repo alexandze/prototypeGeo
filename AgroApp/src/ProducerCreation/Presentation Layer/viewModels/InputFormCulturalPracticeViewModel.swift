@@ -20,7 +20,7 @@ final class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeVie
     var inputElement: CulturalPracticeInputElement?
     var firstInputValue: String?
     var regularExpressionForInputValue: NSRegularExpression?
-    var fieldType: FieldType?
+    var field: Field?
     var settingViewController: SettingViewController<InputFormCulturalPracticeView>?
 
     init(
@@ -38,11 +38,11 @@ final class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeVie
             .observeOn(Util.getSchedulerMain())
             .subscribe {event in
                 guard let inputElement = event.element?.inputElement,
-                    let fieldType = event.element?.fieldType,
+                    let field = event.element?.field,
                     let subAction = event.element?.inputFormSubAction
                     else { return }
 
-                self.setValue(inputElement: inputElement, fieldType: fieldType)
+                self.setValue(inputElement: inputElement, field: field)
                 self.initRegularExpression()
                 self.setFirstInputValue()
 
@@ -126,14 +126,14 @@ final class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeVie
         )
     }
 
-    private func setValue(inputElement: CulturalPracticeInputElement, fieldType: FieldType) {
+    private func setValue(inputElement: CulturalPracticeInputElement, field: Field) {
         self.inputElement = inputElement
-        self.fieldType = fieldType
+        self.field = field
     }
 
     private func setValuesViewState() {
         viewState.title = inputElement!.title
-        viewState.subTitle = "Veuillez saisir la valeur pour la parcelle \(fieldType!.getId())"
+        viewState.subTitle = "Veuillez saisir la valeur pour la parcelle \(field?.id != nil ? String(field!.id) : ""))"
         viewState.inputTitle = inputElement!.valueEmpty.getUnitType()?.convertToString() ?? ""
         viewState.inputValue = inputElement!.value?.getValue() ?? ""
         viewState.unitType = inputElement!.valueEmpty.getUnitType()?.convertToString() ?? ""
@@ -239,10 +239,12 @@ extension InputFormCulturalPracticeViewModelImpl {
     }
 
     private func dispathUpdateCulturalPracticeElementAction() {
+        guard let field = field else { return }
+
         let action = CulturalPracticeFormAction
             .UpdateCulturalPracticeElementAction(
                 culturalPracticeElementProtocol: inputElement!,
-                fieldType: fieldType!
+                field: field
         )
         _ = Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(action)

@@ -1,5 +1,5 @@
 //
-//  FieldGeoJsonArray.swift
+//  FieldCulturalPracticeDecodable.swift
 //  prototypeGeo
 //
 //  Created by Alexandre Andze Kande on 2020-01-27.
@@ -9,82 +9,101 @@
 import Foundation
 import MapKit
 
-struct FieldGeoJsonArray: Codable {
-    var features: [Feature]
+struct FieldCulturalPracticeDecodable: Decodable {
+    var fieldWrappers: [FieldDecodableWrapper]
+
+    private enum CodingKeys: String, CodingKey {
+        case fieldWrappers = "features"
+    }
+
+    func getFieldDictionnary() -> [Int: Field] {
+        fieldWrappers
+            .map(mapFieldWrapperToFieldDecodable(fieldWrapper:))
+            .filter(filterValidFieldDecodable(fieldDecodable:))
+            .map(mapFieldDecodableToField(fieldDecodable:))
+            .reduce([Int:Field](), reduceToFieldDictionnary(fieldDictionnary:field:))
+    }
+
+    private func mapFieldWrapperToFieldDecodable(fieldWrapper: FieldDecodableWrapper) -> FieldDecodable? {
+        fieldWrapper.fieldDecodable
+    }
+
+    private func filterValidFieldDecodable(fieldDecodable: FieldDecodable?) -> Bool {
+        return fieldDecodable?.id != nil &&
+            fieldDecodable?.type != nil &&
+            fieldDecodable?.culturalPratice != nil &&
+            fieldDecodable?.polygon?.isEmpty != nil &&
+            !fieldDecodable!.polygon!.isEmpty &&
+            fieldDecodable?.annotation?.isEmpty != nil &&
+            !fieldDecodable!.annotation!.isEmpty
+    }
+
+    private func mapFieldDecodableToField(fieldDecodable: FieldDecodable?) -> Field {
+        Field(
+            id: fieldDecodable!.id!,
+            type: fieldDecodable!.type!,
+            culturalPratice: fieldDecodable?.culturalPratice,
+            polygon: fieldDecodable!.polygon!,
+            annotation: fieldDecodable!.annotation!
+        )
+    }
+
+    private func reduceToFieldDictionnary(fieldDictionnary: [Int: Field], field: Field) -> [Int: Field] {
+        var copyFieldDictionnary = fieldDictionnary
+        copyFieldDictionnary[field.id] = field
+        return copyFieldDictionnary
+    }
 }
 
-struct Feature: Codable {
-    var id: Int
-    var geometry: Geometry
-    var properties: CulturalPractice
-}
-
-struct Geometry: Codable {
-    var type: String?
-    var coordinates: [[[Double]]]?
-    var coordinatesMulti: [[[[Double]]]]?
+struct FieldDecodableWrapper: Decodable {
+    var fieldDecodable: FieldDecodable?
 
     init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        type = try values.decode(String.self, forKey: .type)
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let id = try? container.decode(Int.self, forKey: .id)
+        var culturalPractice = try? container.decode(CulturalPractice.self, forKey: .properties)
+        var field = try? container.decode(FieldDecodable.self, forKey: .geometry)
 
-        if type == "Polygon" {
-            // TODO creer des MKPolygon
-            coordinates = try? values.decode([[[Double]]].self, forKey: .coordinates)
-        }
-
-        if type == "MultiPolygon" {
-            // TODO creer des MKPolygon
-            coordinatesMulti = try? values.decode([[[[Double]]]].self, forKey: .coordinates)
+        if let id = id {
+            culturalPractice?.id = id
+            field?.id = id
+            field?.culturalPratice = culturalPractice
+            setTitleAndSubtitleOf(annotationsWithData: field?.annotation, with: id)
+            setPayloadOf(annotationsWithData: field?.annotation, id: id)
+            self.fieldDecodable = field
         }
     }
 
     private enum CodingKeys: String, CodingKey {
-        case type
-        case coordinates
+        case id
+        case geometry
+        case properties
     }
-}
 
-/*******   ********/
+    func setTitleAndSubtitleOf(
+        annotationsWithData: [AnnotationWithData<PayloadFieldAnnotation>?]?,
+        with id: Int?
+    ) {
+        guard let annotationsWithData = annotationsWithData, let id = id else { return }
 
-struct FieldGeoJsonArray1: Decodable {
-    var features: [Feature1]
-}
+        return annotationsWithData.forEach { (annotationWithData: AnnotationWithData<PayloadFieldAnnotation>?) in
+            annotationWithData?.title = "\(id)"
 
-struct Feature1: Decodable {
-    // TODO set le title et le subtitle de l'annotation, set le id field du payload, set le id field de Field
-    var id: Int
-    var geometry: Field1
-    var properties: CulturalPractice
-}
-
-struct Geometry1: Codable {
-    var type: String?
-    var coordinates: [[[Double]]]?
-    var coordinatesMulti: [[[[Double]]]]?
-
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        type = try values.decode(String.self, forKey: .type)
-
-        if type == "Polygon" {
-            // TODO creer des MKPolygon
-            coordinates = try? values.decode([[[Double]]].self, forKey: .coordinates)
-        }
-
-        if type == "MultiPolygon" {
-            // TODO creer des MKPolygon
-            coordinatesMulti = try? values.decode([[[[Double]]]].self, forKey: .coordinates)
+            annotationWithData?.subtitle =
+            "\(NSLocalizedString("Parcelle avec le id", comment: "Parcelle avec le id")) \(id)"
         }
     }
 
-    private enum CodingKeys: String, CodingKey {
-        case type
-        case coordinates
+    func setPayloadOf(annotationsWithData: [AnnotationWithData<PayloadFieldAnnotation>?]?, id: Int?) {
+        guard let annotationsWithData = annotationsWithData, let id = id else { return }
+
+        annotationsWithData.forEach { (annotation: AnnotationWithData<PayloadFieldAnnotation>?) -> Void in
+            annotation?.data?.idField = id
+        }
     }
 }
 
-struct Field1: Decodable {
+struct FieldDecodable: Decodable {
     static let POLYGON = "Polygon"
     static let MULTI_POLYGON = "MultiPolygon"
     var id: Int?
@@ -108,13 +127,13 @@ struct Field1: Decodable {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.type = try? container.decode(String.self, forKey: .type)
 
-            if let type = type, type == Field1.POLYGON {
+            if let type = type, type == FieldDecodable.POLYGON {
                 let tuplePolygonAnnotation = decodePolygon(container: container)
                 self.polygon = getPolygonArrayFrom(tuple: tuplePolygonAnnotation)
                 self.annotation = getAnnotationArrayFrom(tuple: tuplePolygonAnnotation)
             }
 
-            if let type = type, type == Field1.MULTI_POLYGON {
+            if let type = type, type == FieldDecodable.MULTI_POLYGON {
                 let tuplePolygonAnnotationArray = decodeMultiPolygon(container: container)
                 self.polygon = getPolygonArrayFrom(tuplePolygonAnnotationArray: tuplePolygonAnnotationArray)
                 self.annotation = getAnnotationArrayFrom(tuplePolygonAnnotationArray: tuplePolygonAnnotationArray)
@@ -158,7 +177,7 @@ struct Field1: Decodable {
     }
 
     private func decodeMultiPolygon(
-        container: KeyedDecodingContainer<Field1.CodingKeys>
+        container: KeyedDecodingContainer<FieldDecodable.CodingKeys>
     ) -> [TuplePolygonAnnotation]? {
         guard let multiPolygon = decodeMultipolygonCoordinates(container: container) else { return nil }
         var tuplePolygonAnnotationArray = [TuplePolygonAnnotation]()
@@ -179,7 +198,7 @@ struct Field1: Decodable {
     }
 
     private func decodePolygon(
-        container: KeyedDecodingContainer<Field1.CodingKeys>
+        container: KeyedDecodingContainer<FieldDecodable.CodingKeys>
     ) -> TuplePolygonAnnotation? {
         do {
             let coordinates = decodePolygonCoordinates(container: container)
@@ -211,7 +230,7 @@ struct Field1: Decodable {
     }
 
     private func decodeMultipolygonCoordinates(
-        container: KeyedDecodingContainer<Field1.CodingKeys>
+        container: KeyedDecodingContainer<FieldDecodable.CodingKeys>
     ) -> [[[[Double]]]]? {
         guard let coordinates = try? container.decode([[[[Double]]]].self, forKey: .coordinates),
             !coordinates.isEmpty else { return nil }
@@ -220,7 +239,7 @@ struct Field1: Decodable {
     }
 
     private func decodePolygonCoordinates(
-        container: KeyedDecodingContainer<Field1.CodingKeys>
+        container: KeyedDecodingContainer<FieldDecodable.CodingKeys>
     ) -> [[Double]]? {
         guard let coordinates = try? container.decode([[[Double]]].self, forKey: .coordinates),
             coordinates.count == 1 else { return nil }

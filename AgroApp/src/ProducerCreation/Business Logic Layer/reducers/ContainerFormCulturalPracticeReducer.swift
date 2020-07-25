@@ -34,7 +34,7 @@ class ContainerFormCulturalPracticeHandler {
         _ state: ContainerFormCulturalPracticeState
     ) -> ContainerFormCulturalPracticeState {
         let containerElement = containerElementSelectedOnListAction.containerElement
-        let fieldType = containerElementSelectedOnListAction.field
+        let field = containerElementSelectedOnListAction.field
         let subAction = containerElementSelectedOnListAction.subAction
 
         let inputElements = convertArrayOfElementProtocolToArrayOfInputElement(
@@ -60,7 +60,7 @@ class ContainerFormCulturalPracticeHandler {
 
         return state.changeValue(
             containerElement: containerElement,
-            fieldType: fieldType,
+            field: field,
             subAction: subAction,
             inputElements: inputElements,
             selectElements: selectElements,

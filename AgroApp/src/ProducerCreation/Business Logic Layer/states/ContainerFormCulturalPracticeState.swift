@@ -15,7 +15,7 @@ struct ContainerFormCulturalPracticeState: Equatable {
 
     var uuidState: String
     var containerElement: CulturalPracticeContainerElement?
-    var fieldType: FieldType?
+    var field: Field?
     var isDirty: Bool?
     var subAction: SubAction?
     var inputElements: [CulturalPracticeInputElement]?
@@ -37,7 +37,7 @@ struct ContainerFormCulturalPracticeState: Equatable {
 
     func changeValue(
         containerElement: CulturalPracticeContainerElement? = nil,
-        fieldType: FieldType? = nil,
+        field: Field? = nil,
         isDirty: Bool? = nil,
         subAction: SubAction? = nil,
         inputElements: [CulturalPracticeInputElement]? = nil,
@@ -53,7 +53,7 @@ struct ContainerFormCulturalPracticeState: Equatable {
         ContainerFormCulturalPracticeState(
             uuidState: UUID().uuidString,
             containerElement: containerElement ?? self.containerElement,
-            fieldType: fieldType ?? self.fieldType,
+            field: field ?? self.field,
             isDirty: isDirty ?? self.isDirty,
             subAction: subAction ?? self.subAction,
             inputElements: inputElements ?? self.inputElements,

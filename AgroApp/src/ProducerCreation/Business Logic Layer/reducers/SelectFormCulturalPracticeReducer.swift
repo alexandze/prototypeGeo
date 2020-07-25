@@ -68,7 +68,7 @@ class CulturalPracticeFormReducerHandler {
         SelectFormCulturalPracticeState(
             uuidState: UUID().uuidString,
             culturalPraticeElement: selectedElementOnList.culturalPracticeElement,
-            fieldType: selectedElementOnList.fieldType,
+            field: selectedElementOnList.field,
             selectFormCulturalParacticeSubAction: selectedElementOnList.subAction
         )
     }
