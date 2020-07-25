@@ -123,6 +123,18 @@ class MapFieldViewModel {
             self.mapFieldView.configNotSelected(polygonRenderer: polygonRenderer)
         }
     }
+
+    private func setAnnotationIsSelected(_ fieldSelected: Field) {
+        (0..<fieldSelected.annotation.count).forEach { index in
+            fieldSelected.annotation[index].data?.isSelected = true
+        }
+    }
+
+    private func setAnnotationIsDeselected(_ fieldDeselected: Field) {
+        (0..<fieldDeselected.annotation.count).forEach { index in
+            fieldDeselected.annotation[index].data?.isSelected = false
+        }
+    }
 }
 
 // Handler
@@ -185,6 +197,7 @@ extension MapFieldViewModel {
             else { return }
 
         deselectPolygonOf(field: fieldDeselected)
+        setAnnotationIsDeselected(fieldDeselected)
         mapFieldInteraction.didDeselectFieldOnMapAction(field: fieldDeselected)
     }
 
@@ -204,6 +217,7 @@ extension MapFieldViewModel {
             else { return }
 
         selectePolygonOf(field: fieldSelected)
+        setAnnotationIsSelected(fieldSelected)
         mapFieldInteraction.didSelectedFieldAction(field: fieldSelected)
     }
 
@@ -215,7 +229,6 @@ extension MapFieldViewModel {
     private func handleCancel(button: UIButton) {
         guard let dataFromAnnotation = currentSelectedAnnotation?.data else { return }
         guard let selectedFieldCalloutView = button.superview as? SelectedFieldCalloutView else { return }
-        dataFromAnnotation.isSelected = false
         selectedFieldCalloutView.setStateButton(with: false)
         mapFieldInteraction.willDeselectedFieldOnMapAction(idField: dataFromAnnotation.idField)
     }
@@ -223,7 +236,6 @@ extension MapFieldViewModel {
     private func handleAdd(button: UIButton) {
         guard let dataFromAnnotation = currentSelectedAnnotation?.data else { return }
         guard let selectedFieldCalloutView = button.superview as? SelectedFieldCalloutView else { return }
-        dataFromAnnotation.isSelected = true
         selectedFieldCalloutView.setStateButton(with: true)
         mapFieldInteraction.willSelectedFieldOnMapAction(idField: dataFromAnnotation.idField)
     }

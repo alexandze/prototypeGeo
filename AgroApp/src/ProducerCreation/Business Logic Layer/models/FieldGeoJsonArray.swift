@@ -29,6 +29,9 @@ struct FieldCulturalPracticeDecodable: Decodable {
     }
 
     private func filterValidFieldDecodable(fieldDecodable: FieldDecodable?) -> Bool {
+        if fieldDecodable?.polygon == nil {
+            print(fieldDecodable?.id)
+        }
         return fieldDecodable?.id != nil &&
             fieldDecodable?.type != nil &&
             fieldDecodable?.culturalPratice != nil &&
@@ -128,9 +131,9 @@ struct FieldDecodable: Decodable {
             self.type = try? container.decode(String.self, forKey: .type)
 
             if let type = type, type == FieldDecodable.POLYGON {
-                let tuplePolygonAnnotation = decodePolygon(container: container)
-                self.polygon = getPolygonArrayFrom(tuple: tuplePolygonAnnotation)
-                self.annotation = getAnnotationArrayFrom(tuple: tuplePolygonAnnotation)
+                let tuplePolygonAnnotationArray = decodePolygon(container: container)
+                self.polygon = getPolygonArrayFrom(tuplePolygonAnnotationArray: tuplePolygonAnnotationArray)
+                self.annotation = getAnnotationArrayFrom(tuplePolygonAnnotationArray: tuplePolygonAnnotationArray)
             }
 
             if let type = type, type == FieldDecodable.MULTI_POLYGON {
@@ -140,13 +143,6 @@ struct FieldDecodable: Decodable {
             }
 
         } catch { }
-    }
-
-    private func getPolygonArrayFrom(
-        tuple: TuplePolygonAnnotation?
-    ) -> [PolygonWithData<PayloadFieldAnnotation>]? {
-        guard let (polygon, _) = tuple else { return nil }
-        return [polygon]
     }
 
     private func getPolygonArrayFrom(
@@ -169,13 +165,6 @@ struct FieldDecodable: Decodable {
         }
     }
 
-    private func getAnnotationArrayFrom(
-        tuple: TuplePolygonAnnotation?
-    ) -> [AnnotationWithData<PayloadFieldAnnotation>]? {
-        guard let (_, annotation) = tuple else { return nil }
-        return [annotation]
-    }
-
     private func decodeMultiPolygon(
         container: KeyedDecodingContainer<FieldDecodable.CodingKeys>
     ) -> [TuplePolygonAnnotation]? {
@@ -186,7 +175,7 @@ struct FieldDecodable: Decodable {
             (0..<multiPolygon[index1].count).forEach { index2 in
                 do {
                     guard let tuplePolygonAnnotation =
-                        try createTuplePolygonAnnotation(coordinates: multiPolygon[index1][index2])
+                        try createTuplePolygonAnnotation(coordinate: multiPolygon[index1][index2])
                         else { return }
 
                     tuplePolygonAnnotationArray.append(tuplePolygonAnnotation)
@@ -199,19 +188,26 @@ struct FieldDecodable: Decodable {
 
     private func decodePolygon(
         container: KeyedDecodingContainer<FieldDecodable.CodingKeys>
-    ) -> TuplePolygonAnnotation? {
+    ) -> [TuplePolygonAnnotation]? {
         do {
             let coordinates = decodePolygonCoordinates(container: container)
-            return try createTuplePolygonAnnotation(coordinates: coordinates)
+            var tuplePolygonAnnotations = [TuplePolygonAnnotation]()
+
+            try coordinates?.forEach({ (coordinate: [[Double]]) in
+                guard let tuplePolygonAnnotation = try createTuplePolygonAnnotation(coordinate: coordinate) else { return }
+                tuplePolygonAnnotations.append(tuplePolygonAnnotation)
+            })
+
+            return tuplePolygonAnnotations
         } catch {
             return nil
         }
     }
 
     private func createTuplePolygonAnnotation(
-        coordinates: [[Double]]?
+        coordinate: [[Double]]?
     ) throws -> TuplePolygonAnnotation? {
-        let points = try createMkMapPoint(latLongArray: coordinates)
+        let points = try createMkMapPoint(latLongArray: coordinate)
         let payload = createPayloadFieldAnnotation(idField: -1)
         let polygonWithData = createPolygonWithData(points: points, payload: payload)
         let centerPolygon = calculCenter(points: points)
@@ -240,11 +236,10 @@ struct FieldDecodable: Decodable {
 
     private func decodePolygonCoordinates(
         container: KeyedDecodingContainer<FieldDecodable.CodingKeys>
-    ) -> [[Double]]? {
-        guard let coordinates = try? container.decode([[[Double]]].self, forKey: .coordinates),
-            coordinates.count == 1 else { return nil }
-
-        return coordinates[0]
+    ) -> [[[Double]]]? {
+        guard let coordinates = try? container.decode([[[Double]]].self, forKey: .coordinates)
+            else { return nil }
+        return coordinates
     }
 
     private func createMkMapPoint(latLongArray: [[Double]]?) throws -> [MKMapPoint]? {
