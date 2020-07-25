@@ -10,9 +10,6 @@ import Foundation
 import ReSwift
 
 struct CulturalPracticeFormAction {
-    struct SelectedFieldOnListAction: Action {
-        let field: Field
-    }
 
     struct AddCulturalPracticeInputMultiSelectContainer: Action {}
 

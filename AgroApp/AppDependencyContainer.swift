@@ -26,8 +26,7 @@ class AppDependencyContainerImpl: AppDependencyContainer {
                 containerTitleNavigationState: ContainerTitleNavigationState(uuidState: UUID().uuidString)
             ),
             middleware: [
-                FarmerMiddleware.shared.makeGetFarmersMiddleware(),
-                MapFieldMiddleware().makeGetAllFieldMiddleware()
+                FarmerMiddleware.shared.makeGetFarmersMiddleware()
             ],
             automaticallySkipsRepeats: true
         )

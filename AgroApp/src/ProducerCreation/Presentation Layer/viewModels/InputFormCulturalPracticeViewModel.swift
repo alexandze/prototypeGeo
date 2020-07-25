@@ -142,7 +142,7 @@ final class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeVie
     /// Activated animation of view. There is one second timeout for activate animation
     private func activatedAnimationOfView() {
         self.disposableActivateAnimation = Observable.just(true)
-            .timeout(.milliseconds(1), scheduler: Util.getSchedulerBackground())
+            .timeout(.milliseconds(1), scheduler: Util.getSchedulerBackgroundForReSwift())
             .observeOn(Util.getSchedulerMain())
             .subscribe { event in
                 if let value = event.element {

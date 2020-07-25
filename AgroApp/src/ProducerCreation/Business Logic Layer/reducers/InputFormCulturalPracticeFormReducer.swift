@@ -15,15 +15,15 @@ extension Reducers {
 
         switch action {
         case let action as InputFormCulturalPracticeAction.InputElementSelectedOnListAction:
-            return InputFormCulturalPracticeReducerHandler
+            return InputFormCulturalPracticeReducerHandler()
                 .handle(inputElementSelectedOnListAction: action, state)
         case let action as InputFormCulturalPracticeAction.CloseInputFormWithSaveAction:
-            return InputFormCulturalPracticeReducerHandler.handle(
+            return InputFormCulturalPracticeReducerHandler().handle(
                 closeInputFormWithSaveAction: action,
                 state
             )
         case let action as InputFormCulturalPracticeAction.CloseInputFormWithoutSaveAction:
-            return InputFormCulturalPracticeReducerHandler.handle(
+            return InputFormCulturalPracticeReducerHandler().handle(
                 closeInputFormWithoutSaveAction: action,
                 state
             )
@@ -34,7 +34,7 @@ extension Reducers {
 }
 
 class InputFormCulturalPracticeReducerHandler {
-    static func handle(
+    func handle(
         inputElementSelectedOnListAction: InputFormCulturalPracticeAction.InputElementSelectedOnListAction,
         _ state: InputFormCulturalPracticeState
     ) -> InputFormCulturalPracticeState {
@@ -46,7 +46,7 @@ class InputFormCulturalPracticeReducerHandler {
         )
     }
 
-    static func handle(
+    func handle(
         closeInputFormWithSaveAction: InputFormCulturalPracticeAction.CloseInputFormWithSaveAction,
         _ state: InputFormCulturalPracticeState
     ) -> InputFormCulturalPracticeState {
@@ -62,7 +62,7 @@ class InputFormCulturalPracticeReducerHandler {
         )
     }
 
-    static func handle(
+    func handle(
         closeInputFormWithoutSaveAction: InputFormCulturalPracticeAction.CloseInputFormWithoutSaveAction,
         _ state: InputFormCulturalPracticeState
     ) -> InputFormCulturalPracticeState {

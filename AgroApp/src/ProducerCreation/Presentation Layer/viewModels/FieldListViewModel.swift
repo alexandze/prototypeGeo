@@ -162,7 +162,7 @@ extension FieldListViewModelImpl {
         guard let fieldSelected = fieldListState?.currentField else { return nil }
 
         return Util.createRunCompletable {
-            let action = CulturalPracticeFormAction.SelectedFieldOnListAction(field: fieldSelected)
+            let action = FieldListAction.DidSelectedFieldOnListAction(field: fieldSelected)
             self.actionDispatcher.dispatch(action)
         }
     }

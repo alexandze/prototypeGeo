@@ -254,7 +254,7 @@ extension SelectFormCulturalPracticeViewModelImpl {
             self.actionDispatcher.dispatch(action)
             completableEvent(.completed)
             return Disposables.create()
-        }.subscribeOn(Util.getSchedulerBackground())
+        }.subscribeOn(Util.getSchedulerBackgroundForReSwift())
         .subscribe()
     }
 }

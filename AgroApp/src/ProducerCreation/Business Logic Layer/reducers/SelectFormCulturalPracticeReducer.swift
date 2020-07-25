@@ -15,23 +15,23 @@ extension Reducers {
 
         switch action {
         case let selectedElementOnList as SelectFormCulturalPracticeAction.SelectElementSelectedOnList:
-            return CulturalPracticeFormReducerHandler.handle(selectedElementOnList: selectedElementOnList)
+            return CulturalPracticeFormReducerHandler().handle(selectedElementOnList: selectedElementOnList)
         case let setFormIsDirtyAction as SelectFormCulturalPracticeAction.SetFormIsDirtyAction:
-            return CulturalPracticeFormReducerHandler.handleUpdateState(state: state) { (state: SelectFormCulturalPracticeState) -> SelectFormCulturalPracticeState in
+            return CulturalPracticeFormReducerHandler().handleUpdateState(state: state) { (state: SelectFormCulturalPracticeState) -> SelectFormCulturalPracticeState in
                 state.changeValue(isDirty: setFormIsDirtyAction.isDirty, culturalPracticeSubAction: .formIsDirty)
             }
         case let closedPresentedViewControllerAction as SelectFormCulturalPracticeAction.ClosePresentedViewControllerAction:
-            return CulturalPracticeFormReducerHandler.handle(
+            return CulturalPracticeFormReducerHandler().handle(
                 closePresentedViewControllerAction: closedPresentedViewControllerAction,
                 state: state
             )
         case let closePresentedViewControllerWithSaveAction as SelectFormCulturalPracticeAction.ClosePresentedViewControllerWithSaveAction:
-            return CulturalPracticeFormReducerHandler.handle(
+            return CulturalPracticeFormReducerHandler().handle(
                 closePresentedViewControllerWithSaveAction: closePresentedViewControllerWithSaveAction,
                 state: state
             )
         case _ as SelectFormCulturalPracticeAction.ClosePresentedViewControllerWithoutSaveAction:
-            return CulturalPracticeFormReducerHandler.handleUpdateState(state: state) {state in state.changeValue(culturalPracticeSubAction: .closeWithoutSave) }
+            return CulturalPracticeFormReducerHandler().handleUpdateState(state: state) {state in state.changeValue(culturalPracticeSubAction: .closeWithoutSave) }
         default:
             break
         }
@@ -42,7 +42,7 @@ extension Reducers {
 
 class CulturalPracticeFormReducerHandler {
 
-    static func handle(
+    func handle(
         closePresentedViewControllerWithSaveAction: SelectFormCulturalPracticeAction.ClosePresentedViewControllerWithSaveAction,
         state: SelectFormCulturalPracticeState
     ) -> SelectFormCulturalPracticeState {
@@ -64,7 +64,7 @@ class CulturalPracticeFormReducerHandler {
         }
     }
 
-    static func handle(selectedElementOnList: SelectFormCulturalPracticeAction.SelectElementSelectedOnList) -> SelectFormCulturalPracticeState {
+    func handle(selectedElementOnList: SelectFormCulturalPracticeAction.SelectElementSelectedOnList) -> SelectFormCulturalPracticeState {
         SelectFormCulturalPracticeState(
             uuidState: UUID().uuidString,
             culturalPraticeElement: selectedElementOnList.culturalPracticeElement,
@@ -73,7 +73,7 @@ class CulturalPracticeFormReducerHandler {
         )
     }
 
-    static func handle(
+    func handle(
         closePresentedViewControllerAction: SelectFormCulturalPracticeAction.ClosePresentedViewControllerAction,
         state: SelectFormCulturalPracticeState
 
@@ -85,7 +85,7 @@ class CulturalPracticeFormReducerHandler {
         return state.changeValue(culturalPracticeSubAction: .closeWithoutSave)
     }
 
-    static private func findCulturalPracticeValueByIndex(
+    private func findCulturalPracticeValueByIndex(
         culturalPraticeElementProtocol: CulturalPracticeElementProtocol,
         index: Int) -> (CulturalPracticeValueProtocol, String)? {
         if let selectElement = culturalPraticeElementProtocol as? CulturalPracticeMultiSelectElement {
@@ -96,7 +96,7 @@ class CulturalPracticeFormReducerHandler {
     }
 
     //TODO util reducerHandle
-    static func handleUpdateState<T>(state: T, _ updateFunction: (T) -> T) -> T {
+    func handleUpdateState<T>(state: T, _ updateFunction: (T) -> T) -> T {
         updateFunction(state)
     }
 }

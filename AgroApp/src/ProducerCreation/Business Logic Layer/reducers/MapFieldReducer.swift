@@ -14,8 +14,14 @@ extension Reducers {
         let state = state ?? MapFieldState(uuidState: UUID().uuidString)
 
         switch action {
-        case let getAllMapFieldSuccess as MapFieldAction.GetAllFieldSuccess :
-            return MapFieldReducerHandler.handle(getAllFieldSuccess: getAllMapFieldSuccess, state: state)
+        case let getAllMapFieldSuccess as MapFieldAction.GetAllFieldSuccessAction :
+            return MapFieldReducerHandler().handle(getAllFieldSuccess: getAllMapFieldSuccess, state)
+        case let willSelectedFieldOnMapAction as MapFieldAction.WillSelectedFieldOnMapAction:
+            return MapFieldReducerHandler().handle(willSelectedFieldOnMapAction: willSelectedFieldOnMapAction, state)
+        case let getAllFieldAction as MapFieldAction.GetAllFieldAction:
+            return MapFieldReducerHandler().handle(getAllFieldAction: getAllFieldAction, state)
+        case let willDeselectFieldOnMapAction as MapFieldAction.WillDeselectFieldOnMapAction:
+            return MapFieldReducerHandler().handle(willDeselectFieldOnMapAction: willDeselectFieldOnMapAction, state)
         default:
             return state
         }
@@ -23,10 +29,42 @@ extension Reducers {
 }
 
 class MapFieldReducerHandler {
-    static func handle(
-        getAllFieldSuccess: MapFieldAction.GetAllFieldSuccess,
-        state: MapFieldState
+    func handle(
+        willDeselectFieldOnMapAction: MapFieldAction.WillDeselectFieldOnMapAction,
+        _ state: MapFieldState
     ) -> MapFieldState {
-        getAllFieldSuccess.mapFieldAllFieldState
+        state.changeValues(
+            lastIdFieldDeselected: willDeselectFieldOnMapAction.idField,
+            responseAction: .willDeselectFieldOnMapActionResponse
+        )
+    }
+
+    func handle(
+        getAllFieldSuccess: MapFieldAction.GetAllFieldSuccessAction,
+        _ state: MapFieldState
+    ) -> MapFieldState {
+        state.changeValues(
+            fieldDictionnary: getAllFieldSuccess.fieldDictionnary,
+            responseAction: .getAllFieldActionSuccessResponse
+        )
+    }
+
+    func handle(
+        willSelectedFieldOnMapAction: MapFieldAction.WillSelectedFieldOnMapAction,
+        _ state: MapFieldState
+    ) -> MapFieldState {
+        state.changeValues(
+            lastIdFieldSelected: willSelectedFieldOnMapAction.idField,
+            responseAction: .willSelectedFieldOnMapActionResponse
+        )
+    }
+
+    func handle(
+        getAllFieldAction: MapFieldAction.GetAllFieldAction,
+        _ state: MapFieldState
+    ) -> MapFieldState {
+        state.changeValues(
+            responseAction: .getAllFieldActionResponse
+        )
     }
 }

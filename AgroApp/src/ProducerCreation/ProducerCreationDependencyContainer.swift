@@ -25,7 +25,7 @@ class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContain
             subscription
                 .select { $0.selectFormCulturalPracticeState }
                 .skip { $0.uuidState == $1.uuidState }
-        }.subscribeOn(Util.getSchedulerBackground())
+        }.subscribeOn(Util.getSchedulerBackgroundForReSwift())
     }
 
     func makeSelectFormCulturalPracticeViewModel() -> SelectFormCulturalPracticeViewModel {
@@ -47,7 +47,7 @@ class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContain
             subscription
                 .select { $0.mapFieldState }
                 .skip { $0.uuidState == $1.uuidState }
-        }).subscribeOn(Util.getSchedulerBackground())
+        }).subscribeOn(Util.getSchedulerBackgroundForReSwift())
     }
 
     func createMapFieldInteraction() -> MapFieldInteraction {
@@ -75,7 +75,7 @@ class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContain
                 .select { appState in
                 appState.fieldListState
             }.skip { $0 == $1 }
-        }).subscribeOn(Util.getSchedulerBackground())
+        }).subscribeOn(Util.getSchedulerBackgroundForReSwift())
     }
 
     func makeFieldListInteraction() -> FieldListInteraction {
@@ -103,7 +103,7 @@ class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContain
                     appState.culturalPracticeState
             }
             .skip { $0 == $1 }
-        }).subscribeOn(Util.getSchedulerBackground())
+        }).subscribeOn(Util.getSchedulerBackgroundForReSwift())
     }
 
     func makeCulturalPracticeInteraction() -> FieldCulturalPracticeInteraction {
@@ -131,7 +131,7 @@ class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContain
                     appState.containerTitleNavigationState
             }
             .skip { $0 == $1 }
-        }).subscribeOn(Util.getSchedulerBackground())
+        }).subscribeOn(Util.getSchedulerBackgroundForReSwift())
     }
 
     func makeContainerTitleNavigationViewModel() -> ContainerTitleNavigationViewModel {
@@ -155,7 +155,7 @@ class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContain
             subscription
                 .select { $0.inputFormCulturalPracticeState }
                 .skip { $0.uuidState == $1.uuidState }
-        }.subscribeOn(Util.getSchedulerBackground())
+        }.subscribeOn(Util.getSchedulerBackgroundForReSwift())
     }
 
     func makeInputFormCulturalPracticeViewModel() -> InputFormCulturalPracticeViewModelImpl {
@@ -184,7 +184,7 @@ class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContain
             subscription
                 .select { $0.containerFormCulturalPracticeState }
                 .skip { $0.uuidState == $1.uuidState }
-        }.subscribeOn(Util.getSchedulerBackground())
+        }.subscribeOn(Util.getSchedulerBackgroundForReSwift())
     }
 
     func makeContainerFormCulturalPracticeViewModel() -> ContainerFormCulturalPracticeViewModelImpl {

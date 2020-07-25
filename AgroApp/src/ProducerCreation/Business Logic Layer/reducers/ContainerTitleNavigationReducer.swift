@@ -15,15 +15,15 @@ extension Reducers {
 
         switch action {
         case let action as ContainerTitleNavigationAction.HideCloseButtonAction:
-            return ContainerTitleNavigationHandler.handle(hideCloseButtonAction: action, state)
+            return ContainerTitleNavigationHandler().handle(hideCloseButtonAction: action, state)
         case let action as ContainerTitleNavigationAction.PrintCloseButtonAction:
-            return ContainerTitleNavigationHandler.handle(printCloseButtonAction: action, state)
+            return ContainerTitleNavigationHandler().handle(printCloseButtonAction: action, state)
         case let action as ContainerTitleNavigationAction.SetTitleAction:
-            return ContainerTitleNavigationHandler.handle(setTitleAction: action, state)
+            return ContainerTitleNavigationHandler().handle(setTitleAction: action, state)
         case let action as ContainerTitleNavigationAction.BackAction:
-            return ContainerTitleNavigationHandler.handle(backAction: action, state)
+            return ContainerTitleNavigationHandler().handle(backAction: action, state)
         case let action as ContainerTitleNavigationAction.SetCurrentViewControllerInNavigationAction:
-            return ContainerTitleNavigationHandler.handle(setCurrentViewControllerInNavigationAction: action, state)
+            return ContainerTitleNavigationHandler().handle(setCurrentViewControllerInNavigationAction: action, state)
         default:
             return state
         }
@@ -31,7 +31,7 @@ extension Reducers {
 }
 
 class ContainerTitleNavigationHandler {
-    static func handle(
+    func handle(
         setCurrentViewControllerInNavigationAction: ContainerTitleNavigationAction.SetCurrentViewControllerInNavigationAction,
         _ state: ContainerTitleNavigationState
     ) -> ContainerTitleNavigationState {
@@ -41,7 +41,7 @@ class ContainerTitleNavigationHandler {
         )
     }
 
-    static func handle(
+    func handle(
         backAction: ContainerTitleNavigationAction.BackAction,
         _ state: ContainerTitleNavigationState
     ) -> ContainerTitleNavigationState {
@@ -50,7 +50,7 @@ class ContainerTitleNavigationHandler {
         )
     }
 
-    static func handle(
+    func handle(
         hideCloseButtonAction: ContainerTitleNavigationAction.HideCloseButtonAction,
         _ state: ContainerTitleNavigationState
     ) -> ContainerTitleNavigationState {
@@ -59,7 +59,7 @@ class ContainerTitleNavigationHandler {
         )
     }
 
-    static func handle(
+    func handle(
         printCloseButtonAction: ContainerTitleNavigationAction.PrintCloseButtonAction,
         _ state: ContainerTitleNavigationState
     ) -> ContainerTitleNavigationState {
@@ -68,7 +68,7 @@ class ContainerTitleNavigationHandler {
         )
     }
 
-    static func handle(
+    func handle(
         setTitleAction: ContainerTitleNavigationAction.SetTitleAction,
         _ state: ContainerTitleNavigationState
     ) -> ContainerTitleNavigationState {

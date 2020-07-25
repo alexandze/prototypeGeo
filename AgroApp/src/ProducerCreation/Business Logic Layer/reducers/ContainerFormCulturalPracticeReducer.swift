@@ -15,13 +15,13 @@ extension Reducers {
 
         switch action {
         case let action as ContainerFormCulturalPracticeAction.ContainerElementSelectedOnListAction:
-            return ContainerFormCulturalPracticeHandler.handle(containerElementSelectedOnListAction: action, state)
+            return ContainerFormCulturalPracticeHandler().handle(containerElementSelectedOnListAction: action, state)
         case let action as ContainerFormCulturalPracticeAction.CheckIfFormIsDirtyAndValidAction:
-            return ContainerFormCulturalPracticeHandler.handle(checkIfFormIsDirtyAction: action, state)
+            return ContainerFormCulturalPracticeHandler().handle(checkIfFormIsDirtyAction: action, state)
         case let action as ContainerFormCulturalPracticeAction.CheckIfInputValueIsValidAction:
-            return ContainerFormCulturalPracticeHandler.handle(checkIfInputValueIsValidAction: action, state)
+            return ContainerFormCulturalPracticeHandler().handle(checkIfInputValueIsValidAction: action, state)
         case let action as ContainerFormCulturalPracticeAction.UpdateContainerElementAction:
-            return ContainerFormCulturalPracticeHandler.handle(updateContainerElementAction: action, state)
+            return ContainerFormCulturalPracticeHandler().handle(updateContainerElementAction: action, state)
         default:
             return state
         }
@@ -29,7 +29,7 @@ extension Reducers {
 }
 
 class ContainerFormCulturalPracticeHandler {
-    static func handle(
+    func handle(
         containerElementSelectedOnListAction: ContainerFormCulturalPracticeAction.ContainerElementSelectedOnListAction,
         _ state: ContainerFormCulturalPracticeState
     ) -> ContainerFormCulturalPracticeState {
@@ -74,7 +74,7 @@ class ContainerFormCulturalPracticeHandler {
         )
     }
 
-    static func handle(
+    func handle(
         checkIfFormIsDirtyAction: ContainerFormCulturalPracticeAction.CheckIfFormIsDirtyAndValidAction,
         _ state: ContainerFormCulturalPracticeState
     ) -> ContainerFormCulturalPracticeState {
@@ -105,7 +105,7 @@ class ContainerFormCulturalPracticeHandler {
         )
     }
 
-    static func handle(
+    func handle(
         checkIfInputValueIsValidAction: ContainerFormCulturalPracticeAction.CheckIfInputValueIsValidAction,
         _ state: ContainerFormCulturalPracticeState
     ) -> ContainerFormCulturalPracticeState {
@@ -127,7 +127,7 @@ class ContainerFormCulturalPracticeHandler {
         )
     }
 
-    static func handle(
+    func handle(
         updateContainerElementAction: ContainerFormCulturalPracticeAction.UpdateContainerElementAction,
         _ state: ContainerFormCulturalPracticeState
     ) -> ContainerFormCulturalPracticeState {
@@ -155,7 +155,7 @@ class ContainerFormCulturalPracticeHandler {
         )
     }
 
-    private static func updateSelectElement(
+    private func updateSelectElement(
         selectElements: [CulturalPracticeMultiSelectElement],
         selectValues: [Int]
     ) -> [CulturalPracticeMultiSelectElement] {
@@ -171,7 +171,7 @@ class ContainerFormCulturalPracticeHandler {
         }
     }
 
-    private static func updateInputElement(
+    private func updateInputElement(
         inputElements: [CulturalPracticeInputElement],
         inputValues: [String]
     ) -> [CulturalPracticeInputElement] {
@@ -187,7 +187,7 @@ class ContainerFormCulturalPracticeHandler {
         }
     }
 
-    private static func createIsPrintMessageErrorInputValues(
+    private func createIsPrintMessageErrorInputValues(
         inputValues: [String],
         inputRegularExpressions: [NSRegularExpression]
     ) -> [Bool] {
@@ -199,7 +199,7 @@ class ContainerFormCulturalPracticeHandler {
         }
     }
 
-    private static func isInputValuesValid(isPrintMessageErrorInputValues: [Bool]) -> Bool {
+    private func isInputValuesValid(isPrintMessageErrorInputValues: [Bool]) -> Bool {
         guard isPrintMessageErrorInputValues.firstIndex(of: false) != nil else {
             return true
         }
@@ -207,7 +207,7 @@ class ContainerFormCulturalPracticeHandler {
         return false
     }
 
-    private static func isInputValuesValid(
+    private func isInputValuesValid(
         currentInputValues: [String],
         inputRegularExpressions: [NSRegularExpression]
     ) -> Bool {
@@ -227,23 +227,23 @@ class ContainerFormCulturalPracticeHandler {
         return isValid
     }
 
-    private static func trim(value: String) -> String {
+    private func trim(value: String) -> String {
         value.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
-    private static func inputValueIsValid(inputValue: String, regularExpression: NSRegularExpression) -> Bool {
+    private func inputValueIsValid(inputValue: String, regularExpression: NSRegularExpression) -> Bool {
         !inputValue.isEmpty &&
             regularExpression.matches(in: inputValue, range: NSRange(location: 0, length: inputValue.count)).count == 1
     }
 
-    private static func createInputRegularExpression(inputElements: [CulturalPracticeInputElement]) -> [NSRegularExpression] {
+    private func createInputRegularExpression(inputElements: [CulturalPracticeInputElement]) -> [NSRegularExpression] {
         inputElements.map { inputElement in
             let regex = type(of: inputElement.valueEmpty).getRegularExpression()
             return try! NSRegularExpression(pattern: regex!, options: [])
         }
     }
 
-    private static func convertArrayOfElementProtocolToArrayOfInputElement(_ elementProtocols: [CulturalPracticeElementProtocol]) -> [CulturalPracticeInputElement] {
+    private func convertArrayOfElementProtocolToArrayOfInputElement(_ elementProtocols: [CulturalPracticeElementProtocol]) -> [CulturalPracticeInputElement] {
         var inputElements = [CulturalPracticeInputElement]()
 
         elementProtocols.forEach { elementProtocol in
@@ -255,7 +255,7 @@ class ContainerFormCulturalPracticeHandler {
         return inputElements
     }
 
-    private static func isInputValuesDirty(
+    private func isInputValuesDirty(
         previousInputValue: [String],
         currentInputValue: [String]
     ) -> Bool {
@@ -272,7 +272,7 @@ class ContainerFormCulturalPracticeHandler {
         return isDirty
     }
 
-    private static func isSelectValuesDirty(
+    private func isSelectValuesDirty(
         previousSelectValue: [Int],
         currentSelectValue: [Int]
     ) -> Bool {
@@ -289,7 +289,7 @@ class ContainerFormCulturalPracticeHandler {
         return isDirty
     }
 
-    private static func converArrayOfElementProtocolToArrayOfSelectElement(_ elementProtocols: [CulturalPracticeElementProtocol]) -> [CulturalPracticeMultiSelectElement] {
+    private func converArrayOfElementProtocolToArrayOfSelectElement(_ elementProtocols: [CulturalPracticeElementProtocol]) -> [CulturalPracticeMultiSelectElement] {
         var selectElements = [CulturalPracticeMultiSelectElement]()
 
         elementProtocols.forEach { elementProtocol in
@@ -301,13 +301,13 @@ class ContainerFormCulturalPracticeHandler {
         return selectElements
     }
 
-    private static func createInputValues(for inputElements: [CulturalPracticeInputElement]) -> [String] {
+    private func createInputValues(for inputElements: [CulturalPracticeInputElement]) -> [String] {
         var inputValues = [String]()
         inputElements.forEach { inputElement in inputValues.append(inputElement.value?.getValue() ?? "") }
         return inputValues
     }
 
-    private static func createSelectValues(for selectElements: [CulturalPracticeMultiSelectElement]) -> [Int] {
+    private func createSelectValues(for selectElements: [CulturalPracticeMultiSelectElement]) -> [Int] {
         var selectValues = [Int]()
 
         selectElements.forEach { selectElement in
@@ -317,7 +317,7 @@ class ContainerFormCulturalPracticeHandler {
         return selectValues
     }
 
-    private static func getSelectedIndex(of selectElement: CulturalPracticeMultiSelectElement) -> Int {
+    private func getSelectedIndex(of selectElement: CulturalPracticeMultiSelectElement) -> Int {
         guard let valueSelectedProtocol = selectElement.value else { return 0 }
         let valueSelected = valueSelectedProtocol.getValue()
 

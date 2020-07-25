@@ -14,4 +14,7 @@ class MapFieldRepository {
         UtilReaderFile.readJsonFile(resource: "PRATIQUES_2018_LATLONG", typeRessource: "json", FieldCulturalPracticeDecodable.self)?.getFieldDictionnary()
     }
 
+    enum MapFieldRepositoryError: Error {
+        case getFieldError
+    }
 }

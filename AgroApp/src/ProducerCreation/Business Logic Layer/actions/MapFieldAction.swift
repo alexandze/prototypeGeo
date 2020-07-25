@@ -10,17 +10,29 @@ import Foundation
 import ReSwift
 
 struct MapFieldAction {
-    struct GetAllField: Action {}
+    struct GetAllFieldAction: Action {}
 
-    struct GetAllFieldSuccess: Action {
-        var mapFieldAllFieldState: MapFieldState
+    struct GetAllFieldSuccessAction: Action {
+        var fieldDictionnary: [Int: Field]
     }
 
-    struct SelectedFieldOnMapAction: Action {
+    struct GetAllFieldErrorAction: Action {
+        var error: Error
+    }
+
+    struct WillSelectedFieldOnMapAction: Action {
+        let idField: Int
+    }
+
+    struct DidSelectedFieldOnMapAction: Action {
         let field: Field
     }
 
-    struct DeselectedFieldOnMapAction: Action {
+    struct WillDeselectFieldOnMapAction: Action {
+        let idField: Int
+    }
+
+    struct DidDelectFieldOnMapAction: Action {
         let field: Field
     }
 }

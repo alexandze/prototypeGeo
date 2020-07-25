@@ -17,4 +17,8 @@ struct FieldListAction {
     struct IsAppearAction: Action {
         var isAppear: Bool
     }
+
+    struct DidSelectedFieldOnListAction: Action {
+        let field: Field
+    }
 }

@@ -7,9 +7,19 @@
 //
 
 import Foundation
+import RxSwift
 
 class MapFieldService {
-    public func getFields() -> [Int: Field]? {
-        MapFieldRepository().getFieldGeoJsonArray()
+    public func getFieldsObs() -> Single<[Int: Field]> {
+        Single.create { event in
+            guard let fieldDictionnary = MapFieldRepository().getFieldGeoJsonArray()
+                else {
+                    event(.error(MapFieldRepository.MapFieldRepositoryError.getFieldError))
+                    return Disposables.create()
+            }
+
+            event(.success(fieldDictionnary))
+            return Disposables.create()
+        }.subscribeOn(Util.getSchedulerBackgroundForRequestServer())
     }
 }

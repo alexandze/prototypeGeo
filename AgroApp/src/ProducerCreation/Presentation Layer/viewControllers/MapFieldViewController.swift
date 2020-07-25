@@ -13,7 +13,6 @@ class MapFieldViewController: UIViewController, MKMapViewDelegate {
 
     var mapFieldViewModel: MapFieldViewModel!
     var mapFieldView: MapFieldView!
-    var mapView: MKMapView!
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -28,14 +27,12 @@ class MapFieldViewController: UIViewController, MKMapViewDelegate {
 
     override func loadView() {
         self.view = self.mapFieldView
-        self.mapFieldViewModel.mapView = self.mapFieldView.mapView
-        self.mapView = self.mapFieldView.mapView
-        self.mapView.delegate = self
+        self.mapFieldViewModel.mapFieldView = self.mapFieldView
+        self.mapFieldView.mapView.delegate = self
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         self.mapFieldViewModel.subscribeToTableViewControllerState()
     }
 
@@ -46,8 +43,8 @@ class MapFieldViewController: UIViewController, MKMapViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.mapFieldViewModel.dispatchGetAllFields()
         self.mapFieldViewModel.registerAnnotationView()
+        self.mapFieldViewModel.mapFieldInteraction.getAllFieldAction()
         self.mapFieldViewModel.initTitleNavigation(of: self)
         self.mapFieldViewModel.initRegion()
     }
@@ -62,5 +59,9 @@ class MapFieldViewController: UIViewController, MKMapViewDelegate {
 
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         self.mapFieldViewModel.handleAnnotationViewSelected(annotationView: view)
+    }
+
+    deinit {
+        print("****** deint MapFieldViewController  *****")
     }
 }

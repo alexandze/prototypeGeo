@@ -14,9 +14,9 @@ class MapFieldViewModel {
     let mapFieldAllFieldStateObs: Observable<MapFieldState>
     let mapFieldInteraction: MapFieldInteraction
     var disposableMapFieldAllState: Disposable?
-    var mapView: MKMapView!
-    var fieldDictionnary: [Int: Field]?
-
+    var mapFieldView: MapFieldView!
+    var state: MapFieldState?
+    let mapFieldService: MapFieldService
     let idClusterAnnotation = "idCLusterAnnotation"
     let idAnnotationView = "My annotation view"
     var currentSelectedAnnotation: AnnotationWithData<PayloadFieldAnnotation>?
@@ -24,20 +24,33 @@ class MapFieldViewModel {
 
     init(
         mapFieldAllFieldStateObs: Observable<MapFieldState>,
-        mapFieldInteraction: MapFieldInteraction
+        mapFieldInteraction: MapFieldInteraction,
+        mapFieldService: MapFieldService = MapFieldService()
     ) {
         self.mapFieldAllFieldStateObs = mapFieldAllFieldStateObs
         self.mapFieldInteraction = mapFieldInteraction
+        self.mapFieldService = mapFieldService
     }
 
     func subscribeToTableViewControllerState() {
         self.disposableMapFieldAllState = self.mapFieldAllFieldStateObs
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { state in
-                // TODO faire des response d'action
-                self.handleInitMap(
-                    fieldDictionnary: state.fieldDictionnary
-                )
+                guard let responseAction = state.responseAction else { return }
+                self.set(state: state)
+
+                switch responseAction {
+                case .willSelectedFieldOnMapActionResponse:
+                    self.handleWillSelectedFieldOnMapActionResponse()
+                case .getAllFieldActionResponse:
+                    self.handleGetAllFieldActionResponse()
+                case .getAllFieldActionSuccessResponse:
+                    self.handleGetAllFieldActionSuccessResponse()
+                case .getAllFieldErrorActionResponse:
+                    self.handleGetAllFieldErrorResponse()
+                case .willDeselectFieldOnMapActionResponse:
+                    self.handleWillDeselectFieldOnMapActionResponse()
+                }
             })
     }
 
@@ -45,18 +58,18 @@ class MapFieldViewModel {
         let location2D = CLLocationCoordinate2DMake(45.233023116000027, -73.355880542999955)
         let coordinateSpan = MKCoordinateSpan(latitudeDelta: 0.015, longitudeDelta: 0.015)
         let region = MKCoordinateRegion(center: location2D, span: coordinateSpan)
-        self.mapView.region = mapView.regionThatFits(region)
+        mapFieldView.mapView.region = mapFieldView.mapView.regionThatFits(region)
     }
 
     func registerAnnotationView() {
-        self.mapView.register(
+        mapFieldView.mapView.register(
             MKMarkerAnnotationView.self,
             forAnnotationViewWithReuseIdentifier: self.idAnnotationView
         )
     }
 
-    func dispatchGetAllFields() {
-        mapFieldInteraction.getAllField()
+    func set(state: MapFieldState) {
+        self.state = state
     }
 
     func initTitleNavigation(of viewController: UIViewController) {
@@ -76,12 +89,8 @@ class MapFieldViewModel {
         }
     }
 
-    private func set(fieldDictionnary: [Int: Field]) {
-        self.fieldDictionnary = fieldDictionnary
-    }
-
-    private func addPolygonsAndAnnotationsToMap(_ fieldDictionnary: [Int: Field]) {
-        fieldDictionnary.forEach { (_, field) in
+    private func addPolygonsAndAnnotationsToMap() {
+        state?.fieldDictionnary?.forEach { (_, field) in
             addToMap(polygonsWithData: field.polygon)
             addToMap(annotationsWithData: field.annotation)
         }
@@ -91,62 +100,29 @@ class MapFieldViewModel {
         annotationsWithData: [AnnotationWithData<PayloadFieldAnnotation>]
     ) {
         annotationsWithData.forEach {
-            self.mapView.addAnnotation($0)
+            self.mapFieldView.mapView.addAnnotation($0)
         }
-
     }
 
     private func addToMap(polygonsWithData: [PolygonWithData<PayloadFieldAnnotation>]) {
         polygonsWithData.forEach {
-            self.mapView.addOverlay($0)
+            self.mapFieldView.mapView.addOverlay($0)
         }
     }
 
-    private func config(markerAnnotationView: MKMarkerAnnotationView) {
-        markerAnnotationView.titleVisibility = .adaptive
-        markerAnnotationView.subtitleVisibility = .adaptive
-        markerAnnotationView.markerTintColor = .black
-        markerAnnotationView.clusteringIdentifier = self.idClusterAnnotation
-        markerAnnotationView.displayPriority = .defaultHigh
-        markerAnnotationView.canShowCallout = true
-    }
-
-    private func configRightCalloutAccessoryView(
-        with mkAnnotation: MKAnnotation,
-        and markerAnnotationView: MKMarkerAnnotationView
-    ) {
-        guard let annotationWithData =
-            mkAnnotation as? AnnotationWithData<PayloadFieldAnnotation> else { return }
-        guard let dataFromAnnotation = annotationWithData.data else { return }
-
-        if markerAnnotationView.rightCalloutAccessoryView == nil {
-            let rightCalloutAccessoryView = SelectedFieldCalloutView()
-            rightCalloutAccessoryView.addTargetButtonAdd(handleAddFunc: handleAdd(button:))
-            rightCalloutAccessoryView.addTargetButtonCancel(handleCancelFunc: handleCancel(button:))
-            rightCalloutAccessoryView.setStateButton(with: dataFromAnnotation.isSelected)
-            return markerAnnotationView.rightCalloutAccessoryView = rightCalloutAccessoryView
-        }
-
-        if let rightCalloutAccessoryView =
-            markerAnnotationView.rightCalloutAccessoryView as? SelectedFieldCalloutView {
-            return rightCalloutAccessoryView.setStateButton(with: dataFromAnnotation.isSelected)
+    private func selectePolygonOf(field: Field) {
+        field.polygon.forEach {
+            let polygonRenderer = self.mapFieldView.mapView.renderer(for: $0) as? MKPolygonRenderer
+            self.mapFieldView.configSelected(polygonRenderer: polygonRenderer)
         }
     }
 
-    private func configSelected(polygonRenderer: MKPolygonRenderer?) {
-        guard let polygonRenderer = polygonRenderer else { return }
-        polygonRenderer.fillColor = UIColor.green.withAlphaComponent(0.3)
-        polygonRenderer.strokeColor = UIColor.yellow.withAlphaComponent(0.8)
-        polygonRenderer.lineWidth = 2
+    private func deselectPolygonOf(field: Field) {
+        field.polygon.forEach {
+            let polygonRenderer = self.mapFieldView.mapView.renderer(for: $0) as? MKPolygonRenderer
+            self.mapFieldView.configNotSelected(polygonRenderer: polygonRenderer)
+        }
     }
-
-    private func configNotSelected(polygonRenderer: MKPolygonRenderer?) {
-        guard let polygonRenderer = polygonRenderer else { return }
-        polygonRenderer.fillColor = UIColor.red.withAlphaComponent(0.1)
-        polygonRenderer.strokeColor = UIColor.yellow.withAlphaComponent(0.8)
-        polygonRenderer.lineWidth = 2
-    }
-
 }
 
 // Handler
@@ -166,11 +142,11 @@ extension MapFieldViewModel {
             let polygonRenderer = MKPolygonRenderer(polygon: overlay)
 
             if overlay.data!.isSelected {
-                configSelected(polygonRenderer: polygonRenderer)
+                self.mapFieldView.configSelected(polygonRenderer: polygonRenderer)
                 return polygonRenderer
             }
 
-            configNotSelected(polygonRenderer: polygonRenderer)
+            self.mapFieldView.configNotSelected(polygonRenderer: polygonRenderer)
             return polygonRenderer
         }
 
@@ -179,17 +155,22 @@ extension MapFieldViewModel {
 
     func handle(mkAnnotation: MKAnnotation) -> MKAnnotationView? {
         if mkAnnotation is AnnotationWithData<PayloadFieldAnnotation> {
-            let markerAnnotationView = mapView.dequeueReusableAnnotationView(
+            let markerAnnotationView = mapFieldView.mapView.dequeueReusableAnnotationView(
                 withIdentifier:
                 self.idAnnotationView,
                 for: mkAnnotation
                 ) as? MKMarkerAnnotationView
 
-            config(markerAnnotationView: markerAnnotationView!)
+            mapFieldView.config(
+                markerAnnotationView: markerAnnotationView,
+                idClusterAnnotation: idClusterAnnotation
+            )
 
-            configRightCalloutAccessoryView(
-                with: mkAnnotation,
-                and: markerAnnotationView!
+            mapFieldView.configRightCalloutAccessoryView(
+                mkAnnotation: mkAnnotation,
+                markerAnnotationView: markerAnnotationView,
+                handleAddFunc: {[weak self] button in self?.handleAdd(button: button) },
+                handleCancelFunc: {[weak self] button in self?.handleCancel(button: button) }
             )
 
             return markerAnnotationView
@@ -198,59 +179,61 @@ extension MapFieldViewModel {
         return nil
     }
 
-    private func handleInitMap(fieldDictionnary: [Int: Field]) {
-        addPolygonsAndAnnotationsToMap(fieldDictionnary)
-        set(fieldDictionnary: fieldDictionnary)
+    private func handleWillDeselectFieldOnMapActionResponse() {
+        guard let lastIdDeselected = state?.lastIdFieldDeselected,
+            let fieldDeselected = state?.fieldDictionnary?[lastIdDeselected]
+            else { return }
 
+        deselectPolygonOf(field: fieldDeselected)
+        mapFieldInteraction.didDeselectFieldOnMapAction(field: fieldDeselected)
+    }
+
+    private func handleGetAllFieldActionResponse() {
+        _ = mapFieldService.getFieldsObs()
+            .observeOn(Util.getSchedulerMain())
+            .subscribe(onSuccess: {
+                self.mapFieldInteraction.getFieldSuccessAction($0)
+            }, onError: {
+                self.mapFieldInteraction.getFieldErrorAction(error: $0)
+            })
+    }
+
+    private func handleWillSelectedFieldOnMapActionResponse() {
+        guard let lastIdSelected = state?.lastIdFieldSelected,
+            let fieldSelected = state?.fieldDictionnary?[lastIdSelected]
+            else { return }
+
+        selectePolygonOf(field: fieldSelected)
+        mapFieldInteraction.didSelectedFieldAction(field: fieldSelected)
+    }
+
+    private func handleGetAllFieldActionSuccessResponse() {
+        addPolygonsAndAnnotationsToMap()
         // TODO dispatch success add polygon and annotation
     }
 
     private func handleCancel(button: UIButton) {
         guard let dataFromAnnotation = currentSelectedAnnotation?.data else { return }
-        guard let selectedFieldCalloutView =
-            button.superview as? SelectedFieldCalloutView else { return }
+        guard let selectedFieldCalloutView = button.superview as? SelectedFieldCalloutView else { return }
         dataFromAnnotation.isSelected = false
         selectedFieldCalloutView.setStateButton(with: false)
-        let fieldDeselected = fieldDictionnary?[dataFromAnnotation.idField]
-
-        fieldDeselected?.polygon.forEach {
-            let polygonRenderer = self.mapView.renderer(for: $0) as? MKPolygonRenderer
-            configNotSelected(polygonRenderer: polygonRenderer)
-        }
-
-        dipatchRemoveFieldToListView(field: fieldDeselected)
+        mapFieldInteraction.willDeselectedFieldOnMapAction(idField: dataFromAnnotation.idField)
     }
 
     private func handleAdd(button: UIButton) {
         guard let dataFromAnnotation = currentSelectedAnnotation?.data else { return }
         guard let selectedFieldCalloutView = button.superview as? SelectedFieldCalloutView else { return }
-
         dataFromAnnotation.isSelected = true
         selectedFieldCalloutView.setStateButton(with: true)
-        let fieldSelected = fieldDictionnary?[dataFromAnnotation.idField]
+        mapFieldInteraction.willSelectedFieldOnMapAction(idField: dataFromAnnotation.idField)
+    }
 
-        fieldSelected?.polygon.forEach {
-            let polygonRenderer = self.mapView.renderer(for: $0) as? MKPolygonRenderer
-            configSelected(polygonRenderer: polygonRenderer)
-        }
-
-        dispatchAddFieldToListView(field: fieldSelected)
+    private func handleGetAllFieldErrorResponse() {
+        // TODO handle error get All field
     }
 }
 
 // Dispatcher
 extension MapFieldViewModel {
-    private func dispatchAddFieldToListView(
-        field: Field?
-    ) {
-        guard let field = field else { return }
-        mapFieldInteraction.selectedField(field: field)
-    }
 
-    private func dipatchRemoveFieldToListView(
-        field: Field?
-    ) {
-        guard let field = field else { return }
-        mapFieldInteraction.deselectedField(field: field)
-    }
 }

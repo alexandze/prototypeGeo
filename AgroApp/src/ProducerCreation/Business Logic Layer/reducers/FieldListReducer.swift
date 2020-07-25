@@ -14,17 +14,16 @@ extension Reducers {
         let state = state ?? FieldListState(uuidState: UUID().uuidString, fieldList: [])
 
         switch action {
-        case let selectedFieldOnMapAction as MapFieldAction.SelectedFieldOnMapAction:
-            return FieldListReducerHandler
-                .handle(selectedFieldOnMapAction: selectedFieldOnMapAction, state)
-        case let deselectedFieldOnMap as MapFieldAction.DeselectedFieldOnMapAction:
-            return FieldListReducerHandler.handle(deselectedFieldOnMapAction: deselectedFieldOnMap, state)
+        case let didSelectedFieldOnMapAction as MapFieldAction.DidSelectedFieldOnMapAction:
+            return FieldListReducerHandler().handle(didSelectedFieldOnMapAction: didSelectedFieldOnMapAction, state)
+        case let didDeselectFieldOnMap as MapFieldAction.DidDelectFieldOnMapAction:
+            return FieldListReducerHandler().handle(didDelectFieldOnMapAction: didDeselectFieldOnMap, state)
         case let willSelectFieldOnListAction as FieldListAction.WillSelectFieldOnListAction:
-            return FieldListReducerHandler.handle(willSelectFieldOnListAction: willSelectFieldOnListAction, state)
+            return FieldListReducerHandler().handle(willSelectFieldOnListAction: willSelectFieldOnListAction, state)
         case let isAppearAction as FieldListAction.IsAppearAction:
-            return FieldListReducerHandler.handle(isAppearAction: isAppearAction, state)
+            return FieldListReducerHandler().handle(isAppearAction: isAppearAction, state)
         case let updateElementAction as CulturalPracticeFormAction.UpdateCulturalPracticeElementAction:
-            return FieldListReducerHandler.handle(
+            return FieldListReducerHandler().handle(
                 updateCulturalPracticeElementAction: updateElementAction,
                 state
             )
@@ -36,7 +35,7 @@ extension Reducers {
 
 class FieldListReducerHandler {
 
-    static func handle(
+    func handle(
         updateCulturalPracticeElementAction : CulturalPracticeFormAction.UpdateCulturalPracticeElementAction,
         _ state: FieldListState
     ) -> FieldListState {
@@ -57,7 +56,7 @@ class FieldListReducerHandler {
         return state
     }
 
-    static private func handleUpdateFieldForInputAndSelect(_ culturalPracticeElement: CulturalPracticeElementProtocol, _ field: Field, _ state: FieldListState) -> FieldListState {
+    private func handleUpdateFieldForInputAndSelect(_ culturalPracticeElement: CulturalPracticeElementProtocol, _ field: Field, _ state: FieldListState) -> FieldListState {
         guard let (fieldFind, indexFind) = findFieldTypeById(state.fieldList!, field.id),
         let culturalPracticeValue = culturalPracticeElement.value
             else { return state }
@@ -84,7 +83,7 @@ class FieldListReducerHandler {
         )
     }
 
-    static private func handleUpdateFieldForContainerElement(
+    private func handleUpdateFieldForContainerElement(
         _ containerElement: CulturalPracticeContainerElement,
         _ field: Field,
         _ state: FieldListState
@@ -109,12 +108,12 @@ class FieldListReducerHandler {
         return previousState
     }
 
-    static private func findFieldTypeById(_ fields: [Field],_ id: Int) -> (Field, Int)? {
+    private func findFieldTypeById(_ fields: [Field],_ id: Int) -> (Field, Int)? {
         let indexFind = fields.firstIndex { $0.id == id }
         return indexFind.map {  (fields[$0], $0) }
     }
 
-    static func handle(
+    func handle(
         willSelectFieldOnListAction: FieldListAction.WillSelectFieldOnListAction,
         _ state: FieldListState
     ) -> FieldListState {
@@ -125,34 +124,34 @@ class FieldListReducerHandler {
         )
     }
 
-    static func handle(
+    func handle(
         isAppearAction: FieldListAction.IsAppearAction,
         _ state: FieldListState
     ) -> FieldListState {
         state.changeValue(subAction: .isAppearActionSuccess, isAppear: isAppearAction.isAppear)
     }
 
-    static func handle(
-        selectedFieldOnMapAction: MapFieldAction.SelectedFieldOnMapAction,
+    func handle(
+        didSelectedFieldOnMapAction: MapFieldAction.DidSelectedFieldOnMapAction,
         _ state: FieldListState
         ) -> FieldListState {
         let secondArray = state.fieldList != nil ? state.fieldList! : []
-        var firstArray = [selectedFieldOnMapAction.field]
+        var firstArray = [didSelectedFieldOnMapAction.field]
         firstArray += secondArray
 
         return state.changeValue(
             fieldList: firstArray,
-            currentField: selectedFieldOnMapAction.field,
+            currentField: didSelectedFieldOnMapAction.field,
             subAction: .selectedFieldOnMapActionSuccess
         )
     }
 
-    static func handle(
-        deselectedFieldOnMapAction: MapFieldAction.DeselectedFieldOnMapAction,
+    func handle(
+        didDelectFieldOnMapAction: MapFieldAction.DidDelectFieldOnMapAction,
         _ state: FieldListState
     ) -> FieldListState {
-        let fieldToRemove = deselectedFieldOnMapAction.field
-        let fieldList = state.fieldList != nil ? state.fieldList! : []
+        let fieldToRemove = didDelectFieldOnMapAction.field
+        let fieldList = state.fieldList ?? []
         let index = findIndexFieldByIdField(idField: fieldToRemove.id, fieldList: fieldList)
 
         let newFieldListState = index.map { (index: Int) -> FieldListState in
@@ -162,7 +161,7 @@ class FieldListReducerHandler {
         return newFieldListState != nil ? newFieldListState! : state
     }
 
-    private static func setCulturalPractice(
+    private func setCulturalPractice(
         state: CulturalPracticeFormState,
         _ sectionIndex: Int,
         _ inputMultiSelectContainer: CulturalPracticeElementProtocol
@@ -182,7 +181,7 @@ class FieldListReducerHandler {
         return copyState
     }
 
-    private static func handleRemoveFieldInState(state: FieldListState, index: Int) -> FieldListState {
+    private func handleRemoveFieldInState(state: FieldListState, index: Int) -> FieldListState {
         var fieldArray = state.fieldList
         let removed = fieldArray?.remove(at: index)
 
@@ -194,7 +193,7 @@ class FieldListReducerHandler {
         )
     }
 
-    private static func findIndexFieldByIdField(idField: Int, fieldList: [Field]) -> Int? {
+    private func findIndexFieldByIdField(idField: Int, fieldList: [Field]) -> Int? {
         fieldList.firstIndex { $0.id == idField }
     }
 }

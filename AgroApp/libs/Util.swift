@@ -12,9 +12,11 @@ import RxSwift
 
 // TODO afficher les messages deinit seulement en mode debug
 // TODO deinit les states
+// TODO renomer les actionSuccess en actionResponse
 class Util {
 
-    private static var serialDispatchQueueScheduler: SerialDispatchQueueScheduler?
+    private static var serialDispatchQueueSchedulerForReSwift: SerialDispatchQueueScheduler?
+    private static var serialDispatchQueueSchedulerForRequestServer: SerialDispatchQueueScheduler?
 
     static func getOppositeColorBlackOrWhite() -> UIColor {
         UIColor {(trait: UITraitCollection) -> UIColor in
@@ -46,14 +48,24 @@ class Util {
         0.95
     }
 
-    static public func getSchedulerBackground() -> SerialDispatchQueueScheduler {
-        if serialDispatchQueueScheduler == nil {
-            let conQueue = DispatchQueue(label: "com.uqtr.conQueue", attributes: .concurrent)
-            serialDispatchQueueScheduler = SerialDispatchQueueScheduler(queue: conQueue, internalSerialQueueName: "com.uqtr.conQueue")
-            return serialDispatchQueueScheduler!
+    static public func getSchedulerBackgroundForReSwift() -> SerialDispatchQueueScheduler {
+        if serialDispatchQueueSchedulerForReSwift == nil {
+            let conQueue = DispatchQueue(label: "com.uqtr.conQueueReSwift", attributes: .concurrent)
+            serialDispatchQueueSchedulerForReSwift = SerialDispatchQueueScheduler(queue: conQueue, internalSerialQueueName: "com.uqtr.conQueue")
+            return serialDispatchQueueSchedulerForReSwift!
         }
 
-        return serialDispatchQueueScheduler!
+        return serialDispatchQueueSchedulerForReSwift!
+    }
+
+    static public func getSchedulerBackgroundForRequestServer() -> SerialDispatchQueueScheduler {
+        if serialDispatchQueueSchedulerForRequestServer == nil {
+            let conQueue = DispatchQueue(label: "com.uqtr.conQueueRequestServer", attributes: .concurrent)
+            serialDispatchQueueSchedulerForRequestServer = SerialDispatchQueueScheduler(queue: conQueue, internalSerialQueueName: "com.uqtr.conQueueRequestServer")
+            return serialDispatchQueueSchedulerForRequestServer!
+        }
+
+        return serialDispatchQueueSchedulerForRequestServer!
     }
 
     static func getSchedulerMain() -> MainScheduler {
@@ -74,7 +86,7 @@ class Util {
             functionWhoRunInSchedulerBackground()
             completableEvent(.completed)
             return Disposables.create()
-        }.subscribeOn(Util.getSchedulerBackground())
+        }.subscribeOn(Util.getSchedulerBackgroundForReSwift())
         .subscribe()
     }
 
@@ -83,7 +95,7 @@ class Util {
             funcRun()
             completableEvent(.completed)
             return Disposables.create()
-        }.subscribeOn(getSchedulerBackground())
+        }.subscribeOn(getSchedulerBackgroundForReSwift())
         .observeOn(getSchedulerMain())
 
     }

@@ -41,4 +41,53 @@ class MapFieldView: UIView {
         ])
     }
 
+    func config(markerAnnotationView: MKMarkerAnnotationView?, idClusterAnnotation: String) {
+        guard let markerAnnotationView = markerAnnotationView else { return }
+        markerAnnotationView.titleVisibility = .adaptive
+        markerAnnotationView.subtitleVisibility = .adaptive
+        markerAnnotationView.markerTintColor = .black
+        markerAnnotationView.clusteringIdentifier = idClusterAnnotation
+        markerAnnotationView.displayPriority = .defaultHigh
+        markerAnnotationView.canShowCallout = true
+    }
+
+    func configNotSelected(polygonRenderer: MKPolygonRenderer?) {
+        guard let polygonRenderer = polygonRenderer else { return }
+        polygonRenderer.fillColor = UIColor.red.withAlphaComponent(0.1)
+        polygonRenderer.strokeColor = UIColor.yellow.withAlphaComponent(0.8)
+        polygonRenderer.lineWidth = 2
+    }
+
+    func configSelected(polygonRenderer: MKPolygonRenderer?) {
+        guard let polygonRenderer = polygonRenderer else { return }
+        polygonRenderer.fillColor = UIColor.green.withAlphaComponent(0.3)
+        polygonRenderer.strokeColor = UIColor.yellow.withAlphaComponent(0.8)
+        polygonRenderer.lineWidth = 2
+    }
+
+    func configRightCalloutAccessoryView(
+        mkAnnotation: MKAnnotation,
+        markerAnnotationView: MKMarkerAnnotationView?,
+        handleAddFunc: @escaping (UIButton) -> Void,
+        handleCancelFunc: @escaping (UIButton) -> Void
+    ) {
+        guard let annotationWithData =
+            mkAnnotation as? AnnotationWithData<PayloadFieldAnnotation>,
+        let dataFromAnnotation = annotationWithData.data,
+        let markerAnnotationView = markerAnnotationView else { return }
+
+        if markerAnnotationView.rightCalloutAccessoryView == nil {
+            let rightCalloutAccessoryView = SelectedFieldCalloutView()
+            rightCalloutAccessoryView.addTargetButtonAdd(handleAddFunc: handleAddFunc)
+            rightCalloutAccessoryView.addTargetButtonCancel(handleCancelFunc: handleCancelFunc)
+            rightCalloutAccessoryView.setStateButton(with: dataFromAnnotation.isSelected)
+            return markerAnnotationView.rightCalloutAccessoryView = rightCalloutAccessoryView
+        }
+
+        if let rightCalloutAccessoryView =
+            markerAnnotationView.rightCalloutAccessoryView as? SelectedFieldCalloutView {
+            return rightCalloutAccessoryView.setStateButton(with: dataFromAnnotation.isSelected)
+        }
+    }
+
 }

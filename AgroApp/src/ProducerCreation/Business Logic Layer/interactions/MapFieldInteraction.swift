@@ -19,33 +19,63 @@ public class MapFieldInteractionImpl: MapFieldInteraction {
         self.actionDispatcher = actionDispatcher
     }
 
-    public func getAllField() {
+    public func getAllFieldAction() {
         _ = Util.runInSchedulerBackground {
-            self.actionDispatcher.dispatch(MapFieldAction.GetAllField())
+            self.actionDispatcher.dispatch(MapFieldAction.GetAllFieldAction())
         }
     }
 
-    func selectedField(field: Field) {
-        let selectedFieldOnMapAction = MapFieldAction.SelectedFieldOnMapAction(field: field)
+    func didSelectedFieldAction(field: Field?) {
+        guard let field = field else { return }
+        let selectedFieldOnMapAction = MapFieldAction.DidSelectedFieldOnMapAction(field: field)
 
-       _ =  Util.runInSchedulerBackground {
+        _ =  Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(selectedFieldOnMapAction)
         }
     }
 
-    func deselectedField(field: Field) {
-        let deselectedFieldOnMapAction = MapFieldAction.DeselectedFieldOnMapAction(field: field)
+    func willDeselectedFieldOnMapAction(idField: Int?) {
+        guard let idField = idField else { return }
+        let willDeselectFieldOnMapAction = MapFieldAction.WillDeselectFieldOnMapAction(idField: idField)
 
         _ = Util.runInSchedulerBackground {
-            self.actionDispatcher.dispatch(deselectedFieldOnMapAction)
+            self.actionDispatcher.dispatch(willDeselectFieldOnMapAction)
         }
-
     }
 
+    func getFieldSuccessAction(_ fieldDictionnary: [Int: Field]) {
+        _ = Util.runInSchedulerBackground {
+            self.actionDispatcher.dispatch(
+                MapFieldAction.GetAllFieldSuccessAction(fieldDictionnary: fieldDictionnary)
+            )
+        }
+    }
+
+    func getFieldErrorAction(error: Error) {
+        _ = Util.runInSchedulerBackground {
+            self.actionDispatcher.dispatch(MapFieldAction.GetAllFieldErrorAction(error: error))
+        }
+    }
+
+    func willSelectedFieldOnMapAction(idField: Int) {
+        _ = Util.runInSchedulerBackground {
+            self.actionDispatcher.dispatch(MapFieldAction.WillSelectedFieldOnMapAction(idField: idField))
+        }
+    }
+
+    func didDeselectFieldOnMapAction(field: Field) {
+        _ = Util.runInSchedulerBackground {
+            self.actionDispatcher.dispatch(MapFieldAction.DidDelectFieldOnMapAction(field: field))
+        }
+    }
 }
 
 protocol MapFieldInteraction {
-    func getAllField()
-    func selectedField(field: Field)
-    func deselectedField(field: Field)
+    func getAllFieldAction()
+    func didSelectedFieldAction(field: Field?)
+    func willDeselectedFieldOnMapAction(idField: Int?)
+    func getFieldSuccessAction(_ fieldDictionnary: [Int: Field])
+    func getFieldErrorAction(error: Error)
+    func willSelectedFieldOnMapAction(idField: Int)
+    func didDeselectFieldOnMapAction(field: Field)
 }
