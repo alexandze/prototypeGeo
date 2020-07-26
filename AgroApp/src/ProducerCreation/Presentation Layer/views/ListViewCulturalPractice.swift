@@ -64,7 +64,7 @@ class ListViewCulturalPractice: UIView {
         cell.detailTextLabel?.text = addElement.title
 
         if !(cell.accessoryView is UIButton) {
-           cell.accessoryView = createAddButton(handleAddButton: handleAddButton)
+            cell.accessoryView = createAddButton(handleAddButton: handleAddButton)
         }
 
         return cell

@@ -95,7 +95,6 @@ class CulturalPracticeFormReducerHandler {
         return nil
     }
 
-    //TODO util reducerHandle
     func handleUpdateState<T>(state: T, _ updateFunction: (T) -> T) -> T {
         updateFunction(state)
     }

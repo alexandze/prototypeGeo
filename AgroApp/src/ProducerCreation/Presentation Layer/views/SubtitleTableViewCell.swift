@@ -25,7 +25,7 @@ class SubtitleTableViewCell: UITableViewCell {
         style: UITableViewCell.CellStyle,
         reuseIdentifier: String?
     ) {
-            super.init(style:.subtitle, reuseIdentifier: reuseIdentifier)
+        super.init(style:.subtitle, reuseIdentifier: reuseIdentifier)
     }
 
     required init?(coder: NSCoder) {

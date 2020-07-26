@@ -59,6 +59,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     private func getAppDelegate() -> AppDelegate {
+        // swiftlint:disable:next force_cast
         UIApplication.shared.delegate as! AppDelegate
     }
 

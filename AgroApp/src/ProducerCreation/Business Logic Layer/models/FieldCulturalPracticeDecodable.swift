@@ -29,10 +29,7 @@ struct FieldCulturalPracticeDecodable: Decodable {
     }
 
     private func filterValidFieldDecodable(fieldDecodable: FieldDecodable?) -> Bool {
-        if fieldDecodable?.polygon == nil {
-            print(fieldDecodable?.id)
-        }
-        return fieldDecodable?.id != nil &&
+        fieldDecodable?.id != nil &&
             fieldDecodable?.type != nil &&
             fieldDecodable?.culturalPratice != nil &&
             fieldDecodable?.polygon?.isEmpty != nil &&

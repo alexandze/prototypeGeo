@@ -75,6 +75,7 @@ extension FarmerMiddleware {
         }
     }
 
+    // swiftlint:disable:next force_cast
     private func getFamers() -> Single<[Farmer]> {
         let farmers = [
             Farmer(firstName: "APrenom", lastName: "BNom"),

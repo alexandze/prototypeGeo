@@ -242,7 +242,7 @@ extension SelectFormCulturalPracticeViewModelImpl {
     private func dispatchClosePresentedViewController() {
         let indexSelected = self.getSelectedIndexOfPickerView()
 
-        Util.runInSchedulerBackground {
+        _ = Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(
                 SelectFormCulturalPracticeAction.ClosePresentedViewControllerAction(indexSelected: indexSelected)
             )

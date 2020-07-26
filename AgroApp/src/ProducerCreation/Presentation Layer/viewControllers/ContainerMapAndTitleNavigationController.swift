@@ -34,8 +34,7 @@ public class ContainerMapAndTitleNavigationController: UIViewController {
         super.viewDidLoad()
         initContainerView()
         initDragGestureOnContainerFieldNavigation()
-       // self.containerMapAndListFieldView.slideContainerFieldNavigationViewToMaxPosition()
-
+        // self.containerMapAndListFieldView.slideContainerFieldNavigationViewToMaxPosition()
     }
 
     private func initContainerView() {
