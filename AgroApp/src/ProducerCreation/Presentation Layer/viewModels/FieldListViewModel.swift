@@ -33,27 +33,27 @@ class FieldListViewModelImpl: FieldListViewModel {
     func subscribeToObservableFieldListState() {
         self.disposableFieldListState = fieldListStateObs
             .observeOn(MainScheduler.instance)
-            .subscribe {
+            .subscribe {[weak self] in
                 guard let state = $0.element, let subAction = state.subAction else { return }
-                self.setValues(state: state)
+                self?.setValues(state: state)
 
                 switch subAction {
                 case .selectedFieldOnMapActionSuccess:
-                    self.handleSelectedFieldOnMapActionSuccess()
+                    self?.handleSelectedFieldOnMapActionSuccess()
                 case .deselectedFieldOnMapActionSuccess:
-                    self.handleDeselectedFieldOnMapActionSuccess()
+                    self?.handleDeselectedFieldOnMapActionSuccess()
                 case .willSelectFieldOnListActionSucccess:
-                    self.handleWillSelectFieldOnListActionSuccess()
+                    self?.handleWillSelectFieldOnListActionSuccess()
                 case .initFieldList:
-                    self.handleInitFieldList()
+                    self?.handleInitFieldList()
                 case .isAppearActionSuccess:
                     break
                 case .updateFieldSuccess:
-                    self.handleUpdateFieldSuccess()
+                    self?.handleUpdateFieldSuccess()
                 }
-                self.dispatchSetTitleAction()
-                self.dispatchSetCurrentViewControllerInNavigationAction()
-                self.dispatchIsAppear()
+                self?.dispatchSetTitleAction()
+                self?.dispatchSetCurrentViewControllerInNavigationAction()
+                self?.dispatchIsAppear()
 
         }
     }

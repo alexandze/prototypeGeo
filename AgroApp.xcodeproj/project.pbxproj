@@ -36,8 +36,8 @@
 		98363B5523DEF0EC00AFFC63 /* MapFieldInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98363B5423DEF0EC00AFFC63 /* MapFieldInteraction.swift */; };
 		98363B6023DFF7EA00AFFC63 /* MapFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98363B5F23DFF7EA00AFFC63 /* MapFieldView.swift */; };
 		98363B6223E028BD00AFFC63 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98363B6123E028BD00AFFC63 /* Util.swift */; };
-		98457B662423E5FA00AF4C90 /* CulturalPraticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98457B652423E5FA00AF4C90 /* CulturalPraticeViewController.swift */; };
-		98457B682423E64F00AF4C90 /* ListViewCulturalPractice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98457B672423E64F00AF4C90 /* ListViewCulturalPractice.swift */; };
+		98457B662423E5FA00AF4C90 /* CulturalPracticeFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98457B652423E5FA00AF4C90 /* CulturalPracticeFormViewController.swift */; };
+		98457B682423E64F00AF4C90 /* CulturalPracticeFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98457B672423E64F00AF4C90 /* CulturalPracticeFormView.swift */; };
 		98457BAA2427353B00AF4C90 /* CulturalPractice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854BFE6240A224600E5AB8A /* CulturalPractice.swift */; };
 		9847564324AEC6710048A503 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9847564224AEC6710048A503 /* SettingViewController.swift */; };
 		9847564524AED2FC0048A503 /* InputFormCulturalPracticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9847564424AED2FC0048A503 /* InputFormCulturalPracticeView.swift */; };
@@ -191,8 +191,8 @@
 		98363B5423DEF0EC00AFFC63 /* MapFieldInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFieldInteraction.swift; sourceTree = "<group>"; };
 		98363B5F23DFF7EA00AFFC63 /* MapFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFieldView.swift; sourceTree = "<group>"; };
 		98363B6123E028BD00AFFC63 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
-		98457B652423E5FA00AF4C90 /* CulturalPraticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalPraticeViewController.swift; sourceTree = "<group>"; };
-		98457B672423E64F00AF4C90 /* ListViewCulturalPractice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewCulturalPractice.swift; sourceTree = "<group>"; };
+		98457B652423E5FA00AF4C90 /* CulturalPracticeFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalPracticeFormViewController.swift; sourceTree = "<group>"; };
+		98457B672423E64F00AF4C90 /* CulturalPracticeFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalPracticeFormView.swift; sourceTree = "<group>"; };
 		9847564224AEC6710048A503 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		9847564424AED2FC0048A503 /* InputFormCulturalPracticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFormCulturalPracticeView.swift; sourceTree = "<group>"; };
 		9847564624AED9FC0048A503 /* InputFormCulturalPracticeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFormCulturalPracticeViewModel.swift; sourceTree = "<group>"; };
@@ -392,10 +392,10 @@
 			children = (
 				98363B2C23DECA3F00AFFC63 /* MapFieldViewController.swift */,
 				9854BFE0240A1C3C00E5AB8A /* ContainerMapAndTitleNavigationController.swift */,
-				9854BFD42408F53400E5AB8A /* FieldListViewController.swift */,
 				9810DA41242F0FCA00545A23 /* SelectFormCulturalPracticeViewController.swift */,
-				98457B652423E5FA00AF4C90 /* CulturalPraticeViewController.swift */,
+				98457B652423E5FA00AF4C90 /* CulturalPracticeFormViewController.swift */,
 				98BA0D7A240CDC2800948A26 /* ContainerTitleNavigationViewController.swift */,
+				9854BFD42408F53400E5AB8A /* FieldListViewController.swift */,
 			);
 			path = viewControllers;
 			sourceTree = "<group>";
@@ -511,7 +511,6 @@
 				988F035C242B0A1B00545D59 /* ContainerElementView.swift */,
 				98943407240F901D003C0110 /* SelectedFieldRightCalloutView.swift */,
 				9894340B2410FAF0003C0110 /* FieldSelectedViewCell.swift */,
-				98457B672423E64F00AF4C90 /* ListViewCulturalPractice.swift */,
 				98DB0F4A242866C50065963B /* SubtitleTableViewCell.swift */,
 				980ECA152430286D00AAD0AB /* HeaderPresentedView.swift */,
 			);
@@ -627,6 +626,7 @@
 				9854BFDE2409047C00E5AB8A /* FieldListView.swift */,
 				98BA0D7E240CE41F00948A26 /* ContainerMapAndTitleNavigationView.swift */,
 				9854BFDC2409000E00E5AB8A /* ContainerTitleNavigationView.swift */,
+				98457B672423E64F00AF4C90 /* CulturalPracticeFormView.swift */,
 			);
 			path = Container;
 			sourceTree = "<group>";
@@ -1036,14 +1036,14 @@
 				98CB79D524B82B3D00EFFF19 /* ContainerFormCulturalPracticeViewModel.swift in Sources */,
 				98A2C548240E696C002A884B /* AnnotationWithData.swift in Sources */,
 				9860400C23BD8EEB00D5B538 /* FarmerState.swift in Sources */,
-				98457B662423E5FA00AF4C90 /* CulturalPraticeViewController.swift in Sources */,
+				98457B662423E5FA00AF4C90 /* CulturalPracticeFormViewController.swift in Sources */,
 				98363B3C23DED00900AFFC63 /* FieldCulturalPracticeDecodable.swift in Sources */,
 				98BA0D7F240CE41F00948A26 /* ContainerMapAndTitleNavigationView.swift in Sources */,
 				98F126B024C71F2C001853D5 /* ConditionProfilCultural.swift in Sources */,
 				98B9991D23B50ACC00CA7EF9 /* FarmerTableViewController.swift in Sources */,
 				98304AD423EE19A400510FFE /* UtilAreaPolygon.swift in Sources */,
 				98CB79CF24B817EA00EFFF19 /* ContainerFormCulturalPracticeAction.swift in Sources */,
-				98457B682423E64F00AF4C90 /* ListViewCulturalPractice.swift in Sources */,
+				98457B682423E64F00AF4C90 /* CulturalPracticeFormView.swift in Sources */,
 				9810DA4E242F1F9A00545A23 /* SelectFormCulturalPracticeAction.swift in Sources */,
 				98304AD623EE21E200510FFE /* ErrorValueEnum.swift in Sources */,
 				98F126BE24C8F1C7001853D5 /* CulturalPractiqueUtil.swift in Sources */,

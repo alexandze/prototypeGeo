@@ -1,5 +1,5 @@
 //
-//  CulturalPraticeViewController.swift
+//  CulturalPracticeFormViewController.swift
 //  prototypeGeo
 //
 //  Created by Alexandre Andze Kande on 2020-03-19.
@@ -8,10 +8,10 @@
 
 import UIKit
 
-public class CulturalPraticeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+public class CulturalPracticeFormViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     var culturalPraticeViewModel: CulturalPraticeFormViewModel
-    let culturalPraticeView: ListViewCulturalPractice
+    let culturalPraticeView: CulturalPracticeFormView
     let tableView: UITableView
 
     required init?(coder: NSCoder) {
@@ -22,7 +22,7 @@ public class CulturalPraticeViewController: UIViewController, UITableViewDelegat
         culturalPraticeViewModel: CulturalPraticeFormViewModel
     ) {
         self.culturalPraticeViewModel = culturalPraticeViewModel
-        self.culturalPraticeView = ListViewCulturalPractice()
+        self.culturalPraticeView = CulturalPracticeFormView()
         self.culturalPraticeViewModel.culturalPraticeView = self.culturalPraticeView
         self.culturalPraticeViewModel.tableView = self.culturalPraticeView.tableView
         self.tableView = self.culturalPraticeView.tableView
@@ -85,10 +85,8 @@ public class CulturalPraticeViewController: UIViewController, UITableViewDelegat
         switch culturalPraticeViewModel.getCulturePracticeElement(by: indexPath) {
         case let addElement as CulturalPracticeAddElement:
             return culturalPraticeViewModel.initCellFor(addElement: addElement, cell: cell!)
-
         case let inputElement as CulturalPracticeInputElement:
             return culturalPraticeViewModel.initCellFor(inputElement: inputElement, cell: cell!)
-
         case let inputMultiSelectContainer as CulturalPracticeContainerElement:
             return culturalPraticeViewModel.initCellFor(containerElement: inputMultiSelectContainer, cell: cell!)
         case let multiSelectElement as CulturalPracticeMultiSelectElement:

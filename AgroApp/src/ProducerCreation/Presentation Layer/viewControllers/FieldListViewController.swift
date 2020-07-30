@@ -48,7 +48,6 @@ public class FieldListViewController: UIViewController, UITableViewDelegate, UIT
 
     public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-
         self.fieldListViewModel.dispose()
     }
 
@@ -75,5 +74,4 @@ public class FieldListViewController: UIViewController, UITableViewDelegate, UIT
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         fieldListViewModel.handle(didSelectRowAt: indexPath)
     }
-
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ListViewCulturalPractice: UIView {
+class CulturalPracticeFormView: UIView {
 
     var handleAddButtonFunc: (() -> Void)?
 
@@ -82,6 +82,7 @@ class ListViewCulturalPractice: UIView {
 
     func initCellFor(inputElement: CulturalPracticeInputElement, cell: UITableViewCell) -> UITableViewCell {
         removeContainerElementViewTo(containerView: cell.contentView)
+
         config(
             labelTitle: cell.textLabel,
             culturalPracticeElementProtocol: inputElement

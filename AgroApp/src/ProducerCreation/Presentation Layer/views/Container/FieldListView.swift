@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RxSwift
 
 class FieldListView: UIView {
 
@@ -38,5 +39,4 @@ class FieldListView: UIView {
             tableView.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
     }
-
 }

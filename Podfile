@@ -6,7 +6,6 @@ def production_pods
     pod 'RxSwift', '~> 5'
     pod 'RxCocoa', '~> 5'
     pod 'ReSwift'
-    pod 'RealmSwift'
 end
 
 def test_pods

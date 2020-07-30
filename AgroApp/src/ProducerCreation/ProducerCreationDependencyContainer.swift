@@ -1,5 +1,5 @@
 //
-//  MapDependecyContainer.swift
+//  ProducerCreationDependencyContainerImpl.swift
 //  prototypeGeo
 //
 //  Created by Alexandre Andze Kande on 2020-02-29.
@@ -12,12 +12,14 @@ import UIKit
 import SwiftUI
 
 class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContainer {
+
     // MARK: - Properties
     let stateStore: Store<AppState>
 
     init(stateStore: Store<AppState>) {
         self.stateStore = stateStore
     }
+
     // MARK: - Methods CulturalPracticeForm
 
     func makeSelectFormCulturalPracticeStateObservable() -> Observable<SelectFormCulturalPracticeState> {
@@ -110,15 +112,15 @@ class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContain
         FieldCulturalPracticeInteractionImpl(actionDispatcher: self.stateStore)
     }
 
-    func makeCulturalPracticeViewModel() -> CulturalPraticeFormViewModel {
+    func makeCulturalPracticeFormViewModel() -> CulturalPraticeFormViewModel {
         CulturalPraticeFormViewModelImpl(
             culturalPracticeStateObs: self.makeCurrentFieldObservable(),
             actionDispatcher: self.stateStore
         )
     }
 
-    func makeCulturalPracticeViewController() -> CulturalPraticeViewController {
-        CulturalPraticeViewController(culturalPraticeViewModel: self.makeCulturalPracticeViewModel())
+    func makeCulturalPracticeFormViewController() -> CulturalPracticeFormViewController {
+        CulturalPracticeFormViewController(culturalPraticeViewModel: self.makeCulturalPracticeFormViewModel())
     }
 
     // MARK: - Methods ContainerTitleNavigation
@@ -178,7 +180,9 @@ class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContain
         viewModel.settingViewController = settingViewController
         return  settingViewController
     }
+
     // MARK: - Methods ContainerFormCulturalPractice
+
     func makeContainerFormCulturalPracticeObservable() -> Observable<ContainerFormCulturalPracticeState> {
         self.stateStore.makeObservable { (subscription: Subscription<AppState>) -> Subscription<ContainerFormCulturalPracticeState> in
             subscription
@@ -209,6 +213,7 @@ class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContain
     }
 
     // MARK: - Methods navigation
+
     func makeFieldListNavigationController() -> UINavigationController {
         UINavigationController(rootViewController: self.makeFieldListViewController())
     }
@@ -221,6 +226,7 @@ class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContain
     }
 
     // MARK: - Methods process
+
     func processInitMapField() -> UINavigationController {
         makeMapFieldNavigationController()
     }
@@ -235,13 +241,12 @@ class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContain
             containerTitleNavigationViewController: makeContainerTitleNavigationViewController()
         )
     }
-
 }
 
 protocol ProducerCreationDependencyContainer {
     func makeMapFieldNavigationController() -> UINavigationController
     func makeFieldListNavigationController() -> UINavigationController
-    func makeCulturalPracticeViewController() -> CulturalPraticeViewController
+    func makeCulturalPracticeFormViewController() -> CulturalPracticeFormViewController
     func makeFieldListViewController() -> FieldListViewController
     func processInitContainerMapAndTitleNavigationController() -> ContainerMapAndTitleNavigationController
     func processInitMapField() -> UINavigationController

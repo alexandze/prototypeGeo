@@ -106,12 +106,13 @@ class AppDependencyContainerImpl: AppDependencyContainer {
 
         return tabBarController
     }
+
     func processInitContainerMapAndTitleNavigationController() -> ContainerMapAndTitleNavigationController {
         producerCreationDependencyContainer.processInitContainerMapAndTitleNavigationController()
     }
 
-    func processInitCulturalPracticeViewController() -> CulturalPraticeViewController {
-        producerCreationDependencyContainer.makeCulturalPracticeViewController()
+    func processInitCulturalPracticeViewController() -> CulturalPracticeFormViewController {
+        producerCreationDependencyContainer.makeCulturalPracticeFormViewController()
     }
 
     func processInitCulturalPracticeFormViewController() -> SelectFormCulturalPracticeViewController {
@@ -131,9 +132,8 @@ protocol AppDependencyContainer {
     var producerCreationDependencyContainer: ProducerCreationDependencyContainer {get}
     func proccessInitTabBarController() -> UITabBarController
     func processInitContainerMapAndTitleNavigationController() -> ContainerMapAndTitleNavigationController
-    func processInitCulturalPracticeViewController() -> CulturalPraticeViewController
+    func processInitCulturalPracticeViewController() -> CulturalPracticeFormViewController
     func processInitCulturalPracticeFormViewController() -> SelectFormCulturalPracticeViewController
     func processInitInputFormCulturalPracticeHostingController() -> SettingViewController<InputFormCulturalPracticeView>
-
     func makeContainerFormCulturalPracticeHostingController() -> SettingViewController<ContainerFormCulturalPracticeView>
 }

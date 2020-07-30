@@ -19,10 +19,10 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
     let actionDispatcher: ActionDispatcher
     var tableView: UITableView?
     var culturalPracticeStateDisposable: Disposable?
-    var culturalPraticeView: ListViewCulturalPractice?
+    var culturalPraticeView: CulturalPracticeFormView?
     var title: String?
     var disposableDispatcher: Disposable?
-    weak var viewController: CulturalPraticeViewController?
+    weak var viewController: CulturalPracticeFormViewController?
 
     init(
         culturalPracticeStateObs: Observable<CulturalPracticeFormState>,
@@ -332,8 +332,8 @@ extension CulturalPraticeFormViewModelImpl {
 protocol CulturalPraticeFormViewModel {
     var tableView: UITableView? {get set}
     var cellId: String {get}
-    var culturalPraticeView: ListViewCulturalPractice? {get set}
-    var viewController: CulturalPraticeViewController? {get set}
+    var culturalPraticeView: CulturalPracticeFormView? {get set}
+    var viewController: CulturalPracticeFormViewController? {get set}
     var headerFooterSectionViewId: String {get}
     func subscribeToCulturalPracticeStateObs()
     func disposeToCulturalPracticeStateObs()
