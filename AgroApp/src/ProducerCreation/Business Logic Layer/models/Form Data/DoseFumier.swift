@@ -56,6 +56,7 @@ enum DoseFumier: CulturalPracticeValueProtocol {
     }
 
     static func getRegularExpression() -> String? {
+        // TODO les doses fumiers doivent etre superieure a zero
         "^\\d*$"
     }
 

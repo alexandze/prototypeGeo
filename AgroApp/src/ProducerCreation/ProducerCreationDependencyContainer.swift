@@ -108,14 +108,14 @@ class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContain
         }).subscribeOn(Util.getSchedulerBackgroundForReSwift())
     }
 
-    func makeCulturalPracticeInteraction() -> FieldCulturalPracticeInteraction {
-        FieldCulturalPracticeInteractionImpl(actionDispatcher: self.stateStore)
+    func makeCulturalPraticeFormInteraction() -> CulturalPraticeFormInteraction {
+        CulturalPraticeFormInteractionImpl(actionDispatcher: self.stateStore)
     }
 
     func makeCulturalPracticeFormViewModel() -> CulturalPraticeFormViewModel {
         CulturalPraticeFormViewModelImpl(
-            culturalPracticeStateObs: self.makeCurrentFieldObservable(),
-            actionDispatcher: self.stateStore
+            culturalPracticeStateObs: makeCurrentFieldObservable(),
+            culturalPraticeFormInteraction: makeCulturalPraticeFormInteraction()
         )
     }
 

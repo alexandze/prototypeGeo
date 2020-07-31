@@ -109,3 +109,13 @@ class Util {
         UIColor(red: 34/255, green: 139/255, blue: 34/255, alpha: 1)
     }
 }
+
+precedencegroup CompositionPrecedence {
+    associativity: left
+}
+
+infix operator >>>: CompositionPrecedence
+
+func >>> <T, U, V>(lhs: @escaping (T) -> U, rhs: @escaping (U) -> V) -> (T) -> V {
+    return { rhs(lhs($0)) }
+}

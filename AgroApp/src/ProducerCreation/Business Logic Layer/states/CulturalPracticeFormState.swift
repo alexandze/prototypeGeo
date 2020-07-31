@@ -42,9 +42,15 @@ enum CulturalPracticeSubAction {
     case insertRows(indexPath: [IndexPath])
     case deletedRows(indexPath: [IndexPath])
     case updateRows(indexPath: [IndexPath])
+
     case willSelectElementOnList(
         culturalPracticeElement: CulturalPracticeElementProtocol,
         field: Field
+    )
+
+    case removeDoseFumierResponse(
+        indexPathsRemove: [IndexPath],
+        indexPathsAdd: [IndexPath]?
     )
 
     case canNotSelectElementOnList(culturalPracticeElement: CulturalPracticeElementProtocol)

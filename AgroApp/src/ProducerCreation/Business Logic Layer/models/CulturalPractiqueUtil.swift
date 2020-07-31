@@ -41,12 +41,18 @@ struct CulturalPracticeAddElement: CulturalPracticeElementProtocol {
 struct CulturalPracticeContainerElement: CulturalPracticeElementProtocol {
     let key: String
     let title: String
+    var index: Int
     var culturalInputElement: [CulturalPracticeElementProtocol]
     var culturalPracticeMultiSelectElement: [CulturalPracticeElementProtocol]
     var value: CulturalPracticeValueProtocol?
 
     func getIndex() -> Int? {
-        nil
+        index
+    }
+
+    func hasAllValueCompleted() -> Bool {
+        culturalInputElement.firstIndex { $0.value == nil } == nil &&
+        culturalPracticeMultiSelectElement.firstIndex { $0.value == nil } == nil
     }
 }
 

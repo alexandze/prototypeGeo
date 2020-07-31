@@ -95,7 +95,8 @@ class FieldListReducerHandler {
 
         (0..<countInputElement).forEach { index in
             previousState = handleUpdateFieldForInputAndSelect(
-                containerElement.culturalInputElement[index], field, previousState)
+                containerElement.culturalInputElement[index], field, previousState
+            )
         }
 
         (0..<countSelectElement).forEach { index in

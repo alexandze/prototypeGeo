@@ -48,6 +48,55 @@ struct CulturalPractice {
         }
     }
 
+    func removeDoseFumierIndex(indexRemove: Int?) -> CulturalPractice? {
+        guard let indexRemove = indexRemove else { return nil }
+        var copyCulturalPractice = self
+        print("Dose A \(copyCulturalPractice.doseFumier)")
+        if hasIndexInArray(elements: copyCulturalPractice.doseFumier, index: indexRemove) {
+            copyCulturalPractice.doseFumier?.remove(at: indexRemove)
+        }
+        print("Dose B \(copyCulturalPractice.doseFumier)")
+        if hasIndexInArray(elements: copyCulturalPractice.delaiIncorporationFumier, index: indexRemove) {
+            copyCulturalPractice.delaiIncorporationFumier?.remove(at: indexRemove)
+        }
+
+        if hasIndexInArray(elements: copyCulturalPractice.periodeApplicationFumier, index: indexRemove) {
+            copyCulturalPractice.periodeApplicationFumier?.remove(at: indexRemove)
+        }
+
+        let doseFumiers = resetDoseFumier(dose: copyCulturalPractice.doseFumier)
+        let delaiFumiers =  resetDoseFumier(dose: copyCulturalPractice.delaiIncorporationFumier)
+        let periodeFumiers = resetDoseFumier(dose: copyCulturalPractice.periodeApplicationFumier)
+
+        copyCulturalPractice.doseFumier = doseFumiers
+        copyCulturalPractice.delaiIncorporationFumier = delaiFumiers
+        copyCulturalPractice.periodeApplicationFumier = periodeFumiers
+
+        return copyCulturalPractice
+    }
+
+    func resetDoseFumier<T>(dose: [T?]?) -> [T?] {
+        var doseReset = [T?]()
+        (0..<CulturalPractice.MAX_DOSE_FUMIER).forEach { index in
+            if !hasIndexInArray(elements: dose, index: index) {
+                return doseReset.append(nil)
+            }
+
+            doseReset.append(dose?[index])
+        }
+
+        return doseReset
+    }
+
+    private func getValueInArray<T>(elements: [T?]?, index: Int) -> T? {
+        guard let count = elements?.count, count > index else { return nil }
+        return elements?[index]
+    }
+
+    private func hasIndexInArray<T>(elements: [T?]?, index: Int?) -> Bool {
+        return elements?.count != nil && index != nil && elements!.count > index!
+    }
+
     static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> [CulturalPracticeElementProtocol] {
         let culturalPracticeSingleElement = getCulturalPracticeSingleElement(from: culturalPractice)
         let culturalPracticeContainerElement = getCulturalPracticeDynamic(from: culturalPractice)
@@ -90,6 +139,7 @@ struct CulturalPractice {
         CulturalPracticeContainerElement(
             key: UUID().uuidString,
             title: "Dose fumier \(index + 1)",
+            index: index,
             culturalInputElement: [
                 DoseFumier.getCulturalPracticeElement(id: index, culturalPractice: nil)
             ],
@@ -100,7 +150,7 @@ struct CulturalPractice {
         )
     }
 
-    private static func getCulturalPracticeDynamic(from culturalPractice: CulturalPractice?) -> [CulturalPracticeElementProtocol]? {
+    static func getCulturalPracticeDynamic(from culturalPractice: CulturalPractice?) -> [CulturalPracticeElementProtocol]? {
         guard let culturalPractice = culturalPractice else {
             return nil
         }
@@ -113,6 +163,7 @@ struct CulturalPractice {
                     CulturalPracticeContainerElement(
                         key: UUID().uuidString,
                         title: "Dose fumier \(index + 1)",
+                        index: index,
                         culturalInputElement: [
                             DoseFumier.getCulturalPracticeElement(id: index, culturalPractice: culturalPractice)
                         ],

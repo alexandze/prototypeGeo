@@ -21,4 +21,8 @@ struct CulturalPracticeFormAction {
     struct WillSelectElementOnListAction: Action {
         let indexPath: IndexPath
     }
+
+    struct RemoveDoseFumierAction: Action {
+        let indexPath: IndexPath
+    }
 }
