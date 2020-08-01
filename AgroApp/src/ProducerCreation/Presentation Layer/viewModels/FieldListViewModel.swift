@@ -50,7 +50,12 @@ class FieldListViewModelImpl: FieldListViewModel {
                     break
                 case .updateFieldSuccess:
                     self?.handleUpdateFieldSuccess()
+                case .removeFieldResponse(indexPathFieldRemoved: let indexPathRemoveField, fieldRemoved: let fieldRemoved):
+                    self?.handleRemoveFieldResponse(indexPathFieldRemoved: indexPathRemoveField, fieldRemoved: fieldRemoved)
+                case .notResponse:
+                    break
                 }
+
                 self?.dispatchSetTitleAction()
                 self?.dispatchSetCurrentViewControllerInNavigationAction()
                 self?.dispatchIsAppear()
@@ -78,6 +83,29 @@ class FieldListViewModelImpl: FieldListViewModel {
 
 // handler
 extension FieldListViewModelImpl {
+
+    func handle(didSelectRowAt indexPath: IndexPath) {
+        dispatchWillSelectFieldOnListAction(indexPath: indexPath)
+    }
+
+    func handleRemoveFieldInList(editingStyle: UITableViewCell.EditingStyle, indexPath: IndexPath) {
+        switch editingStyle {
+        case .delete:
+            self.dispatchRemoveField(indexPath: indexPath)
+        default:
+            break
+        }
+    }
+
+    private func handleRemoveFieldResponse(indexPathFieldRemoved: IndexPath, fieldRemoved: Field) {
+        tableView?.beginUpdates()
+        self.tableView?.deleteRows(at: [indexPathFieldRemoved], with: .left)
+        tableView?.endUpdates()
+
+        let action = MapFieldAction.WillDeselectFieldOnMapAction(idField: fieldRemoved.id)
+        dispatch(action: action)
+    }
+
     private func handleSelectedFieldOnMapActionSuccess() {
         if fieldListState?.isAppear == nil || fieldListState!.isAppear == true {
             tableView?.beginUpdates()
@@ -108,17 +136,19 @@ extension FieldListViewModelImpl {
                 let appDelegate = self.viewController!.getAppDelegate()
 
                 appDelegate.map {
-                    self.viewController?.navigationController?.pushViewController($0.appDependencyContainer.processInitCulturalPracticeViewController(), animated: true)
+                    self
+                        .viewController?
+                        .navigationController?
+                        .pushViewController(
+                            $0.appDependencyContainer.processInitCulturalPracticeViewController(),
+                            animated: true
+                    )
                 }
         }
     }
 
     private func handleInitFieldList() {
         dispatchSetCurrentViewControllerInNavigationAction()
-    }
-
-    public func handle(didSelectRowAt indexPath: IndexPath) {
-        dispatchWillSelectFieldOnListAction(indexPath: indexPath)
     }
 
     private func handleUpdateFieldSuccess() {
@@ -129,6 +159,19 @@ extension FieldListViewModelImpl {
 }
 
 extension FieldListViewModelImpl {
+
+    func dispatchIsDisappear() {
+        let action = FieldListAction.IsAppearAction(isAppear: false)
+        dispatch(action: action)
+    }
+
+    func dispatchIsAppear() {
+        if fieldListState?.isAppear == nil || fieldListState!.isAppear == false {
+            let action = FieldListAction.IsAppearAction(isAppear: true)
+            dispatch(action: action)
+        }
+    }
+
     /// action for set title of TitleNavigationViewController
     private func dispatchSetTitleAction() {
         if fieldListState?.isAppear == nil || fieldListState!.isAppear == false {
@@ -161,21 +204,17 @@ extension FieldListViewModelImpl {
     private func dispatchDidSelectedFieldOnListActionObs() -> Completable? {
         guard let fieldSelected = fieldListState?.currentField else { return nil }
 
-        return Util.createRunCompletable {
+        return Util.createRunCompletable { [weak self] in
             let action = FieldListAction.DidSelectedFieldOnListAction(field: fieldSelected)
-            self.actionDispatcher.dispatch(action)
+            self?.actionDispatcher.dispatch(action)
         }
     }
 
-    func dispatchIsDisappear() {
-        let action = FieldListAction.IsAppearAction(isAppear: false)
-        dispatch(action: action)
-    }
+    private func dispatchRemoveField(indexPath: IndexPath) {
+        let action = FieldListAction.RemoveFieldAction(indexPath: indexPath)
 
-    func dispatchIsAppear() {
-        if fieldListState?.isAppear == nil || fieldListState!.isAppear == false {
-            let action = FieldListAction.IsAppearAction(isAppear: true)
-            dispatch(action: action)
+        _ = Util.runInSchedulerBackground { [weak self] in
+            self?.actionDispatcher.dispatch(action)
         }
     }
 }
@@ -189,4 +228,5 @@ protocol FieldListViewModel {
     func handle(didSelectRowAt indexPath: IndexPath)
     func dispatchIsDisappear()
     func dispatchIsAppear()
+    func handleRemoveFieldInList(editingStyle: UITableViewCell.EditingStyle, indexPath: IndexPath)
 }

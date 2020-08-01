@@ -22,6 +22,7 @@ struct FieldListState: Equatable {
     var isAppear: Bool?
     var indexForUpdate: Int?
 
+    // TODO renomer en response
     enum SubAction {
         case selectedFieldOnMapActionSuccess
         case deselectedFieldOnMapActionSuccess
@@ -29,6 +30,8 @@ struct FieldListState: Equatable {
         case initFieldList
         case isAppearActionSuccess
         case updateFieldSuccess
+        case removeFieldResponse(indexPathFieldRemoved: IndexPath, fieldRemoved: Field)
+        case notResponse
     }
 
     func changeValue(

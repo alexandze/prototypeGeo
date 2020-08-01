@@ -101,6 +101,15 @@ class CulturalPraticeFormInteractionImpl: CulturalPraticeFormInteraction {
         }
     }
 
+    func dispatchUpdateFieldAction(field: Field?) {
+        guard let field = field else { return }
+        let action = FieldListAction.UpdateFieldAction(field: field)
+
+        _ = Util.runInSchedulerBackground {
+            self.actionDispatcher.dispatch(action)
+        }
+    }
+
     private func createSelectedSelectElementOnListAction(
         culturalPracticeSelectElement: CulturalPracticeElementProtocol,
         field: Field
@@ -145,4 +154,5 @@ protocol CulturalPraticeFormInteraction {
 
     func dispatchSetTitleAction(title: String?)
     func dispatchRemoveDoseFumierAction(indexPath: IndexPath)
+    func dispatchUpdateFieldAction(field: Field?)
 }

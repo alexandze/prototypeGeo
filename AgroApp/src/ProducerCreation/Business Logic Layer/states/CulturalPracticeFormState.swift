@@ -40,7 +40,6 @@ struct CulturalPracticeFormState: Equatable {
 enum CulturalPracticeSubAction {
     case reloadData
     case insertRows(indexPath: [IndexPath])
-    case deletedRows(indexPath: [IndexPath])
     case updateRows(indexPath: [IndexPath])
 
     case willSelectElementOnList(
@@ -54,5 +53,6 @@ enum CulturalPracticeSubAction {
     )
 
     case canNotSelectElementOnList(culturalPracticeElement: CulturalPracticeElementProtocol)
+    case notResponse
 
 }

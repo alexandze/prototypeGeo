@@ -21,4 +21,12 @@ struct FieldListAction {
     struct DidSelectedFieldOnListAction: Action {
         let field: Field
     }
+
+    struct UpdateFieldAction: Action {
+        let field: Field
+    }
+
+    struct RemoveFieldAction: Action {
+        let indexPath: IndexPath
+    }
 }

@@ -90,7 +90,7 @@ struct FieldDecodableWrapper: Decodable {
             annotationWithData?.title = "\(id)"
 
             annotationWithData?.subtitle =
-            "\(NSLocalizedString("Parcelle avec le id", comment: "Parcelle avec le id")) \(id)"
+            "\(NSLocalizedString("Parcelle", comment: "Parcelle")) \(id)"
         }
     }
 

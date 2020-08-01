@@ -51,11 +51,11 @@ struct CulturalPractice {
     func removeDoseFumierIndex(indexRemove: Int?) -> CulturalPractice? {
         guard let indexRemove = indexRemove else { return nil }
         var copyCulturalPractice = self
-        print("Dose A \(copyCulturalPractice.doseFumier)")
+
         if hasIndexInArray(elements: copyCulturalPractice.doseFumier, index: indexRemove) {
             copyCulturalPractice.doseFumier?.remove(at: indexRemove)
         }
-        print("Dose B \(copyCulturalPractice.doseFumier)")
+
         if hasIndexInArray(elements: copyCulturalPractice.delaiIncorporationFumier, index: indexRemove) {
             copyCulturalPractice.delaiIncorporationFumier?.remove(at: indexRemove)
         }

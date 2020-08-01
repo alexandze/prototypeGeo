@@ -8,30 +8,30 @@
 
 import Foundation
 
-class HandlerRemoveDoseFumierAction {
+class HandlerRemoveDoseFumierAction: HandlerReducerProtocol {
+
     func handle(
-        removeDoseFumierAction: CulturalPracticeFormAction.RemoveDoseFumierAction,
+        action: CulturalPracticeFormAction.RemoveDoseFumierAction,
         _ state: CulturalPracticeFormState
     ) -> CulturalPracticeFormState {
         let util = UtilRemoveDoseFumierAction(
-            indexPathDoseFumierFromAction: removeDoseFumierAction.indexPath,
+            indexPathDoseFumierFromAction: action.indexPath,
             state: state
         )
 
-        let composeFunc =
+        return (
             checkIfRemoveContainerElementHasValue(util:) >>>
-            hasContainerElementForNotRemoveWithNoValue(util:) >>>
-            getIndexDoseFumierFromCulturalPracticeElement(util:) >>>
-            removeDoseFumierWithIndex(util:) >>>
-            createContainerElementsIfHasCulturalPractice(util:) >>>
-            createContainerElementsWithNoValueIfHasNoValue(util:) >>>
-            getAllIndexPathContainerElementForRemove(util:) >>>
-            getAllIndexPathContainerElementForAddIfHas(util:) >>>
-            removeAllCulturalPracticeContainerElement(util:) >>>
-            addNewCulturalPracticeContainerElementIfThere(util:) >>>
-            newState(util:)
-
-        return composeFunc(util) ?? state
+                hasContainerElementForNotRemoveWithNoValue(util:) >>>
+                getIndexDoseFumierFromCulturalPracticeElement(util:) >>>
+                removeDoseFumierWithIndex(util:) >>>
+                createContainerElementsIfHasCulturalPractice(util:) >>>
+                createContainerElementsWithNoValueIfHasNoValue(util:) >>>
+                getAllIndexPathContainerElementForRemove(util:) >>>
+                getAllIndexPathContainerElementForAddIfHas(util:) >>>
+                removeAllCulturalPracticeContainerElement(util:) >>>
+                addNewCulturalPracticeContainerElementIfThere(util:) >>>
+                newState(util:)
+            )(util) ?? state.changeValues(subAction: .notResponse)
     }
 
     private func checkIfRemoveContainerElementHasValue(
@@ -40,9 +40,9 @@ class HandlerRemoveDoseFumierAction {
         guard let sections = util?.state.sections,
             var newUtil = util,
             let containerElement =
-                sections[newUtil.indexPathDoseFumierFromAction.section]
-                    .rowData[newUtil.indexPathDoseFumierFromAction.row]
-                    as? CulturalPracticeContainerElement
+            sections[newUtil.indexPathDoseFumierFromAction.section]
+                .rowData[newUtil.indexPathDoseFumierFromAction.row]
+                as? CulturalPracticeContainerElement
             else { return nil }
 
         newUtil.isContainerHasValue = containerElement.hasAllValueCompleted()
@@ -133,8 +133,8 @@ class HandlerRemoveDoseFumierAction {
         util: UtilRemoveDoseFumierAction?
     ) -> UtilRemoveDoseFumierAction? {
         guard let sections = util?.state.sections,
-        let indexPathRemoveDoseFromAction = util?.indexPathDoseFumierFromAction,
-        var newUtil = util
+            let indexPathRemoveDoseFromAction = util?.indexPathDoseFumierFromAction,
+            var newUtil = util
             else { return nil }
 
         var doseFumierRemoveIndexPaths = [IndexPath]()

@@ -67,6 +67,9 @@
 		9860400C23BD8EEB00D5B538 /* FarmerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9860400B23BD8EEB00D5B538 /* FarmerState.swift */; };
 		9860400F23BD976800D5B538 /* StoreSubcriberProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9860400E23BD976800D5B538 /* StoreSubcriberProxy.swift */; };
 		9860401123BD9C1700D5B538 /* StoreSubscriptionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9860401023BD9C1700D5B538 /* StoreSubscriptionExtension.swift */; };
+		986E1C8424D5C02C00EDB1DE /* HandlerUpdateFieldAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986E1C8324D5C02C00EDB1DE /* HandlerUpdateFieldAction.swift */; };
+		986E1C8624D5C07100EDB1DE /* HandlerReducerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986E1C8524D5C07100EDB1DE /* HandlerReducerProtocol.swift */; };
+		986E1C8824D5E0C900EDB1DE /* HandlerRemoveFieldAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986E1C8724D5E0C900EDB1DE /* HandlerRemoveFieldAction.swift */; };
 		988F035D242B0A1B00545D59 /* ContainerElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988F035C242B0A1B00545D59 /* ContainerElementView.swift */; };
 		989090A424C059C000AFC080 /* ContainerTitleNavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989090A324C059C000AFC080 /* ContainerTitleNavigationViewModel.swift */; };
 		989090A624C05A4000AFC080 /* ContainerTitleNavigationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989090A524C05A4000AFC080 /* ContainerTitleNavigationState.swift */; };
@@ -226,6 +229,9 @@
 		9860400B23BD8EEB00D5B538 /* FarmerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FarmerState.swift; sourceTree = "<group>"; };
 		9860400E23BD976800D5B538 /* StoreSubcriberProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreSubcriberProxy.swift; sourceTree = "<group>"; };
 		9860401023BD9C1700D5B538 /* StoreSubscriptionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreSubscriptionExtension.swift; sourceTree = "<group>"; };
+		986E1C8324D5C02C00EDB1DE /* HandlerUpdateFieldAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerUpdateFieldAction.swift; sourceTree = "<group>"; };
+		986E1C8524D5C07100EDB1DE /* HandlerReducerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerReducerProtocol.swift; sourceTree = "<group>"; };
+		986E1C8724D5E0C900EDB1DE /* HandlerRemoveFieldAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerRemoveFieldAction.swift; sourceTree = "<group>"; };
 		988F035C242B0A1B00545D59 /* ContainerElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerElementView.swift; sourceTree = "<group>"; };
 		989090A324C059C000AFC080 /* ContainerTitleNavigationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerTitleNavigationViewModel.swift; sourceTree = "<group>"; };
 		989090A524C05A4000AFC080 /* ContainerTitleNavigationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerTitleNavigationState.swift; sourceTree = "<group>"; };
@@ -397,8 +403,8 @@
 				98363B2C23DECA3F00AFFC63 /* MapFieldViewController.swift */,
 				9854BFE0240A1C3C00E5AB8A /* ContainerMapAndTitleNavigationController.swift */,
 				9810DA41242F0FCA00545A23 /* SelectFormCulturalPracticeViewController.swift */,
-				98457B652423E5FA00AF4C90 /* CulturalPracticeFormViewController.swift */,
 				98BA0D7A240CDC2800948A26 /* ContainerTitleNavigationViewController.swift */,
+				98457B652423E5FA00AF4C90 /* CulturalPracticeFormViewController.swift */,
 				9854BFD42408F53400E5AB8A /* FieldListViewController.swift */,
 			);
 			path = viewControllers;
@@ -408,12 +414,12 @@
 			isa = PBXGroup;
 			children = (
 				98363B2F23DECA9F00AFFC63 /* MapFieldViewModel.swift */,
-				9854BFE2240A1D6200E5AB8A /* FieldListViewModel.swift */,
 				9810DA43242F0FE800545A23 /* SelectFormCulturalPracticeViewModel.swift */,
 				9847564624AED9FC0048A503 /* InputFormCulturalPracticeViewModel.swift */,
 				98CB79D424B82B3D00EFFF19 /* ContainerFormCulturalPracticeViewModel.swift */,
 				989090A324C059C000AFC080 /* ContainerTitleNavigationViewModel.swift */,
 				9854BFF8240B901A00E5AB8A /* CulturalPracticeFormViewModel.swift */,
+				9854BFE2240A1D6200E5AB8A /* FieldListViewModel.swift */,
 			);
 			path = viewModels;
 			sourceTree = "<group>";
@@ -445,9 +451,9 @@
 		98363B3423DECB2800AFFC63 /* reducers */ = {
 			isa = PBXGroup;
 			children = (
+				98C2A84024D5BE8600A8625C /* FieldListReducer */,
 				98A8D9C424D40BE800041391 /* CulturalPracticeFormReducer */,
 				989090AB24C18B9D00AFC080 /* MapFieldReducer.swift */,
-				989090AD24C18F4300AFC080 /* FieldListReducer.swift */,
 				9810DA4B242F1EEE00545A23 /* SelectFormCulturalPracticeReducer.swift */,
 				98D4628A24AEDF2C00DD53BD /* InputFormCulturalPracticeFormReducer.swift */,
 				98CB79D024B81A1300EFFF19 /* ContainerFormCulturalPracticeReducer.swift */,
@@ -754,8 +760,19 @@
 				98C77E7224B024AF00AA6423 /* UIButtonRepresentable.swift */,
 				98C77E7424B06E0500AA6423 /* KeyboardFollower.swift */,
 				98EBA95124B1600300D233D0 /* DimensionScreen.swift */,
+				986E1C8524D5C07100EDB1DE /* HandlerReducerProtocol.swift */,
 			);
 			path = libs;
+			sourceTree = "<group>";
+		};
+		98C2A84024D5BE8600A8625C /* FieldListReducer */ = {
+			isa = PBXGroup;
+			children = (
+				989090AD24C18F4300AFC080 /* FieldListReducer.swift */,
+				986E1C8324D5C02C00EDB1DE /* HandlerUpdateFieldAction.swift */,
+				986E1C8724D5E0C900EDB1DE /* HandlerRemoveFieldAction.swift */,
+			);
+			path = FieldListReducer;
 			sourceTree = "<group>";
 		};
 		98D1929323C01FDF00BF9A7A /* interactions */ = {
@@ -1081,6 +1098,7 @@
 				9894340A2410C76D003C0110 /* PolygonWithData.swift in Sources */,
 				989090AA24C1530800AFC080 /* ContainerTitleNavigationAction.swift in Sources */,
 				98F126A424C71130001853D5 /* PeriodeApplicationFumier.swift in Sources */,
+				986E1C8824D5E0C900EDB1DE /* HandlerRemoveFieldAction.swift in Sources */,
 				989090AE24C18F4300AFC080 /* FieldListReducer.swift in Sources */,
 				98EBA95224B1600300D233D0 /* DimensionScreen.swift in Sources */,
 				9854BFFF240B9DD500E5AB8A /* CulturalPraticeFormInteraction.swift in Sources */,
@@ -1142,8 +1160,10 @@
 				98F126BA24C8F078001853D5 /* AlMehlich3.swift in Sources */,
 				98363B5523DEF0EC00AFFC63 /* MapFieldInteraction.swift in Sources */,
 				98D4628924AEDC4B00DD53BD /* InputFormCulturalPracticeState.swift in Sources */,
+				986E1C8624D5C07100EDB1DE /* HandlerReducerProtocol.swift in Sources */,
 				98F126B224C8EFBC001853D5 /* CouvertureDerobee.swift in Sources */,
 				9860400623BD882900D5B538 /* Reducers.swift in Sources */,
+				986E1C8424D5C02C00EDB1DE /* HandlerUpdateFieldAction.swift in Sources */,
 				98363B4223DEDF6600AFFC63 /* MapFieldAction.swift in Sources */,
 				9810DA4A242F184A00545A23 /* CulturalPracticeFormAction.swift in Sources */,
 				98D1929223C012E300BF9A7A /* AppDependencyContainer.swift in Sources */,

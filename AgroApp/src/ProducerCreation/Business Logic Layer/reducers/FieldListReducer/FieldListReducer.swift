@@ -22,11 +22,10 @@ extension Reducers {
             return FieldListReducerHandler().handle(willSelectFieldOnListAction: willSelectFieldOnListAction, state)
         case let isAppearAction as FieldListAction.IsAppearAction:
             return FieldListReducerHandler().handle(isAppearAction: isAppearAction, state)
-        case let updateElementAction as CulturalPracticeFormAction.UpdateCulturalPracticeElementAction:
-            return FieldListReducerHandler().handle(
-                updateCulturalPracticeElementAction: updateElementAction,
-                state
-            )
+        case let updateFieldAction as FieldListAction.UpdateFieldAction:
+            return HandlerUpdateFieldAction().handle(action: updateFieldAction, state)
+        case let removeFieldAction as FieldListAction.RemoveFieldAction:
+            return HandlerRemoveFieldAction().handle(action: removeFieldAction, state)
         default:
             return state
         }
@@ -34,86 +33,6 @@ extension Reducers {
 }
 
 class FieldListReducerHandler {
-
-    func handle(
-        updateCulturalPracticeElementAction : CulturalPracticeFormAction.UpdateCulturalPracticeElementAction,
-        _ state: FieldListState
-    ) -> FieldListState {
-        switch updateCulturalPracticeElementAction.culturalPracticeElementProtocol {
-        case let inputElement as CulturalPracticeInputElement:
-            return handleUpdateFieldForInputAndSelect(inputElement, updateCulturalPracticeElementAction.field, state)
-        case let selectElement as CulturalPracticeMultiSelectElement:
-            return handleUpdateFieldForInputAndSelect(selectElement, updateCulturalPracticeElementAction.field, state)
-        case let containerElement as CulturalPracticeContainerElement:
-            return handleUpdateFieldForContainerElement(
-                containerElement,
-                updateCulturalPracticeElementAction.field,
-                state
-            )
-        default:
-            break
-        }
-        return state
-    }
-
-    private func handleUpdateFieldForInputAndSelect(_ culturalPracticeElement: CulturalPracticeElementProtocol, _ field: Field, _ state: FieldListState) -> FieldListState {
-        guard let (fieldFind, indexFind) = findFieldTypeById(state.fieldList!, field.id),
-        let culturalPracticeValue = culturalPracticeElement.value
-            else { return state }
-
-        let culturalPractice = fieldFind.culturalPratice ?? CulturalPractice(id: fieldFind.id)
-
-        let newCulturalPracticeValue = culturalPracticeValue.changeValueOfCulturalPractice(
-            culturalPractice,
-            index: culturalPracticeElement.getIndex()
-        )
-
-        let fieldNew = fieldFind.set(
-            culturalPractice: newCulturalPracticeValue,
-            of: fieldFind
-        )
-
-        var newFieldList = state.fieldList!
-        newFieldList[indexFind] = fieldNew
-
-        return state.changeValue(
-            fieldList: newFieldList,
-            subAction: .updateFieldSuccess,
-            indexForUpdate: indexFind
-        )
-    }
-
-    private func handleUpdateFieldForContainerElement(
-        _ containerElement: CulturalPracticeContainerElement,
-        _ field: Field,
-        _ state: FieldListState
-    ) -> FieldListState {
-        // TODO refactoring
-        let countInputElement = containerElement.culturalInputElement.count
-        var previousState = state
-        let countSelectElement = containerElement.culturalPracticeMultiSelectElement.count
-
-        (0..<countInputElement).forEach { index in
-            previousState = handleUpdateFieldForInputAndSelect(
-                containerElement.culturalInputElement[index], field, previousState
-            )
-        }
-
-        (0..<countSelectElement).forEach { index in
-            previousState = handleUpdateFieldForInputAndSelect(
-                containerElement.culturalPracticeMultiSelectElement[index],
-                field, previousState
-            )
-        }
-
-        return previousState
-    }
-
-    private func findFieldTypeById(_ fields: [Field],_ id: Int) -> (Field, Int)? {
-        let indexFind = fields.firstIndex { $0.id == id }
-        return indexFind.map {  (fields[$0], $0) }
-    }
-
     func handle(
         willSelectFieldOnListAction: FieldListAction.WillSelectFieldOnListAction,
         _ state: FieldListState

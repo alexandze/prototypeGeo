@@ -52,7 +52,7 @@ class SelectedFieldCalloutView: UIView {
         buttonAdd.addTarget(self, action: #selector(handle(addButton:)), for: .touchDown)
     }
 
-    public func setStateButton(with isSelected: Bool) {
+    public func setStateButton(isSelected: Bool) {
         buttonCancel.isHidden = !isSelected
         buttonAdd.isHidden = isSelected
     }

@@ -38,23 +38,18 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
                 .observeOn(MainScheduler.instance)
                 .subscribe {[weak self] element in
                     guard let culturalPracticeState = element.element,
-                        let currentFieldType = culturalPracticeState.currentField,
+                        let currentField = culturalPracticeState.currentField,
                         let sections = culturalPracticeState.sections,
                         let tableState = culturalPracticeState.subAction,
                         let title = culturalPracticeState.title,
                         let self = self
                         else { return }
 
-                    self.setStateProperties(currentFieldType, sections, title)
+                    self.setStateProperties(currentField, sections, title)
 
                     switch tableState {
                     case .reloadData:
                         self.handleReloadData()
-                        self.culturalPraticeFormInteraction.dispatchSetCurrentViewControllerInNavigationAction()
-                        self.culturalPraticeFormInteraction.dispatchSetTitleAction(title: self.title)
-                    case .deletedRows(indexPath: let indexPaths):
-                        //TODO effecer la cell en question
-                        break
                     case .insertRows(indexPath: let indexPaths):
                         self.handleInsertRows(indexPaths: indexPaths, sections: sections)
                     case .updateRows(indexPath: let indexPaths):
@@ -68,9 +63,11 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
                             field: field
                         )
                     case .canNotSelectElementOnList(culturalPracticeElement: _):
-                        print("can not select")
+                       break
                     case .removeDoseFumierResponse(indexPathsRemove: let indexPathsRemove, indexPathsAdd: let indexPathsAdd):
                         self.handleRemoveDoseFumier(indexPathsRemove: indexPathsRemove, indexPathsAdd: indexPathsAdd)
+                    case .notResponse:
+                        break
                     }
         }
     }
@@ -121,8 +118,8 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
         viewController?.present(containerFormCulturalPracticeHostingController, animated: true)
     }
 
-    private func setStateProperties(_ currentFieldType: Field, _ sections: [Section<CulturalPracticeElementProtocol>], _ title: String) {
-        self.currentField = currentFieldType
+    private func setStateProperties(_ currentField: Field, _ sections: [Section<CulturalPracticeElementProtocol>], _ title: String) {
+        self.currentField = currentField
         self.sections = sections
         self.title = title
     }
@@ -188,10 +185,14 @@ extension CulturalPraticeFormViewModelImpl {
             }
 
         })
+
+        self.culturalPraticeFormInteraction.dispatchUpdateFieldAction(field: currentField)
     }
 
     private func handleReloadData() {
         self.tableView?.reloadData()
+        self.culturalPraticeFormInteraction.dispatchSetCurrentViewControllerInNavigationAction()
+        self.culturalPraticeFormInteraction.dispatchSetTitleAction(title: self.title)
     }
 
     private func handleInsertRows(
@@ -204,6 +205,7 @@ extension CulturalPraticeFormViewModelImpl {
 
     private func handleUpdateRowAt(indexPath: IndexPath) {
         self.tableView?.reloadRows(at: [indexPath], with: .fade)
+        self.culturalPraticeFormInteraction.dispatchUpdateFieldAction(field: currentField)
     }
 
     private func handleWillSelectElementOnList(

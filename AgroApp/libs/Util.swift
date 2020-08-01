@@ -13,6 +13,7 @@ import RxSwift
 // TODO afficher les messages deinit seulement en mode debug
 // TODO deinit les states
 // TODO renomer les actionSuccess en actionResponse
+// TODO creer dans les actions response une case notResponse
 class Util {
 
     private static var serialDispatchQueueSchedulerForReSwift: SerialDispatchQueueScheduler?

@@ -35,7 +35,7 @@ extension Reducers {
             )
         case let removeDoseFumierAction as CulturalPracticeFormAction.RemoveDoseFumierAction:
             return HandlerRemoveDoseFumierAction().handle(
-                removeDoseFumierAction: removeDoseFumierAction,
+                action: removeDoseFumierAction,
                 state
             )
         default:

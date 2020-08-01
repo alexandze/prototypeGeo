@@ -80,13 +80,13 @@ class MapFieldView: UIView {
             let rightCalloutAccessoryView = SelectedFieldCalloutView()
             rightCalloutAccessoryView.addTargetButtonAdd(handleAddFunc: handleAddFunc)
             rightCalloutAccessoryView.addTargetButtonCancel(handleCancelFunc: handleCancelFunc)
-            rightCalloutAccessoryView.setStateButton(with: dataFromAnnotation.isSelected)
+            rightCalloutAccessoryView.setStateButton(isSelected: dataFromAnnotation.isSelected)
             return markerAnnotationView.rightCalloutAccessoryView = rightCalloutAccessoryView
         }
 
         if let rightCalloutAccessoryView =
             markerAnnotationView.rightCalloutAccessoryView as? SelectedFieldCalloutView {
-            return rightCalloutAccessoryView.setStateButton(with: dataFromAnnotation.isSelected)
+            return rightCalloutAccessoryView.setStateButton(isSelected: dataFromAnnotation.isSelected)
         }
     }
 

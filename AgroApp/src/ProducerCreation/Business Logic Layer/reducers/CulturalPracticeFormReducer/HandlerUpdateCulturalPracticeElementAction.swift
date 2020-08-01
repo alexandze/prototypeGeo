@@ -7,13 +7,15 @@
 //
 
 import Foundation
+import ReSwift
 
-class HandlerUpdateCulturalPracticeElementAction {
+class HandlerUpdateCulturalPracticeElementAction: HandlerReducerProtocol {
 
     func handle(
         action: CulturalPracticeFormAction.UpdateCulturalPracticeElementAction,
         _ state: CulturalPracticeFormState
     ) -> CulturalPracticeFormState {
+
         let util = UtilUpdateCulturalPracticeElementAction(
             state: state,
             culturalPracticeElementProtocole: action.culturalPracticeElementProtocol,
@@ -21,15 +23,14 @@ class HandlerUpdateCulturalPracticeElementAction {
             fieldFromAction: action.field
         )
 
-        let composeFunc = findCulturalPracticeElementIndex(util:) >>>
-            updateSectionWithNewCulturalPracticeElement(util:) >>>
-            isContainerElement(util:) >>>
-            updateFieldifInputAndSelectElement(util:) >>>
-            updateFieldIfContainerElement(util:) >>>
-            createNewState(util:)
-
-        let newState = composeFunc(util)
-        return newState ?? state
+        return (
+            findCulturalPracticeElementIndex(util:) >>>
+                updateSectionWithNewCulturalPracticeElement(util:) >>>
+                isContainerElement(util:) >>>
+                updateFieldifInputAndSelectElement(util:) >>>
+                updateFieldIfContainerElement(util:) >>>
+                createNewState(util:)
+            )(util) ?? state.changeValues(subAction: .notResponse)
     }
 
     private func findCulturalPracticeElementIndex(

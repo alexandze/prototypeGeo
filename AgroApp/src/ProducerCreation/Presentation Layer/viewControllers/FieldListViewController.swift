@@ -63,7 +63,7 @@ public class FieldListViewController: UIViewController, UITableViewDelegate, UIT
         let cell = tableView.dequeueReusableCell(withIdentifier: self.cellID, for: indexPath)
         let index = indexPath.row
         let field = fieldListViewModel.fieldList[index]
-        cell.textLabel?.text = "Parcelle avec le id \(field.id)"
+        cell.textLabel?.text = "Parcelle \(field.id)"
         cell.backgroundColor = .systemGray6
         cell.alpha = 0.95
         let image = UIImage(named: "location")?.withTintColor(Util.getOppositeColorBlackOrWhite())
@@ -73,5 +73,9 @@ public class FieldListViewController: UIViewController, UITableViewDelegate, UIT
 
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         fieldListViewModel.handle(didSelectRowAt: indexPath)
+    }
+
+    public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        fieldListViewModel.handleRemoveFieldInList(editingStyle: editingStyle, indexPath: indexPath)
     }
 }
