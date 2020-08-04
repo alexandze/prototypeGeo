@@ -16,7 +16,7 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
     var cellId: String = UUID().uuidString
     var headerFooterSectionViewId: String = UUID().uuidString
     let culturalPracticeStateObs: Observable<CulturalPracticeFormState>
-    let actionDispatcher: ActionDispatcher
+    let culturalPraticeFormInteraction: CulturalPraticeFormInteraction
     var tableView: UITableView?
     var culturalPracticeStateDisposable: Disposable?
     var culturalPraticeView: CulturalPracticeFormView?
@@ -26,48 +26,47 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
 
     init(
         culturalPracticeStateObs: Observable<CulturalPracticeFormState>,
-        actionDispatcher: ActionDispatcher
+        culturalPraticeFormInteraction: CulturalPraticeFormInteraction
     ) {
         self.culturalPracticeStateObs = culturalPracticeStateObs
-        self.actionDispatcher = actionDispatcher
+        self.culturalPraticeFormInteraction = culturalPraticeFormInteraction
     }
 
     func subscribeToCulturalPracticeStateObs() {
         self.culturalPracticeStateDisposable =
             culturalPracticeStateObs
                 .observeOn(MainScheduler.instance)
-                .subscribe { element in
+                .subscribe {[weak self] element in
                     guard let culturalPracticeState = element.element,
-                        let currentFieldType = culturalPracticeState.currentField,
+                        let currentField = culturalPracticeState.currentField,
                         let sections = culturalPracticeState.sections,
-                        let tableState = culturalPracticeState.subAction,
-                        let title = culturalPracticeState.title
+                        let responseAction = culturalPracticeState.responseAction,
+                        let title = culturalPracticeState.title,
+                        let self = self
                         else { return }
 
-                    self.setStateProperties(currentFieldType, sections, title)
+                    self.setStateProperties(currentField, sections, title)
 
-                    switch tableState {
-                    case .reloadData:
-                        self.handleReloadData()
-                        self.dispatchSetCurrentViewControllerInNavigationAction()
-                        self.dispatchSetTitleAction()
-                    case .deletedRows(indexPath: let indexPaths):
-                        //TODO effecer la cell en question
-                        break
-                    case .insertRows(indexPath: let indexPaths):
-                        self.handleInsertRows(indexPaths: indexPaths, sections: sections)
-                    case .updateRows(indexPath: let indexPaths):
-                        self.handleUpdateRowAt(indexPath: indexPaths[0])
-                    case .willSelectElementOnList(
+                    switch responseAction {
+                    case .reloadAllListElementResponse:
+                        self.handleReloadAllListElementResponse()
+                    case .insertContainerElementResponse(indexPath: let indexPaths):
+                        self.handleInsertContainerElementResponse(indexPaths: indexPaths)
+                    case .updateElementResponse(indexPath: let indexPaths):
+                        self.handleUpdateElementResponse(indexPath: indexPaths[0])
+                    case .willSelectElementOnListResponse(
                         culturalPracticeElement: let culturalPracticeElementSelected,
-                        field: let field
-                        ):
-                        self.handleWillSelectElementOnList(
+                        field: let field):
+                        self.handleWillSelectElementOnListResponse(
                             culturalParacticeElementSelected: culturalPracticeElementSelected,
                             field: field
                         )
-                    case .canNotSelectElementOnList(culturalPracticeElement: _):
-                        print("can not select")
+                    case .canNotSelectElementOnListResponse(culturalPracticeElement: _):
+                        break
+                    case .removeDoseFumierResponse(indexPathsRemove: let indexPathsRemove, indexPathsAdd: let indexPathsAdd):
+                        self.handleRemoveDoseFumier(indexPathsRemove: indexPathsRemove, indexPathsAdd: indexPathsAdd)
+                    case .notResponse:
+                        break
                     }
         }
     }
@@ -118,29 +117,8 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
         viewController?.present(containerFormCulturalPracticeHostingController, animated: true)
     }
 
-    private func createSelectedSelectElementOnListAction(
-        culturalPracticeSelectElement: CulturalPracticeElementProtocol,
-        field: Field
-    ) -> SelectFormCulturalPracticeAction.SelectElementSelectedOnList {
-        SelectFormCulturalPracticeAction.SelectElementSelectedOnList(
-            culturalPracticeElement: culturalPracticeSelectElement,
-            field: field,
-            subAction: SelectFormCulturalPracticeSubAction.newDataForm
-        )
-    }
-
-    private func createSelectedInputElementOnListAction(
-        inputElement: CulturalPracticeInputElement,
-        field: Field
-    ) -> InputFormCulturalPracticeAction.InputElementSelectedOnListAction {
-        InputFormCulturalPracticeAction.InputElementSelectedOnListAction(
-            culturalPracticeInputElement: inputElement,
-            field: field,
-            subAction: .newFormData)
-    }
-
-    private func setStateProperties(_ currentFieldType: Field, _ sections: [Section<CulturalPracticeElementProtocol>], _ title: String) {
-        self.currentField = currentFieldType
+    private func setStateProperties(_ currentField: Field, _ sections: [Section<CulturalPracticeElementProtocol>], _ title: String) {
+        self.currentField = currentField
         self.sections = sections
         self.title = title
     }
@@ -156,7 +134,7 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
         culturalPraticeView!.initCellFor(
             addElement: addElement,
             cell: cell,
-            handleAddButton: dispatchAddDoseFumier
+            handleAddButton: {[weak self] in self?.culturalPraticeFormInteraction.dispatchAddDoseFumier() }
         )
     }
 
@@ -175,25 +153,61 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
         print("***** denit CulturalPraticeFormViewModelImpl *******")
     }
 }
-// handle methode
+
+// MARK: - handle methode
+
 extension CulturalPraticeFormViewModelImpl {
-    private func handleReloadData() {
+
+    func handleRemoveDoseFumierOnTableView(editingStyle: UITableViewCell.EditingStyle, indexPath: IndexPath) {
+        switch editingStyle {
+        case .delete:
+            culturalPraticeFormInteraction.dispatchRemoveDoseFumierAction(indexPath: indexPath)
+        default:
+            break
+        }
+    }
+
+    func handleCanEditRow(indexPath: IndexPath) -> Bool {
+        (getCulturePracticeElement(by: indexPath) as? CulturalPracticeContainerElement) != nil
+    }
+
+    func tableView(didSelectRowAt indexPath: IndexPath) {
+        self.culturalPraticeFormInteraction.dispathWillSelectElementOnList(indexPath: indexPath)
+    }
+
+    private func handleRemoveDoseFumier(indexPathsRemove: [IndexPath], indexPathsAdd: [IndexPath]?) {
+        self.tableView?.performBatchUpdates({
+            self.tableView?.deleteRows(at: indexPathsRemove.sorted().reversed(), with: .left)
+
+            indexPathsAdd.map {
+                self.tableView?.insertRows(at: $0.sorted().reversed(), with: .left)
+            }
+
+        })
+
+        self.culturalPraticeFormInteraction.dispatchUpdateFieldAction(field: currentField)
+    }
+
+    private func handleReloadAllListElementResponse() {
         self.tableView?.reloadData()
+        self.culturalPraticeFormInteraction.dispatchSetCurrentViewControllerInNavigationAction()
+        self.culturalPraticeFormInteraction.dispatchSetTitleAction(title: self.title)
     }
 
-    private func handleInsertRows(
-        indexPaths: [IndexPath],
-        sections: [Section<CulturalPracticeElementProtocol>]
+    private func handleInsertContainerElementResponse(
+        indexPaths: [IndexPath]
     ) {
-        self.sections = sections
+        guard !indexPaths.isEmpty else { return }
         self.tableView?.insertRows(at: indexPaths, with: .right)
+        self.tableView?.scrollToRow(at: indexPaths[0], at: .top, animated: true)
     }
 
-    private func handleUpdateRowAt(indexPath: IndexPath) {
+    private func handleUpdateElementResponse(indexPath: IndexPath) {
         self.tableView?.reloadRows(at: [indexPath], with: .fade)
+        self.culturalPraticeFormInteraction.dispatchUpdateFieldAction(field: currentField)
     }
 
-    private func handleWillSelectElementOnList(
+    private func handleWillSelectElementOnListResponse(
         culturalParacticeElementSelected: CulturalPracticeElementProtocol,
         field: Field
     ) {
@@ -213,7 +227,7 @@ extension CulturalPraticeFormViewModelImpl {
         containerElement: CulturalPracticeContainerElement,
         _ field: Field
     ) {
-        _ = dispatchSelectedContainerElementOnListObs(containerElement: containerElement, field: field)
+        _ = culturalPraticeFormInteraction.dispatchSelectedContainerElementOnListObs(containerElement: containerElement, field: field)
             .subscribe { _ in
                 self.presentContainerFormCulturalPracticeHostingController()
         }
@@ -223,7 +237,7 @@ extension CulturalPraticeFormViewModelImpl {
         inputElement: CulturalPracticeInputElement,
         _ field: Field
     ) {
-        _ = dispatchSelectedInputElementOnListObs(
+        _ = culturalPraticeFormInteraction.dispatchSelectedInputElementOnListObs(
             inputElement: inputElement,
             field: field
         ).subscribe { _ in
@@ -235,96 +249,11 @@ extension CulturalPraticeFormViewModelImpl {
         selectElement: CulturalPracticeMultiSelectElement,
         _ field: Field
     ) {
-        _ = dispatchSelectedSelectElementOnListObs(
+        _ = culturalPraticeFormInteraction.dispatchSelectedSelectElementOnListObs(
             culturalPracticeElement: selectElement,
             field: field
         ).subscribe { _ in
             self.presentSelectFormCulturalPracticeController()
-        }
-    }
-
-    public func tableView(didSelectRowAt indexPath: IndexPath) {
-        self.dispathWillSelectElementOnList(indexPath: indexPath)
-    }
-}
-
-// dispatcher methode
-extension CulturalPraticeFormViewModelImpl {
-
-    func dispatchSetCurrentViewControllerInNavigationAction() {
-        let action = ContainerTitleNavigationAction
-            .SetCurrentViewControllerInNavigationAction(currentViewControllerInNavigation: .fieldList)
-        _ = Util.runInSchedulerBackground {
-            self.actionDispatcher.dispatch(action)
-        }
-    }
-
-    /// action for set title of TitleNavigationViewController
-    func dispatchSetTitleAction() {
-        let action = ContainerTitleNavigationAction.SetTitleAction(title: title ?? "")
-
-        _ = Util.runInSchedulerBackground {
-            self.actionDispatcher.dispatch(action)
-        }
-
-    }
-
-    private func dispatchSelectedSelectElementOnListObs(
-        culturalPracticeElement: CulturalPracticeElementProtocol,
-        field: Field
-    ) -> Completable {
-        Util.createRunCompletable {
-            let action = self.createSelectedSelectElementOnListAction(
-                culturalPracticeSelectElement: culturalPracticeElement,
-                field: field
-            )
-
-            self.actionDispatcher.dispatch(action)
-        }
-    }
-
-    private func dispatchSelectedInputElementOnListObs(
-        inputElement: CulturalPracticeInputElement,
-        field: Field
-    ) -> Completable {
-        Util.createRunCompletable {
-            let action = self.createSelectedInputElementOnListAction(
-                inputElement: inputElement,
-                field: field
-            )
-
-            self.actionDispatcher.dispatch(action)
-        }
-    }
-
-    private func dispatchSelectedContainerElementOnListObs(
-        containerElement: CulturalPracticeContainerElement,
-        field: Field
-    ) -> Completable {
-        Util.createRunCompletable {
-            let action = ContainerFormCulturalPracticeAction
-                .ContainerElementSelectedOnListAction(
-                    containerElement: containerElement,
-                    field: field
-            )
-
-            self.actionDispatcher.dispatch(action)
-        }
-    }
-
-    private func dispatchAddDoseFumier() {
-        _ = Util.runInSchedulerBackground {
-            self.actionDispatcher.dispatch(
-                CulturalPracticeFormAction.AddCulturalPracticeInputMultiSelectContainer()
-            )
-        }
-    }
-
-    private func dispathWillSelectElementOnList(indexPath: IndexPath) {
-        let action = CulturalPracticeFormAction.WillSelectElementOnListAction(indexPath: indexPath)
-
-        _ = Util.runInSchedulerBackground {
-            self.actionDispatcher.dispatch(action)
         }
     }
 }
@@ -347,4 +276,6 @@ protocol CulturalPraticeFormViewModel {
     func initCellFor(inputElement: CulturalPracticeInputElement, cell: UITableViewCell) -> UITableViewCell
     func initCellFor(addElement: CulturalPracticeAddElement, cell: UITableViewCell) -> UITableViewCell
     func tableView(didSelectRowAt indexPath: IndexPath)
+    func handleRemoveDoseFumierOnTableView(editingStyle: UITableViewCell.EditingStyle, indexPath: IndexPath)
+    func handleCanEditRow(indexPath: IndexPath) -> Bool
 }

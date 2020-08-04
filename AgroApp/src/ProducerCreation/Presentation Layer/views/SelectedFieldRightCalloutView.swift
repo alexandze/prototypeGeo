@@ -9,17 +9,17 @@
 import UIKit
 
 class SelectedFieldCalloutView: UIView {
-    static let tagButtonCancel = 51
-    static let tagButttonAdd = 50
+    let tagButtonCancel = 51
+    let tagButttonAdd = 50
 
     private var handleButtonCancelFunc: ((UIButton) -> Void)?
     private var handleButtonAddFunc: ((UIButton) -> Void)?
+    var idField: Int?
 
     let buttonAdd: UIButton = {
         let buttonAdd = UIButton()
         let addImage = UIImage(named: "plus")
         buttonAdd.setImage(addImage, for: .normal)
-        buttonAdd.tag = tagButttonAdd
         buttonAdd.translatesAutoresizingMaskIntoConstraints = false
         return buttonAdd
     }()
@@ -28,7 +28,6 @@ class SelectedFieldCalloutView: UIView {
         let buttonCancel = UIButton()
         let cancelImage = UIImage(named: "stop")
         buttonCancel.setImage(cancelImage, for: .normal)
-        buttonCancel.tag = tagButtonCancel
         buttonCancel.translatesAutoresizingMaskIntoConstraints = false
         return buttonCancel
     }()
@@ -42,22 +41,24 @@ class SelectedFieldCalloutView: UIView {
         initView()
     }
 
-    public func addTargetButtonCancel(handleCancelFunc: @escaping (UIButton) -> Void) {
+    func addTargetButtonCancel(handleCancelFunc: @escaping (UIButton) -> Void) {
         self.handleButtonCancelFunc = handleCancelFunc
         buttonCancel.addTarget(self, action: #selector(handle(buttonCancel:)), for: .touchDown)
     }
 
-    public func addTargetButtonAdd(handleAddFunc: @escaping (UIButton) -> Void) {
+    func addTargetButtonAdd(handleAddFunc: @escaping (UIButton) -> Void) {
         self.handleButtonAddFunc = handleAddFunc
         buttonAdd.addTarget(self, action: #selector(handle(addButton:)), for: .touchDown)
     }
 
-    public func setStateButton(with isSelected: Bool) {
+    func setStateButton(isSelected: Bool) {
         buttonCancel.isHidden = !isSelected
         buttonAdd.isHidden = isSelected
     }
 
     private func initView() {
+        buttonAdd.tag = tagButttonAdd
+        buttonCancel.tag = tagButtonCancel
         addSubview(buttonAdd)
         addSubview(buttonCancel)
         buttonCancel.isHidden = true

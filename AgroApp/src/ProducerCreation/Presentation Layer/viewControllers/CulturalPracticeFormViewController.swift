@@ -100,6 +100,17 @@ public class CulturalPracticeFormViewController: UIViewController, UITableViewDe
         culturalPraticeViewModel.tableView(didSelectRowAt: indexPath)
     }
 
+    public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        culturalPraticeViewModel.handleRemoveDoseFumierOnTableView(
+            editingStyle: editingStyle,
+            indexPath: indexPath
+        )
+    }
+
+    public func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        culturalPraticeViewModel.handleCanEditRow(indexPath: indexPath)
+    }
+
     deinit {
         print("***** denit CulturalPraticeViewController *******")
     }

@@ -13,6 +13,7 @@ import RxSwift
 // TODO afficher les messages deinit seulement en mode debug
 // TODO deinit les states
 // TODO renomer les actionSuccess en actionResponse
+// TODO creer dans les actions response une case notResponse
 class Util {
 
     private static var serialDispatchQueueSchedulerForReSwift: SerialDispatchQueueScheduler?
@@ -108,4 +109,14 @@ class Util {
     static func getGreenColor() -> UIColor {
         UIColor(red: 34/255, green: 139/255, blue: 34/255, alpha: 1)
     }
+}
+
+precedencegroup CompositionPrecedence {
+    associativity: left
+}
+
+infix operator >>>: CompositionPrecedence
+
+func >>> <T, U, V>(lhs: @escaping (T) -> U, rhs: @escaping (U) -> V) -> (T) -> V {
+    return { rhs(lhs($0)) }
 }

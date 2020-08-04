@@ -15,38 +15,43 @@ struct CulturalPracticeFormState: Equatable {
     var uuidState: String
     var currentField: Field?
     var sections: [Section<CulturalPracticeElementProtocol>]?
-    var subAction: CulturalPracticeSubAction?
     var title: String?
     var isFinishCompletedCurrentContainer: Bool?
+    var responseAction: ResponseAction?
+
+    enum ResponseAction {
+        case reloadAllListElementResponse
+        case insertContainerElementResponse(indexPath: [IndexPath])
+        case updateElementResponse(indexPath: [IndexPath])
+
+        case willSelectElementOnListResponse(
+            culturalPracticeElement: CulturalPracticeElementProtocol,
+            field: Field
+        )
+
+        case removeDoseFumierResponse(
+            indexPathsRemove: [IndexPath],
+            indexPathsAdd: [IndexPath]?
+        )
+
+        case canNotSelectElementOnListResponse(culturalPracticeElement: CulturalPracticeElementProtocol)
+        case notResponse
+    }
 
     public func changeValues(
         currentField: Field? = nil,
         sections: [Section<CulturalPracticeElementProtocol>]? = nil,
-        subAction: CulturalPracticeSubAction? = nil,
         title: String? = nil,
-        isFinishCompletedCurrentContainer: Bool? = nil
+        isFinishCompletedCurrentContainer: Bool? = nil,
+        responseAction: ResponseAction? = nil
     ) -> CulturalPracticeFormState {
         CulturalPracticeFormState(
             uuidState: UUID().uuidString,
             currentField: currentField ?? self.currentField,
             sections: sections ?? self.sections,
-            subAction: subAction ?? self.subAction,
             title: title ?? self.title,
-            isFinishCompletedCurrentContainer: isFinishCompletedCurrentContainer ?? self.isFinishCompletedCurrentContainer
+            isFinishCompletedCurrentContainer: isFinishCompletedCurrentContainer ?? self.isFinishCompletedCurrentContainer,
+            responseAction: responseAction ?? self.responseAction
         )
     }
-}
-
-enum CulturalPracticeSubAction {
-    case reloadData
-    case insertRows(indexPath: [IndexPath])
-    case deletedRows(indexPath: [IndexPath])
-    case updateRows(indexPath: [IndexPath])
-    case willSelectElementOnList(
-        culturalPracticeElement: CulturalPracticeElementProtocol,
-        field: Field
-    )
-
-    case canNotSelectElementOnList(culturalPracticeElement: CulturalPracticeElementProtocol)
-
 }

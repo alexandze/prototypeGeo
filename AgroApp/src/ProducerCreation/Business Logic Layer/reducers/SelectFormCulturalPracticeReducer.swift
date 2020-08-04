@@ -1,5 +1,5 @@
 //
-//  CulturalPracticeFormReducer.swift
+//  SelectFormCulturalPracticeReducer.swift
 //  prototypeGeo
 //
 //  Created by Alexandre Andze Kande on 2020-03-28.
@@ -15,18 +15,18 @@ extension Reducers {
 
         switch action {
         case let selectedElementOnList as SelectFormCulturalPracticeAction.SelectElementSelectedOnList:
-            return CulturalPracticeFormReducerHandler().handle(selectedElementOnList: selectedElementOnList)
+            return SelectFormCulturalPracticeHandlerReducer().handle(selectedElementOnList: selectedElementOnList)
         case let setFormIsDirtyAction as SelectFormCulturalPracticeAction.SetFormIsDirtyAction:
-            return CulturalPracticeFormReducerHandler().handleUpdateState(state: state) { (state: SelectFormCulturalPracticeState) -> SelectFormCulturalPracticeState in
+            return SelectFormCulturalPracticeHandlerReducer().handleUpdateState(state: state) { (state: SelectFormCulturalPracticeState) -> SelectFormCulturalPracticeState in
                 state.changeValue(isDirty: setFormIsDirtyAction.isDirty, culturalPracticeSubAction: .formIsDirty)
             }
         case let closedPresentedViewControllerAction as SelectFormCulturalPracticeAction.ClosePresentedViewControllerAction:
-            return CulturalPracticeFormReducerHandler().handle(
+            return SelectFormCulturalPracticeHandlerReducer().handle(
                 closePresentedViewControllerAction: closedPresentedViewControllerAction,
                 state: state
             )
         case let closePresentedViewControllerWithSaveAction as SelectFormCulturalPracticeAction.ClosePresentedViewControllerWithSaveAction:
-            return CulturalPracticeFormReducerHandler().handle(
+            return SelectFormCulturalPracticeHandlerReducer().handle(
                 closePresentedViewControllerWithSaveAction: closePresentedViewControllerWithSaveAction,
                 state: state
             )
@@ -40,7 +40,7 @@ extension Reducers {
     }
 }
 
-class CulturalPracticeFormReducerHandler {
+class SelectFormCulturalPracticeHandlerReducer {
 
     func handle(
         closePresentedViewControllerWithSaveAction: SelectFormCulturalPracticeAction.ClosePresentedViewControllerWithSaveAction,

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RxSwift
 
 class CulturalPracticeFormView: UIView {
 
@@ -68,6 +69,21 @@ class CulturalPracticeFormView: UIView {
         }
 
         return cell
+    }
+
+    // TODO afficher les messages d'erreur pour les dose fumier
+    private func printMesageErrorNotCompletedDoseFumier() {
+        _ = Observable.just(0)
+            .delay(.seconds(2), scheduler: MainScheduler.instance)
+            .do(onNext: {_ in print("1") })
+            .delay(.seconds(2), scheduler: MainScheduler.instance)
+            .do(onNext: { _ in print("2") })
+            .subscribe()
+    }
+
+    // TODO afficher les messages d'erreur pour les dose fumier
+    private func printMessageErrorMaxDoseFumier() {
+
     }
 
     func initCellFor(containerElement: CulturalPracticeContainerElement, cell: UITableViewCell) -> UITableViewCell {

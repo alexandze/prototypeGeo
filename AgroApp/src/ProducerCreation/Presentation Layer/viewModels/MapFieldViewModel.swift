@@ -14,13 +14,14 @@ class MapFieldViewModel {
     let mapFieldAllFieldStateObs: Observable<MapFieldState>
     let mapFieldInteraction: MapFieldInteraction
     var disposableMapFieldAllState: Disposable?
-    var mapFieldView: MapFieldView!
+    var mapFieldView: MapFieldView?
     var state: MapFieldState?
     let mapFieldService: MapFieldService
     let idClusterAnnotation = "idCLusterAnnotation"
     let idAnnotationView = "My annotation view"
     var currentSelectedAnnotation: AnnotationWithData<PayloadFieldAnnotation>?
     let disposeBag = DisposeBag()
+    var lastSelectedFieldCalloutView: SelectedFieldCalloutView?
 
     init(
         mapFieldAllFieldStateObs: Observable<MapFieldState>,
@@ -55,6 +56,7 @@ class MapFieldViewModel {
     }
 
     func initRegion() {
+        guard let mapFieldView = mapFieldView else { return }
         let location2D = CLLocationCoordinate2DMake(45.233023116000027, -73.355880542999955)
         let coordinateSpan = MKCoordinateSpan(latitudeDelta: 0.015, longitudeDelta: 0.015)
         let region = MKCoordinateRegion(center: location2D, span: coordinateSpan)
@@ -62,6 +64,7 @@ class MapFieldViewModel {
     }
 
     func registerAnnotationView() {
+        guard let mapFieldView = mapFieldView else { return }
         mapFieldView.mapView.register(
             MKMarkerAnnotationView.self,
             forAnnotationViewWithReuseIdentifier: self.idAnnotationView
@@ -99,28 +102,36 @@ class MapFieldViewModel {
     private func addToMap(
         annotationsWithData: [AnnotationWithData<PayloadFieldAnnotation>]
     ) {
+        guard let mapFieldView = mapFieldView else { return }
+
         annotationsWithData.forEach {
-            self.mapFieldView.mapView.addAnnotation($0)
+            mapFieldView.mapView.addAnnotation($0)
         }
     }
 
     private func addToMap(polygonsWithData: [PolygonWithData<PayloadFieldAnnotation>]) {
+        guard let mapFieldView = mapFieldView else { return }
+
         polygonsWithData.forEach {
-            self.mapFieldView.mapView.addOverlay($0)
+            mapFieldView.mapView.addOverlay($0)
         }
     }
 
     private func selectePolygonOf(field: Field) {
+        guard let mapFieldView = mapFieldView else { return }
+
         field.polygon.forEach {
-            let polygonRenderer = self.mapFieldView.mapView.renderer(for: $0) as? MKPolygonRenderer
-            self.mapFieldView.configSelected(polygonRenderer: polygonRenderer)
+            let polygonRenderer = mapFieldView.mapView.renderer(for: $0) as? MKPolygonRenderer
+            mapFieldView.configSelected(polygonRenderer: polygonRenderer)
         }
     }
 
     private func deselectPolygonOf(field: Field) {
+        guard let mapFieldView = mapFieldView else { return }
+
         field.polygon.forEach {
-            let polygonRenderer = self.mapFieldView.mapView.renderer(for: $0) as? MKPolygonRenderer
-            self.mapFieldView.configNotSelected(polygonRenderer: polygonRenderer)
+            let polygonRenderer = mapFieldView.mapView.renderer(for: $0) as? MKPolygonRenderer
+            mapFieldView.configNotSelected(polygonRenderer: polygonRenderer)
         }
     }
 
@@ -130,10 +141,15 @@ class MapFieldViewModel {
         }
     }
 
-    private func setAnnotationIsDeselected(_ fieldDeselected: Field) {
+    private func setAnnotationDataIsDeselected(_ fieldDeselected: Field) {
         (0..<fieldDeselected.annotation.count).forEach { index in
             fieldDeselected.annotation[index].data?.isSelected = false
         }
+    }
+
+    private func printAddButtonInCalloutView(idField: Int) {
+        guard lastSelectedFieldCalloutView?.idField == idField else { return }
+        lastSelectedFieldCalloutView?.setStateButton(isSelected: false)
     }
 }
 
@@ -145,50 +161,51 @@ extension MapFieldViewModel {
             let annotationWithData = annotationView.annotation as? AnnotationWithData<PayloadFieldAnnotation>,
             let dataFromAnnotationView = annotationWithData.data {
             self.currentSelectedAnnotation = annotationWithData
-            selectedFieldRightCalloutView.setStateButton(with: dataFromAnnotationView.isSelected)
+            selectedFieldRightCalloutView.setStateButton(isSelected: dataFromAnnotationView.isSelected)
+            lastSelectedFieldCalloutView = selectedFieldRightCalloutView
+            lastSelectedFieldCalloutView?.idField = dataFromAnnotationView.idField
         }
     }
 
     func handle(overlay: MKOverlay) -> MKOverlayRenderer {
-        if let overlay = overlay as? PolygonWithData<PayloadFieldAnnotation> {
-            let polygonRenderer = MKPolygonRenderer(polygon: overlay)
+        guard let mapFieldView = mapFieldView,
+            let overlay = overlay as? PolygonWithData<PayloadFieldAnnotation>
+            else { return MKOverlayRenderer()}
 
-            if overlay.data!.isSelected {
-                self.mapFieldView.configSelected(polygonRenderer: polygonRenderer)
-                return polygonRenderer
-            }
+        let polygonRenderer = MKPolygonRenderer(polygon: overlay)
 
-            self.mapFieldView.configNotSelected(polygonRenderer: polygonRenderer)
+        if overlay.data!.isSelected {
+            mapFieldView.configSelected(polygonRenderer: polygonRenderer)
             return polygonRenderer
         }
 
-        return MKOverlayRenderer()
+        mapFieldView.configNotSelected(polygonRenderer: polygonRenderer)
+        return polygonRenderer
     }
 
     func handle(mkAnnotation: MKAnnotation) -> MKAnnotationView? {
-        if mkAnnotation is AnnotationWithData<PayloadFieldAnnotation> {
-            let markerAnnotationView = mapFieldView.mapView.dequeueReusableAnnotationView(
-                withIdentifier:
-                self.idAnnotationView,
-                for: mkAnnotation
-                ) as? MKMarkerAnnotationView
+        guard let mapFieldView = mapFieldView,
+            mkAnnotation is AnnotationWithData<PayloadFieldAnnotation> else { return nil }
 
-            mapFieldView.config(
-                markerAnnotationView: markerAnnotationView,
-                idClusterAnnotation: idClusterAnnotation
-            )
+        let markerAnnotationView = mapFieldView.mapView.dequeueReusableAnnotationView(
+            withIdentifier:
+            self.idAnnotationView,
+            for: mkAnnotation
+            ) as? MKMarkerAnnotationView
 
-            mapFieldView.configRightCalloutAccessoryView(
-                mkAnnotation: mkAnnotation,
-                markerAnnotationView: markerAnnotationView,
-                handleAddFunc: {[weak self] button in self?.handleAdd(button: button) },
-                handleCancelFunc: {[weak self] button in self?.handleCancel(button: button) }
-            )
+        mapFieldView.config(
+            markerAnnotationView: markerAnnotationView,
+            idClusterAnnotation: idClusterAnnotation
+        )
 
-            return markerAnnotationView
-        }
+        mapFieldView.configRightCalloutAccessoryView(
+            mkAnnotation: mkAnnotation,
+            markerAnnotationView: markerAnnotationView,
+            handleAddFunc: {[weak self] button in self?.handleAdd(button: button) },
+            handleCancelFunc: {[weak self] button in self?.handleCancel(button: button) }
+        )
 
-        return nil
+        return markerAnnotationView
     }
 
     private func handleWillDeselectFieldOnMapActionResponse() {
@@ -197,8 +214,9 @@ extension MapFieldViewModel {
             else { return }
 
         deselectPolygonOf(field: fieldDeselected)
-        setAnnotationIsDeselected(fieldDeselected)
+        setAnnotationDataIsDeselected(fieldDeselected)
         mapFieldInteraction.didDeselectFieldOnMapAction(field: fieldDeselected)
+        printAddButtonInCalloutView(idField: lastIdDeselected)
     }
 
     private func handleGetAllFieldActionResponse() {
@@ -227,16 +245,23 @@ extension MapFieldViewModel {
     }
 
     private func handleCancel(button: UIButton) {
-        guard let dataFromAnnotation = currentSelectedAnnotation?.data else { return }
-        guard let selectedFieldCalloutView = button.superview as? SelectedFieldCalloutView else { return }
-        selectedFieldCalloutView.setStateButton(with: false)
+        guard let dataFromAnnotation = currentSelectedAnnotation?.data,
+            let selectedFieldCalloutView = button.superview as? SelectedFieldCalloutView
+            else { return }
+
+        lastSelectedFieldCalloutView = selectedFieldCalloutView
+        lastSelectedFieldCalloutView?.setStateButton(isSelected: false)
+        lastSelectedFieldCalloutView?.idField = dataFromAnnotation.idField
         mapFieldInteraction.willDeselectedFieldOnMapAction(idField: dataFromAnnotation.idField)
     }
 
     private func handleAdd(button: UIButton) {
-        guard let dataFromAnnotation = currentSelectedAnnotation?.data else { return }
-        guard let selectedFieldCalloutView = button.superview as? SelectedFieldCalloutView else { return }
-        selectedFieldCalloutView.setStateButton(with: true)
+        guard let dataFromAnnotation = currentSelectedAnnotation?.data,
+            let selectedFieldCalloutView = button.superview as? SelectedFieldCalloutView else { return }
+
+        lastSelectedFieldCalloutView = selectedFieldCalloutView
+        lastSelectedFieldCalloutView?.setStateButton(isSelected: true)
+        lastSelectedFieldCalloutView?.idField = dataFromAnnotation.idField
         mapFieldInteraction.willSelectedFieldOnMapAction(idField: dataFromAnnotation.idField)
     }
 
