@@ -59,11 +59,11 @@ class CulturalPracticeFormReducerHandler {
             (culturalPracticeElement as? CulturalPracticeInputElement) != nil ||
             (culturalPracticeElement as? CulturalPracticeContainerElement) != nil else {
                 return state.changeValues(
-                    subAction: .canNotSelectElementOnList(culturalPracticeElement: culturalPracticeElement)
+                    responseAction: .canNotSelectElementOnListResponse(culturalPracticeElement: culturalPracticeElement)
                 )
         }
 
-        return state.changeValues(subAction: .willSelectElementOnList(
+        return state.changeValues(responseAction: .willSelectElementOnListResponse(
             culturalPracticeElement: culturalPracticeElement,
             field: state.currentField!
             )
@@ -79,8 +79,8 @@ class CulturalPracticeFormReducerHandler {
             uuidState: UUID().uuidString,
             currentField: didSelectedFieldOnListAction.field,
             sections: createSection(by: culturalPracticeElements),
-            subAction: .reloadData,
-            title: "Pratiques culturelles parcelle \(field.id)"
+            title: "Pratiques culturelles parcelle \(field.id)",
+            responseAction: .reloadAllListElementResponse
         )
     }
 
@@ -150,14 +150,14 @@ class CulturalPracticeFormReducerHandler {
 
             return state.changeValues(
                 sections: copySection,
-                subAction: .insertRows(
+                isFinishCompletedCurrentContainer: false,
+                responseAction: .insertContainerElementResponse(
                     indexPath: [
                         IndexPath(
                             row: copySection[indexSectionDoseFumier].rowData.count - 1,
                             section: indexSectionDoseFumier
                         )
-                ]),
-                isFinishCompletedCurrentContainer: false
+                ])
             )
         }
     }
@@ -199,7 +199,7 @@ class CulturalPracticeFormReducerHandler {
 
         copyState.sections![sectionIndex].rowData.append(inputMultiSelectContainer)
         copyState.uuidState = UUID().uuidString
-        copyState.subAction = .insertRows(indexPath: [
+        copyState.responseAction = .insertContainerElementResponse(indexPath: [
             IndexPath(
                 row: copyState.sections![sectionIndex].rowData.count - 1,
                 section: sectionIndex

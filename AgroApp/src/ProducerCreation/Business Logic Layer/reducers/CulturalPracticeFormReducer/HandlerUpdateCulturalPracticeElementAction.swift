@@ -30,7 +30,7 @@ class HandlerUpdateCulturalPracticeElementAction: HandlerReducerProtocol {
                 updateFieldifInputAndSelectElement(util:) >>>
                 updateFieldIfContainerElement(util:) >>>
                 createNewState(util:)
-            )(util) ?? state.changeValues(subAction: .notResponse)
+            )(util) ?? state.changeValues(responseAction: .notResponse)
     }
 
     private func findCulturalPracticeElementIndex(
@@ -146,8 +146,8 @@ class HandlerUpdateCulturalPracticeElementAction: HandlerReducerProtocol {
         return state.changeValues(
             currentField: copyCurrentField,
             sections: newSections,
-            subAction: .updateRows(indexPath: [indexOfCulturalPracticeElement]),
-            isFinishCompletedCurrentContainer: isContainerElement ? true : state.isFinishCompletedCurrentContainer
+            isFinishCompletedCurrentContainer: isContainerElement ? true : state.isFinishCompletedCurrentContainer,
+            responseAction: .updateElementResponse(indexPath: [indexOfCulturalPracticeElement])
         )
     }
 

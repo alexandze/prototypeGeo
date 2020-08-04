@@ -77,6 +77,7 @@ struct CulturalPractice {
 
     func resetDoseFumier<T>(dose: [T?]?) -> [T?] {
         var doseReset = [T?]()
+
         (0..<CulturalPractice.MAX_DOSE_FUMIER).forEach { index in
             if !hasIndexInArray(elements: dose, index: index) {
                 return doseReset.append(nil)

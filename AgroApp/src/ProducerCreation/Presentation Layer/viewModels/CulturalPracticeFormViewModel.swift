@@ -40,30 +40,29 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
                     guard let culturalPracticeState = element.element,
                         let currentField = culturalPracticeState.currentField,
                         let sections = culturalPracticeState.sections,
-                        let tableState = culturalPracticeState.subAction,
+                        let responseAction = culturalPracticeState.responseAction,
                         let title = culturalPracticeState.title,
                         let self = self
                         else { return }
 
                     self.setStateProperties(currentField, sections, title)
 
-                    switch tableState {
-                    case .reloadData:
-                        self.handleReloadData()
-                    case .insertRows(indexPath: let indexPaths):
-                        self.handleInsertRows(indexPaths: indexPaths, sections: sections)
-                    case .updateRows(indexPath: let indexPaths):
-                        self.handleUpdateRowAt(indexPath: indexPaths[0])
-                    case .willSelectElementOnList(
+                    switch responseAction {
+                    case .reloadAllListElementResponse:
+                        self.handleReloadAllListElementResponse()
+                    case .insertContainerElementResponse(indexPath: let indexPaths):
+                        self.handleInsertContainerElementResponse(indexPaths: indexPaths)
+                    case .updateElementResponse(indexPath: let indexPaths):
+                        self.handleUpdateElementResponse(indexPath: indexPaths[0])
+                    case .willSelectElementOnListResponse(
                         culturalPracticeElement: let culturalPracticeElementSelected,
-                        field: let field
-                        ):
-                        self.handleWillSelectElementOnList(
+                        field: let field):
+                        self.handleWillSelectElementOnListResponse(
                             culturalParacticeElementSelected: culturalPracticeElementSelected,
                             field: field
                         )
-                    case .canNotSelectElementOnList(culturalPracticeElement: _):
-                       break
+                    case .canNotSelectElementOnListResponse(culturalPracticeElement: _):
+                        break
                     case .removeDoseFumierResponse(indexPathsRemove: let indexPathsRemove, indexPathsAdd: let indexPathsAdd):
                         self.handleRemoveDoseFumier(indexPathsRemove: indexPathsRemove, indexPathsAdd: indexPathsAdd)
                     case .notResponse:
@@ -189,26 +188,26 @@ extension CulturalPraticeFormViewModelImpl {
         self.culturalPraticeFormInteraction.dispatchUpdateFieldAction(field: currentField)
     }
 
-    private func handleReloadData() {
+    private func handleReloadAllListElementResponse() {
         self.tableView?.reloadData()
         self.culturalPraticeFormInteraction.dispatchSetCurrentViewControllerInNavigationAction()
         self.culturalPraticeFormInteraction.dispatchSetTitleAction(title: self.title)
     }
 
-    private func handleInsertRows(
-        indexPaths: [IndexPath],
-        sections: [Section<CulturalPracticeElementProtocol>]
+    private func handleInsertContainerElementResponse(
+        indexPaths: [IndexPath]
     ) {
-        self.sections = sections
+        guard !indexPaths.isEmpty else { return }
         self.tableView?.insertRows(at: indexPaths, with: .right)
+        self.tableView?.scrollToRow(at: indexPaths[0], at: .top, animated: true)
     }
 
-    private func handleUpdateRowAt(indexPath: IndexPath) {
+    private func handleUpdateElementResponse(indexPath: IndexPath) {
         self.tableView?.reloadRows(at: [indexPath], with: .fade)
         self.culturalPraticeFormInteraction.dispatchUpdateFieldAction(field: currentField)
     }
 
-    private func handleWillSelectElementOnList(
+    private func handleWillSelectElementOnListResponse(
         culturalParacticeElementSelected: CulturalPracticeElementProtocol,
         field: Field
     ) {

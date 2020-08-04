@@ -31,7 +31,7 @@ class HandlerRemoveDoseFumierAction: HandlerReducerProtocol {
                 removeAllCulturalPracticeContainerElement(util:) >>>
                 addNewCulturalPracticeContainerElementIfThere(util:) >>>
                 newState(util:)
-            )(util) ?? state.changeValues(subAction: .notResponse)
+            )(util) ?? state.changeValues(responseAction: .notResponse)
     }
 
     private func checkIfRemoveContainerElementHasValue(
@@ -212,8 +212,8 @@ class HandlerRemoveDoseFumierAction: HandlerReducerProtocol {
         return state.changeValues(
             currentField: currentField,
             sections: sections,
-            subAction: .removeDoseFumierResponse(indexPathsRemove: indexPathRemove, indexPathsAdd: util?.doseFumierAddIndexPaths),
-            isFinishCompletedCurrentContainer: isContainerHasElement ? state.isFinishCompletedCurrentContainer : true
+            isFinishCompletedCurrentContainer: isContainerHasElement ? state.isFinishCompletedCurrentContainer : true,
+            responseAction: .removeDoseFumierResponse(indexPathsRemove: indexPathRemove, indexPathsAdd: util?.doseFumierAddIndexPaths)
         )
     }
 }

@@ -50,7 +50,7 @@ enum DrainageSurface: Int, CulturalPracticeValueProtocol, Codable {
             key: UUID().uuidString,
             title: getTitle(),
             tupleCulturalTypeValue: getValues()!,
-            value: culturalPractice?.drainageSouterrain
+            value: culturalPractice?.drainageSurface
         )
     }
 

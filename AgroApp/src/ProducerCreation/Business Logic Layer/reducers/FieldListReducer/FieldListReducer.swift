@@ -15,7 +15,7 @@ extension Reducers {
 
         switch action {
         case let didSelectedFieldOnMapAction as MapFieldAction.DidSelectedFieldOnMapAction:
-            return FieldListReducerHandler().handle(didSelectedFieldOnMapAction: didSelectedFieldOnMapAction, state)
+            return HandlerDidSelectedFieldOnMapAction().handle(action: didSelectedFieldOnMapAction, state)
         case let didDeselectFieldOnMap as MapFieldAction.DidDelectFieldOnMapAction:
             return FieldListReducerHandler().handle(didDelectFieldOnMapAction: didDeselectFieldOnMap, state)
         case let willSelectFieldOnListAction as FieldListAction.WillSelectFieldOnListAction:
@@ -52,21 +52,6 @@ class FieldListReducerHandler {
     }
 
     func handle(
-        didSelectedFieldOnMapAction: MapFieldAction.DidSelectedFieldOnMapAction,
-        _ state: FieldListState
-        ) -> FieldListState {
-        let secondArray = state.fieldList != nil ? state.fieldList! : []
-        var firstArray = [didSelectedFieldOnMapAction.field]
-        firstArray += secondArray
-
-        return state.changeValue(
-            fieldList: firstArray,
-            currentField: didSelectedFieldOnMapAction.field,
-            subAction: .selectedFieldOnMapActionSuccess
-        )
-    }
-
-    func handle(
         didDelectFieldOnMapAction: MapFieldAction.DidDelectFieldOnMapAction,
         _ state: FieldListState
     ) -> FieldListState {
@@ -90,7 +75,7 @@ class FieldListReducerHandler {
 
         copyState.sections![sectionIndex].rowData.append(inputMultiSelectContainer)
         copyState.uuidState = UUID().uuidString
-        copyState.subAction = .insertRows(indexPath: [
+        copyState.responseAction = .insertContainerElementResponse(indexPath: [
             IndexPath(
                 row: copyState.sections![sectionIndex].rowData.count - 1,
                 section: sectionIndex

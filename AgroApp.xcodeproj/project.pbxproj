@@ -77,6 +77,7 @@
 		989090AA24C1530800AFC080 /* ContainerTitleNavigationAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989090A924C1530800AFC080 /* ContainerTitleNavigationAction.swift */; };
 		989090AC24C18B9D00AFC080 /* MapFieldReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989090AB24C18B9D00AFC080 /* MapFieldReducer.swift */; };
 		989090AE24C18F4300AFC080 /* FieldListReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989090AD24C18F4300AFC080 /* FieldListReducer.swift */; };
+		9891610124D9FEF5005E1F7C /* HandlerDidSelectedFieldOnMapAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9891610024D9FEF5005E1F7C /* HandlerDidSelectedFieldOnMapAction.swift */; };
 		98943408240F901D003C0110 /* SelectedFieldRightCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98943407240F901D003C0110 /* SelectedFieldRightCalloutView.swift */; };
 		9894340A2410C76D003C0110 /* PolygonWithData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989434092410C76D003C0110 /* PolygonWithData.swift */; };
 		9894340C2410FAF0003C0110 /* FieldSelectedViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9894340B2410FAF0003C0110 /* FieldSelectedViewCell.swift */; };
@@ -239,6 +240,7 @@
 		989090A924C1530800AFC080 /* ContainerTitleNavigationAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerTitleNavigationAction.swift; sourceTree = "<group>"; };
 		989090AB24C18B9D00AFC080 /* MapFieldReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFieldReducer.swift; sourceTree = "<group>"; };
 		989090AD24C18F4300AFC080 /* FieldListReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldListReducer.swift; sourceTree = "<group>"; };
+		9891610024D9FEF5005E1F7C /* HandlerDidSelectedFieldOnMapAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerDidSelectedFieldOnMapAction.swift; sourceTree = "<group>"; };
 		98943407240F901D003C0110 /* SelectedFieldRightCalloutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedFieldRightCalloutView.swift; sourceTree = "<group>"; };
 		989434092410C76D003C0110 /* PolygonWithData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolygonWithData.swift; sourceTree = "<group>"; };
 		9894340B2410FAF0003C0110 /* FieldSelectedViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldSelectedViewCell.swift; sourceTree = "<group>"; };
@@ -771,6 +773,7 @@
 				989090AD24C18F4300AFC080 /* FieldListReducer.swift */,
 				986E1C8324D5C02C00EDB1DE /* HandlerUpdateFieldAction.swift */,
 				986E1C8724D5E0C900EDB1DE /* HandlerRemoveFieldAction.swift */,
+				9891610024D9FEF5005E1F7C /* HandlerDidSelectedFieldOnMapAction.swift */,
 			);
 			path = FieldListReducer;
 			sourceTree = "<group>";
@@ -1154,6 +1157,7 @@
 				98F126AE24C71EE3001853D5 /* DrainageSurface.swift in Sources */,
 				98D1929523C020B000BF9A7A /* FarmerTableViewInteractions.swift in Sources */,
 				98A8D9C624D40C4700041391 /* HandlerUpdateCulturalPracticeElementAction.swift in Sources */,
+				9891610124D9FEF5005E1F7C /* HandlerDidSelectedFieldOnMapAction.swift in Sources */,
 				98363B2D23DECA3F00AFFC63 /* MapFieldViewController.swift in Sources */,
 				98A2C54A240E6BD9002A884B /* PayloadFieldAnnotation.swift in Sources */,
 				989090A424C059C000AFC080 /* ContainerTitleNavigationViewModel.swift in Sources */,
