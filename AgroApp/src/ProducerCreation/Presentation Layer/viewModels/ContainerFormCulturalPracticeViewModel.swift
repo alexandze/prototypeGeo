@@ -81,6 +81,7 @@ class ContainerFormCulturalPracticeViewModelImpl: ContainerFormCulturalPracticeV
     }
 
     private func setViewStateValue() {
+        // TODO utiliser des map
         viewState.selectValue = state!.selectValues!
         viewState.isPrintMessageErrorInputValues = state!.isPrintMessageErrorInputValues!
         viewState.inputValues = state!.inputValues!

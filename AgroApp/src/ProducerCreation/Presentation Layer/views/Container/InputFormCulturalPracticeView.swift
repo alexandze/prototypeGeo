@@ -9,11 +9,7 @@
 import SwiftUI
 import RxSwift
 
-struct InputFormCulturalPracticeView: View, SettingViewControllerProtocol {
-    var dismiss: ((FuncVoid) -> Void)?
-    var setAlpha: ((CGFloat) -> Void)?
-    var setBackgroundColor: ((UIColor) -> Void)?
-    var setIsModalInPresentation: ((Bool) -> Void)?
+struct InputFormCulturalPracticeView: View {
     let viewModel: InputFormCulturalPracticeViewModel
     @ObservedObject var viewState: InputFormCulturalPracticeViewModelImpl.ViewState
     @ObservedObject var keyboardFollower: KeyboardFollower
@@ -93,14 +89,6 @@ struct InputFormCulturalPracticeView: View, SettingViewControllerProtocol {
                     )
                 )
             }
-            .onReceive(self.viewState.$isDismissForm, perform: self.dismissForm(isDismissForm:))
-
-        }
-    }
-
-    func dismissForm(isDismissForm: Bool) {
-        if isDismissForm {
-            self.dismiss? { }
         }
     }
 

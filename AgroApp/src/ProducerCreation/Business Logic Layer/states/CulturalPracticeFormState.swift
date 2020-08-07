@@ -7,6 +7,7 @@
 //
 
 import Foundation
+
 struct CulturalPracticeFormState: Equatable {
     static func == (lhs: CulturalPracticeFormState, rhs: CulturalPracticeFormState) -> Bool {
         lhs.uuidState == rhs.uuidState

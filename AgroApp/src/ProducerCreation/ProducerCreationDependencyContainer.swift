@@ -212,6 +212,59 @@ class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContain
         return settingViewController
     }
 
+    // MARK: - Methods AddProducerForm
+
+    func makeAddProducerFormStateObservalbe() -> Observable<AddProducerFormState> {
+        self.stateStore.makeObservable { (subscription: Subscription<AppState>) -> Subscription<AddProducerFormState> in
+            subscription
+                .select { $0.addProducerFormState }
+                .skip {$0 == $1}
+        }.subscribeOn(Util.getSchedulerBackgroundForReSwift())
+    }
+
+    func makeAddProducerFormInteraction() -> AddProducerFormInteraction {
+        AddProducerFormInteractionImpl(actionDispatcher: self.stateStore)
+    }
+
+    func makeAddProducerFormViewModel() -> AddProducerFormViewModel {
+        AddProducerFormViewModelImpl(
+            addProducerFormStateObservable: makeAddProducerFormStateObservalbe(),
+            addProducerFormInteraction: makeAddProducerFormInteraction()
+        )
+    }
+
+    func makeAddProducerFormView(
+        addProducerFormViewModel: AddProducerFormViewModel,
+        keyboardFollower: KeyboardFollower
+    ) -> AddProducerFormView {
+        AddProducerFormView(
+            addProducerFormViewModel: addProducerFormViewModel,
+            keyboardFollower: keyboardFollower
+        )
+    }
+
+    func makeAddProducerFormSettingViewController(
+        addProducerFormView: AddProducerFormView
+    ) -> SettingViewController<AddProducerFormView> {
+        SettingViewController(myView: addProducerFormView)
+    }
+
+    func makeAddProducerFormHostingController() -> SettingViewController<AddProducerFormView> {
+        var addProducerFormViewModel = makeAddProducerFormViewModel()
+
+        let addProducerFormView = makeAddProducerFormView(
+            addProducerFormViewModel: addProducerFormViewModel,
+            keyboardFollower: KeyboardFollower()
+        )
+
+        let settingViewController = makeAddProducerFormSettingViewController(
+            addProducerFormView: addProducerFormView
+        )
+
+        addProducerFormViewModel.viewController = settingViewController
+        return settingViewController
+    }
+
     // MARK: - Methods navigation
 
     func makeFieldListNavigationController() -> UINavigationController {
@@ -252,5 +305,8 @@ protocol ProducerCreationDependencyContainer {
     func processInitMapField() -> UINavigationController
     func makeSelectFormCulturalPracticeViewController() -> SelectFormCulturalPracticeViewController
     func makeInputFormCulturalPracticeHostingController() -> SettingViewController<InputFormCulturalPracticeView>
+
     func makeContainerFormCulturalPracticeHostingController() -> SettingViewController<ContainerFormCulturalPracticeView>
+
+    func makeAddProducerFormHostingController() -> SettingViewController<AddProducerFormView>
 }

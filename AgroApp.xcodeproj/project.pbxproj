@@ -78,6 +78,12 @@
 		989090AC24C18B9D00AFC080 /* MapFieldReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989090AB24C18B9D00AFC080 /* MapFieldReducer.swift */; };
 		989090AE24C18F4300AFC080 /* FieldListReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989090AD24C18F4300AFC080 /* FieldListReducer.swift */; };
 		9891610124D9FEF5005E1F7C /* HandlerDidSelectedFieldOnMapAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9891610024D9FEF5005E1F7C /* HandlerDidSelectedFieldOnMapAction.swift */; };
+		9891610324DC8C3D005E1F7C /* AddProducerFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9891610224DC8C3D005E1F7C /* AddProducerFormView.swift */; };
+		9891610524DC932D005E1F7C /* AddProducerFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9891610424DC932D005E1F7C /* AddProducerFormViewModel.swift */; };
+		9891610724DC93CF005E1F7C /* AddProducerFormAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9891610624DC93CF005E1F7C /* AddProducerFormAction.swift */; };
+		9891610A24DC940F005E1F7C /* AddProducerFormReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9891610924DC940F005E1F7C /* AddProducerFormReducer.swift */; };
+		9891610C24DC97B2005E1F7C /* AddProducerFormState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9891610B24DC97B2005E1F7C /* AddProducerFormState.swift */; };
+		9891610E24DCA0E9005E1F7C /* AddProducerFormInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9891610D24DCA0E9005E1F7C /* AddProducerFormInteraction.swift */; };
 		98943408240F901D003C0110 /* SelectedFieldRightCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98943407240F901D003C0110 /* SelectedFieldRightCalloutView.swift */; };
 		9894340A2410C76D003C0110 /* PolygonWithData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989434092410C76D003C0110 /* PolygonWithData.swift */; };
 		9894340C2410FAF0003C0110 /* FieldSelectedViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9894340B2410FAF0003C0110 /* FieldSelectedViewCell.swift */; };
@@ -241,6 +247,12 @@
 		989090AB24C18B9D00AFC080 /* MapFieldReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFieldReducer.swift; sourceTree = "<group>"; };
 		989090AD24C18F4300AFC080 /* FieldListReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldListReducer.swift; sourceTree = "<group>"; };
 		9891610024D9FEF5005E1F7C /* HandlerDidSelectedFieldOnMapAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerDidSelectedFieldOnMapAction.swift; sourceTree = "<group>"; };
+		9891610224DC8C3D005E1F7C /* AddProducerFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProducerFormView.swift; sourceTree = "<group>"; };
+		9891610424DC932D005E1F7C /* AddProducerFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProducerFormViewModel.swift; sourceTree = "<group>"; };
+		9891610624DC93CF005E1F7C /* AddProducerFormAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProducerFormAction.swift; sourceTree = "<group>"; };
+		9891610924DC940F005E1F7C /* AddProducerFormReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProducerFormReducer.swift; sourceTree = "<group>"; };
+		9891610B24DC97B2005E1F7C /* AddProducerFormState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProducerFormState.swift; sourceTree = "<group>"; };
+		9891610D24DCA0E9005E1F7C /* AddProducerFormInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProducerFormInteraction.swift; sourceTree = "<group>"; };
 		98943407240F901D003C0110 /* SelectedFieldRightCalloutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedFieldRightCalloutView.swift; sourceTree = "<group>"; };
 		989434092410C76D003C0110 /* PolygonWithData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolygonWithData.swift; sourceTree = "<group>"; };
 		9894340B2410FAF0003C0110 /* FieldSelectedViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldSelectedViewCell.swift; sourceTree = "<group>"; };
@@ -422,6 +434,7 @@
 				989090A324C059C000AFC080 /* ContainerTitleNavigationViewModel.swift */,
 				9854BFF8240B901A00E5AB8A /* CulturalPracticeFormViewModel.swift */,
 				9854BFE2240A1D6200E5AB8A /* FieldListViewModel.swift */,
+				9891610424DC932D005E1F7C /* AddProducerFormViewModel.swift */,
 			);
 			path = viewModels;
 			sourceTree = "<group>";
@@ -429,6 +442,7 @@
 		98363B3223DECAFC00AFFC63 /* interactions */ = {
 			isa = PBXGroup;
 			children = (
+				9891610D24DCA0E9005E1F7C /* AddProducerFormInteraction.swift */,
 				98363B5423DEF0EC00AFFC63 /* MapFieldInteraction.swift */,
 				9854BFF4240B7A9F00E5AB8A /* FieldListInteraction.swift */,
 				9854BFFE240B9DD500E5AB8A /* CulturalPraticeFormInteraction.swift */,
@@ -446,6 +460,7 @@
 				98CB79CE24B817EA00EFFF19 /* ContainerFormCulturalPracticeAction.swift */,
 				989090A924C1530800AFC080 /* ContainerTitleNavigationAction.swift */,
 				9810DA49242F184A00545A23 /* CulturalPracticeFormAction.swift */,
+				9891610624DC93CF005E1F7C /* AddProducerFormAction.swift */,
 			);
 			path = actions;
 			sourceTree = "<group>";
@@ -453,6 +468,7 @@
 		98363B3423DECB2800AFFC63 /* reducers */ = {
 			isa = PBXGroup;
 			children = (
+				9891610824DC93F6005E1F7C /* AddProducerFormReducer */,
 				98C2A84024D5BE8600A8625C /* FieldListReducer */,
 				98A8D9C424D40BE800041391 /* CulturalPracticeFormReducer */,
 				989090AB24C18B9D00AFC080 /* MapFieldReducer.swift */,
@@ -474,6 +490,7 @@
 				98CB79CC24B8166200EFFF19 /* ContainerFormCulturalPracticeState.swift */,
 				989090A524C05A4000AFC080 /* ContainerTitleNavigationState.swift */,
 				9854BFFA240B956400E5AB8A /* CulturalPracticeFormState.swift */,
+				9891610B24DC97B2005E1F7C /* AddProducerFormState.swift */,
 			);
 			path = states;
 			sourceTree = "<group>";
@@ -631,7 +648,6 @@
 		989090A224C03D3D00AFC080 /* Container */ = {
 			isa = PBXGroup;
 			children = (
-				9847564424AED2FC0048A503 /* InputFormCulturalPracticeView.swift */,
 				98CB79D224B827AC00EFFF19 /* ContainerFormCulturalPracticeView.swift */,
 				980ECA132430261700AAD0AB /* SelectFormCulturalPracticeView.swift */,
 				98363B5F23DFF7EA00AFFC63 /* MapFieldView.swift */,
@@ -639,8 +655,18 @@
 				98BA0D7E240CE41F00948A26 /* ContainerMapAndTitleNavigationView.swift */,
 				9854BFDC2409000E00E5AB8A /* ContainerTitleNavigationView.swift */,
 				98457B672423E64F00AF4C90 /* CulturalPracticeFormView.swift */,
+				9847564424AED2FC0048A503 /* InputFormCulturalPracticeView.swift */,
+				9891610224DC8C3D005E1F7C /* AddProducerFormView.swift */,
 			);
 			path = Container;
+			sourceTree = "<group>";
+		};
+		9891610824DC93F6005E1F7C /* AddProducerFormReducer */ = {
+			isa = PBXGroup;
+			children = (
+				9891610924DC940F005E1F7C /* AddProducerFormReducer.swift */,
+			);
+			path = AddProducerFormReducer;
 			sourceTree = "<group>";
 		};
 		989BEEB224345D360018F1D8 /* Frameworks */ = {
@@ -1089,6 +1115,7 @@
 				98A8D9C824D48B6200041391 /* HandlerRemoveDoseFumierAction.swift in Sources */,
 				98BA0D7B240CDC2800948A26 /* ContainerTitleNavigationViewController.swift in Sources */,
 				9810DA44242F0FE800545A23 /* SelectFormCulturalPracticeViewModel.swift in Sources */,
+				9891610724DC93CF005E1F7C /* AddProducerFormAction.swift in Sources */,
 				98F126A824C715EC001853D5 /* TravailSol.swift in Sources */,
 				98D1929E23C03CF900BF9A7A /* FarmerMiddleware.swift in Sources */,
 				980ECA162430286D00AAD0AB /* HeaderPresentedView.swift in Sources */,
@@ -1096,6 +1123,7 @@
 				98DB0F4D24286CED0065963B /* UIButtonWithData.swift in Sources */,
 				9854C003240BC60400E5AB8A /* ContainerVIewControllers.swift in Sources */,
 				98CB79D324B827AC00EFFF19 /* ContainerFormCulturalPracticeView.swift in Sources */,
+				9891610A24DC940F005E1F7C /* AddProducerFormReducer.swift in Sources */,
 				98F126A024C6F1D4001853D5 /* BandeRiveraine.swift in Sources */,
 				9860400F23BD976800D5B538 /* StoreSubcriberProxy.swift in Sources */,
 				9894340A2410C76D003C0110 /* PolygonWithData.swift in Sources */,
@@ -1119,6 +1147,7 @@
 				98B9992423B50E0800CA7EF9 /* Section.swift in Sources */,
 				98B9991023B5076000CA7EF9 /* prototypeGeo.xcdatamodeld in Sources */,
 				989090A624C05A4000AFC080 /* ContainerTitleNavigationState.swift in Sources */,
+				9891610E24DCA0E9005E1F7C /* AddProducerFormInteraction.swift in Sources */,
 				98D1929723C020ED00BF9A7A /* FarmerTableViewInteractionsImpl.swift in Sources */,
 				9860400023BD855F00D5B538 /* AppState.swift in Sources */,
 				9810DA48242F135300545A23 /* CulturalPracticeFormReducer.swift in Sources */,
@@ -1131,6 +1160,7 @@
 				98A13FBF23C5A75D0087BB22 /* FarmerAddViewController.swift in Sources */,
 				9854BFDF2409047C00E5AB8A /* FieldListView.swift in Sources */,
 				9854BFF9240B901A00E5AB8A /* CulturalPracticeFormViewModel.swift in Sources */,
+				9891610524DC932D005E1F7C /* AddProducerFormViewModel.swift in Sources */,
 				98DB0F5724297F960065963B /* TableState.swift in Sources */,
 				98EBA95424B1654A00D233D0 /* InputFormCulturalPracticeAction.swift in Sources */,
 				9830049024AC2B8300CDF624 /* ProducerCreationDependencyContainer.swift in Sources */,
@@ -1144,6 +1174,7 @@
 				9854BFDD2409000E00E5AB8A /* ContainerTitleNavigationView.swift in Sources */,
 				98BA0D81240CF43600948A26 /* UIViewExtention.swift in Sources */,
 				98F126A624C712CB001853D5 /* DelaiIncorporationFumier.swift in Sources */,
+				9891610324DC8C3D005E1F7C /* AddProducerFormView.swift in Sources */,
 				98363B4823DEE34F00AFFC63 /* MapFieldRepository.swift in Sources */,
 				9805683423B92DD40056D199 /* FarmerFormated.swift in Sources */,
 				9860401123BD9C1700D5B538 /* StoreSubscriptionExtension.swift in Sources */,
@@ -1172,6 +1203,7 @@
 				9810DA4A242F184A00545A23 /* CulturalPracticeFormAction.swift in Sources */,
 				98D1929223C012E300BF9A7A /* AppDependencyContainer.swift in Sources */,
 				9860400A23BD8BC800D5B538 /* FarmerReducer.swift in Sources */,
+				9891610C24DC97B2005E1F7C /* AddProducerFormState.swift in Sources */,
 				9894340C2410FAF0003C0110 /* FieldSelectedViewCell.swift in Sources */,
 				989090AC24C18B9D00AFC080 /* MapFieldReducer.swift in Sources */,
 				98C77E7324B024AF00AA6423 /* UIButtonRepresentable.swift in Sources */,

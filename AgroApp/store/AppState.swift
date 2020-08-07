@@ -18,4 +18,5 @@ struct AppState: StateType {
     var inputFormCulturalPracticeState: InputFormCulturalPracticeState
     var containerFormCulturalPracticeState: ContainerFormCulturalPracticeState
     var containerTitleNavigationState: ContainerTitleNavigationState
+    var addProducerFormState: AddProducerFormState
 }

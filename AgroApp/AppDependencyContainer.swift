@@ -23,7 +23,8 @@ class AppDependencyContainerImpl: AppDependencyContainer {
                 selectFormCulturalPracticeState: SelectFormCulturalPracticeState(uuidState: UUID().uuidString),
                 inputFormCulturalPracticeState: InputFormCulturalPracticeState(uuidState: UUID().uuidString),
                 containerFormCulturalPracticeState: ContainerFormCulturalPracticeState(uuidState: UUID().uuidString),
-                containerTitleNavigationState: ContainerTitleNavigationState(uuidState: UUID().uuidString)
+                containerTitleNavigationState: ContainerTitleNavigationState(uuidState: UUID().uuidString),
+                addProducerFormState: AddProducerFormState(uuidState: UUID().uuidString)
             ),
             middleware: [
                 FarmerMiddleware.shared.makeGetFarmersMiddleware()
@@ -96,7 +97,9 @@ class AppDependencyContainerImpl: AppDependencyContainer {
 
     func proccessInitTabBarController() -> UITabBarController {
         let farmerNavigationController = self.processInitFarmerPackage()
+
         let mapFieldNavigationController = self.producerCreationDependencyContainer.processInitMapField()
+
         let tabBarController = UITabBarController()
 
         tabBarController.viewControllers = [farmerNavigationController, mapFieldNavigationController]
@@ -126,14 +129,26 @@ class AppDependencyContainerImpl: AppDependencyContainer {
     func makeContainerFormCulturalPracticeHostingController() -> SettingViewController<ContainerFormCulturalPracticeView> {
         producerCreationDependencyContainer.makeContainerFormCulturalPracticeHostingController()
     }
+
+    func makeAddProducerFormHostingController() -> SettingViewController<AddProducerFormView> {
+        self.producerCreationDependencyContainer.makeAddProducerFormHostingController()
+    }
 }
 
 protocol AppDependencyContainer {
-    var producerCreationDependencyContainer: ProducerCreationDependencyContainer {get}
+    var producerCreationDependencyContainer: ProducerCreationDependencyContainer { get }
     func proccessInitTabBarController() -> UITabBarController
+
     func processInitContainerMapAndTitleNavigationController() -> ContainerMapAndTitleNavigationController
+
     func processInitCulturalPracticeViewController() -> CulturalPracticeFormViewController
+
     func processInitCulturalPracticeFormViewController() -> SelectFormCulturalPracticeViewController
+
     func processInitInputFormCulturalPracticeHostingController() -> SettingViewController<InputFormCulturalPracticeView>
+
     func makeContainerFormCulturalPracticeHostingController() -> SettingViewController<ContainerFormCulturalPracticeView>
+
+    func makeAddProducerFormHostingController() ->
+        SettingViewController<AddProducerFormView>
 }
