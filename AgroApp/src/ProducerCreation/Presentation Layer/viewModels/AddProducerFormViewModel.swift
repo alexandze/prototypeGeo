@@ -59,6 +59,8 @@ class AddProducerFormViewModelImpl: AddProducerFormViewModel {
         self.viewController?.setBackgroundColor(Util.getBackgroundColor())
         self.viewController?.setAlpha(Util.getAlphaValue())
         self.viewController?.setIsModalInPresentation(true)
+        self.viewController?.title = "Nouveau Agriculteur"
+        self.viewController?.navigationController?.navigationBar.prefersLargeTitles = true
     }
 }
 

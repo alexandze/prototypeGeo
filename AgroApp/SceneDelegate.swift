@@ -25,8 +25,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 getAppDelegate().appDependencyContainer.processInitContainerMapAndTitleNavigationController()
             */
 
-            self.window!.rootViewController = getAppDelegate()
+            self.window!.rootViewController = UINavigationController(
+                rootViewController: getAppDelegate()
                 .appDependencyContainer.makeAddProducerFormHostingController()
+            )
 
             // self.window!.backgroundColor = .white
             self.window!.makeKeyAndVisible()
