@@ -14,6 +14,9 @@ extension Reducers {
         let state = state ?? AddProducerFormState(uuidState: UUID().uuidString)
 
         switch action {
+        case let getListElementUIDataWithoutValueAction as AddProducerFormAction.GetListElementUIDataWithoutValueAction:
+            return HandlerGetListElementUIDataWihoutValue()
+                .handle(action: getListElementUIDataWithoutValueAction, state)
         default:
             return state
         }

@@ -127,6 +127,8 @@
 		98DB0F4B242866C50065963B /* SubtitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DB0F4A242866C50065963B /* SubtitleTableViewCell.swift */; };
 		98DB0F4D24286CED0065963B /* UIButtonWithData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DB0F4C24286CED0065963B /* UIButtonWithData.swift */; };
 		98DB0F5724297F960065963B /* TableState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DB0F5624297F960065963B /* TableState.swift */; };
+		98DC7B5624DF623800A898B6 /* FormUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DC7B5524DF623800A898B6 /* FormUtil.swift */; };
+		98DC7B5824E0667F00A898B6 /* HandlerGetListElementUIDataWihoutValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DC7B5724E0667F00A898B6 /* HandlerGetListElementUIDataWihoutValue.swift */; };
 		98EBA95224B1600300D233D0 /* DimensionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EBA95124B1600300D233D0 /* DimensionScreen.swift */; };
 		98EBA95424B1654A00D233D0 /* InputFormCulturalPracticeAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EBA95324B1654A00D233D0 /* InputFormCulturalPracticeAction.swift */; };
 		98EBA95A24B1DEA800D233D0 /* CulturalPracticeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EBA95924B1DEA800D233D0 /* CulturalPracticeTests.swift */; };
@@ -307,6 +309,8 @@
 		98DB0F4A242866C50065963B /* SubtitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleTableViewCell.swift; sourceTree = "<group>"; };
 		98DB0F4C24286CED0065963B /* UIButtonWithData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonWithData.swift; sourceTree = "<group>"; };
 		98DB0F5624297F960065963B /* TableState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableState.swift; sourceTree = "<group>"; };
+		98DC7B5524DF623800A898B6 /* FormUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormUtil.swift; sourceTree = "<group>"; };
+		98DC7B5724E0667F00A898B6 /* HandlerGetListElementUIDataWihoutValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerGetListElementUIDataWihoutValue.swift; sourceTree = "<group>"; };
 		98EBA95124B1600300D233D0 /* DimensionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DimensionScreen.swift; sourceTree = "<group>"; };
 		98EBA95324B1654A00D233D0 /* InputFormCulturalPracticeAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFormCulturalPracticeAction.swift; sourceTree = "<group>"; };
 		98EBA95924B1DEA800D233D0 /* CulturalPracticeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalPracticeTests.swift; sourceTree = "<group>"; };
@@ -665,6 +669,7 @@
 			isa = PBXGroup;
 			children = (
 				9891610924DC940F005E1F7C /* AddProducerFormReducer.swift */,
+				98DC7B5724E0667F00A898B6 /* HandlerGetListElementUIDataWihoutValue.swift */,
 			);
 			path = AddProducerFormReducer;
 			sourceTree = "<group>";
@@ -771,6 +776,7 @@
 		98B9992523B50E2C00CA7EF9 /* libs */ = {
 			isa = PBXGroup;
 			children = (
+				98DC7B5524DF623800A898B6 /* FormUtil.swift */,
 				98B9992323B50E0800CA7EF9 /* Section.swift */,
 				98D1929823C0212C00BF9A7A /* ActionDispatcher.swift */,
 				98363B4923DEE3C900AFFC63 /* UtilFileReader.swift */,
@@ -1112,6 +1118,7 @@
 				98B9990623B5076000CA7EF9 /* AppDelegate.swift in Sources */,
 				9854BFE5240A1FA500E5AB8A /* FieldListState.swift in Sources */,
 				9847564324AEC6710048A503 /* SettingViewController.swift in Sources */,
+				98DC7B5624DF623800A898B6 /* FormUtil.swift in Sources */,
 				98A8D9C824D48B6200041391 /* HandlerRemoveDoseFumierAction.swift in Sources */,
 				98BA0D7B240CDC2800948A26 /* ContainerTitleNavigationViewController.swift in Sources */,
 				9810DA44242F0FE800545A23 /* SelectFormCulturalPracticeViewModel.swift in Sources */,
@@ -1174,6 +1181,7 @@
 				9854BFDD2409000E00E5AB8A /* ContainerTitleNavigationView.swift in Sources */,
 				98BA0D81240CF43600948A26 /* UIViewExtention.swift in Sources */,
 				98F126A624C712CB001853D5 /* DelaiIncorporationFumier.swift in Sources */,
+				98DC7B5824E0667F00A898B6 /* HandlerGetListElementUIDataWihoutValue.swift in Sources */,
 				9891610324DC8C3D005E1F7C /* AddProducerFormView.swift in Sources */,
 				98363B4823DEE34F00AFFC63 /* MapFieldRepository.swift in Sources */,
 				9805683423B92DD40056D199 /* FarmerFormated.swift in Sources */,

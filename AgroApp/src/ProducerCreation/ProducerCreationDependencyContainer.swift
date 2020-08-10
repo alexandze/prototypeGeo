@@ -226,10 +226,15 @@ class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContain
         AddProducerFormInteractionImpl(actionDispatcher: self.stateStore)
     }
 
+    func makeAddProducerFormViewState() -> AddProducerFormViewModelImpl.ViewState {
+        AddProducerFormViewModelImpl.ViewState()
+    }
+
     func makeAddProducerFormViewModel() -> AddProducerFormViewModel {
         AddProducerFormViewModelImpl(
             addProducerFormStateObservable: makeAddProducerFormStateObservalbe(),
-            addProducerFormInteraction: makeAddProducerFormInteraction()
+            addProducerFormInteraction: makeAddProducerFormInteraction(),
+            viewState: makeAddProducerFormViewState()
         )
     }
 

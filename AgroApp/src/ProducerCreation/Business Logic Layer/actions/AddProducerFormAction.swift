@@ -7,7 +7,8 @@
 //
 
 import Foundation
+import ReSwift
 
 struct AddProducerFormAction {
-
+    struct GetListElementUIDataWithoutValueAction: Action { }
 }

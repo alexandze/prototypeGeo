@@ -72,7 +72,7 @@ class HandlerDidSelectedFieldOnMapAction: HandlerReducerProtocol {
     }
 }
 
-struct UtilHandlerDidSelectedFieldOnMapAction {
+private struct UtilHandlerDidSelectedFieldOnMapAction {
     var fieldFromAction: Field
     var state: FieldListState
     var isFieldExist: Bool?

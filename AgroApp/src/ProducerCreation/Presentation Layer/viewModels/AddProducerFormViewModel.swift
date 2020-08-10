@@ -16,31 +16,45 @@ class AddProducerFormViewModelImpl: AddProducerFormViewModel {
     var viewController: SettingViewController<AddProducerFormView>?
     var disposableStateObserver: Disposable?
     var state: AddProducerFormState?
+    var viewState: ViewState
 
     init(
         addProducerFormStateObservable: Observable<AddProducerFormState>,
-        addProducerFormInteraction: AddProducerFormInteraction
+        addProducerFormInteraction: AddProducerFormInteraction,
+        viewState: ViewState
     ) {
         self.stateObservable = addProducerFormStateObservable
         self.interaction = addProducerFormInteraction
+        self.viewState = viewState
     }
 
     func subscribeToStateObservable() {
+        interaction.getListElementUIDataWithoutValueAction()
+
         self.disposableStateObserver = stateObservable
             .observeOn(Util.getSchedulerMain())
-            .subscribe { event in
+            .subscribe {[weak self] event in
                 guard let state = event.element,
                     let responseAction = state.responseAction
                     else { return }
 
-                self.setValues(addProducerFormState: state)
+                self?.setValues(addProducerFormState: state)
 
                 switch responseAction {
+                case .getListElementUIDataWihoutValueResponse:
+                    self?.handleGetListElementUIDataWihoutValueResponse()
                 case .notResponse:
                     break
                 }
-
         }
+    }
+
+    func configView() {
+        self.viewController?.setBackgroundColor(Util.getBackgroundColor())
+        self.viewController?.setAlpha(Util.getAlphaValue())
+        self.viewController?.setIsModalInPresentation(true)
+        self.viewController?.title = "Nouveau Agriculteur"
+       // self.viewController?.navigationController?.navigationBar.prefersLargeTitles = true
     }
 
     func dispose() {
@@ -55,17 +69,33 @@ class AddProducerFormViewModelImpl: AddProducerFormViewModel {
         self.state = addProducerFormState
     }
 
-    func configView() {
-        self.viewController?.setBackgroundColor(Util.getBackgroundColor())
-        self.viewController?.setAlpha(Util.getAlphaValue())
-        self.viewController?.setIsModalInPresentation(true)
-        self.viewController?.title = "Nouveau Agriculteur"
-        self.viewController?.navigationController?.navigationBar.prefersLargeTitles = true
+    private func setViewStateValue() {
+        guard let listElementUIData = state?.listElementUIData,
+            let listElementValue = state?.listElementValue,
+            let listElementValid = state?.listElementValid
+            else { return }
+
+        viewState.listElementUIData = listElementUIData
+        viewState.listElementValue = listElementValue
+        viewState.listElementValid = listElementValid
+    }
+
+    class ViewState: ObservableObject {
+        @Published var listElementUIData: [ElementUIData] = []
+        @Published var listElementValue: [String] = []
+        @Published var listElementValid: [Bool] = []
+    }
+}
+
+extension AddProducerFormViewModelImpl {
+    private func handleGetListElementUIDataWihoutValueResponse() {
+        setViewStateValue()
     }
 }
 
 protocol AddProducerFormViewModel {
     var viewController: SettingViewController<AddProducerFormView>? {get set}
+    var viewState: AddProducerFormViewModelImpl.ViewState { get }
     func configView()
     func subscribeToStateObservable()
     func dispose()

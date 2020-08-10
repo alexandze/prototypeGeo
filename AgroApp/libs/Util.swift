@@ -109,6 +109,14 @@ class Util {
     static func getGreenColor() -> UIColor {
         UIColor(red: 34/255, green: 139/255, blue: 34/255, alpha: 1)
     }
+
+    static func getElementInArrayByIndex<T>(_ array: [T], index: Int) -> T? {
+        array.indices.contains(index) ? array[index] : nil
+    }
+
+    static func hasIndexInArray<T>(_ array: [T], index: Int) -> Bool {
+        array.indices.contains(index)
+    }
 }
 
 precedencegroup CompositionPrecedence {

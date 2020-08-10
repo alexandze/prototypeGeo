@@ -12,6 +12,8 @@ import UIKit
 
 class KeyboardFollower : ObservableObject {
     @Published var keyboardHeight: CGFloat = 0
+    @Published var maxY: CGFloat = 0
+    @Published var minY: CGFloat = 0
     @Published var isVisible = false
 
     init() {
@@ -28,5 +30,7 @@ class KeyboardFollower : ObservableObject {
 
         isVisible = keyboardEndFrame.minY < UIScreen.main.bounds.height
         keyboardHeight = isVisible ? keyboardEndFrame.height : 0
+        maxY = isVisible ? keyboardEndFrame.maxY : 0
+        minY = isVisible ? keyboardEndFrame.minY : 0
     }
 }

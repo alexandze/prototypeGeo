@@ -15,8 +15,16 @@ class AddProducerFormInteractionImpl: AddProducerFormInteraction {
         self.actionDispatcher = actionDispatcher
     }
 
+    func getListElementUIDataWithoutValueAction() {
+        _ = Util.runInSchedulerBackground { [weak self] in
+            self?.actionDispatcher.dispatch(
+                AddProducerFormAction.GetListElementUIDataWithoutValueAction()
+            )
+        }
+    }
+
 }
 
 protocol AddProducerFormInteraction {
-
+    func getListElementUIDataWithoutValueAction()
 }

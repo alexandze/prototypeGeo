@@ -10,11 +10,8 @@ import SwiftUI
 
 struct AddProducerFormView: View {
     let viewModel: AddProducerFormViewModel
-    let keyboardFollower: KeyboardFollower
-    @State var name: String = ""
-    @State var isPaddingBottom: Bool = false
-    @State var currentIndexEditing: Int = -1
-    @State var maxYCurrentTextFieldEditing: CGFloat = -1
+    @ObservedObject var keyboardFollower: KeyboardFollower
+    @ObservedObject var viewState: AddProducerFormViewModelImpl.ViewState
 
     init(
         addProducerFormViewModel: AddProducerFormViewModel,
@@ -22,55 +19,123 @@ struct AddProducerFormView: View {
     ) {
         self.viewModel = addProducerFormViewModel
         self.keyboardFollower = keyboardFollower
+        self.viewState = addProducerFormViewModel.viewState
     }
 
     var body: some View {
-        GeometryReader { (_: GeometryProxy) in
-            ScrollView {
-                VStack(alignment: .center, spacing: 30) {
-                    Text("current index \(self.currentIndexEditing) \(self.maxYCurrentTextFieldEditing)")
-                    ForEach(0...5, id: \.self) { index in
 
-                        VStack(alignment: .center) {
+        GeometryReader { (geometryProxy: GeometryProxy) in
+            VStack {
+                ScrollView {
+                    VStack {
+                        ForEach(0..<self.viewState.listElementUIData.count, id: \.self) { index in
+                            VStack {
+                                if self.isInputElement(index: index) &&
+                                    self.hasIsValid(index: index) &&
+                                    self.hasValue(index: index) {
 
-                            InputWithTitleElement(
-                                title: "Nom",
-                                isValid: true,
-                                index: index,
-                                currentIndexEditing: self.$currentIndexEditing,
-                                maxYCurrentTextFieldEditing: self.$maxYCurrentTextFieldEditing,
-                                value: self.$name
-                            )
-                        }.padding(.bottom, self.currentIndexEditing == index ? 50: 20)
-                    }
+                                    InputWithTitleElement(
+                                        title: self.viewState.listElementUIData[index].title,
+                                        isValid: self.viewState.listElementValid[index],
+                                        value: self.$viewState.listElementValue[index]
+                                    ).padding(15)
+                                }
 
-                    Button(action: {self.isPaddingBottom = !self.isPaddingBottom}) {
-                        Text("okm")
-                    }
+                                if self.isButtonElement(index: index) {
+                                    HStack {
+                                        ButtonAdd(
+                                            title: self.viewState.listElementUIData[index].title,
+                                            action: {}
+                                        )
+
+                                        Spacer()
+                                    }.padding(.leading, 15)
+                                        .padding(.top, -20)
+                                }
+                            }
+                        }
+
+                    }.padding(.bottom, 50)
                 }
+
+                Spacer()
+
+                ButtonValidate(
+                    title: "Valider",
+                    isButtonActivated: true,
+                    action: {}
+                ).padding(10)
+
+            }.frame(
+                width: geometryProxy.size.width,
+                height: self.isKeyboardVisible()
+                    ? self.calculHeightWithKeyBoard(geometryProxy: geometryProxy)
+                    : self.calculHeightWithoutKeyBoard(geometryProxy: geometryProxy),
+                alignment: .top
+            ).offset(y: self.isKeyboardVisible()
+                ? -self.keyboardFollower.keyboardHeight + self.getOffset(geometryProxy: geometryProxy)
+                : 0
+            ).onAppear {
+                self.viewModel.configView()
+                self.viewModel.subscribeToStateObservable()
             }
+            .onDisappear {
+                self.viewModel.dispose()
+            }
+            .animation(.default)
+            .environmentObject(self.viewModel.viewState)
+            .environmentObject(self.keyboardFollower)
+            .environmentObject(
+                DimensionScreen(width: geometryProxy.size.width, height: geometryProxy.size.height)
+            )
+
         }
-        .onAppear {
-            self.viewModel.configView()
-            self.viewModel.subscribeToStateObservable()
-        }
-        .onDisappear {
-            self.viewModel.dispose()
-        }
-        .animation(.default)
+    }
+
+    private func isButtonElement(index: Int) -> Bool {
+        viewState.listElementUIData[index].type == ButtonElement.TYPE
+    }
+
+    private func isInputElement(index: Int) -> Bool {
+        viewState.listElementUIData[index].type == InputElement.TYPE
+    }
+
+    private func hasIsValid(index: Int) -> Bool {
+        Util.hasIndexInArray(viewState.listElementValid, index: index)
+    }
+
+    private func hasValue(index: Int) -> Bool {
+        Util.hasIndexInArray(viewState.listElementValue, index: index)
+    }
+
+    private func isKeyboardVisible() -> Bool {
+        keyboardFollower.isVisible
+    }
+
+    private func calculHeightWithKeyBoard(geometryProxy: GeometryProxy) -> CGFloat {
+        geometryProxy.size.height - keyboardFollower.keyboardHeight
+    }
+
+    private func getOffset(geometryProxy: GeometryProxy) -> CGFloat {
+        let heightCenter = geometryProxy.size.height - keyboardFollower.keyboardHeight
+        let offset = (geometryProxy.size.height - heightCenter) / 2
+        return offset
+    }
+
+    private func calculHeightWithoutKeyBoard(geometryProxy: GeometryProxy) -> CGFloat {
+        geometryProxy.size.height
     }
 }
 
 private struct InputWithTitleElement: View {
     var title: String
     var isValid: Bool
-    var index: Int
-    @Binding var currentIndexEditing: Int
-    @Binding var maxYCurrentTextFieldEditing: CGFloat
     @Binding var value: String
+    @EnvironmentObject var viewState: AddProducerFormViewModelImpl.ViewState
+    @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
-        VStack(alignment: .center, spacing: 5) {
+        VStack(alignment: .center, spacing: 2) {
             HStack {
                 Text(self.title)
                 Spacer()
@@ -78,38 +143,32 @@ private struct InputWithTitleElement: View {
 
             HStack {
                 ZStack {
-                    GeometryReader { (geometry: GeometryProxy)  in
-                        TextField(
-                            "\(geometry.frame(in: .global).origin.y)",
-                            text: self.$value,
-                            onEditingChanged: { isEditing in self.onEditingTextField(isEditing: isEditing, maxYCurrentTextField: geometry.frame(in: .global).maxY) },
-                            onCommit: self.onCommitTextField
-                        )
+                    TextField(
+                        "",
+                        text: self.$value
+                    )
+                        .padding(
+                            EdgeInsets(top: 8, leading: 10, bottom: 8, trailing: 50)
+                    ).background(colorScheme == .dark ? Color.black : Color.white)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 5)
+                                .stroke(lineWidth: 2)
+                                .foregroundColor(self.isValid ? .green : .red)
+                    )
+                    HStack {
+                        Spacer()
 
-                            .padding(
-                                EdgeInsets(top: 8, leading: 10, bottom: 8, trailing: 50)
-                        ).background(Color.white)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 5)
-                                    .stroke(lineWidth: 2)
-                                    // TODO Changer la couleur en fonction une image en fonction de la validite
-                                    .foregroundColor(self.isValid ? .green : .red)
-                            )
-                        HStack {
-                            Spacer()
-                            // TODO Aficher une image en fonction de la validite
-                            if self.isValid {
-                                self.getImageValid()
-                            } else {
-                                self.getImageNoValid()
-                            }
+                        if self.isValid {
+                            self.getImageValid()
+                        } else {
+                            self.getImageNoValid()
                         }
                     }
                 }
+
                 Spacer()
             }
-
-        }.padding(.leading, 10)
+        }
     }
 
     private func getImageValid() -> some View {
@@ -123,19 +182,52 @@ private struct InputWithTitleElement: View {
             .resizable()
             .frame(width: 35, height: 35)
     }
+}
 
-    private func onEditingTextField(isEditing: Bool, maxYCurrentTextField: CGFloat) {
-        if isEditing {
-            currentIndexEditing = index
-            self.maxYCurrentTextFieldEditing = maxYCurrentTextField
-            return
-        }
+private struct ButtonValidate: View {
+    var title: String
+    var isButtonActivated: Bool
+    var action: () -> Void
+    @EnvironmentObject var dimensionScreen: DimensionScreen
 
-        currentIndexEditing = -1
+    var body: some View {
+        Button(action: {
+            self.action()
+        }) {
+            Text(title)
+                .frame(
+                    width: dimensionScreen.width * 0.6,
+                    height: dimensionScreen.height * 0.09
+            )
+        }.frame(
+            width: dimensionScreen.width * 0.6,
+            height: dimensionScreen.height * 0.09
+        ).foregroundColor(.white)
+            .background(Color(Util.getGreenColor()))
+            .cornerRadius(10)
     }
+}
 
-    private func onCommitTextField() {
-        currentIndexEditing = -1
-        self.maxYCurrentTextFieldEditing = -1
+private struct ButtonAdd: View {
+    var title: String
+    var action: () -> Void
+    @EnvironmentObject var dimensionScreen: DimensionScreen
+    @Environment(\.colorScheme) var colorScheme
+
+    var body: some View {
+        Button(action: { self.action() }) {
+            Text("+")
+                .frame(
+                    width: dimensionScreen.width * 0.2,
+                    height: dimensionScreen.height * 0.06,
+                    alignment: .center
+                ).font(.system(size: 45))
+        }.frame(
+            width: dimensionScreen.width * 0.2,
+            height: dimensionScreen.height * 0.06,
+            alignment: .center
+        ).foregroundColor(colorScheme == .dark ? .white : .black)
+            .background(colorScheme == .dark ? Color.black : Color.white)
+            .cornerRadius(10)
     }
 }
