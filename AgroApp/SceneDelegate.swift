@@ -20,16 +20,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             self.window = UIWindow(windowScene: windowScene)
 
             //self.window!.rootViewController = appDependencyContainer.proccessInitTabBarController()
-            /*
+            
             self.window!.rootViewController =
                 getAppDelegate().appDependencyContainer.processInitContainerMapAndTitleNavigationController()
-            */
-
+            
+            /*
             self.window!.rootViewController = UINavigationController(
                 rootViewController: getAppDelegate()
                 .appDependencyContainer.makeAddProducerFormHostingController()
             )
-
+            */
             // self.window!.backgroundColor = .white
             self.window!.makeKeyAndVisible()
         }
