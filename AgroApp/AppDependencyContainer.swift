@@ -110,6 +110,8 @@ class AppDependencyContainerImpl: AppDependencyContainer {
         return tabBarController
     }
 
+    // MARK: - MapField Navigation
+
     func processInitContainerMapAndTitleNavigationController() -> ContainerMapAndTitleNavigationController {
         producerCreationDependencyContainer.processInitContainerMapAndTitleNavigationController()
     }
@@ -133,6 +135,10 @@ class AppDependencyContainerImpl: AppDependencyContainer {
     func makeAddProducerFormHostingController() -> SettingViewController<AddProducerFormView> {
         self.producerCreationDependencyContainer.makeAddProducerFormHostingController()
     }
+
+    func makeFieldListViewController() -> FieldListViewController {
+        self.producerCreationDependencyContainer.makeFieldListViewController()
+    }
 }
 
 protocol AppDependencyContainer {
@@ -151,4 +157,6 @@ protocol AppDependencyContainer {
 
     func makeAddProducerFormHostingController() ->
         SettingViewController<AddProducerFormView>
+
+    func makeFieldListViewController() -> FieldListViewController
 }

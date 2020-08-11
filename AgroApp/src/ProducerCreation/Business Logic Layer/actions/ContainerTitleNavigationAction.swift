@@ -20,7 +20,7 @@ struct ContainerTitleNavigationAction {
 
     struct BackAction: Action { }
 
-    struct SetCurrentViewControllerInNavigationAction: Action {
+    struct SetCurrentViewControllerAction: Action {
         var currentViewControllerInNavigation: ContainerTitleNavigationState.CurrentViewControllerInNavigation
     }
 }

@@ -12,7 +12,6 @@ import RxSwift
 class AddProducerFormViewModelImpl: AddProducerFormViewModel {
     let stateObservable: Observable<AddProducerFormState>
     let interaction: AddProducerFormInteraction
-    // TODO mettre view controller a nil dans le dispose
     var viewController: SettingViewController<AddProducerFormView>?
     var disposableStateObserver: Disposable?
     var state: AddProducerFormState?
@@ -52,17 +51,25 @@ class AddProducerFormViewModelImpl: AddProducerFormViewModel {
     func configView() {
         self.viewController?.setBackgroundColor(Util.getBackgroundColor())
         self.viewController?.setAlpha(Util.getAlphaValue())
-        self.viewController?.setIsModalInPresentation(true)
-        self.viewController?.title = "Nouveau Agriculteur"
-       // self.viewController?.navigationController?.navigationBar.prefersLargeTitles = true
+        // self.viewController?.setIsModalInPresentation(true)
+        self.viewController?.navigationController?.setNavigationBarHidden(true, animated: true)
+        self.interaction.setTitleContainerTitleNavigation(title: "Saisir information agriculteur")
+        self.interaction.setCurrentViewControllerInNavigation()
+        // TODO dispatch isAppear
+        // self.viewController?.title = "Nouveau Agriculteur"
+        // self.viewController?.navigationController?.navigationBar.prefersLargeTitles = true
     }
 
     func dispose() {
-        viewController = nil
+       // viewController = nil
 
         _ = Util.runInSchedulerBackground {
             self.disposableStateObserver?.dispose()
         }
+    }
+
+    func disposeViewController() {
+        viewController = nil
     }
 
     private func setValues(addProducerFormState: AddProducerFormState) {
@@ -88,6 +95,13 @@ class AddProducerFormViewModelImpl: AddProducerFormViewModel {
 }
 
 extension AddProducerFormViewModelImpl {
+    func handleButtonValidate() {
+        // TODO Dispatch action
+        guard let appDependency = Util.getAppDependency() else { return }
+        self.viewController?.navigationController?.pushViewController(appDependency.makeFieldListViewController(), animated: true)
+
+    }
+
     private func handleGetListElementUIDataWihoutValueResponse() {
         setViewStateValue()
     }
@@ -99,4 +113,5 @@ protocol AddProducerFormViewModel {
     func configView()
     func subscribeToStateObservable()
     func dispose()
+    func handleButtonValidate()
 }

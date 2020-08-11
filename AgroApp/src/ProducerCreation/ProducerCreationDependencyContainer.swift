@@ -97,7 +97,7 @@ class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContain
 
     // MARK: - Methods FieldCultural
 
-    func makeCurrentFieldObservable() -> Observable<CulturalPracticeFormState> {
+    func makeCulturalPracticeFormObservable() -> Observable<CulturalPracticeFormState> {
         self.stateStore.makeObservable(
             transform: {(subscription: Subscription<AppState>) -> Subscription<CulturalPracticeFormState> in
             subscription
@@ -114,7 +114,7 @@ class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContain
 
     func makeCulturalPracticeFormViewModel() -> CulturalPraticeFormViewModel {
         CulturalPraticeFormViewModelImpl(
-            culturalPracticeStateObs: makeCurrentFieldObservable(),
+            culturalPracticeStateObs: makeCulturalPracticeFormObservable(),
             culturalPraticeFormInteraction: makeCulturalPraticeFormInteraction()
         )
     }
@@ -145,7 +145,7 @@ class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContain
 
     func makeContainerTitleNavigationViewController() -> ContainerTitleNavigationViewController {
         ContainerTitleNavigationViewController(
-            navigationFieldController: makeFieldListNavigationController(),
+            navigationController: makeNavigationController(),
             containerTitleNavigationViewModel: makeContainerTitleNavigationViewModel()
         )
     }
@@ -272,8 +272,8 @@ class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContain
 
     // MARK: - Methods navigation
 
-    func makeFieldListNavigationController() -> UINavigationController {
-        UINavigationController(rootViewController: self.makeFieldListViewController())
+    func makeNavigationController() -> UINavigationController {
+        UINavigationController(rootViewController: self.makeAddProducerFormHostingController())
     }
 
     func makeMapFieldNavigationController() -> UINavigationController {
@@ -289,8 +289,8 @@ class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContain
         makeMapFieldNavigationController()
     }
 
-    func processInitFieldListNavigation() -> UINavigationController {
-        makeFieldListNavigationController()
+    func processNavigation() -> UINavigationController {
+        makeNavigationController()
     }
 
     func processInitContainerMapAndTitleNavigationController() -> ContainerMapAndTitleNavigationController {
@@ -303,7 +303,7 @@ class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContain
 
 protocol ProducerCreationDependencyContainer {
     func makeMapFieldNavigationController() -> UINavigationController
-    func makeFieldListNavigationController() -> UINavigationController
+    func makeNavigationController() -> UINavigationController
     func makeCulturalPracticeFormViewController() -> CulturalPracticeFormViewController
     func makeFieldListViewController() -> FieldListViewController
     func processInitContainerMapAndTitleNavigationController() -> ContainerMapAndTitleNavigationController

@@ -19,6 +19,7 @@ struct ContainerTitleNavigationState: Equatable {
     var subAction: SubAction?
     var currentViewController: CurrentViewControllerInNavigation?
 
+    // TODO responseAction
     enum SubAction {
         case setTitleActionSuccess
         case setCurrentViewControllerInNavigationActionSuccess
@@ -30,6 +31,7 @@ struct ContainerTitleNavigationState: Equatable {
     enum CurrentViewControllerInNavigation {
         case fieldList
         case culturalPracticeForm
+        case addProducerForm
     }
 
     func changeValue(

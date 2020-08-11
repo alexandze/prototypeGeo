@@ -61,6 +61,7 @@ class HandlerGetListElementUIDataWihoutValue: HandlerReducerProtocol {
     private func newState(
         util: UtilHandlerGetListElementUIData?
     ) -> AddProducerFormState? {
+
         guard let newUtil = util
             else { return nil }
 

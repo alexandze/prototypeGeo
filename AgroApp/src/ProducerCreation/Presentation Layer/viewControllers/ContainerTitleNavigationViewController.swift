@@ -12,7 +12,7 @@ import RxSwift
 class ContainerTitleNavigationViewController: UIViewController {
 
     let containerTitleNavigationView = ContainerTitleNavigationView()
-    let navigationFieldController: UINavigationController
+    let myNavigationController: UINavigationController
     let containerTitleNavigationViewModel: ContainerTitleNavigationViewModel
     var disposeSubjectViewState: Disposable?
 
@@ -21,10 +21,10 @@ class ContainerTitleNavigationViewController: UIViewController {
     }
 
     init(
-        navigationFieldController: UINavigationController,
+        navigationController: UINavigationController,
         containerTitleNavigationViewModel: ContainerTitleNavigationViewModel
     ) {
-        self.navigationFieldController = navigationFieldController
+        self.myNavigationController = navigationController
         self.containerTitleNavigationViewModel = containerTitleNavigationViewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -67,7 +67,7 @@ class ContainerTitleNavigationViewController: UIViewController {
     private func handleSetCurrentViewControllerInNavigation(
         currentViewControllerInNavigation: ContainerTitleNavigationState.CurrentViewControllerInNavigation
     ) {
-        let countViewControllers = navigationFieldController.viewControllers.count
+        let countViewControllers = myNavigationController.viewControllers.count
 
         if countViewControllers == 1 {
             return containerTitleNavigationViewModel.dispatchHideCloseButtonAction()
@@ -96,12 +96,12 @@ class ContainerTitleNavigationViewController: UIViewController {
 
     /// Init view who content navigation controller
     func initNavigationControllerView() {
-        self.addChild(self.navigationFieldController)
+        self.addChild(self.myNavigationController)
         hideBarNavigation()
 
-        containerTitleNavigationView.initNavigationControllerView(navigationControllerView: navigationFieldController.view)
+        containerTitleNavigationView.initNavigationControllerView(navigationControllerView: myNavigationController.view)
 
-        self.navigationFieldController.didMove(toParent: self)
+        self.myNavigationController.didMove(toParent: self)
     }
 
     func initHandlerCloseButton() {
@@ -116,14 +116,14 @@ class ContainerTitleNavigationViewController: UIViewController {
     }
 
     func hideBarNavigation() {
-        navigationFieldController.isNavigationBarHidden = true
+        myNavigationController.isNavigationBarHidden = true
     }
 
     func handleBack() {
-        let countViewControllers = navigationFieldController.viewControllers.count
+        let countViewControllers = myNavigationController.viewControllers.count
 
         if countViewControllers > 1 {
-            navigationFieldController.popViewController(animated: true)
+            myNavigationController.popViewController(animated: true)
             return
         }
     }

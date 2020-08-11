@@ -37,6 +37,7 @@ struct AddProducerFormView: View {
                                     InputWithTitleElement(
                                         title: self.viewState.listElementUIData[index].title,
                                         isValid: self.viewState.listElementValid[index],
+                                        index: index,
                                         value: self.$viewState.listElementValue[index]
                                     ).padding(15)
                                 }
@@ -63,7 +64,7 @@ struct AddProducerFormView: View {
                 ButtonValidate(
                     title: "Valider",
                     isButtonActivated: true,
-                    action: {}
+                    action: {self.viewModel.handleButtonValidate() }
                 ).padding(10)
 
             }.frame(
@@ -130,6 +131,7 @@ struct AddProducerFormView: View {
 private struct InputWithTitleElement: View {
     var title: String
     var isValid: Bool
+    var index: Int
     @Binding var value: String
     @EnvironmentObject var viewState: AddProducerFormViewModelImpl.ViewState
     @Environment(\.colorScheme) var colorScheme
@@ -163,6 +165,7 @@ private struct InputWithTitleElement: View {
                         } else {
                             self.getImageNoValid()
                         }
+
                     }
                 }
 

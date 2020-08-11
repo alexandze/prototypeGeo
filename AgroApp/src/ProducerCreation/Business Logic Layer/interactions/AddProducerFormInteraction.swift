@@ -23,8 +23,26 @@ class AddProducerFormInteractionImpl: AddProducerFormInteraction {
         }
     }
 
+    func setTitleContainerTitleNavigation(title: String) {
+        _ = Util.runInSchedulerBackground { [weak self] in
+            self?.actionDispatcher.dispatch(
+                ContainerTitleNavigationAction.SetTitleAction(title: title)
+            )
+        }
+    }
+
+    func setCurrentViewControllerInNavigation() {
+        _ = Util.runInSchedulerBackground { [weak self] in
+            self?.actionDispatcher.dispatch(
+                ContainerTitleNavigationAction
+                    .SetCurrentViewControllerAction(currentViewControllerInNavigation: .culturalPracticeForm)
+            )
+        }
+    }
 }
 
 protocol AddProducerFormInteraction {
     func getListElementUIDataWithoutValueAction()
+    func setTitleContainerTitleNavigation(title: String)
+    func setCurrentViewControllerInNavigation()
 }

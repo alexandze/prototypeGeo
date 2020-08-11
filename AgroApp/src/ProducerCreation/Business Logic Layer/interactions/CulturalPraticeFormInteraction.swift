@@ -19,7 +19,7 @@ class CulturalPraticeFormInteractionImpl: CulturalPraticeFormInteraction {
 
     func dispatchSetCurrentViewControllerInNavigationAction() {
         let action = ContainerTitleNavigationAction
-            .SetCurrentViewControllerInNavigationAction(currentViewControllerInNavigation: .fieldList)
+            .SetCurrentViewControllerAction(currentViewControllerInNavigation: .fieldList)
         _ = Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(action)
         }

@@ -56,10 +56,7 @@ class FieldListViewModelImpl: FieldListViewModel {
                     break
                 }
 
-                self?.dispatchSetTitleAction()
-                self?.dispatchSetCurrentViewControllerInNavigationAction()
-                self?.dispatchIsAppear()
-
+                self?.config()
         }
     }
 
@@ -78,6 +75,12 @@ class FieldListViewModelImpl: FieldListViewModel {
     private func setValues(state: FieldListState) {
         self.fieldListState = state
         self.fieldList = state.fieldList ?? []
+    }
+
+    private func config() {
+        self.dispatchSetTitleAction()
+        self.dispatchSetCurrentViewControllerInNavigationAction()
+        self.dispatchIsAppear()
     }
 }
 
@@ -158,6 +161,7 @@ extension FieldListViewModelImpl {
     }
 }
 
+// TODO Interaction
 extension FieldListViewModelImpl {
 
     func dispatchIsDisappear() {
@@ -183,7 +187,7 @@ extension FieldListViewModelImpl {
     private func dispatchSetCurrentViewControllerInNavigationAction() {
         if fieldListState?.isAppear == nil || fieldListState!.isAppear == false {
             let action = ContainerTitleNavigationAction
-                .SetCurrentViewControllerInNavigationAction(currentViewControllerInNavigation: .fieldList)
+                .SetCurrentViewControllerAction(currentViewControllerInNavigation: .fieldList)
 
             dispatch(action: action)
         }

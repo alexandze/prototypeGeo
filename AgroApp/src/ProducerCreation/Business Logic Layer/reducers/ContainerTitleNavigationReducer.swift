@@ -22,8 +22,8 @@ extension Reducers {
             return ContainerTitleNavigationHandler().handle(setTitleAction: action, state)
         case let action as ContainerTitleNavigationAction.BackAction:
             return ContainerTitleNavigationHandler().handle(backAction: action, state)
-        case let action as ContainerTitleNavigationAction.SetCurrentViewControllerInNavigationAction:
-            return ContainerTitleNavigationHandler().handle(setCurrentViewControllerInNavigationAction: action, state)
+        case let action as ContainerTitleNavigationAction.SetCurrentViewControllerAction:
+            return ContainerTitleNavigationHandler().handle(setCurrentViewControllerAction: action, state)
         default:
             return state
         }
@@ -32,12 +32,12 @@ extension Reducers {
 
 class ContainerTitleNavigationHandler {
     func handle(
-        setCurrentViewControllerInNavigationAction: ContainerTitleNavigationAction.SetCurrentViewControllerInNavigationAction,
+        setCurrentViewControllerAction: ContainerTitleNavigationAction.SetCurrentViewControllerAction,
         _ state: ContainerTitleNavigationState
     ) -> ContainerTitleNavigationState {
         state.changeValue(
             subAction: .setCurrentViewControllerInNavigationActionSuccess,
-            currentViewController: setCurrentViewControllerInNavigationAction.currentViewControllerInNavigation
+            currentViewController: setCurrentViewControllerAction.currentViewControllerInNavigation
         )
     }
 
