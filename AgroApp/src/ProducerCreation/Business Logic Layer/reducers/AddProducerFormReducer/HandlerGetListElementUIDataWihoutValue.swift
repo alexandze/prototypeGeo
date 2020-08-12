@@ -9,30 +9,40 @@
 import Foundation
 
 class HandlerGetListElementUIDataWihoutValue: HandlerReducerProtocol {
+    let addProducerFormFactory: AddProducerFormFactory
+    
+    init(addProducerFormFactory: AddProducerFormFactory = AddProducerFormFactoryImpl()) {
+        self.addProducerFormFactory = addProducerFormFactory
+    }
+    
     func handle(
         action: AddProducerFormAction.GetListElementUIDataWithoutValueAction,
         _ state: AddProducerFormState
     ) -> AddProducerFormState {
-        let util = UtilHandlerGetListElementUIData(state: state)
+        let util = UtilHandlerGetListElementUIData(
+            addProducerFormFactory: addProducerFormFactory,
+            state: state
+        )
 
         return (
-            createListElementUIData(util:) >>>
+            createListElementUIDataIfEmpty(util:) >>>
+                // TODO restaurer les elements si pas empty
                 createListValueValid(util:) >>>
                 newState(util:)
             )(util) ?? state
     }
 
-    private func createListElementUIData(util: UtilHandlerGetListElementUIData?) -> UtilHandlerGetListElementUIData? {
-        guard var newUtil = util else { return nil }
-
-        newUtil.listElementUIData = [
-            InputElement(id: UUID().uuidString, title: "Nom", value: "", isValid: false),
-            InputElement(id: UUID().uuidString, title: "Prenom", value: "", isValid: false),
-            InputElement(id: UUID().uuidString, title: "Email", value: "", isValid: false),
-            InputElement(id: UUID().uuidString, title: "NIM", value: "", isValid: false),
-            ButtonElement(id: UUID().uuidString, title: "Ajouter NIM", isEnabled: true)
-        ]
-
+    private func createListElementUIDataIfEmpty(util: UtilHandlerGetListElementUIData?) -> UtilHandlerGetListElementUIData? {
+        guard var newUtil = util
+            else { return nil }
+        
+        guard newUtil.state.listElementUIData == nil ||
+            newUtil.state.listElementUIData!.isEmpty
+            else {
+                return newUtil
+            }
+        
+        newUtil.listElementUIData = newUtil.addProducerFormFactory.makeElementsUIData()
         return newUtil
     }
 
@@ -75,6 +85,7 @@ class HandlerGetListElementUIDataWihoutValue: HandlerReducerProtocol {
 }
 
 private struct UtilHandlerGetListElementUIData {
+    var addProducerFormFactory: AddProducerFormFactory
     var state: AddProducerFormState
     var listElementUIData: [ElementUIData] = []
     var listElementValue = [String]()

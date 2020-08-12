@@ -14,12 +14,24 @@ protocol ElementUIData {
 }
 
 struct InputElement: ElementUIData {
-    static let TYPE = "INPUT ELEMENT"
+    static let TYPE = "INPUT_ELEMENT"
     var id: String
     var type: String = InputElement.TYPE
     var title: String
     var value: String
     var isValid: Bool
+    var isRequired: Bool
+    var regex: NSRegularExpression?
+}
+
+struct InputElementWithRemoveButton: ElementUIData {
+    static let TYPE = "INPUT_ELEMENT_REMOVE_BUTTON"
+    var id: String
+    var type: String
+    var title: String
+    var isValid: Bool
+    var isRequired: Bool
+    var action: ElementFormAction
     var regex: NSRegularExpression?
 }
 
@@ -29,6 +41,10 @@ struct ButtonElement: ElementUIData {
     var type: String = ButtonElement.TYPE
     var title: String
     var isEnabled: Bool
-    var action: String?
-    var handle: (() -> Void)?
+    var action: ElementFormAction
+}
+
+enum ElementFormAction {
+    case add
+    case remove
 }

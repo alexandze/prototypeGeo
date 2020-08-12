@@ -36,7 +36,8 @@ class AddProducerFormViewModelImpl: AddProducerFormViewModel {
                 guard let state = event.element,
                     let responseAction = state.responseAction
                     else { return }
-
+                
+                print(state)
                 self?.setValues(addProducerFormState: state)
 
                 switch responseAction {

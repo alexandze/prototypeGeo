@@ -110,7 +110,7 @@ extension FieldListViewModelImpl {
     }
 
     private func handleSelectedFieldOnMapActionSuccess() {
-        if fieldListState?.isAppear == nil || fieldListState!.isAppear == true {
+        if fieldListState!.isAppear == true {
             tableView?.beginUpdates()
             self.tableView?.insertRows(at: [IndexPath(row: 0, section: 0)], with: .top)
             tableView?.endUpdates()
@@ -123,7 +123,7 @@ extension FieldListViewModelImpl {
     private func handleDeselectedFieldOnMapActionSuccess() {
         guard let indexDeleted = fieldListState?.indexForRemove else { return }
 
-        if fieldListState?.isAppear == nil || fieldListState!.isAppear == true {
+        if fieldListState!.isAppear == true {
             tableView?.beginUpdates()
             self.tableView?.deleteRows(at: [IndexPath(row: indexDeleted, section: 0)], with: .top)
             tableView?.endUpdates()
