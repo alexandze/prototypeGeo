@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import Combine
 
 class AddProducerFormViewModelImpl: AddProducerFormViewModel {
     let stateObservable: Observable<AddProducerFormState>
@@ -16,6 +17,7 @@ class AddProducerFormViewModelImpl: AddProducerFormViewModel {
     var disposableStateObserver: Disposable?
     var state: AddProducerFormState?
     var viewState: ViewState
+    var cancelable: [AnyCancellable] = []
 
     init(
         addProducerFormStateObservable: Observable<AddProducerFormState>,
@@ -43,6 +45,8 @@ class AddProducerFormViewModelImpl: AddProducerFormViewModel {
                 switch responseAction {
                 case .getListElementUIDataWihoutValueResponse:
                     self?.handleGetListElementUIDataWihoutValueResponse()
+                case .checkIfInputElemenIsValidActionResponse(index: let index):
+                    self?.handleCheckIfInputElemenIsValidActionResponse(index: index)
                 case .notResponse:
                     break
                 }
@@ -60,12 +64,32 @@ class AddProducerFormViewModelImpl: AddProducerFormViewModel {
         // self.viewController?.title = "Nouveau Agriculteur"
         // self.viewController?.navigationController?.navigationBar.prefersLargeTitles = true
     }
-
+    
     func dispose() {
        // viewController = nil
-
+        
         _ = Util.runInSchedulerBackground {
             self.disposableStateObserver?.dispose()
+        }
+    }
+    
+    func subscribeToFormObserver() {
+        viewState.utilElementUIDataSwiftUIList.forEach { utilElementUIData in
+            guard utilElementUIData.elementUIData is InputElementData else {
+                return
+            }
+            
+            cancelable.append(
+                utilElementUIData.$valueState.sink {[weak self] value in
+                    self?.interaction.checkIfInputElemenIsValidAction(uuid: utilElementUIData.uuid, value: value)
+                }
+            )
+        }
+    }
+    
+    func cancelableObservableForm() {
+        while !cancelable.isEmpty {
+            cancelable.popLast()?.cancel()
         }
     }
 
@@ -78,33 +102,42 @@ class AddProducerFormViewModelImpl: AddProducerFormViewModel {
     }
 
     private func setViewStateValue() {
-        guard let listElementUIData = state?.listElementUIData,
-            let listElementValue = state?.listElementValue,
-            let listElementValid = state?.listElementValid
+        guard let utilElementUIDataSwiftUI = state?.utilElementUIDataSwiftUI
             else { return }
-
-        viewState.listElementUIData = listElementUIData
-        viewState.listElementValue = listElementValue
-        viewState.listElementValid = listElementValid
+        
+        viewState.utilElementUIDataSwiftUIList = utilElementUIDataSwiftUI
     }
 
     class ViewState: ObservableObject {
-        @Published var listElementUIData: [ElementUIData] = []
-        @Published var listElementValue: [String] = []
-        @Published var listElementValid: [Bool] = []
+        @Published var utilElementUIDataSwiftUIList: [UtilElementUIDataSwiftUI] = []
     }
 }
 
 extension AddProducerFormViewModelImpl {
     func handleButtonValidate() {
+        print(viewState.utilElementUIDataSwiftUIList[0].valueState)
         // TODO Dispatch action
+        /*
         guard let appDependency = Util.getAppDependency() else { return }
         self.viewController?.navigationController?.pushViewController(appDependency.makeFieldListViewController(), animated: true)
-
+        */
     }
 
     private func handleGetListElementUIDataWihoutValueResponse() {
         setViewStateValue()
+        cancelableObservableForm()
+        subscribeToFormObserver()
+    }
+    
+    private func handleCheckIfInputElemenIsValidActionResponse(
+        index: Int
+    ) {
+        guard let utilElementUIData = state?.utilElementUIDataSwiftUI?[index]
+            else {
+            return
+        }
+        
+        viewState.utilElementUIDataSwiftUIList[index] = utilElementUIData
     }
 }
 

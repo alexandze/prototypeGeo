@@ -17,6 +17,8 @@ extension Reducers {
         case let getListElementUIDataWithoutValueAction as AddProducerFormAction.GetListElementUIDataWithoutValueAction:
             return HandlerGetListElementUIDataWihoutValue()
                 .handle(action: getListElementUIDataWithoutValueAction, state)
+        case let checkIfInputElemenIsValidAction as AddProducerFormAction.CheckIfInputElemenIsValidAction:
+            return HandlerCheckIfInputElemenIsValidAction().handle(action: checkIfInputElemenIsValidAction, state)
         default:
             return state
         }

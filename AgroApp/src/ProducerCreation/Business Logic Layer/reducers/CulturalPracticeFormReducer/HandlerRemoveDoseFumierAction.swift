@@ -8,7 +8,7 @@
 
 import Foundation
 
-class HandlerRemoveDoseFumierAction: HandlerReducerProtocol {
+class HandlerRemoveDoseFumierAction: HandlerReducer {
 
     func handle(
         action: CulturalPracticeFormAction.RemoveDoseFumierAction,

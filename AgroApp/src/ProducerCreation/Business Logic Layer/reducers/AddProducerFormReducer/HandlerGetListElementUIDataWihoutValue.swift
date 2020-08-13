@@ -8,7 +8,7 @@
 
 import Foundation
 
-class HandlerGetListElementUIDataWihoutValue: HandlerReducerProtocol {
+class HandlerGetListElementUIDataWihoutValue: HandlerReducer {
     let addProducerFormFactory: AddProducerFormFactory
     
     init(addProducerFormFactory: AddProducerFormFactory = AddProducerFormFactoryImpl()) {
@@ -27,7 +27,6 @@ class HandlerGetListElementUIDataWihoutValue: HandlerReducerProtocol {
         return (
             createListElementUIDataIfEmpty(util:) >>>
                 // TODO restaurer les elements si pas empty
-                createListValueValid(util:) >>>
                 newState(util:)
             )(util) ?? state
     }
@@ -36,38 +35,16 @@ class HandlerGetListElementUIDataWihoutValue: HandlerReducerProtocol {
         guard var newUtil = util
             else { return nil }
         
-        guard newUtil.state.listElementUIData == nil ||
-            newUtil.state.listElementUIData!.isEmpty
+        guard newUtil.state.utilElementUIDataSwiftUI == nil ||
+            newUtil.state.utilElementUIDataSwiftUI!.isEmpty
             else {
                 return newUtil
             }
         
-        newUtil.listElementUIData = newUtil.addProducerFormFactory.makeElementsUIData()
+        newUtil.utilElementUIDataSwiftUI = newUtil.addProducerFormFactory.makeElementsUIData()
         return newUtil
     }
-
-    private func createListValueValid(
-        util: UtilHandlerGetListElementUIData?
-    ) -> UtilHandlerGetListElementUIData? {
-        guard var newUtil = util
-            else { return nil }
-
-        newUtil.listElementUIData.forEach { elementUIData in
-            switch elementUIData {
-            case let inputElement as InputElement:
-                newUtil.listElementValue.append(inputElement.value)
-                newUtil.listElementValid.append(inputElement.isValid)
-            case let buttonElement as ButtonElement:
-                newUtil.listElementValue.append("")
-                newUtil.listElementValid.append(buttonElement.isEnabled)
-            default:
-                break
-            }
-        }
-
-        return newUtil
-    }
-
+    
     private func newState(
         util: UtilHandlerGetListElementUIData?
     ) -> AddProducerFormState? {
@@ -76,9 +53,7 @@ class HandlerGetListElementUIDataWihoutValue: HandlerReducerProtocol {
             else { return nil }
 
         return newUtil.state.changeValues(
-            listElementUIData: newUtil.listElementUIData,
-            listElementValue: newUtil.listElementValue,
-            listElementValid: newUtil.listElementValid,
+            utilElementUIDataSwiftUI: newUtil.utilElementUIDataSwiftUI,
             responseAction: .getListElementUIDataWihoutValueResponse
         )
     }
@@ -87,7 +62,5 @@ class HandlerGetListElementUIDataWihoutValue: HandlerReducerProtocol {
 private struct UtilHandlerGetListElementUIData {
     var addProducerFormFactory: AddProducerFormFactory
     var state: AddProducerFormState
-    var listElementUIData: [ElementUIData] = []
-    var listElementValue = [String]()
-    var listElementValid = [Bool]()
+    var utilElementUIDataSwiftUI: [UtilElementUIDataSwiftUI] = []
 }

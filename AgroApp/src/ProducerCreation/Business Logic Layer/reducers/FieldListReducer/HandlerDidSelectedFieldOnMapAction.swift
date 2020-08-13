@@ -8,7 +8,7 @@
 
 import Foundation
 
-class HandlerDidSelectedFieldOnMapAction: HandlerReducerProtocol {
+class HandlerDidSelectedFieldOnMapAction: HandlerReducer {
 
     func handle(
         action: MapFieldAction.DidSelectedFieldOnMapAction,

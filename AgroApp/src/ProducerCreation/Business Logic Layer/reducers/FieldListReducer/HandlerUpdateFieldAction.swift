@@ -9,7 +9,7 @@
 import Foundation
 import ReSwift
 
-class HandlerUpdateFieldAction: HandlerReducerProtocol {
+class HandlerUpdateFieldAction: HandlerReducer {
 
     func handle(action: FieldListAction.UpdateFieldAction, _ state: FieldListState) -> FieldListState {
         let util = UtilHandlerUpdateFieldAction(fieldFromAction: action.field, state: state)

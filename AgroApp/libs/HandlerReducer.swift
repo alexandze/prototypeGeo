@@ -9,7 +9,7 @@
 import Foundation
 import ReSwift
 
-protocol HandlerReducerProtocol {
+protocol HandlerReducer {
     associatedtype State
     associatedtype MyAction: Action
 

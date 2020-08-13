@@ -115,7 +115,7 @@ class Util {
     }
 
     static func hasIndexInArray<T>(_ array: [T], index: Int) -> Bool {
-        array.indices.contains(index)
+        return array.count > index
     }
 }
 

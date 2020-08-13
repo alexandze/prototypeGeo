@@ -30,27 +30,20 @@ struct AddProducerFormView: View {
             VStack {
                 ScrollView {
                     VStack {
-                        ForEach(self.viewState.listElementUIData.indices, id: \.self) { index in
+                        ForEach(self.viewState.utilElementUIDataSwiftUIList.indices, id: \.self) { (index: Int) in
                             VStack {
-                                if self.isInputElement(index: index) &&
-                                    self.hasIsValid(index: index) &&
-                                    self.hasValue(index: index) {
-                                    
+                                if self.isInputElement(index) {
                                     InputWithTitleElement(
-                                        title: self.getTitle(index: index),
-                                        isValid: self.getIsValid(index: index),
-                                        index: index,
-                                        value: self.getValueBinding(index: index) ?? self.$value
+                                        title: self.getTitle(index),
+                                        isValid: self.getIsValid(index),
+                                        value: self.getValueBinding(index)
                                     ).padding(15)
                                 }
                                 
-                                if self.isButtonElement(index: index) {
-                                    InputWithTitleRemoveButton(title: "NIM 1", isValid: false, value: self.$value, handleRemoveButton: {})
-                                        .padding(15)
-                                    
+                                if self.isButtonAddElement(index) {
                                     HStack {
                                         ButtonAdd(
-                                            title: self.getTitle(index: index),
+                                            title: self.getTitle(index),
                                             action: {}
                                         )
                                         
@@ -60,8 +53,6 @@ struct AddProducerFormView: View {
                                 }
                             }
                         }
-                        
-                        
                     }.padding(.bottom, 50)
                 }
                 
@@ -70,7 +61,10 @@ struct AddProducerFormView: View {
                 ButtonValidate(
                     title: "Valider",
                     isButtonActivated: true,
-                    action: {self.viewModel.handleButtonValidate() }
+                    action: {
+                        self.viewModel.handleButtonValidate()
+
+                }
                 ).padding(10)
                 
             }.frame(
@@ -99,51 +93,29 @@ struct AddProducerFormView: View {
         }
     }
     
-    private func getValueBinding(index: Int) -> Binding<String>? {
-        guard Util.hasIndexInArray(viewState.listElementValue, index: index) else {
-            return nil
-        }
-        
-        return $viewState.listElementValue[index]
+    private func getValueBinding(_ index: Int) -> Binding<String> {
+        $viewState.utilElementUIDataSwiftUIList[index].valueState
     }
     
-    private func getIsValid(index: Int) -> Bool {
-        guard Util.hasIndexInArray(viewState.listElementValue, index: index) else {
+    private func getIsValid(_ index: Int) -> Bool {
+        (viewState.utilElementUIDataSwiftUIList[index].elementUIData as? InputElement)?.isValid ?? false
+    }
+    
+    private func getTitle(_ index: Int) -> String {
+        viewState.utilElementUIDataSwiftUIList[index].elementUIData.title
+    }
+    
+    private func isButtonAddElement(_ index: Int) -> Bool {
+        guard let buttonAdd = viewState.utilElementUIDataSwiftUIList[index].elementUIData as? ButtonElement,
+            buttonAdd.action == ElementFormAction.add.rawValue else {
             return false
         }
         
-        return viewState.listElementValid[index]
+        return true
     }
     
-    private func getTitle(index: Int) -> String {
-        guard Util.hasIndexInArray(viewState.listElementUIData, index: index) else {
-            return ""
-        }
-        
-        return viewState.listElementUIData[index].title
-    }
-    
-    private func isButtonElement(index: Int) -> Bool {
-        guard Util.hasIndexInArray(viewState.listElementUIData, index: index) else {
-            return false
-        }
-        
-        return viewState.listElementUIData[index].type == ButtonElement.TYPE
-    }
-    
-    private func isInputElement(index: Int) -> Bool {
-        guard Util.hasIndexInArray(viewState.listElementUIData, index: index)
-            else { return false }
-        
-        return viewState.listElementUIData[index].type == InputElement.TYPE
-    }
-    
-    private func hasIsValid(index: Int) -> Bool {
-        Util.hasIndexInArray(viewState.listElementValid, index: index)
-    }
-    
-    private func hasValue(index: Int) -> Bool {
-        Util.hasIndexInArray(viewState.listElementValue, index: index)
+    private func isInputElement(_ index: Int) -> Bool {
+        viewState.utilElementUIDataSwiftUIList[index].elementUIData.type == InputElement.TYPE_ELEMENT
     }
     
     private func isKeyboardVisible() -> Bool {
@@ -166,10 +138,11 @@ struct AddProducerFormView: View {
 }
 
 private struct InputWithTitleRemoveButton: View {
+    var uuidUtilElementUIData: UUID
     var title: String
     var isValid: Bool
     @Binding var value: String
-    var handleRemoveButton: () -> Void
+    var handleRemoveButton: (UUID) -> Void
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
@@ -206,7 +179,7 @@ private struct InputWithTitleRemoveButton: View {
                 
                 getImageRemove()
                     .onTapGesture {
-                        print("Tap button remove")
+                        self.handleRemoveButton(self.uuidUtilElementUIData)
                 }
             }
         }
@@ -216,9 +189,7 @@ private struct InputWithTitleRemoveButton: View {
 private struct InputWithTitleElement: View {
     var title: String
     var isValid: Bool
-    var index: Int
     @Binding var value: String
-    @EnvironmentObject var viewState: AddProducerFormViewModelImpl.ViewState
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {

@@ -13,38 +13,47 @@ protocol ElementUIData {
     var title: String {get set}
 }
 
-struct InputElement: ElementUIData {
-    static let TYPE = "INPUT_ELEMENT"
-    var id: String
-    var type: String = InputElement.TYPE
+protocol InputElementData: ElementUIData {
+    var type: String {get set}
+    var title: String {get set}
+    var value: String {get set}
+    var isValid: Bool {get set}
+    var isRequired: Bool {get set}
+    var regexPattern: String {get set}
+}
+
+struct InputElement: InputElementData {
+    static let TYPE_ELEMENT = "INPUT_ELEMENT"
+    var type: String = InputElement.TYPE_ELEMENT
     var title: String
     var value: String
     var isValid: Bool
     var isRequired: Bool
-    var regex: NSRegularExpression?
+    var regexPattern: String
 }
 
-struct InputElementWithRemoveButton: ElementUIData {
-    static let TYPE = "INPUT_ELEMENT_REMOVE_BUTTON"
-    var id: String
-    var type: String
+struct InputElementWithRemoveButton: InputElementData {
+    static let TYPE_ELEMENT = "INPUT_ELEMENT_REMOVE_BUTTON"
+    var type: String = InputElementWithRemoveButton.TYPE_ELEMENT
     var title: String
+    var value: String
     var isValid: Bool
     var isRequired: Bool
-    var action: ElementFormAction
-    var regex: NSRegularExpression?
+    var action: String
+    var regexPattern: String
 }
 
 struct ButtonElement: ElementUIData {
     static let TYPE = "BUTTON"
-    var id: String
     var type: String = ButtonElement.TYPE
     var title: String
     var isEnabled: Bool
-    var action: ElementFormAction
+    var action: String
 }
 
-enum ElementFormAction {
+enum ElementFormAction: String {
     case add
     case remove
 }
+
+

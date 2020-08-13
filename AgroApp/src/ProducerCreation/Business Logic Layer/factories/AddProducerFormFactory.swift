@@ -6,7 +6,7 @@
 //  Copyright © 2020 Alexandre Andze Kande. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
 
 class AddProducerFormFactoryImpl: AddProducerFormFactory {
     
@@ -14,64 +14,96 @@ class AddProducerFormFactoryImpl: AddProducerFormFactory {
     let lastNameTitle = "Nom"
     let emailTitle = "Email"
     let nimTitle = "NIM"
-    let addButtonTitle = "+"
+    let addButtonTitle = ".+?$"
+    let firstNamePattern = ".+?$"
+    let lastNamePattern = ".+?$"
+    let emailPattern = ".+?$"
+    let nimPattern = ".+?$"
     
-    let firstNamePattern = "*"
-    let lastNamePattern = "*"
-    let emailPattern = "*"
-    let nimPattern = "*"
-    
-    func makeElementsUIData() -> [ElementUIData] {
+    func makeElementsUIData() -> [UtilElementUIDataSwiftUI] {
         [
-            self.makeFirstNameInputElement(),
-            self.makeLastNameInputElement(),
-            self.makeEmailInputElement(),
-            self.makeNimInputElement(),
-            self.makeAddNimButtonElement()
+            self.makeFirstNameInputUtilElementUIDataSwiftUI(),
+            self.makeLastNameInputUtilElementUIDataSwiftUI(),
+            self.makeEmailInputUtilElementUIDataSwiftUI(),
+            self.makeNimInputUtilElementUIDataSwiftUI(),
+            self.makeAddNimButtonUtilElementUIDataSwiftUI()
         ]
     }
     
-    func makeAddNimButtonElement() -> ElementUIData {
-        ButtonElement(
-            id: UUID().uuidString,
+    func makeFirstNameInputUtilElementUIDataSwiftUI(value: String? = nil) -> UtilElementUIDataSwiftUI {
+        let inputElement = makeInputElement(
+            title: firstNameTitle,
+            value: value,
+            regexPattern: firstNamePattern
+        )
+        
+        return makeUtilElementUIDataSwiftUI(inputElement: inputElement)
+    }
+    
+    func makeLastNameInputUtilElementUIDataSwiftUI(value: String? = nil) -> UtilElementUIDataSwiftUI {
+        let inputElement = makeInputElement(
+            title: lastNameTitle,
+            value: value,
+            regexPattern: lastNamePattern
+        )
+        
+        return makeUtilElementUIDataSwiftUI(inputElement: inputElement)
+    }
+    
+    func makeEmailInputUtilElementUIDataSwiftUI(value: String? = nil) -> UtilElementUIDataSwiftUI {
+        let inputElement = makeInputElement(
+            title: self.emailTitle,
+            value: value,
+            regexPattern: emailPattern
+        )
+        
+        return makeUtilElementUIDataSwiftUI(inputElement: inputElement)
+    }
+    
+    func makeNimInputUtilElementUIDataSwiftUI(value: String? = nil) -> UtilElementUIDataSwiftUI {
+        let inputElement = makeInputElement(
+            title: self.nimTitle,
+            value: value,
+            regexPattern: nimPattern
+        )
+        
+        return makeUtilElementUIDataSwiftUI(inputElement: inputElement)
+    }
+    
+    func makeAddNimButtonUtilElementUIDataSwiftUI(isEnabled: Bool? = nil) -> UtilElementUIDataSwiftUI {
+        let button = ButtonElement(
             title: addButtonTitle,
-            isEnabled: true,
-            action: .add
+            isEnabled: isEnabled ?? true,
+            action: ElementFormAction.add.rawValue
+        )
+        
+        return UtilElementUIDataSwiftUI(elementUIData: button)
+    }
+    
+    func makeInputElement(title: String, value: String? = nil, regexPattern: String? = nil) -> InputElement {
+        InputElement(
+            title: title,
+            value: value ?? "",
+            isValid: false,
+            isRequired: true,
+            regexPattern: regexPattern ?? ".+?$"
         )
     }
     
-    func makeFirstNameInputElement(value: String? = nil) -> ElementUIData {
-        makeInputElement(title: firstNameTitle, value: value, regexPattern: firstNamePattern)
-    }
-    
-    func makeLastNameInputElement(value: String? = nil) -> ElementUIData {
-        makeInputElement(title: lastNameTitle, value: value, regexPattern: lastNamePattern)
-    }
-    
-    func makeEmailInputElement(value: String? = nil) -> ElementUIData {
-        makeInputElement(title: self.emailTitle, value: value, regexPattern: emailPattern)
-    }
-    
-    func makeNimInputElement(value: String? = nil) -> ElementUIData {
-        makeInputElement(title: self.nimTitle, value: value, regexPattern: nimPattern)
-    }
-    
-    func makeInputElement(title: String, value: String? = nil, regexPattern: String? = nil) -> ElementUIData {
-        let regularExpression = self.makeRegularExpression(regexPattern)
+    func makeUtilElementUIDataSwiftUI(inputElement: InputElement) -> UtilElementUIDataSwiftUI {
+        let regularExpression = self.makeRegularExpression(inputElement.regexPattern)
+        var copyInputElement = inputElement
+        copyInputElement.isValid = self.isInputValueValid(copyInputElement.value, regularExpression)
         
-        return InputElement(
-            id: UUID().uuidString,
-            title: title,
-            value: value ?? "",
-            isValid: isInputValueValid(value, regularExpression),
-            isRequired: true,
-            regex: regularExpression
+        return UtilElementUIDataSwiftUI(
+            elementUIData: copyInputElement,
+            regularExpression: regularExpression
         )
     }
     
     private func makeRegularExpression(_ regexPattern: String?) -> NSRegularExpression? {
         guard let regexPattern = regexPattern else {
-            return try? NSRegularExpression(pattern: "*", options: [])
+            return try? NSRegularExpression(pattern: ".+?$", options: [])
         }
         
         return try? NSRegularExpression(pattern: regexPattern, options: [])
@@ -88,5 +120,26 @@ class AddProducerFormFactoryImpl: AddProducerFormFactory {
 }
 
 protocol AddProducerFormFactory {
-    func makeElementsUIData() -> [ElementUIData]
+    func makeElementsUIData() -> [UtilElementUIDataSwiftUI]
+}
+
+class UtilElementUIDataSwiftUI: ObservableObject {
+    var uuid = UUID()
+    var elementUIData: ElementUIData
+    @Published var valueState = ""
+    var regularExpression: NSRegularExpression?
+    
+    init(
+        elementUIData: ElementUIData,
+        valueState: String? = nil,
+        regularExpression: NSRegularExpression? = nil
+    ) {
+        self.elementUIData = elementUIData
+        
+        if let valueState = valueState {
+            self.valueState = valueState
+        }
+        
+        self.regularExpression = regularExpression
+    }
 }

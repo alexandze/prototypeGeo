@@ -8,7 +8,7 @@
 
 import Foundation
 
-class HandlerRemoveFieldAction: HandlerReducerProtocol {
+class HandlerRemoveFieldAction: HandlerReducer {
 
     func handle(action: FieldListAction.RemoveFieldAction, _ state: FieldListState) -> FieldListState {
         let util = UtilHandlerRemoveFieldAction(

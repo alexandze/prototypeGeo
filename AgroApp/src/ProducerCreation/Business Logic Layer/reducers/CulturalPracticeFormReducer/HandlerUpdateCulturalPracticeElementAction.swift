@@ -9,7 +9,7 @@
 import Foundation
 import ReSwift
 
-class HandlerUpdateCulturalPracticeElementAction: HandlerReducerProtocol {
+class HandlerUpdateCulturalPracticeElementAction: HandlerReducer {
 
     func handle(
         action: CulturalPracticeFormAction.UpdateCulturalPracticeElementAction,
