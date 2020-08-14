@@ -24,9 +24,10 @@ extension Reducers {
                 state: state
             ).map { state = $0 }
         case let updateCulturalPracticeElement as CulturalPracticeFormAction.UpdateCulturalPracticeElementAction:
-            return HandlerUpdateCulturalPracticeElementAction().handle(
-                action: updateCulturalPracticeElement,
-                state
+            return CulturalPracticeFormReducerHandler
+                .HandlerUpdateCulturalPracticeElementAction().handle(
+                    action: updateCulturalPracticeElement,
+                    state
             )
         case let selectElementOnList as CulturalPracticeFormAction.WillSelectElementOnListAction:
             return CulturalPracticeFormReducerHandler().handle(
@@ -34,7 +35,7 @@ extension Reducers {
                 state
             )
         case let removeDoseFumierAction as CulturalPracticeFormAction.RemoveDoseFumierAction:
-            return HandlerRemoveDoseFumierAction().handle(
+            return CulturalPracticeFormReducerHandler.HandlerRemoveDoseFumierAction().handle(
                 action: removeDoseFumierAction,
                 state
             )

@@ -15,12 +15,17 @@ extension Reducers {
 
         switch action {
         case let getListElementUIDataWithoutValueAction as AddProducerFormAction.GetListElementUIDataWithoutValueAction:
-            return HandlerGetListElementUIDataWihoutValue()
-                .handle(action: getListElementUIDataWithoutValueAction, state)
+            return AddProducerFormReducerHandler
+                .HandlerGetListElementUIDataWihoutValue().handle(action: getListElementUIDataWithoutValueAction, state)
         case let checkIfInputElemenIsValidAction as AddProducerFormAction.CheckIfInputElemenIsValidAction:
-            return HandlerCheckIfInputElemenIsValidAction().handle(action: checkIfInputElemenIsValidAction, state)
+            return AddProducerFormReducerHandler
+                .HandlerCheckIfInputElemenIsValidAction().handle(action: checkIfInputElemenIsValidAction, state)
+        case let checkIfAllInputElementIsValidAction as AddProducerFormAction.CheckIfAllInputElementIsValidAction:
+            return state
         default:
             return state
         }
     }
 }
+
+class AddProducerFormReducerHandler { }

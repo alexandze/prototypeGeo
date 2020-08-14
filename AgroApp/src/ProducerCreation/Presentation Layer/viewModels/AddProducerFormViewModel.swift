@@ -38,8 +38,7 @@ class AddProducerFormViewModelImpl: AddProducerFormViewModel {
                 guard let state = event.element,
                     let responseAction = state.responseAction
                     else { return }
-                
-                print(state)
+
                 self?.setValues(addProducerFormState: state)
 
                 switch responseAction {
@@ -58,27 +57,27 @@ class AddProducerFormViewModelImpl: AddProducerFormViewModel {
         self.viewController?.setAlpha(Util.getAlphaValue())
         // self.viewController?.setIsModalInPresentation(true)
         self.viewController?.navigationController?.setNavigationBarHidden(true, animated: true)
-        self.interaction.setTitleContainerTitleNavigation(title: "Saisir information agriculteur")
+        self.interaction.setTitleContainerTitleNavigation(title: "Saisir information producteur")
         self.interaction.setCurrentViewControllerInNavigation()
         // TODO dispatch isAppear
         // self.viewController?.title = "Nouveau Agriculteur"
         // self.viewController?.navigationController?.navigationBar.prefersLargeTitles = true
     }
-    
+
     func dispose() {
        // viewController = nil
-        
+
         _ = Util.runInSchedulerBackground {
             self.disposableStateObserver?.dispose()
         }
     }
-    
+
     func subscribeToFormObserver() {
         viewState.utilElementUIDataSwiftUIList.forEach { utilElementUIData in
             guard utilElementUIData.elementUIData is InputElementData else {
                 return
             }
-            
+
             cancelable.append(
                 utilElementUIData.$valueState.sink {[weak self] value in
                     self?.interaction.checkIfInputElemenIsValidAction(uuid: utilElementUIData.uuid, value: value)
@@ -86,7 +85,7 @@ class AddProducerFormViewModelImpl: AddProducerFormViewModel {
             )
         }
     }
-    
+
     func cancelableObservableForm() {
         while !cancelable.isEmpty {
             cancelable.popLast()?.cancel()
@@ -104,7 +103,7 @@ class AddProducerFormViewModelImpl: AddProducerFormViewModel {
     private func setViewStateValue() {
         guard let utilElementUIDataSwiftUI = state?.utilElementUIDataSwiftUI
             else { return }
-        
+
         viewState.utilElementUIDataSwiftUIList = utilElementUIDataSwiftUI
     }
 
@@ -115,12 +114,11 @@ class AddProducerFormViewModelImpl: AddProducerFormViewModel {
 
 extension AddProducerFormViewModelImpl {
     func handleButtonValidate() {
-        print(viewState.utilElementUIDataSwiftUIList[0].valueState)
+       // print(viewState.utilElementUIDataSwiftUIList[0].valueState)
         // TODO Dispatch action
-        /*
+
         guard let appDependency = Util.getAppDependency() else { return }
         self.viewController?.navigationController?.pushViewController(appDependency.makeFieldListViewController(), animated: true)
-        */
     }
 
     private func handleGetListElementUIDataWihoutValueResponse() {
@@ -128,7 +126,7 @@ extension AddProducerFormViewModelImpl {
         cancelableObservableForm()
         subscribeToFormObserver()
     }
-    
+
     private func handleCheckIfInputElemenIsValidActionResponse(
         index: Int
     ) {
@@ -136,7 +134,7 @@ extension AddProducerFormViewModelImpl {
             else {
             return
         }
-        
+
         viewState.utilElementUIDataSwiftUIList[index] = utilElementUIData
     }
 }

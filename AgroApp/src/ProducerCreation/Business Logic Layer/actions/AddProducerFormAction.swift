@@ -11,9 +11,11 @@ import ReSwift
 
 struct AddProducerFormAction {
     struct GetListElementUIDataWithoutValueAction: Action { }
-    
+
     struct CheckIfInputElemenIsValidAction: Action {
         var uuid: UUID
         var value: String
     }
+
+    struct CheckIfAllInputElementIsValidAction: Action { }
 }

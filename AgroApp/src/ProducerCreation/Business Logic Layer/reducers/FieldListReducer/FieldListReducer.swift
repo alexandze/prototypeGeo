@@ -15,7 +15,8 @@ extension Reducers {
 
         switch action {
         case let didSelectedFieldOnMapAction as MapFieldAction.DidSelectedFieldOnMapAction:
-            return HandlerDidSelectedFieldOnMapAction().handle(action: didSelectedFieldOnMapAction, state)
+            return FieldListReducerHandler
+                .HandlerDidSelectedFieldOnMapAction().handle(action: didSelectedFieldOnMapAction, state)
         case let didDeselectFieldOnMap as MapFieldAction.DidDelectFieldOnMapAction:
             return FieldListReducerHandler().handle(didDelectFieldOnMapAction: didDeselectFieldOnMap, state)
         case let willSelectFieldOnListAction as FieldListAction.WillSelectFieldOnListAction:
@@ -23,9 +24,11 @@ extension Reducers {
         case let isAppearAction as FieldListAction.IsAppearAction:
             return FieldListReducerHandler().handle(isAppearAction: isAppearAction, state)
         case let updateFieldAction as FieldListAction.UpdateFieldAction:
-            return HandlerUpdateFieldAction().handle(action: updateFieldAction, state)
+            return FieldListReducerHandler
+                .HandlerUpdateFieldAction().handle(action: updateFieldAction, state)
         case let removeFieldAction as FieldListAction.RemoveFieldAction:
-            return HandlerRemoveFieldAction().handle(action: removeFieldAction, state)
+            return FieldListReducerHandler
+                .HandlerRemoveFieldAction().handle(action: removeFieldAction, state)
         default:
             return state
         }

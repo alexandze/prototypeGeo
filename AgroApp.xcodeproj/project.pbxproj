@@ -11,6 +11,7 @@
 		7F1D50DE24E3509100486C81 /* AddProducerFormFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1D50DD24E3509100486C81 /* AddProducerFormFactory.swift */; };
 		7F1D50E124E35F5A00486C81 /* AddProducerFormFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1D50E024E35F5900486C81 /* AddProducerFormFactoryTests.swift */; };
 		7FED3A5D24E4B53E0071A20B /* HandlerCheckIfInputElemenIsValidAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FED3A5C24E4B53E0071A20B /* HandlerCheckIfInputElemenIsValidAction.swift */; };
+		7FF7F13324E6170300F99A3D /* HandlerCheckIfAllInputElementIsValidAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF7F13224E6170300F99A3D /* HandlerCheckIfAllInputElementIsValidAction.swift */; };
 		9805683423B92DD40056D199 /* FarmerFormated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9805683323B92DD40056D199 /* FarmerFormated.swift */; };
 		9805683823B954630056D199 /* FarmerTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9805683723B954630056D199 /* FarmerTableViewModel.swift */; };
 		980ECA142430261700AAD0AB /* SelectFormCulturalPracticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980ECA132430261700AAD0AB /* SelectFormCulturalPracticeView.swift */; };
@@ -174,6 +175,7 @@
 		7F1D50DD24E3509100486C81 /* AddProducerFormFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProducerFormFactory.swift; sourceTree = "<group>"; };
 		7F1D50E024E35F5900486C81 /* AddProducerFormFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProducerFormFactoryTests.swift; sourceTree = "<group>"; };
 		7FED3A5C24E4B53E0071A20B /* HandlerCheckIfInputElemenIsValidAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerCheckIfInputElemenIsValidAction.swift; sourceTree = "<group>"; };
+		7FF7F13224E6170300F99A3D /* HandlerCheckIfAllInputElementIsValidAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerCheckIfAllInputElementIsValidAction.swift; sourceTree = "<group>"; };
 		825DECEC2C742A323721D8B0 /* Pods_prototypeGeoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_prototypeGeoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9805683323B92DD40056D199 /* FarmerFormated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FarmerFormated.swift; sourceTree = "<group>"; };
 		9805683723B954630056D199 /* FarmerTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FarmerTableViewModel.swift; sourceTree = "<group>"; };
@@ -693,6 +695,7 @@
 				9891610924DC940F005E1F7C /* AddProducerFormReducer.swift */,
 				98DC7B5724E0667F00A898B6 /* HandlerGetListElementUIDataWihoutValue.swift */,
 				7FED3A5C24E4B53E0071A20B /* HandlerCheckIfInputElemenIsValidAction.swift */,
+				7FF7F13224E6170300F99A3D /* HandlerCheckIfAllInputElementIsValidAction.swift */,
 			);
 			path = AddProducerFormReducer;
 			sourceTree = "<group>";
@@ -1240,6 +1243,7 @@
 				98D1929223C012E300BF9A7A /* AppDependencyContainer.swift in Sources */,
 				9860400A23BD8BC800D5B538 /* FarmerReducer.swift in Sources */,
 				9891610C24DC97B2005E1F7C /* AddProducerFormState.swift in Sources */,
+				7FF7F13324E6170300F99A3D /* HandlerCheckIfAllInputElementIsValidAction.swift in Sources */,
 				9894340C2410FAF0003C0110 /* FieldSelectedViewCell.swift in Sources */,
 				989090AC24C18B9D00AFC080 /* MapFieldReducer.swift in Sources */,
 				98C77E7324B024AF00AA6423 /* UIButtonRepresentable.swift in Sources */,

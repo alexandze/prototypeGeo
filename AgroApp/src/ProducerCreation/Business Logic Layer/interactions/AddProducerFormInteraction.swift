@@ -39,7 +39,7 @@ class AddProducerFormInteractionImpl: AddProducerFormInteraction {
             )
         }
     }
-    
+
     func checkIfInputElemenIsValidAction(uuid: UUID, value: String) {
         _ = Util.runInSchedulerBackground { [weak self] in
             self?.actionDispatcher.dispatch(
