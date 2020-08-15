@@ -9,10 +9,10 @@
 import Foundation
 extension AddProducerFormReducerHandler {
     class HandlerGetListElementUIDataWihoutValue: HandlerReducer {
-        let addProducerFormFactory: AddProducerFormFactory
+        let addProducerFormService: AddProducerFormService
 
-        init(addProducerFormFactory: AddProducerFormFactory = AddProducerFormFactoryImpl()) {
-            self.addProducerFormFactory = addProducerFormFactory
+        init(addProducerFormService: AddProducerFormService = AddProducerFormServiceImpl()) {
+            self.addProducerFormService = addProducerFormService
         }
 
         func handle(
@@ -20,7 +20,7 @@ extension AddProducerFormReducerHandler {
             _ state: AddProducerFormState
         ) -> AddProducerFormState {
             let util = UtilHandlerGetListElementUIData(
-                addProducerFormFactory: addProducerFormFactory,
+                addProducerFormService: addProducerFormService,
                 state: state
             )
 
@@ -35,13 +35,13 @@ extension AddProducerFormReducerHandler {
             guard var newUtil = util
                 else { return nil }
 
-            guard newUtil.state.utilElementUIDataSwiftUI == nil ||
-                newUtil.state.utilElementUIDataSwiftUI!.isEmpty
+            guard newUtil.state.elementUIDataObservableList == nil ||
+                newUtil.state.elementUIDataObservableList!.isEmpty
                 else {
                     return newUtil
             }
 
-            newUtil.utilElementUIDataSwiftUI = newUtil.addProducerFormFactory.makeElementsUIData()
+            newUtil.elementUIDataObservableList = newUtil.addProducerFormService.getElementUIDataObservableList()
             return newUtil
         }
 
@@ -53,15 +53,15 @@ extension AddProducerFormReducerHandler {
                 else { return nil }
 
             return newUtil.state.changeValues(
-                utilElementUIDataSwiftUI: newUtil.utilElementUIDataSwiftUI,
+                elementUIDataObservableList: newUtil.elementUIDataObservableList,
                 responseAction: .getListElementUIDataWihoutValueResponse
             )
         }
     }
 
     private struct UtilHandlerGetListElementUIData {
-        var addProducerFormFactory: AddProducerFormFactory
+        var addProducerFormService: AddProducerFormService
         var state: AddProducerFormState
-        var utilElementUIDataSwiftUI: [UtilElementUIDataSwiftUI] = []
+        var elementUIDataObservableList: [ElementUIDataObservable] = []
     }
 }

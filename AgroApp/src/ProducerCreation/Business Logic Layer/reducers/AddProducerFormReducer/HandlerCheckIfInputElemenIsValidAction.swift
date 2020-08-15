@@ -16,7 +16,7 @@ extension AddProducerFormReducerHandler {
             _ state: AddProducerFormState
         ) -> AddProducerFormState {
             let util =  UtilCheckIfInputElemenIsValidAction(
-                uuid: action.uuid,
+                id: action.id,
                 value: action.value,
                 state: state
             )
@@ -34,11 +34,11 @@ extension AddProducerFormReducerHandler {
             util: UtilCheckIfInputElemenIsValidAction?
         ) -> UtilCheckIfInputElemenIsValidAction? {
             guard var newUtil = util,
-                let utilElementUIDataList = newUtil.state.utilElementUIDataSwiftUI
+                let elementUIDataObservableList = newUtil.state.elementUIDataObservableList
                 else { return nil }
 
-            let indexFindOfInputElement = utilElementUIDataList.firstIndex { utilElementUIData in
-                utilElementUIData.uuid == newUtil.uuid
+            let indexFindOfInputElement = elementUIDataObservableList.firstIndex { elementUIData in
+                elementUIData.id == newUtil.id
             }
 
             guard let indexFind = indexFindOfInputElement else { return nil }
@@ -51,26 +51,10 @@ extension AddProducerFormReducerHandler {
         ) -> UtilCheckIfInputElemenIsValidAction? {
             guard var newUtil = util,
                 let indexFind = newUtil.indexFind,
-                let utilElementUIDataList = newUtil.state.utilElementUIDataSwiftUI
+                let elementUIDataObservable = (newUtil.state.elementUIDataObservableList?[indexFind] as? InputElementDataObservable)
                 else { return nil }
 
-            guard let regularExpression = utilElementUIDataList[indexFind].regularExpression else {
-                newUtil.isValid = true
-                return newUtil
-            }
-
-            let value = utilElementUIDataList[indexFind]
-                .valueState.trimmingCharacters(in: .whitespacesAndNewlines)
-
-            guard !value.isEmpty else {
-                newUtil.isValid = false
-                return newUtil
-            }
-
-            let isValid = regularExpression
-                .matches(in: value, range: NSRange(location: 0, length: value.count)).count == 1
-
-            newUtil.isValid = isValid
+            newUtil.isValid = elementUIDataObservable.isInputValid()
             return newUtil
         }
 
@@ -80,15 +64,15 @@ extension AddProducerFormReducerHandler {
             guard var newUtil = util,
                 let indexFind = newUtil.indexFind,
                 let isValid = newUtil.isValid,
-                let utilElementList = newUtil.state.utilElementUIDataSwiftUI,
-                var inputElement = (utilElementList[indexFind].elementUIData as? InputElementData)
+                let inputElement = (newUtil.state.elementUIDataObservableList?[indexFind] as? InputElementDataObservable),
+                var elementUIDataObservableList = newUtil.state.elementUIDataObservableList
                 else {
                     return nil
             }
 
             inputElement.isValid = isValid
-            utilElementList[indexFind].elementUIData = inputElement
-            newUtil.newUtilElementUIDataList = utilElementList
+            elementUIDataObservableList[indexFind] = inputElement
+            newUtil.elementUIDataObservableList = elementUIDataObservableList
             return newUtil
         }
 
@@ -96,13 +80,13 @@ extension AddProducerFormReducerHandler {
             util: UtilCheckIfInputElemenIsValidAction?
         ) -> AddProducerFormState? {
             guard let indexFind = util?.indexFind,
-                let newUtilElementList = util?.newUtilElementUIDataList
+                let elementUIDataObservableList = util?.elementUIDataObservableList
                 else {
                     return nil
             }
 
             return util?.state.changeValues(
-                utilElementUIDataSwiftUI: newUtilElementList,
+                elementUIDataObservableList: elementUIDataObservableList,
                 responseAction: .checkIfInputElemenIsValidActionResponse(
                     index: indexFind
                 )
@@ -111,12 +95,12 @@ extension AddProducerFormReducerHandler {
     }
 
     private struct UtilCheckIfInputElemenIsValidAction {
-        var uuid: UUID
+        var id: UUID
         var value: String
         var state: AddProducerFormState
         var indexFind: Int?
         var isValid: Bool?
-        var newUtilElementUIDataList: [UtilElementUIDataSwiftUI]?
+        var elementUIDataObservableList: [ElementUIDataObservable]?
     }
 
 }

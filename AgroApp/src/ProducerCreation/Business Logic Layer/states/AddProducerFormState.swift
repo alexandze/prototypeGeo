@@ -15,16 +15,16 @@ struct AddProducerFormState: Equatable {
     }
 
     var uuidState: String
-    var utilElementUIDataSwiftUI: [UtilElementUIDataSwiftUI]?
+    var elementUIDataObservableList: [ElementUIDataObservable]?
     var responseAction: ResponseAction?
 
     func changeValues(
-        utilElementUIDataSwiftUI: [UtilElementUIDataSwiftUI]? = nil,
+        elementUIDataObservableList: [ElementUIDataObservable]? = nil,
         responseAction: ResponseAction
     ) -> AddProducerFormState {
         AddProducerFormState(
             uuidState: UUID().uuidString,
-            utilElementUIDataSwiftUI: utilElementUIDataSwiftUI ?? self.utilElementUIDataSwiftUI,
+            elementUIDataObservableList: elementUIDataObservableList ?? self.elementUIDataObservableList,
             responseAction: responseAction
         )
     }
@@ -32,6 +32,7 @@ struct AddProducerFormState: Equatable {
     enum ResponseAction {
         case getListElementUIDataWihoutValueResponse
         case checkIfInputElemenIsValidActionResponse(index: Int)
+        case checkIfAllInputElementIsValidActionResponse(isAllInputValid: Bool)
         case notResponse
     }
 }

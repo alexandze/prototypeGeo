@@ -40,13 +40,21 @@ class AddProducerFormInteractionImpl: AddProducerFormInteraction {
         }
     }
 
-    func checkIfInputElemenIsValidAction(uuid: UUID, value: String) {
+    func checkIfInputElemenIsValidAction(id: UUID, value: String) {
         _ = Util.runInSchedulerBackground { [weak self] in
             self?.actionDispatcher.dispatch(
                 AddProducerFormAction.CheckIfInputElemenIsValidAction(
-                    uuid: uuid,
+                    id: id,
                     value: value
                 )
+            )
+        }
+    }
+
+    func checkIfAllInputElementIsValidAction() {
+        _ = Util.runInSchedulerBackground { [weak self] in
+            self?.actionDispatcher.dispatch(
+                AddProducerFormAction.CheckIfAllInputElementIsValidAction()
             )
         }
     }
@@ -56,5 +64,6 @@ protocol AddProducerFormInteraction {
     func getListElementUIDataWithoutValueAction()
     func setTitleContainerTitleNavigation(title: String)
     func setCurrentViewControllerInNavigation()
-    func checkIfInputElemenIsValidAction(uuid: UUID, value: String)
+    func checkIfInputElemenIsValidAction(id: UUID, value: String)
+    func checkIfAllInputElementIsValidAction()
 }

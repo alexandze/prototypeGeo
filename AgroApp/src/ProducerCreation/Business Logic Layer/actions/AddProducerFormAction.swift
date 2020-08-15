@@ -13,7 +13,7 @@ struct AddProducerFormAction {
     struct GetListElementUIDataWithoutValueAction: Action { }
 
     struct CheckIfInputElemenIsValidAction: Action {
-        var uuid: UUID
+        var id: UUID
         var value: String
     }
 

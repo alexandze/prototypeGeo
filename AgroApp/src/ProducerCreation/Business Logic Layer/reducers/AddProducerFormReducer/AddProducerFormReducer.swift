@@ -21,7 +21,8 @@ extension Reducers {
             return AddProducerFormReducerHandler
                 .HandlerCheckIfInputElemenIsValidAction().handle(action: checkIfInputElemenIsValidAction, state)
         case let checkIfAllInputElementIsValidAction as AddProducerFormAction.CheckIfAllInputElementIsValidAction:
-            return state
+            return AddProducerFormReducerHandler
+                .HandlerCheckIfAllInputElementIsValidAction().handle(action: checkIfAllInputElementIsValidAction, state)
         default:
             return state
         }

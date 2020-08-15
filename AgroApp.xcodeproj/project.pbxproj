@@ -10,6 +10,7 @@
 		1D9906770E6E2074C3379909 /* Pods_AgroApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AC948D72A5D5DE7D8A1FDB4 /* Pods_AgroApp.framework */; };
 		7F1D50DE24E3509100486C81 /* AddProducerFormFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1D50DD24E3509100486C81 /* AddProducerFormFactory.swift */; };
 		7F1D50E124E35F5A00486C81 /* AddProducerFormFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1D50E024E35F5900486C81 /* AddProducerFormFactoryTests.swift */; };
+		7F34F01D24E76FF7001278CA /* AddProducerFormService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F34F01C24E76FF7001278CA /* AddProducerFormService.swift */; };
 		7FED3A5D24E4B53E0071A20B /* HandlerCheckIfInputElemenIsValidAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FED3A5C24E4B53E0071A20B /* HandlerCheckIfInputElemenIsValidAction.swift */; };
 		7FF7F13324E6170300F99A3D /* HandlerCheckIfAllInputElementIsValidAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF7F13224E6170300F99A3D /* HandlerCheckIfAllInputElementIsValidAction.swift */; };
 		9805683423B92DD40056D199 /* FarmerFormated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9805683323B92DD40056D199 /* FarmerFormated.swift */; };
@@ -174,6 +175,7 @@
 		7AC948D72A5D5DE7D8A1FDB4 /* Pods_AgroApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AgroApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F1D50DD24E3509100486C81 /* AddProducerFormFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProducerFormFactory.swift; sourceTree = "<group>"; };
 		7F1D50E024E35F5900486C81 /* AddProducerFormFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProducerFormFactoryTests.swift; sourceTree = "<group>"; };
+		7F34F01C24E76FF7001278CA /* AddProducerFormService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProducerFormService.swift; sourceTree = "<group>"; };
 		7FED3A5C24E4B53E0071A20B /* HandlerCheckIfInputElemenIsValidAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerCheckIfInputElemenIsValidAction.swift; sourceTree = "<group>"; };
 		7FF7F13224E6170300F99A3D /* HandlerCheckIfAllInputElementIsValidAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerCheckIfAllInputElementIsValidAction.swift; sourceTree = "<group>"; };
 		825DECEC2C742A323721D8B0 /* Pods_prototypeGeoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_prototypeGeoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -536,14 +538,6 @@
 			path = models;
 			sourceTree = "<group>";
 		};
-		98363B4523DEE30600AFFC63 /* services */ = {
-			isa = PBXGroup;
-			children = (
-				98363B4B23DEE57A00AFFC63 /* MapFieldService.swift */,
-			);
-			path = services;
-			sourceTree = "<group>";
-		};
 		98363B4623DEE33300AFFC63 /* repositories */ = {
 			isa = PBXGroup;
 			children = (
@@ -881,7 +875,8 @@
 		98DFE6FC24AC0316007CC832 /* Service Layer */ = {
 			isa = PBXGroup;
 			children = (
-				98363B4523DEE30600AFFC63 /* services */,
+				98363B4B23DEE57A00AFFC63 /* MapFieldService.swift */,
+				7F34F01C24E76FF7001278CA /* AddProducerFormService.swift */,
 			);
 			path = "Service Layer";
 			sourceTree = "<group>";
@@ -1203,6 +1198,7 @@
 				98EBA95424B1654A00D233D0 /* InputFormCulturalPracticeAction.swift in Sources */,
 				9830049024AC2B8300CDF624 /* ProducerCreationDependencyContainer.swift in Sources */,
 				98F1269E24C6F029001853D5 /* Avaloir.swift in Sources */,
+				7F34F01D24E76FF7001278CA /* AddProducerFormService.swift in Sources */,
 				9847564524AED2FC0048A503 /* InputFormCulturalPracticeView.swift in Sources */,
 				98363B5123DEEC7A00AFFC63 /* mapFieldMiddleware.swift in Sources */,
 				9860400423BD868A00D5B538 /* FarmerTableVIewControllerState.swift in Sources */,

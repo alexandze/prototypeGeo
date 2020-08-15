@@ -10,105 +10,118 @@ import SwiftUI
 
 class AddProducerFormFactoryImpl: AddProducerFormFactory {
 
-    let firstNameTitle = "Prénom"
-    let lastNameTitle = "Nom"
-    let emailTitle = "Email"
-    let nimTitle = "NIM"
-    let addButtonTitle = "+"
-    let firstNamePattern = "[A-Za-z àáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]{2,50}"
-    let lastNamePattern = "[A-Za-z àáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]{2,50}"
-    let emailPattern = "^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}$"
-    let nimPattern = "^[A-Z0-9]{2,}$"
-    let defaultPattern = ".+?$"
+    private let firstNameTitle = "Prénom"
+    private let lastNameTitle = "Nom"
+    private let emailTitle = "Email"
+    private let nimTitle = "NIM"
+    private let addButtonTitle = "+"
+    private let firstNamePattern = "[A-Za-z àáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]{2,50}"
+    private let lastNamePattern = "[A-Za-z àáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]{2,50}"
+    private let emailPattern = "^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}$"
+    private let nimPattern = "^[A-Z0-9]{2,}$"
+    private let defaultPattern = ".+?$"
 
-    func makeElementsUIData() -> [UtilElementUIDataSwiftUI] {
+    func makeElementUIDataObservableList() -> [ElementUIDataObservable] {
         [
-            self.makeFirstNameInputUtilElementUIDataSwiftUI(),
-            self.makeLastNameInputUtilElementUIDataSwiftUI(),
-            self.makeEmailInputUtilElementUIDataSwiftUI(),
-            self.makeNimInputUtilElementUIDataSwiftUI(),
-            self.makeAddNimButtonUtilElementUIDataSwiftUI()
+            self.makeFirstNameInputElementObservable(),
+            self.makeLastNameInputElementObservable(),
+            self.makeEmailInputElementObservable(),
+            self.makeNimInputElementObservable(),
+            self.makeAddNimButtonElementObservable()
         ]
     }
 
-    func makeFirstNameInputUtilElementUIDataSwiftUI(value: String? = nil) -> UtilElementUIDataSwiftUI {
-        let inputElement = makeInputElement(
+    private func makeFirstNameInputElementObservable(value: String? = nil) -> ElementUIDataObservable {
+        makeInputElementObservable(
             title: firstNameTitle,
             value: value,
             regexPattern: firstNamePattern
         )
-
-        return makeUtilElementUIDataSwiftUI(inputElement: inputElement)
     }
 
-    func makeLastNameInputUtilElementUIDataSwiftUI(value: String? = nil) -> UtilElementUIDataSwiftUI {
-        let inputElement = makeInputElement(
+    private func makeLastNameInputElementObservable(value: String? = nil) -> ElementUIDataObservable {
+        makeInputElementObservable(
             title: lastNameTitle,
             value: value,
             regexPattern: lastNamePattern
         )
-
-        return makeUtilElementUIDataSwiftUI(inputElement: inputElement)
     }
 
-    func makeEmailInputUtilElementUIDataSwiftUI(value: String? = nil) -> UtilElementUIDataSwiftUI {
-        let inputElement = makeInputElement(
+    private func makeEmailInputElementObservable(value: String? = nil) -> ElementUIDataObservable {
+        makeInputElementObservable(
             title: self.emailTitle,
             value: value,
             regexPattern: emailPattern,
             isRequired: false,
             keyboardType: .email
         )
-
-        return makeUtilElementUIDataSwiftUI(inputElement: inputElement)
     }
 
-    func makeNimInputUtilElementUIDataSwiftUI(value: String? = nil) -> UtilElementUIDataSwiftUI {
-        let inputElement = makeInputElement(
+    private func makeNimInputElementObservable(value: String? = nil) -> ElementUIDataObservable {
+        makeInputElementObservable(
             title: self.nimTitle,
             value: value,
             regexPattern: nimPattern
         )
-
-        return makeUtilElementUIDataSwiftUI(inputElement: inputElement)
     }
 
-    func makeAddNimButtonUtilElementUIDataSwiftUI(isEnabled: Bool? = nil) -> UtilElementUIDataSwiftUI {
-        let button = ButtonElement(
+    private func makeAddNimButtonElementObservable(isEnabled: Bool? = nil) -> ElementUIDataObservable {
+        ButtonElementObservable(
             title: addButtonTitle,
             isEnabled: isEnabled ?? true,
             action: ElementFormAction.add.rawValue
         )
-
-        return UtilElementUIDataSwiftUI(elementUIData: button)
     }
 
-    func makeInputElement(
+    private func makeNimInputElementWithRemoveButton(numberNim: Int, value: String? = nil) -> InputElementWithRemoveButtonObservable {
+        makeInputElementWithRemoveButtonObservable(
+            title: "\(self.nimTitle) \(numberNim)",
+            value: value ?? "",
+            regexPattern: self.nimPattern,
+            isRequired: true,
+            keyboardType: .normal
+        )
+    }
+
+    private func makeInputElementWithRemoveButtonObservable(
         title: String,
         value: String? = nil,
         regexPattern: String? = nil,
         isRequired: Bool? = nil,
         keyboardType: KeyboardType = .normal
-    ) -> InputElement {
-        InputElement(
+    ) -> InputElementWithRemoveButtonObservable {
+        let inputElementWithRemoveButton = InputElementWithRemoveButtonObservable(
+            title: title,
+            value: value ?? "",
+            isValid: false,
+            isRequired: isRequired ?? true,
+            action: ElementFormAction.remove.rawValue,
+            regexPattern: regexPattern ?? self.defaultPattern
+        )
+
+        inputElementWithRemoveButton.isValid = inputElementWithRemoveButton.isInputValid()
+        return inputElementWithRemoveButton
+    }
+
+    private func makeInputElementObservable(
+        title: String,
+        value: String? = nil,
+        regexPattern: String? = nil,
+        isRequired: Bool? = nil,
+        keyboardType: KeyboardType = .normal
+    ) -> InputElementObservable {
+        let inputElement = InputElementObservable(
             title: title,
             value: value ?? "",
             isValid: false,
             isRequired: isRequired ?? true,
             regexPattern: regexPattern ?? self.defaultPattern,
-            keyboardType: keyboardType
+            keyboardType: keyboardType,
+            regex: self.makeRegularExpression(regexPattern)
         )
-    }
 
-    func makeUtilElementUIDataSwiftUI(inputElement: InputElement) -> UtilElementUIDataSwiftUI {
-        let regularExpression = self.makeRegularExpression(inputElement.regexPattern)
-        var copyInputElement = inputElement
-        copyInputElement.isValid = self.isInputValueValid(copyInputElement.value, regularExpression)
-
-        return UtilElementUIDataSwiftUI(
-            elementUIData: copyInputElement,
-            regularExpression: regularExpression
-        )
+        inputElement.isValid = inputElement.isInputValid()
+        return inputElement
     }
 
     private func makeRegularExpression(_ regexPattern: String?) -> NSRegularExpression? {
@@ -118,19 +131,10 @@ class AddProducerFormFactoryImpl: AddProducerFormFactory {
 
         return try? NSRegularExpression(pattern: regexPattern, options: [.caseInsensitive])
     }
-
-    private func isInputValueValid(_ value: String?, _ regularExpression: NSRegularExpression?) -> Bool {
-        guard let value = value,
-            let regularExpression = regularExpression,
-            !value.isEmpty
-            else { return false }
-
-        return regularExpression.matches(in: value, range: NSRange(location: 0, length: value.count)).count == 1
-    }
 }
 
 protocol AddProducerFormFactory {
-    func makeElementsUIData() -> [UtilElementUIDataSwiftUI]
+    func makeElementUIDataObservableList() -> [ElementUIDataObservable]
 }
 
 class UtilElementUIDataSwiftUI: ObservableObject, Identifiable {

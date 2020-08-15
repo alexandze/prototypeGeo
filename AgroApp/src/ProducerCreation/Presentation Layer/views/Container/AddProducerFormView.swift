@@ -30,20 +30,27 @@ struct AddProducerFormView: View {
             VStack {
                 ScrollView {
                     VStack {
-                        ForEach(self.viewState.utilElementUIDataSwiftUIList) { (util: UtilElementUIDataSwiftUI) in
+                        ForEach(self.viewState.elementUIDataObservableList) { (elementUIData: ElementUIDataObservable) in
                             VStack {
-                                if util.elementUIData.type == InputElement.TYPE_ELEMENT {
-                                    InputWithTitleElement(util: util).padding(15)
+                                if (elementUIData.type == InputElementObservable.TYPE_ELEMENT) {
+                                    InputWithTitleElement(elementUIData: elementUIData)
+                                        .padding(15)
                                 }
 
-                                if util.elementUIData.type == ButtonElement.TYPE {
+                                if elementUIData.type == ButtonElementObservable.TYPE_ELEMENT {
                                     HStack {
-                                        ButtonAdd(util: util) { print("Add")}
+                                        ButtonAdd(elementUIData: elementUIData) { print("Add")}
                                         Spacer()
                                     }.padding(.leading, 15)
                                         .padding(.top, -20)
                                 }
+
                             }
+                        }
+
+                        if self.isKeyboardVisible() {
+                            self.getButtonValidate()
+                                .padding(.vertical, 15)
                         }
                     }
                 }.frame(
@@ -54,8 +61,8 @@ struct AddProducerFormView: View {
                     alignment: .top
                 )//.offset(y: self.isKeyboardVisible() ? -self.keyboardFollower.keyboardHeight + self.getOffset(geometryProxy: geometryProxy) : 0)
                     .onAppear {
-                    self.viewModel.configView()
-                    self.viewModel.subscribeToStateObservable()
+                        self.viewModel.configView()
+                        self.viewModel.subscribeToStateObservable()
                 }
                 .onDisappear {
                     self.viewModel.dispose()
@@ -64,54 +71,27 @@ struct AddProducerFormView: View {
 
                 Spacer()
 
-                ButtonValidate(
-                    title: "Valider",
-                    isButtonActivated: true,
-                    action: {
-                        self.viewModel.handleButtonValidate()
-                    }
-                ).padding(.bottom, 20)
-
+                if !self.isKeyboardVisible() {
+                    self.getButtonValidate()
+                        .padding(.bottom, 20)
+                }
             }.environmentObject(self.viewModel.viewState)
-            .environmentObject(self.keyboardFollower)
-            .environmentObject(
-                DimensionScreen(width: geometryProxy.size.width, height: geometryProxy.size.height)
+                .environmentObject(self.keyboardFollower)
+                .environmentObject(
+                    DimensionScreen(width: geometryProxy.size.width, height: geometryProxy.size.height)
             )
 
         }
     }
 
-    private func getValueBinding(_ index: Int) -> Binding<String> {
-        $viewState.utilElementUIDataSwiftUIList[index].valueState
-    }
-
-    private func getIsValid(_ index: Int) -> Bool {
-        (viewState.utilElementUIDataSwiftUIList[index].elementUIData as? InputElement)?.isValid ?? false
-    }
-
-    private func getTitle(_ index: Int) -> String {
-        viewState.utilElementUIDataSwiftUIList[index].elementUIData.title
-    }
-
-    private func getIsRequired(_ index: Int) -> Bool {
-        (viewState.utilElementUIDataSwiftUIList[index].elementUIData as? InputElementData)?.isRequired ?? true
-    }
-
-    private func getKeyboardType(_ index: Int) -> KeyboardType {
-        (viewState.utilElementUIDataSwiftUIList[index].elementUIData as? InputElementData)?.keyboardType ?? .normal
-    }
-
-    private func isButtonAddElement(_ index: Int) -> Bool {
-        guard let buttonAdd = viewState.utilElementUIDataSwiftUIList[index].elementUIData as? ButtonElement,
-            buttonAdd.action == ElementFormAction.add.rawValue else {
-            return false
+    private func getButtonValidate() -> some View {
+        ButtonValidate(
+            title: "Valider",
+            isButtonActivated: self.viewState.isAllInputValid,
+            action: {
+                self.viewModel.handleButtonValidate()
         }
-
-        return true
-    }
-
-    private func isInputElement(_ index: Int) -> Bool {
-        viewState.utilElementUIDataSwiftUIList[index].elementUIData.type == InputElement.TYPE_ELEMENT
+        )
     }
 
     private func isKeyboardVisible() -> Bool {
@@ -133,66 +113,23 @@ struct AddProducerFormView: View {
     }
 }
 
-private struct InputWithTitleRemoveButton: View {
-    var uuidUtilElementUIData: UUID
-    var title: String
-    var isValid: Bool
-    var value: Published<String>.Publisher
-    @State var myValue = ""
-
-    var handleRemoveButton: (UUID) -> Void
-    @Environment(\.colorScheme) var colorScheme
-
-    var body: some View {
-        VStack {
-            HStack {
-                Text(self.title)
-                Spacer()
-            }
-
-            HStack {
-                ZStack {
-                    TextField(
-                        "",
-                        text: self.$myValue
-                        )
-                        .padding(
-                        EdgeInsets(top: 8, leading: 10, bottom: 8, trailing: 50)
-                    ).background(colorScheme == .dark ? Color.black : Color.white)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 5)
-                                .stroke(lineWidth: 2)
-                                .foregroundColor(isValid ? .green : .red)
-                    )
-
-                    HStack {
-                        Spacer()
-
-                        if isValid {
-                            getValidImage()
-                        } else {
-                            getNoValidImage()
-                        }
-                    }
-                }
-
-                getRemoveImage()
-                    .onTapGesture {
-                        self.handleRemoveButton(self.uuidUtilElementUIData)
-                }
-            }
-        }
-    }
-}
-
 private struct InputWithTitleElement: View {
-    @ObservedObject var util: UtilElementUIDataSwiftUI
+    @ObservedObject var inputElement: InputElementDataObservable
     @Environment(\.colorScheme) var colorScheme
+
+    init(elementUIData: ElementUIDataObservable) {
+        guard let inputElementData = elementUIData as? InputElementObservable else {
+            self.inputElement = InputElementObservable.makeDefault()
+            return
+        }
+
+        self.inputElement = inputElementData
+    }
 
     var body: some View {
         VStack(alignment: .center, spacing: 2) {
             HStack {
-                Text(self.util.elementUIData.title)
+                Text(self.inputElement.title)
                 Spacer()
             }
 
@@ -200,10 +137,10 @@ private struct InputWithTitleElement: View {
                 ZStack {
                     TextField(
                         "",
-                        text: $util.valueState
-                    ).keyboardType(self.getKeyboardType())
+                        text: $inputElement.value
+                    ).keyboardType(self.inputElement.keyboardType.getUIKeyboardType())
                         .padding(
-                        EdgeInsets(top: 8, leading: 10, bottom: 8, trailing: 50)
+                            EdgeInsets(top: 8, leading: 10, bottom: 8, trailing: 50)
                     ).background(colorScheme == .dark ? Color.black : Color.white)
                         .overlay(
                             RoundedRectangle(cornerRadius: 5)
@@ -214,15 +151,15 @@ private struct InputWithTitleElement: View {
                     HStack {
                         Spacer()
 
-                        if self.getIsValid() {
+                        if self.inputElement.isValid {
                             getValidImage()
                         }
 
-                        if !self.getIsValid() && self.getIsRequired() {
+                        if !self.inputElement.isValid && self.inputElement.isRequired {
                             getNoValidImage()
                         }
 
-                        if !self.getIsValid() && !self.getIsRequired() {
+                        if !self.inputElement.isValid && !self.inputElement.isRequired {
                             getWarningImage().padding(.trailing, 5)
                         }
                     }
@@ -239,26 +176,14 @@ private struct InputWithTitleElement: View {
         }
     }
 
-    private func getKeyboardType() -> UIKeyboardType {
-        (util.elementUIData as? InputElementData)?.keyboardType.getUIKeyboardType() ?? .default
-    }
-
-    private func getIsValid() -> Bool {
-        (util.elementUIData as? InputElementData)?.isValid ?? false
-    }
-
-    private func getIsRequired() -> Bool {
-        (util.elementUIData as? InputElementData)?.isRequired ?? true
-    }
-
     private func getForegroundColorOfRoundedRectangle() -> Color {
-        self.getIsRequired()
-            ? self.getIsValid() ? .green : .red
-            : self.getIsValid() ? .green : .yellow
+        self.inputElement.isRequired
+            ? self.inputElement.isValid ? .green : .red
+            : self.inputElement.isValid ? .green : .yellow
     }
 
     private func isInputElementWithRemoveButton() -> Bool {
-        (util.elementUIData as? InputElementWithRemoveButton) != nil
+        (self.inputElement as? InputElementWithRemoveButtonObservable) != nil
     }
 }
 
@@ -277,30 +202,47 @@ private struct ButtonValidate: View {
                     width: dimensionScreen.width * 0.6,
                     height: dimensionScreen.height * 0.09
             )
-        }.frame(
-            width: dimensionScreen.width * 0.6,
-            height: dimensionScreen.height * 0.09
+        }.disabled(!isButtonActivated)
+            .frame(
+                width: dimensionScreen.width * 0.6,
+                height: dimensionScreen.height * 0.09
         ).foregroundColor(.white)
-            .background(Color(Util.getGreenColor()))
+            .background(self.getBackgroundColor())
             .cornerRadius(10)
+    }
+
+    private func getBackgroundColor() -> Color {
+        isButtonActivated ? Color(Util.getGreenColor()) : .red
     }
 }
 
 private struct ButtonAdd: View {
-    @ObservedObject var util: UtilElementUIDataSwiftUI
+    @ObservedObject var buttonElement: ButtonElementObservable
     @EnvironmentObject var dimensionScreen: DimensionScreen
     @Environment(\.colorScheme) var colorScheme
     var action: () -> Void
 
+    init(elementUIData: ElementUIDataObservable, action: @escaping () -> Void) {
+        guard let buttonElement = elementUIData as? ButtonElementObservable else {
+            self.buttonElement = ButtonElementObservable.makeDefault()
+            self.action = action
+            return
+        }
+
+        self.buttonElement = buttonElement
+        self.action = action
+    }
+
     var body: some View {
         Button(action: { self.action() }) {
-            Text(util.elementUIData.title)
+            Text(buttonElement.title)
                 .frame(
                     width: dimensionScreen.width * 0.2,
                     height: dimensionScreen.height * 0.06,
                     alignment: .center
             ).font(.system(size: 45))
-        }.frame(
+        }
+        .frame(
             width: dimensionScreen.width * 0.2,
             height: dimensionScreen.height * 0.06,
             alignment: .center
