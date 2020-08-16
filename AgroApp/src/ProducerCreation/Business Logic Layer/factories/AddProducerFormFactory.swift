@@ -9,12 +9,11 @@
 import SwiftUI
 
 class AddProducerFormFactoryImpl: AddProducerFormFactory {
-
+    let nimTitle = "NIM"
     private let firstNameTitle = "Prénom"
     private let lastNameTitle = "Nom"
     private let emailTitle = "Email"
-    private let nimTitle = "NIM"
-    private let addButtonTitle = "+"
+    private let addButtonTitle = "NIM"
     private let firstNamePattern = "[A-Za-z àáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]{2,50}"
     private let lastNamePattern = "[A-Za-z àáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]{2,50}"
     private let emailPattern = "^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}$"
@@ -26,9 +25,31 @@ class AddProducerFormFactoryImpl: AddProducerFormFactory {
             self.makeFirstNameInputElementObservable(),
             self.makeLastNameInputElementObservable(),
             self.makeEmailInputElementObservable(),
-            self.makeNimInputElementObservable(),
-            self.makeAddNimButtonElementObservable()
+            self.makeNimInputElementObservable(number: 1)
         ]
+    }
+
+    func makeAddNimButtonElementObservable(isEnabled: Bool? = nil) -> ButtonElementObservable {
+        ButtonElementObservable(
+            title: addButtonTitle,
+            isEnabled: isEnabled ?? true,
+            action: ElementFormAction.add.rawValue
+        )
+    }
+
+    func makeNimInputElementWithRemoveButton(value: String? = nil, number: Int? = nil) -> InputElementWithRemoveButtonObservable {
+        makeInputElementWithRemoveButtonObservable(
+            title: "\(self.nimTitle)",
+            value: value ?? "",
+            regexPattern: self.nimPattern,
+            isRequired: true,
+            keyboardType: .normal,
+            number: number
+        )
+    }
+
+    func getMaxNim() -> Int {
+        Enterprise.MAX_ENTERPRISE
     }
 
     private func makeFirstNameInputElementObservable(value: String? = nil) -> ElementUIDataObservable {
@@ -57,29 +78,12 @@ class AddProducerFormFactoryImpl: AddProducerFormFactory {
         )
     }
 
-    private func makeNimInputElementObservable(value: String? = nil) -> ElementUIDataObservable {
+    private func makeNimInputElementObservable(value: String? = nil, number: Int? = nil) -> ElementUIDataObservable {
         makeInputElementObservable(
             title: self.nimTitle,
             value: value,
-            regexPattern: nimPattern
-        )
-    }
-
-    private func makeAddNimButtonElementObservable(isEnabled: Bool? = nil) -> ElementUIDataObservable {
-        ButtonElementObservable(
-            title: addButtonTitle,
-            isEnabled: isEnabled ?? true,
-            action: ElementFormAction.add.rawValue
-        )
-    }
-
-    private func makeNimInputElementWithRemoveButton(numberNim: Int, value: String? = nil) -> InputElementWithRemoveButtonObservable {
-        makeInputElementWithRemoveButtonObservable(
-            title: "\(self.nimTitle) \(numberNim)",
-            value: value ?? "",
-            regexPattern: self.nimPattern,
-            isRequired: true,
-            keyboardType: .normal
+            regexPattern: nimPattern,
+            number: number
         )
     }
 
@@ -88,7 +92,8 @@ class AddProducerFormFactoryImpl: AddProducerFormFactory {
         value: String? = nil,
         regexPattern: String? = nil,
         isRequired: Bool? = nil,
-        keyboardType: KeyboardType = .normal
+        keyboardType: KeyboardType = .normal,
+        number: Int? = nil
     ) -> InputElementWithRemoveButtonObservable {
         let inputElementWithRemoveButton = InputElementWithRemoveButtonObservable(
             title: title,
@@ -96,9 +101,11 @@ class AddProducerFormFactoryImpl: AddProducerFormFactory {
             isValid: false,
             isRequired: isRequired ?? true,
             action: ElementFormAction.remove.rawValue,
-            regexPattern: regexPattern ?? self.defaultPattern
+            regexPattern: regexPattern ?? self.defaultPattern,
+            number: number
         )
 
+        inputElementWithRemoveButton.regex = self.makeRegularExpression(inputElementWithRemoveButton.regexPattern)
         inputElementWithRemoveButton.isValid = inputElementWithRemoveButton.isInputValid()
         return inputElementWithRemoveButton
     }
@@ -108,7 +115,8 @@ class AddProducerFormFactoryImpl: AddProducerFormFactory {
         value: String? = nil,
         regexPattern: String? = nil,
         isRequired: Bool? = nil,
-        keyboardType: KeyboardType = .normal
+        keyboardType: KeyboardType = .normal,
+        number: Int? = nil
     ) -> InputElementObservable {
         let inputElement = InputElementObservable(
             title: title,
@@ -117,9 +125,10 @@ class AddProducerFormFactoryImpl: AddProducerFormFactory {
             isRequired: isRequired ?? true,
             regexPattern: regexPattern ?? self.defaultPattern,
             keyboardType: keyboardType,
-            regex: self.makeRegularExpression(regexPattern)
+            number: number
         )
 
+        inputElement.regex =  self.makeRegularExpression(inputElement.regexPattern)
         inputElement.isValid = inputElement.isInputValid()
         return inputElement
     }
@@ -134,26 +143,10 @@ class AddProducerFormFactoryImpl: AddProducerFormFactory {
 }
 
 protocol AddProducerFormFactory {
+    var nimTitle: String {get}
     func makeElementUIDataObservableList() -> [ElementUIDataObservable]
-}
+    func makeAddNimButtonElementObservable(isEnabled: Bool?) -> ButtonElementObservable
+    func getMaxNim() -> Int
+    func makeNimInputElementWithRemoveButton(value: String?, number: Int?) -> InputElementWithRemoveButtonObservable
 
-class UtilElementUIDataSwiftUI: ObservableObject, Identifiable {
-    var uuid = UUID()
-    var elementUIData: ElementUIData
-    @Published var valueState = ""
-    var regularExpression: NSRegularExpression?
-
-    init(
-        elementUIData: ElementUIData,
-        valueState: String? = nil,
-        regularExpression: NSRegularExpression? = nil
-    ) {
-        self.elementUIData = elementUIData
-
-        if let valueState = valueState {
-            self.valueState = valueState
-        }
-
-        self.regularExpression = regularExpression
-    }
 }

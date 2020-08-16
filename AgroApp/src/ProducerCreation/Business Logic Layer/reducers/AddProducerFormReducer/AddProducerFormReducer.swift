@@ -14,15 +14,18 @@ extension Reducers {
         let state = state ?? AddProducerFormState(uuidState: UUID().uuidString)
 
         switch action {
-        case let getListElementUIDataWithoutValueAction as AddProducerFormAction.GetListElementUIDataWithoutValueAction:
+        case let getAllElementUIDataWithoutValueAction as AddProducerFormAction.GetAllElementUIDataWithoutValueAction:
             return AddProducerFormReducerHandler
-                .HandlerGetListElementUIDataWihoutValue().handle(action: getListElementUIDataWithoutValueAction, state)
+                .HandlerGetAllElementUIDataWihoutValue().handle(action: getAllElementUIDataWithoutValueAction, state)
         case let checkIfInputElemenIsValidAction as AddProducerFormAction.CheckIfInputElemenIsValidAction:
             return AddProducerFormReducerHandler
                 .HandlerCheckIfInputElemenIsValidAction().handle(action: checkIfInputElemenIsValidAction, state)
         case let checkIfAllInputElementIsValidAction as AddProducerFormAction.CheckIfAllInputElementIsValidAction:
             return AddProducerFormReducerHandler
                 .HandlerCheckIfAllInputElementIsValidAction().handle(action: checkIfAllInputElementIsValidAction, state)
+        case let addNimInputElementAction as AddProducerFormAction.AddNimInputElementAction:
+            return AddProducerFormReducerHandler
+                .HandlerAddNimInputElementAction().handle(action: addNimInputElementAction, state)
         default:
             return state
         }

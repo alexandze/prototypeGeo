@@ -18,8 +18,29 @@ class AddProducerFormServiceImpl: AddProducerFormService {
     func getElementUIDataObservableList() -> [ElementUIDataObservable] {
         addProducerFormFactory.makeElementUIDataObservableList()
     }
+
+    func getAddButtonElementObservable(isEnabled: Bool) -> ButtonElementObservable {
+        addProducerFormFactory.makeAddNimButtonElementObservable(isEnabled: isEnabled)
+    }
+
+    func getNimTitle() -> String {
+        addProducerFormFactory.nimTitle
+    }
+
+    func getMaxNim() -> Int {
+        addProducerFormFactory.getMaxNim()
+    }
+
+    func makeNimInputElementWithRemoveButton(value: String? = nil, number: Int? = nil) -> InputElementWithRemoveButtonObservable {
+        addProducerFormFactory.makeNimInputElementWithRemoveButton(value: value, number: number)
+    }
+
 }
 
 protocol AddProducerFormService {
     func getElementUIDataObservableList() -> [ElementUIDataObservable]
+    func getAddButtonElementObservable(isEnabled: Bool) -> ButtonElementObservable
+    func getNimTitle() -> String
+    func getMaxNim() -> Int
+    func makeNimInputElementWithRemoveButton(value: String?, number: Int?) -> InputElementWithRemoveButtonObservable
 }

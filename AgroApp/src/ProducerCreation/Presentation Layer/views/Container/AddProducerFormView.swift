@@ -27,53 +27,65 @@ struct AddProducerFormView: View {
     var body: some View {
 
         GeometryReader { (geometryProxy: GeometryProxy) in
-            VStack {
-                ScrollView {
-                    VStack {
-                        ForEach(self.viewState.elementUIDataObservableList) { (elementUIData: ElementUIDataObservable) in
-                            VStack {
-                                if (elementUIData.type == InputElementObservable.TYPE_ELEMENT) {
-                                    InputWithTitleElement(elementUIData: elementUIData)
-                                        .padding(15)
-                                }
+            ZStack {
+                VStack {
+                    ScrollView {
+                        VStack {
+                            ForEach(self.viewState.elementUIDataObservableList) { (elementUIData: ElementUIDataObservable) in
+                                VStack {
+                                    if elementUIData.type == InputElementObservable.TYPE_ELEMENT {
+                                        InputWithTitleElement(elementUIData: elementUIData) {}
+                                            .padding(15)
+                                    }
 
-                                if elementUIData.type == ButtonElementObservable.TYPE_ELEMENT {
-                                    HStack {
-                                        ButtonAdd(elementUIData: elementUIData) { print("Add")}
-                                        Spacer()
-                                    }.padding(.leading, 15)
-                                        .padding(.top, -20)
+                                    if elementUIData.type == InputElementWithRemoveButtonObservable.TYPE_ELEMENT {
+                                        InputWithTitleElement(elementUIData: elementUIData) { self.viewModel.handleRemoveNimButton()}
+                                            .padding(15)
+                                    }
                                 }
+                            }
 
+                            if self.isKeyboardVisible() {
+                                self.getButtonValidate()
+                                    .padding(.vertical, 15)
                             }
                         }
+                    }.frame(
+                        width: geometryProxy.size.width,
+                        height: self.isKeyboardVisible()
+                            ? self.calculHeightWithKeyBoard(geometryProxy: geometryProxy)
+                            : self.calculHeightWithoutKeyBoard(geometryProxy: geometryProxy),
+                        alignment: .top
+                    )//.offset(y: self.isKeyboardVisible() ? -self.keyboardFollower.keyboardHeight + self.getOffset(geometryProxy: geometryProxy) : 0)
+                        .onAppear {
+                            self.viewModel.configView()
+                            self.viewModel.subscribeToStateObservable()
+                    }
+                    .onDisappear {
+                        self.viewModel.dispose()
+                    }
+                    .animation(.default)
 
-                        if self.isKeyboardVisible() {
-                            self.getButtonValidate()
-                                .padding(.vertical, 15)
+                    Spacer()
+
+                    if !self.isKeyboardVisible() {
+                        self.getButtonValidate()
+                            .padding(.vertical, 30)
+                    }
+                }
+
+                VStack {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        if self.viewState.addElementButton != nil {
+                            ButtonAdd(
+                                buttonElementObservable: self.viewState.addElementButton
+                            ) {
+                                self.viewModel.handleAddNimButton()
+                            }.offset(x: -20, y: -100)
                         }
                     }
-                }.frame(
-                    width: geometryProxy.size.width,
-                    height: self.isKeyboardVisible()
-                        ? self.calculHeightWithKeyBoard(geometryProxy: geometryProxy)
-                        : self.calculHeightWithoutKeyBoard(geometryProxy: geometryProxy),
-                    alignment: .top
-                )//.offset(y: self.isKeyboardVisible() ? -self.keyboardFollower.keyboardHeight + self.getOffset(geometryProxy: geometryProxy) : 0)
-                    .onAppear {
-                        self.viewModel.configView()
-                        self.viewModel.subscribeToStateObservable()
-                }
-                .onDisappear {
-                    self.viewModel.dispose()
-                }
-                .animation(.default)
-
-                Spacer()
-
-                if !self.isKeyboardVisible() {
-                    self.getButtonValidate()
-                        .padding(.bottom, 20)
                 }
             }.environmentObject(self.viewModel.viewState)
                 .environmentObject(self.keyboardFollower)
@@ -89,7 +101,7 @@ struct AddProducerFormView: View {
             title: "Valider",
             isButtonActivated: self.viewState.isAllInputValid,
             action: {
-                self.viewModel.handleButtonValidate()
+                self.viewModel.handleValidateButton()
         }
         )
     }
@@ -109,27 +121,29 @@ struct AddProducerFormView: View {
     }
 
     private func calculHeightWithoutKeyBoard(geometryProxy: GeometryProxy) -> CGFloat {
-        geometryProxy.size.height * 0.85
+        geometryProxy.size.height * 0.75
     }
 }
 
 private struct InputWithTitleElement: View {
     @ObservedObject var inputElement: InputElementDataObservable
+    var handleRemoveButton: () -> Void
     @Environment(\.colorScheme) var colorScheme
 
-    init(elementUIData: ElementUIDataObservable) {
-        guard let inputElementData = elementUIData as? InputElementObservable else {
+    init(elementUIData: ElementUIDataObservable, handleRemoveButton: @escaping () -> Void) {
+        guard let inputElementData = elementUIData as? InputElementDataObservable else {
             self.inputElement = InputElementObservable.makeDefault()
+            self.handleRemoveButton = handleRemoveButton
             return
         }
-
+        self.handleRemoveButton = handleRemoveButton
         self.inputElement = inputElementData
     }
 
     var body: some View {
         VStack(alignment: .center, spacing: 2) {
             HStack {
-                Text(self.inputElement.title)
+                Text("\(self.inputElement.title) \(self.getNumber())")
                 Spacer()
             }
 
@@ -167,13 +181,18 @@ private struct InputWithTitleElement: View {
 
                 if self.isInputElementWithRemoveButton() {
                     getRemoveImage().onTapGesture {
-                        print("remove")
+                        self.handleRemoveButton()
                     }
                 }
 
                 Spacer()
             }
         }
+    }
+
+    private func getNumber() -> String {
+        let number = self.inputElement.number ?? 0
+        return number > 0 ? String(number) : ""
     }
 
     private func getForegroundColorOfRoundedRectangle() -> Color {
@@ -217,38 +236,49 @@ private struct ButtonValidate: View {
 }
 
 private struct ButtonAdd: View {
-    @ObservedObject var buttonElement: ButtonElementObservable
+    var buttonElement: ButtonElementObservable?
     @EnvironmentObject var dimensionScreen: DimensionScreen
     @Environment(\.colorScheme) var colorScheme
     var action: () -> Void
 
-    init(elementUIData: ElementUIDataObservable, action: @escaping () -> Void) {
-        guard let buttonElement = elementUIData as? ButtonElementObservable else {
-            self.buttonElement = ButtonElementObservable.makeDefault()
-            self.action = action
-            return
-        }
-
-        self.buttonElement = buttonElement
+    init(buttonElementObservable: ButtonElementObservable?, action: @escaping () -> Void) {
+        self.buttonElement = buttonElementObservable
         self.action = action
     }
 
     var body: some View {
         Button(action: { self.action() }) {
-            Text(buttonElement.title)
-                .frame(
-                    width: dimensionScreen.width * 0.2,
-                    height: dimensionScreen.height * 0.06,
-                    alignment: .center
-            ).font(.system(size: 45))
+            VStack(alignment: .center, spacing: 0) {
+                Text("+")
+                    .font(.system(size: 35))
+
+                Text(self.getTitle())
+                    .font(.system(size: 15))
+                .offset(y: -5)
+            }.frame(width: 67 , height: 60)
         }
         .frame(
-            width: dimensionScreen.width * 0.2,
-            height: dimensionScreen.height * 0.06,
+            width: 67,
+            height: 60,
             alignment: .center
         ).foregroundColor(.white)
-            .background(Color(Util.getGreenColor()))
-            .cornerRadius(10)
+            .background(self.getbackgroundColor())
+            .cornerRadius(38.5)
+            .shadow(
+                color: Color.black.opacity(0.3),
+                radius: 3,
+                x: 3,
+                y: 3
+        )
+    }
+
+    func getbackgroundColor() -> Color {
+        let isEnabled = self.buttonElement?.isEnabled ?? false
+        return isEnabled ? Color(Util.getGreenColor()) : .red
+    }
+
+    func getTitle() -> String {
+        buttonElement?.title ?? ""
     }
 }
 

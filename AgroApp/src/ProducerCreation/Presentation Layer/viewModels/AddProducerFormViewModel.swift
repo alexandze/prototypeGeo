@@ -43,11 +43,13 @@ class AddProducerFormViewModelImpl: AddProducerFormViewModel {
 
                 switch responseAction {
                 case .getListElementUIDataWihoutValueResponse:
-                    self?.handleGetListElementUIDataWihoutValueResponse()
+                    self?.handleGetAllElementUIDataWihoutValueResponse()
                 case .checkIfInputElemenIsValidActionResponse(index: let index):
                     self?.handleCheckIfInputElemenIsValidActionResponse(index: index)
                 case .checkIfAllInputElementIsValidActionResponse(isAllInputValid: let isAllInputValid):
                     self?.handleCheckIfAllInputElementIsValidActionResponse(isAllInputValid: isAllInputValid)
+                case .addNimInputElementActionResponse(indexOfNewNimInputElement: let indexOfNewNimInputElement):
+                    self?.handleAddNimInputElementActionResponse(indexOfNewNimInputElement: indexOfNewNimInputElement)
                 case .notResponse:
                     break
                 }
@@ -106,21 +108,37 @@ class AddProducerFormViewModelImpl: AddProducerFormViewModel {
     }
 
     private func setViewStateValue() {
-        guard let elementUIDataObservableList = state?.elementUIDataObservableList
+        guard let elementUIDataObservableList = state?.elementUIDataObservableList,
+            let addButtonElementObservable = state?.addButtonElementObservable
             else { return }
 
         viewState.elementUIDataObservableList = elementUIDataObservableList
+        viewState.addElementButton = addButtonElementObservable
         viewState.objectWillChange.send()
+    }
+
+    private func sendObjectChangeInputElementByIndex(_ index: Int) {
+        viewState.elementUIDataObservableList[index].objectWillChange.send()
+    }
+
+    private func setInputElement(_ elementUIData: ElementUIDataObservable, index: Int) {
+        viewState.elementUIDataObservableList[index] = elementUIData
+        viewState.elementUIDataObservableList[index].objectWillChange.send()
     }
 
     class ViewState: ObservableObject {
         var elementUIDataObservableList: [ElementUIDataObservable] = []
         var isAllInputValid = false
+        var addElementButton: ButtonElementObservable?
     }
 }
 
 extension AddProducerFormViewModelImpl {
-    func handleButtonValidate() {
+    func handleAddNimButton() {
+        self.interaction.addNimInputElementAction()
+    }
+
+    func handleValidateButton() {
         // print(viewState.utilElementUIDataSwiftUIList[0].valueState)
         // TODO Dispatch action
 
@@ -128,7 +146,21 @@ extension AddProducerFormViewModelImpl {
         self.viewController?.navigationController?.pushViewController(appDependency.makeFieldListViewController(), animated: true)
     }
 
-    private func handleGetListElementUIDataWihoutValueResponse() {
+    func handleRemoveNimButton() {
+        // TODO remove nim
+        print("remove NIM")
+    }
+
+    private func handleAddNimInputElementActionResponse(indexOfNewNimInputElement: Int) {
+        print(indexOfNewNimInputElement)
+        setViewStateValue()
+        sendObjectChangeInputElementByIndex(indexOfNewNimInputElement)
+        cancelableObservableForm()
+        subscribeToFormObserver()
+        interaction.checkIfAllInputElementIsValidAction()
+    }
+
+    private func handleGetAllElementUIDataWihoutValueResponse() {
         setViewStateValue()
         cancelableObservableForm()
         subscribeToFormObserver()
@@ -140,12 +172,10 @@ extension AddProducerFormViewModelImpl {
             return
         }
 
-        viewState.elementUIDataObservableList[index] = elementUIDataObservable
-        viewState.elementUIDataObservableList[index].objectWillChange.send()
+        setInputElement(elementUIDataObservable, index: index)
     }
 
     private func handleCheckIfAllInputElementIsValidActionResponse(isAllInputValid: Bool) {
-        print("is all isValid \(isAllInputValid)")
         self.viewState.isAllInputValid = isAllInputValid
         self.viewState.objectWillChange.send()
     }
@@ -157,5 +187,7 @@ protocol AddProducerFormViewModel {
     func configView()
     func subscribeToStateObservable()
     func dispose()
-    func handleButtonValidate()
+    func handleValidateButton()
+    func handleAddNimButton()
+    func handleRemoveNimButton()
 }

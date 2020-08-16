@@ -46,6 +46,7 @@ class InputElementDataObservable: ElementUIDataObservable {
     var regexPattern: String
     var keyboardType: KeyboardType
     var regex: NSRegularExpression?
+    var number: Int?
 
     init(
         type: String,
@@ -55,7 +56,8 @@ class InputElementDataObservable: ElementUIDataObservable {
         isRequired: Bool,
         regexPattern: String,
         keyboardType: KeyboardType = .normal,
-        regex: NSRegularExpression? = nil
+        regex: NSRegularExpression? = nil,
+        number: Int? = nil
     ) {
         self.value = value
         self.isValid = isValid
@@ -63,6 +65,7 @@ class InputElementDataObservable: ElementUIDataObservable {
         self.regexPattern = regexPattern
         self.keyboardType = keyboardType
         self.regex = regex
+        self.number = number
         super.init(type: type, title: title)
     }
 
@@ -103,7 +106,8 @@ class InputElementObservable: InputElementDataObservable {
         isRequired: Bool,
         regexPattern: String,
         keyboardType: KeyboardType = .normal,
-        regex: NSRegularExpression? = nil
+        regex: NSRegularExpression? = nil,
+        number: Int? = nil
     ) {
         super.init(
             type: InputElementObservable.TYPE_ELEMENT,
@@ -113,7 +117,8 @@ class InputElementObservable: InputElementDataObservable {
             isRequired: isRequired,
             regexPattern: regexPattern,
             keyboardType: keyboardType,
-            regex: regex
+            regex: regex,
+            number: number
         )
     }
 
@@ -148,7 +153,8 @@ class InputElementWithRemoveButtonObservable: InputElementDataObservable {
         action: String,
         regexPattern: String,
         keyboardType: KeyboardType = .normal,
-        regex: NSRegularExpression? = nil
+        regex: NSRegularExpression? = nil,
+        number: Int? = nil
     ) {
         self.action = action
 
@@ -160,7 +166,8 @@ class InputElementWithRemoveButtonObservable: InputElementDataObservable {
             isRequired: isRequired,
             regexPattern: regexPattern,
             keyboardType: keyboardType,
-            regex: regex
+            regex: regex,
+            number: number
         )
     }
 
@@ -189,7 +196,7 @@ class ButtonElementObservable: ElementUIDataObservable {
         isEnabled: Bool,
         action: String
     ) {
-        self.isEnabled = true
+        self.isEnabled = isEnabled
         self.action = action
         super.init(type: ButtonElementObservable.TYPE_ELEMENT, title: title)
     }

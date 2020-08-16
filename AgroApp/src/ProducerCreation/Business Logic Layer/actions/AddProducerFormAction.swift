@@ -10,7 +10,7 @@ import Foundation
 import ReSwift
 
 struct AddProducerFormAction {
-    struct GetListElementUIDataWithoutValueAction: Action { }
+    struct GetAllElementUIDataWithoutValueAction: Action { }
 
     struct CheckIfInputElemenIsValidAction: Action {
         var id: UUID
@@ -18,4 +18,6 @@ struct AddProducerFormAction {
     }
 
     struct CheckIfAllInputElementIsValidAction: Action { }
+
+    struct AddNimInputElementAction: Action {}
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 extension AddProducerFormReducerHandler {
-    class HandlerGetListElementUIDataWihoutValue: HandlerReducer {
+    class HandlerGetAllElementUIDataWihoutValue: HandlerReducer {
         let addProducerFormService: AddProducerFormService
 
         init(addProducerFormService: AddProducerFormService = AddProducerFormServiceImpl()) {
@@ -16,7 +16,7 @@ extension AddProducerFormReducerHandler {
         }
 
         func handle(
-            action: AddProducerFormAction.GetListElementUIDataWithoutValueAction,
+            action: AddProducerFormAction.GetAllElementUIDataWithoutValueAction,
             _ state: AddProducerFormState
         ) -> AddProducerFormState {
             let util = UtilHandlerGetListElementUIData(
@@ -42,18 +42,21 @@ extension AddProducerFormReducerHandler {
             }
 
             newUtil.elementUIDataObservableList = newUtil.addProducerFormService.getElementUIDataObservableList()
+            // TODO calculer le nombre d'element de nim pour s'avoir si le boutton doit etre active ou pas
+            newUtil.addButtonElementObservalble = newUtil.addProducerFormService.getAddButtonElementObservable(isEnabled: true)
             return newUtil
         }
 
         private func newState(
             util: UtilHandlerGetListElementUIData?
         ) -> AddProducerFormState? {
-
-            guard let newUtil = util
+            guard let newUtil = util,
+                let addButtonElementObservable = newUtil.addButtonElementObservalble
                 else { return nil }
 
             return newUtil.state.changeValues(
                 elementUIDataObservableList: newUtil.elementUIDataObservableList,
+                addButtonElementObservable: addButtonElementObservable,
                 responseAction: .getListElementUIDataWihoutValueResponse
             )
         }
@@ -63,5 +66,6 @@ extension AddProducerFormReducerHandler {
         var addProducerFormService: AddProducerFormService
         var state: AddProducerFormState
         var elementUIDataObservableList: [ElementUIDataObservable] = []
+        var addButtonElementObservalble: ButtonElementObservable?
     }
 }

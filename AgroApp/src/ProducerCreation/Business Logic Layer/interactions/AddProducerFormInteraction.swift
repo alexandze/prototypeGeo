@@ -18,7 +18,7 @@ class AddProducerFormInteractionImpl: AddProducerFormInteraction {
     func getListElementUIDataWithoutValueAction() {
         _ = Util.runInSchedulerBackground { [weak self] in
             self?.actionDispatcher.dispatch(
-                AddProducerFormAction.GetListElementUIDataWithoutValueAction()
+                AddProducerFormAction.GetAllElementUIDataWithoutValueAction()
             )
         }
     }
@@ -58,6 +58,14 @@ class AddProducerFormInteractionImpl: AddProducerFormInteraction {
             )
         }
     }
+
+    func addNimInputElementAction() {
+        _ = Util.runInSchedulerBackground { [weak self] in
+            self?.actionDispatcher.dispatch(
+                AddProducerFormAction.AddNimInputElementAction()
+            )
+        }
+    }
 }
 
 protocol AddProducerFormInteraction {
@@ -66,4 +74,5 @@ protocol AddProducerFormInteraction {
     func setCurrentViewControllerInNavigation()
     func checkIfInputElemenIsValidAction(id: UUID, value: String)
     func checkIfAllInputElementIsValidAction()
+    func addNimInputElementAction()
 }

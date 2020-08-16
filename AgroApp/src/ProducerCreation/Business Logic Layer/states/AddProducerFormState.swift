@@ -16,15 +16,18 @@ struct AddProducerFormState: Equatable {
 
     var uuidState: String
     var elementUIDataObservableList: [ElementUIDataObservable]?
+    var addButtonElementObservable: ButtonElementObservable?
     var responseAction: ResponseAction?
 
     func changeValues(
         elementUIDataObservableList: [ElementUIDataObservable]? = nil,
+        addButtonElementObservable: ButtonElementObservable? = nil,
         responseAction: ResponseAction
     ) -> AddProducerFormState {
         AddProducerFormState(
             uuidState: UUID().uuidString,
             elementUIDataObservableList: elementUIDataObservableList ?? self.elementUIDataObservableList,
+            addButtonElementObservable: addButtonElementObservable,
             responseAction: responseAction
         )
     }
@@ -33,6 +36,7 @@ struct AddProducerFormState: Equatable {
         case getListElementUIDataWihoutValueResponse
         case checkIfInputElemenIsValidActionResponse(index: Int)
         case checkIfAllInputElementIsValidActionResponse(isAllInputValid: Bool)
+        case addNimInputElementActionResponse(indexOfNewNimInputElement: Int)
         case notResponse
     }
 }
