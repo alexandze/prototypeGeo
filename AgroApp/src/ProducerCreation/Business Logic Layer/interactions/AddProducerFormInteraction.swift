@@ -66,6 +66,14 @@ class AddProducerFormInteractionImpl: AddProducerFormInteraction {
             )
         }
     }
+
+    func removeNimInputElementAction(id: UUID) {
+        _ = Util.runInSchedulerBackground {
+            self.actionDispatcher.dispatch(
+                AddProducerFormAction.RemoveNimInputElementAction(id: id)
+            )
+        }
+    }
 }
 
 protocol AddProducerFormInteraction {
@@ -75,4 +83,5 @@ protocol AddProducerFormInteraction {
     func checkIfInputElemenIsValidAction(id: UUID, value: String)
     func checkIfAllInputElementIsValidAction()
     func addNimInputElementAction()
+    func removeNimInputElementAction(id: UUID)
 }

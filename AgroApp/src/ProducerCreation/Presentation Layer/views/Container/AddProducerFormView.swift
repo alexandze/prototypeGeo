@@ -39,8 +39,9 @@ struct AddProducerFormView: View {
                                     }
 
                                     if elementUIData.type == InputElementWithRemoveButtonObservable.TYPE_ELEMENT {
-                                        InputWithTitleElement(elementUIData: elementUIData) { self.viewModel.handleRemoveNimButton()}
-                                            .padding(15)
+                                        InputWithTitleElement(elementUIData: elementUIData) {
+                                            self.viewModel.handleRemoveNimButton(id: elementUIData.id)
+                                        }.padding(15)
                                     }
                                 }
                             }

@@ -42,7 +42,6 @@ extension AddProducerFormReducerHandler {
             }
 
             newUtil.elementUIDataObservableList = newUtil.addProducerFormService.getElementUIDataObservableList()
-            // TODO calculer le nombre d'element de nim pour s'avoir si le boutton doit etre active ou pas
             newUtil.addButtonElementObservalble = newUtil.addProducerFormService.getAddButtonElementObservable(isEnabled: true)
             return newUtil
         }

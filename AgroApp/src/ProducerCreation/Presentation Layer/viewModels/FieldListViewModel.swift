@@ -47,7 +47,7 @@ class FieldListViewModelImpl: FieldListViewModel {
                 case .initFieldList:
                     self?.handleInitFieldList()
                 case .isAppearActionSuccess:
-                    break
+                    self?.handleIsAppearActionResponse()
                 case .updateFieldSuccess:
                     self?.handleUpdateFieldSuccess()
                 case .removeFieldResponse(indexPathFieldRemoved: let indexPathRemoveField, fieldRemoved: let fieldRemoved):
@@ -100,6 +100,14 @@ extension FieldListViewModelImpl {
         }
     }
 
+    private func handleIsAppearActionResponse() {
+        guard let isAppear = self.fieldListState?.isAppear, isAppear else {
+            return
+        }
+
+        tableView?.reloadData()
+    }
+
     private func handleRemoveFieldResponse(indexPathFieldRemoved: IndexPath, fieldRemoved: Field) {
         tableView?.beginUpdates()
         self.tableView?.deleteRows(at: [indexPathFieldRemoved], with: .left)
@@ -110,27 +118,23 @@ extension FieldListViewModelImpl {
     }
 
     private func handleSelectedFieldOnMapActionSuccess() {
-        if fieldListState!.isAppear == true {
+        if let isAppear = fieldListState?.isAppear, isAppear {
             tableView?.beginUpdates()
             self.tableView?.insertRows(at: [IndexPath(row: 0, section: 0)], with: .top)
             tableView?.endUpdates()
             return
         }
-
-        tableView?.reloadData()
     }
 
     private func handleDeselectedFieldOnMapActionSuccess() {
         guard let indexDeleted = fieldListState?.indexForRemove else { return }
 
-        if fieldListState!.isAppear == true {
+        if let isAppear = fieldListState?.isAppear, isAppear {
             tableView?.beginUpdates()
             self.tableView?.deleteRows(at: [IndexPath(row: indexDeleted, section: 0)], with: .top)
             tableView?.endUpdates()
             return
         }
-
-        tableView?.reloadData()
     }
 
     private func handleWillSelectFieldOnListActionSuccess() {
@@ -155,9 +159,11 @@ extension FieldListViewModelImpl {
     }
 
     private func handleUpdateFieldSuccess() {
+        /*
         if fieldListState!.isAppear != nil && fieldListState!.isAppear == false {
             tableView?.reloadData()
         }
+        */
     }
 }
 

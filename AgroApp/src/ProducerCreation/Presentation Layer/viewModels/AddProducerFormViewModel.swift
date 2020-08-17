@@ -50,6 +50,15 @@ class AddProducerFormViewModelImpl: AddProducerFormViewModel {
                     self?.handleCheckIfAllInputElementIsValidActionResponse(isAllInputValid: isAllInputValid)
                 case .addNimInputElementActionResponse(indexOfNewNimInputElement: let indexOfNewNimInputElement):
                     self?.handleAddNimInputElementActionResponse(indexOfNewNimInputElement: indexOfNewNimInputElement)
+                case .removeNimInputElementActionResponse(
+                    indexInputElementRemoved: let indexInputElementRemoved,
+                    indexInputElementUpdateList: let indexInputElementUpdateList
+                    ) :
+
+                    self?.handleRemoveNimInputElementActionResponse(
+                        indexInputElementRemoved: indexInputElementRemoved,
+                        indexInputElementUpdateList: indexInputElementUpdateList
+                    )
                 case .notResponse:
                     break
                 }
@@ -114,6 +123,15 @@ class AddProducerFormViewModelImpl: AddProducerFormViewModel {
 
         viewState.elementUIDataObservableList = elementUIDataObservableList
         viewState.addElementButton = addButtonElementObservable
+    }
+
+    private func sendObjectWillChangeOnViewState() {
+        viewState.objectWillChange.send()
+    }
+
+    private func sendObjectWillChangeOnAll() {
+        viewState.elementUIDataObservableList.forEach { $0.objectWillChange.send() }
+        viewState.addElementButton?.objectWillChange.send()
         viewState.objectWillChange.send()
     }
 
@@ -146,16 +164,22 @@ extension AddProducerFormViewModelImpl {
         self.viewController?.navigationController?.pushViewController(appDependency.makeFieldListViewController(), animated: true)
     }
 
-    func handleRemoveNimButton() {
-        // TODO remove nim
-        print("remove NIM")
+    func handleRemoveNimButton(id: UUID) {
+        interaction.removeNimInputElementAction(id: id)
+    }
+
+    private func handleRemoveNimInputElementActionResponse(indexInputElementRemoved: Int, indexInputElementUpdateList: [Int]) {
+        setViewStateValue()
+        cancelableObservableForm()
+        sendObjectWillChangeOnAll()
+        subscribeToFormObserver()
+        interaction.checkIfAllInputElementIsValidAction()
     }
 
     private func handleAddNimInputElementActionResponse(indexOfNewNimInputElement: Int) {
-        print(indexOfNewNimInputElement)
         setViewStateValue()
-        sendObjectChangeInputElementByIndex(indexOfNewNimInputElement)
         cancelableObservableForm()
+        sendObjectWillChangeOnAll()
         subscribeToFormObserver()
         interaction.checkIfAllInputElementIsValidAction()
     }
@@ -163,6 +187,7 @@ extension AddProducerFormViewModelImpl {
     private func handleGetAllElementUIDataWihoutValueResponse() {
         setViewStateValue()
         cancelableObservableForm()
+        sendObjectWillChangeOnAll()
         subscribeToFormObserver()
         self.interaction.checkIfAllInputElementIsValidAction()
     }
@@ -189,5 +214,5 @@ protocol AddProducerFormViewModel {
     func dispose()
     func handleValidateButton()
     func handleAddNimButton()
-    func handleRemoveNimButton()
+    func handleRemoveNimButton(id: UUID)
 }

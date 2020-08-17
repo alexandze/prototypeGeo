@@ -26,6 +26,8 @@ extension Reducers {
         case let addNimInputElementAction as AddProducerFormAction.AddNimInputElementAction:
             return AddProducerFormReducerHandler
                 .HandlerAddNimInputElementAction().handle(action: addNimInputElementAction, state)
+        case let removeNimInputElementAction as AddProducerFormAction.RemoveNimInputElementAction:
+            return AddProducerFormReducerHandler.HandlerRemoveNimInputElementAction().handle(action: removeNimInputElementAction, state)
         default:
             return state
         }

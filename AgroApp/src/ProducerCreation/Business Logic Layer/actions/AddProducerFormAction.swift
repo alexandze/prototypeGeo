@@ -20,4 +20,8 @@ struct AddProducerFormAction {
     struct CheckIfAllInputElementIsValidAction: Action { }
 
     struct AddNimInputElementAction: Action {}
+
+    struct RemoveNimInputElementAction: Action {
+        var id: UUID
+    }
 }
