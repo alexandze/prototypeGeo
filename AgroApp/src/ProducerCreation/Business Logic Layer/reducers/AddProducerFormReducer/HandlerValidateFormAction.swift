@@ -1,29 +1,24 @@
 //
-//  HandlerCheckIfAllInputElementIsValidAction.swift
+//  HandlerValidateFormAction.swift
 //  AgroApp
 //
-//  Created by Alexandre Andze Kande on 2020-08-13.
+//  Created by Alexandre Andze Kande on 2020-08-17.
 //  Copyright © 2020 Alexandre Andze Kande. All rights reserved.
 //
 
 import Foundation
 
 extension AddProducerFormReducerHandler {
-    class HandlerCheckIfAllInputElementIsValidAction: HandlerReducer {
+    class HandlerValidateFormAction: HandlerReducer {
+
         let helperAddProducerFormHandler: HelperAddProducerFormReducerHandler
 
         init(helperAddProducerFormHandler: HelperAddProducerFormReducerHandler = HelperAddProducerFormReducerHandlerImpl()) {
             self.helperAddProducerFormHandler = helperAddProducerFormHandler
         }
 
-        func handle(
-            action: AddProducerFormAction.CheckIfAllInputElementIsValidAction,
-            _ state: AddProducerFormState
-        ) -> AddProducerFormState {
-            let util = UtilHandlerCheckIfAllInputElementIsValidAction(
-                state: state,
-                helperAddProducerFormHandler: helperAddProducerFormHandler
-            )
+        func handle(action: AddProducerFormAction.ValidateFormAction, _ state: AddProducerFormState) -> AddProducerFormState {
+            let util = UtilHandlerValidateFormAction(state: state, helperAddProducerFormHandler: helperAddProducerFormHandler)
 
             return (
                 filterElementUIDataRequired(util:) >>>
@@ -33,8 +28,8 @@ extension AddProducerFormReducerHandler {
         }
 
         private func filterElementUIDataRequired(
-            util: UtilHandlerCheckIfAllInputElementIsValidAction?
-        ) -> UtilHandlerCheckIfAllInputElementIsValidAction? {
+            util: UtilHandlerValidateFormAction?
+        ) -> UtilHandlerValidateFormAction? {
             guard var newUtil = util else { return nil }
 
             guard let elementUIDataList = newUtil.state.elementUIDataObservableList else {
@@ -49,8 +44,8 @@ extension AddProducerFormReducerHandler {
         }
 
         private func checkIfAllInputElementIsValid(
-            util: UtilHandlerCheckIfAllInputElementIsValidAction?
-        ) -> UtilHandlerCheckIfAllInputElementIsValidAction? {
+            util: UtilHandlerValidateFormAction?
+        ) -> UtilHandlerValidateFormAction? {
             guard var newUtil = util else { return nil }
 
             guard let elementUIDataRequiredList = newUtil.elementUIDataRequiredList, !elementUIDataRequiredList.isEmpty else {
@@ -64,28 +59,22 @@ extension AddProducerFormReducerHandler {
             return newUtil
         }
 
-        private func newState(
-            util: UtilHandlerCheckIfAllInputElementIsValidAction?
-        ) -> AddProducerFormState? {
+        private func newState(util: UtilHandlerValidateFormAction?) -> AddProducerFormState? {
             guard let newUtil = util,
                 let isAllInputElementIsValid = newUtil.isAllInputElementIsValid else {
                 return nil
             }
 
             return newUtil.state
-                .changeValues(
-                    responseAction: .checkIfAllInputElementIsValidActionResponse(
-                        isAllInputValid: isAllInputElementIsValid
-                    )
-            )
+                .changeValues(responseAction: .validateFormActionResponse(isAllInputElementRequiredIsValid: isAllInputElementIsValid))
         }
+
     }
 
-    private struct UtilHandlerCheckIfAllInputElementIsValidAction {
+    private struct UtilHandlerValidateFormAction {
         var state: AddProducerFormState
         var helperAddProducerFormHandler: HelperAddProducerFormReducerHandler
         var elementUIDataRequiredList: [ElementUIDataObservable]?
         var isAllInputElementIsValid: Bool?
-
     }
 }

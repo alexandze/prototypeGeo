@@ -24,7 +24,7 @@ class AddProducerFormServiceImpl: AddProducerFormService {
     }
 
     func getNimTitle() -> String {
-        addProducerFormFactory.nimTitle
+        addProducerFormFactory.getNimTitle()
     }
 
     func getMaxNim() -> Int {

@@ -24,4 +24,7 @@ struct AddProducerFormAction {
     struct RemoveNimInputElementAction: Action {
         var id: UUID
     }
+
+    struct ValidateFormAction: Action { }
+    struct NotResponseAction: Action { }
 }

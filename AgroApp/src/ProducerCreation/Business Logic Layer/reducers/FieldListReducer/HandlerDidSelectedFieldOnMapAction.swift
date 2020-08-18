@@ -11,7 +11,7 @@ extension FieldListReducerHandler {
     class HandlerDidSelectedFieldOnMapAction: HandlerReducer {
 
         func handle(
-            action: MapFieldAction.DidSelectedFieldOnMapAction,
+            action: MapFieldAction.WillSelectedFieldOnMapAction,
             _ state: FieldListState
         ) -> FieldListState {
             let util = UtilHandlerDidSelectedFieldOnMapAction(fieldFromAction: action.field, state: state)

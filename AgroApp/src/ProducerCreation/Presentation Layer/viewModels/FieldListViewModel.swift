@@ -113,7 +113,7 @@ extension FieldListViewModelImpl {
         self.tableView?.deleteRows(at: [indexPathFieldRemoved], with: .left)
         tableView?.endUpdates()
 
-        let action = MapFieldAction.WillDeselectFieldOnMapAction(idField: fieldRemoved.id)
+        let action = MapFieldAction.WillDeselectFieldOnMapAction(field: fieldRemoved)
         dispatch(action: action)
     }
 
@@ -138,19 +138,16 @@ extension FieldListViewModelImpl {
     }
 
     private func handleWillSelectFieldOnListActionSuccess() {
-        _ = dispatchDidSelectedFieldOnListActionObs()?
-            .subscribe { _ in
-                let appDelegate = self.viewController!.getAppDelegate()
+        let appDelegate = self.viewController!.getAppDelegate()
 
-                appDelegate.map {
-                    self
-                        .viewController?
-                        .navigationController?
-                        .pushViewController(
-                            $0.appDependencyContainer.processInitCulturalPracticeViewController(),
-                            animated: true
-                    )
-                }
+        appDelegate.map {
+            self
+                .viewController?
+                .navigationController?
+                .pushViewController(
+                    $0.appDependencyContainer.processInitCulturalPracticeViewController(),
+                    animated: true
+            )
         }
     }
 
@@ -209,15 +206,6 @@ extension FieldListViewModelImpl {
         let fieldSelected = fieldList[indexPath.row]
         let action = FieldListAction.WillSelectFieldOnListAction(field: fieldSelected)
         dispatch(action: action)
-    }
-
-    private func dispatchDidSelectedFieldOnListActionObs() -> Completable? {
-        guard let fieldSelected = fieldListState?.currentField else { return nil }
-
-        return Util.createRunCompletable { [weak self] in
-            let action = FieldListAction.DidSelectedFieldOnListAction(field: fieldSelected)
-            self?.actionDispatcher.dispatch(action)
-        }
     }
 
     private func dispatchRemoveField(indexPath: IndexPath) {

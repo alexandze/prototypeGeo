@@ -18,10 +18,6 @@ struct FieldListAction {
         var isAppear: Bool
     }
 
-    struct DidSelectedFieldOnListAction: Action {
-        let field: Field
-    }
-
     struct UpdateFieldAction: Action {
         let field: Field
     }

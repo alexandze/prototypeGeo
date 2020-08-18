@@ -14,11 +14,11 @@ extension Reducers {
         let state = state ?? FieldListState(uuidState: UUID().uuidString, fieldList: [])
 
         switch action {
-        case let didSelectedFieldOnMapAction as MapFieldAction.DidSelectedFieldOnMapAction:
+        case let selectedFieldOnMapAction as MapFieldAction.WillSelectedFieldOnMapAction:
             return FieldListReducerHandler
-                .HandlerDidSelectedFieldOnMapAction().handle(action: didSelectedFieldOnMapAction, state)
-        case let didDeselectFieldOnMap as MapFieldAction.DidDelectFieldOnMapAction:
-            return FieldListReducerHandler().handle(didDelectFieldOnMapAction: didDeselectFieldOnMap, state)
+                .HandlerDidSelectedFieldOnMapAction().handle(action: selectedFieldOnMapAction, state)
+        case let deselectFieldOnMap as MapFieldAction.WillDeselectFieldOnMapAction:
+            return FieldListReducerHandler().handle(delectFieldOnMapAction: deselectFieldOnMap, state)
         case let willSelectFieldOnListAction as FieldListAction.WillSelectFieldOnListAction:
             return FieldListReducerHandler().handle(willSelectFieldOnListAction: willSelectFieldOnListAction, state)
         case let isAppearAction as FieldListAction.IsAppearAction:
@@ -41,6 +41,7 @@ class FieldListReducerHandler {
         _ state: FieldListState
     ) -> FieldListState {
         let fieldSelected = willSelectFieldOnListAction.field
+
         return state.changeValue(
             currentField: fieldSelected,
             subAction: .willSelectFieldOnListActionSucccess
@@ -55,10 +56,10 @@ class FieldListReducerHandler {
     }
 
     func handle(
-        didDelectFieldOnMapAction: MapFieldAction.DidDelectFieldOnMapAction,
+        delectFieldOnMapAction: MapFieldAction.WillDeselectFieldOnMapAction,
         _ state: FieldListState
     ) -> FieldListState {
-        let fieldToRemove = didDelectFieldOnMapAction.field
+        let fieldToRemove = delectFieldOnMapAction.field
         let fieldList = state.fieldList ?? []
         let index = findIndexFieldByIdField(idField: fieldToRemove.id, fieldList: fieldList)
 
@@ -78,6 +79,7 @@ class FieldListReducerHandler {
 
         copyState.sections![sectionIndex].rowData.append(inputMultiSelectContainer)
         copyState.uuidState = UUID().uuidString
+
         copyState.responseAction = .insertContainerElementResponse(indexPath: [
             IndexPath(
                 row: copyState.sections![sectionIndex].rowData.count - 1,

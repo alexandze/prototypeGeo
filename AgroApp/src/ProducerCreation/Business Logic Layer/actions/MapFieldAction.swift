@@ -21,18 +21,10 @@ struct MapFieldAction {
     }
 
     struct WillSelectedFieldOnMapAction: Action {
-        let idField: Int
-    }
-
-    struct DidSelectedFieldOnMapAction: Action {
         let field: Field
     }
 
     struct WillDeselectFieldOnMapAction: Action {
-        let idField: Int
-    }
-
-    struct DidDelectFieldOnMapAction: Action {
         let field: Field
     }
 }

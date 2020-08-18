@@ -209,14 +209,12 @@ extension MapFieldViewModel {
     }
 
     private func handleWillDeselectFieldOnMapActionResponse() {
-        guard let lastIdDeselected = state?.lastIdFieldDeselected,
-            let fieldDeselected = state?.fieldDictionnary?[lastIdDeselected]
+        guard let lastFieldDeselected = state?.lastFieldDeselected
             else { return }
 
-        deselectPolygonOf(field: fieldDeselected)
-        setAnnotationDataIsDeselected(fieldDeselected)
-        mapFieldInteraction.didDeselectFieldOnMapAction(field: fieldDeselected)
-        printAddButtonInCalloutView(idField: lastIdDeselected)
+        deselectPolygonOf(field: lastFieldDeselected)
+        setAnnotationDataIsDeselected(lastFieldDeselected)
+        printAddButtonInCalloutView(idField: lastFieldDeselected.id)
     }
 
     private func handleGetAllFieldActionResponse() {
@@ -230,13 +228,12 @@ extension MapFieldViewModel {
     }
 
     private func handleWillSelectedFieldOnMapActionResponse() {
-        guard let lastIdSelected = state?.lastIdFieldSelected,
-            let fieldSelected = state?.fieldDictionnary?[lastIdSelected]
+        guard let lastSelected = state?.lastFieldSelected,
+            let fieldSelected = state?.fieldDictionnary?[lastSelected.id]
             else { return }
 
         selectePolygonOf(field: fieldSelected)
         setAnnotationIsSelected(fieldSelected)
-        mapFieldInteraction.didSelectedFieldAction(field: fieldSelected)
     }
 
     private func handleGetAllFieldActionSuccessResponse() {
@@ -252,7 +249,7 @@ extension MapFieldViewModel {
         lastSelectedFieldCalloutView = selectedFieldCalloutView
         lastSelectedFieldCalloutView?.setStateButton(isSelected: false)
         lastSelectedFieldCalloutView?.idField = dataFromAnnotation.idField
-        mapFieldInteraction.willDeselectedFieldOnMapAction(idField: dataFromAnnotation.idField)
+        mapFieldInteraction.willDeselectedFieldOnMapAction(field: self.state?.fieldDictionnary?[dataFromAnnotation.idField])
     }
 
     private func handleAdd(button: UIButton) {
@@ -262,7 +259,7 @@ extension MapFieldViewModel {
         lastSelectedFieldCalloutView = selectedFieldCalloutView
         lastSelectedFieldCalloutView?.setStateButton(isSelected: true)
         lastSelectedFieldCalloutView?.idField = dataFromAnnotation.idField
-        mapFieldInteraction.willSelectedFieldOnMapAction(idField: dataFromAnnotation.idField)
+        mapFieldInteraction.willSelectedFieldOnMapAction(field: self.state?.fieldDictionnary?[dataFromAnnotation.idField])
     }
 
     private func handleGetAllFieldErrorResponse() {

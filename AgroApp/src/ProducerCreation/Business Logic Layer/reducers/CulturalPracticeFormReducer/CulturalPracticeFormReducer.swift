@@ -14,9 +14,9 @@ extension Reducers {
         var state = state ?? CulturalPracticeFormState(uuidState: UUID().uuidString)
 
         switch action {
-        case let didSelectedFieldOnList as FieldListAction.DidSelectedFieldOnListAction:
+        case let selectedFieldOnList as FieldListAction.WillSelectFieldOnListAction:
             return CulturalPracticeFormReducerHandler().handle(
-                didSelectedFieldOnListAction: didSelectedFieldOnList
+                selectedFieldOnListAction: selectedFieldOnList
             )
         case let addCulturalPracticeContainerAction as CulturalPracticeFormAction.AddCulturalPracticeInputMultiSelectContainer:
             CulturalPracticeFormReducerHandler().handle(
@@ -71,14 +71,15 @@ class CulturalPracticeFormReducerHandler {
         )
     }
 
-    func handle(didSelectedFieldOnListAction: FieldListAction.DidSelectedFieldOnListAction) -> CulturalPracticeFormState {
-        let field = didSelectedFieldOnListAction.field
+    func handle(selectedFieldOnListAction: FieldListAction.WillSelectFieldOnListAction) -> CulturalPracticeFormState {
+        let field = selectedFieldOnListAction.field
+
         let culturalPracticeElements = CulturalPractice
             .getCulturalPracticeElement(culturalPractice: field.culturalPratice)
 
         return CulturalPracticeFormState(
             uuidState: UUID().uuidString,
-            currentField: didSelectedFieldOnListAction.field,
+            currentField: selectedFieldOnListAction.field,
             sections: createSection(by: culturalPracticeElements),
             title: "Pratiques culturelles parcelle \(field.id)",
             responseAction: .reloadAllListElementResponse

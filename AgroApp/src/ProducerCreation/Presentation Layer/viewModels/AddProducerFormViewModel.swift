@@ -59,6 +59,8 @@ class AddProducerFormViewModelImpl: AddProducerFormViewModel {
                         indexInputElementRemoved: indexInputElementRemoved,
                         indexInputElementUpdateList: indexInputElementUpdateList
                     )
+                case .validateFormActionResponse(isAllInputElementRequiredIsValid: let isAllInputElementRequiredIsValid):
+                    self?.handleValidateFormActionResponse(isAllInputElementRequiredIsValid: isAllInputElementRequiredIsValid)
                 case .notResponse:
                     break
                 }
@@ -157,15 +159,21 @@ extension AddProducerFormViewModelImpl {
     }
 
     func handleValidateButton() {
-        // print(viewState.utilElementUIDataSwiftUIList[0].valueState)
-        // TODO Dispatch action
-
-        guard let appDependency = Util.getAppDependency() else { return }
-        self.viewController?.navigationController?.pushViewController(appDependency.makeFieldListViewController(), animated: true)
+        interaction.validateFormAction()
     }
 
     func handleRemoveNimButton(id: UUID) {
         interaction.removeNimInputElementAction(id: id)
+    }
+
+    private func handleValidateFormActionResponse(isAllInputElementRequiredIsValid: Bool) {
+        guard isAllInputElementRequiredIsValid else {
+            return
+        }
+
+        interaction.notResponseAction()
+        guard let appDependency = Util.getAppDependency() else { return }
+        self.viewController?.navigationController?.pushViewController(appDependency.makeFieldListViewController(), animated: true)
     }
 
     private func handleRemoveNimInputElementActionResponse(indexInputElementRemoved: Int, indexInputElementUpdateList: [Int]) {
@@ -198,11 +206,12 @@ extension AddProducerFormViewModelImpl {
         }
 
         setInputElement(elementUIDataObservable, index: index)
+        //self.interaction.checkIfAllInputElementIsValidAction()
     }
 
     private func handleCheckIfAllInputElementIsValidActionResponse(isAllInputValid: Bool) {
         self.viewState.isAllInputValid = isAllInputValid
-        self.viewState.objectWillChange.send()
+        sendObjectWillChangeOnAll()
     }
 }
 

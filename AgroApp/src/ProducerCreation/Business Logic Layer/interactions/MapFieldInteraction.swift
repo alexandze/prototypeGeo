@@ -25,18 +25,9 @@ public class MapFieldInteractionImpl: MapFieldInteraction {
         }
     }
 
-    func didSelectedFieldAction(field: Field?) {
+    func willDeselectedFieldOnMapAction(field: Field?) {
         guard let field = field else { return }
-        let selectedFieldOnMapAction = MapFieldAction.DidSelectedFieldOnMapAction(field: field)
-
-        _ =  Util.runInSchedulerBackground {
-            self.actionDispatcher.dispatch(selectedFieldOnMapAction)
-        }
-    }
-
-    func willDeselectedFieldOnMapAction(idField: Int?) {
-        guard let idField = idField else { return }
-        let willDeselectFieldOnMapAction = MapFieldAction.WillDeselectFieldOnMapAction(idField: idField)
+        let willDeselectFieldOnMapAction = MapFieldAction.WillDeselectFieldOnMapAction(field: field)
 
         _ = Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(willDeselectFieldOnMapAction)
@@ -57,25 +48,21 @@ public class MapFieldInteractionImpl: MapFieldInteraction {
         }
     }
 
-    func willSelectedFieldOnMapAction(idField: Int) {
-        _ = Util.runInSchedulerBackground {
-            self.actionDispatcher.dispatch(MapFieldAction.WillSelectedFieldOnMapAction(idField: idField))
+    func willSelectedFieldOnMapAction(field: Field?) {
+        guard let field = field else {
+            return
         }
-    }
 
-    func didDeselectFieldOnMapAction(field: Field) {
         _ = Util.runInSchedulerBackground {
-            self.actionDispatcher.dispatch(MapFieldAction.DidDelectFieldOnMapAction(field: field))
+            self.actionDispatcher.dispatch(MapFieldAction.WillSelectedFieldOnMapAction(field: field))
         }
     }
 }
 
 protocol MapFieldInteraction {
     func getAllFieldAction()
-    func didSelectedFieldAction(field: Field?)
-    func willDeselectedFieldOnMapAction(idField: Int?)
+    func willDeselectedFieldOnMapAction(field: Field?)
     func getFieldSuccessAction(_ fieldDictionnary: [Int: Field])
     func getFieldErrorAction(error: Error)
-    func willSelectedFieldOnMapAction(idField: Int)
-    func didDeselectFieldOnMapAction(field: Field)
+    func willSelectedFieldOnMapAction(field: Field?)
 }

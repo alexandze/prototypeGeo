@@ -16,8 +16,8 @@ struct MapFieldState: Equatable {
 
     var uuidState: String
     var fieldDictionnary: [Int: Field]?
-    var lastIdFieldSelected: Int?
-    var lastIdFieldDeselected: Int?
+    var lastFieldSelected: Field?
+    var lastFieldDeselected: Field?
     var responseAction: ResponseAction?
 
     enum ResponseAction {
@@ -30,15 +30,15 @@ struct MapFieldState: Equatable {
 
     func changeValues(
         fieldDictionnary: [Int: Field]? = nil,
-        lastIdFieldSelected: Int? = nil,
-        lastIdFieldDeselected: Int? = nil,
+        lastFieldSelected: Field? = nil,
+        lastFieldDeselected: Field? = nil,
         responseAction: ResponseAction? = nil
     ) -> MapFieldState {
         MapFieldState(
             uuidState: UUID().uuidString,
             fieldDictionnary: fieldDictionnary ?? self.fieldDictionnary,
-            lastIdFieldSelected: lastIdFieldSelected ?? self.lastIdFieldSelected,
-            lastIdFieldDeselected: lastIdFieldDeselected ?? self.lastIdFieldDeselected,
+            lastFieldSelected: lastFieldSelected ?? self.lastFieldSelected,
+            lastFieldDeselected: lastFieldDeselected ?? self.lastFieldDeselected,
             responseAction: responseAction ?? self.responseAction
         )
     }

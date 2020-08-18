@@ -34,7 +34,7 @@ class MapFieldReducerHandler {
         _ state: MapFieldState
     ) -> MapFieldState {
         state.changeValues(
-            lastIdFieldDeselected: willDeselectFieldOnMapAction.idField,
+            lastFieldDeselected: willDeselectFieldOnMapAction.field,
             responseAction: .willDeselectFieldOnMapActionResponse
         )
     }
@@ -54,7 +54,7 @@ class MapFieldReducerHandler {
         _ state: MapFieldState
     ) -> MapFieldState {
         state.changeValues(
-            lastIdFieldSelected: willSelectedFieldOnMapAction.idField,
+            lastFieldSelected: willSelectedFieldOnMapAction.field,
             responseAction: .willSelectedFieldOnMapActionResponse
         )
     }

@@ -27,67 +27,61 @@ struct AddProducerFormView: View {
     var body: some View {
 
         GeometryReader { (geometryProxy: GeometryProxy) in
-            ZStack {
-                VStack {
-                    ScrollView {
-                        VStack {
-                            ForEach(self.viewState.elementUIDataObservableList) { (elementUIData: ElementUIDataObservable) in
-                                VStack {
-                                    if elementUIData.type == InputElementObservable.TYPE_ELEMENT {
-                                        InputWithTitleElement(elementUIData: elementUIData) {}
-                                            .padding(15)
-                                    }
+            VStack {
+                ScrollView {
+                    VStack {
+                        ForEach(self.viewState.elementUIDataObservableList) { (elementUIData: ElementUIDataObservable) in
+                            VStack {
+                                if elementUIData.type == InputElementObservable.TYPE_ELEMENT {
+                                    InputWithTitleElement(elementUIData: elementUIData) {}
+                                        .padding(15)
+                                }
 
-                                    if elementUIData.type == InputElementWithRemoveButtonObservable.TYPE_ELEMENT {
-                                        InputWithTitleElement(elementUIData: elementUIData) {
-                                            self.viewModel.handleRemoveNimButton(id: elementUIData.id)
-                                        }.padding(15)
-                                    }
+                                if elementUIData.type == InputElementWithRemoveButtonObservable.TYPE_ELEMENT {
+                                    InputWithTitleElement(elementUIData: elementUIData) {
+                                        self.viewModel.handleRemoveNimButton(id: elementUIData.id)
+                                    }.padding(15)
                                 }
                             }
-
-                            if self.isKeyboardVisible() {
-                                self.getButtonValidate()
-                                    .padding(.vertical, 15)
-                            }
                         }
-                    }.frame(
-                        width: geometryProxy.size.width,
-                        height: self.isKeyboardVisible()
-                            ? self.calculHeightWithKeyBoard(geometryProxy: geometryProxy)
-                            : self.calculHeightWithoutKeyBoard(geometryProxy: geometryProxy),
-                        alignment: .top
-                    )//.offset(y: self.isKeyboardVisible() ? -self.keyboardFollower.keyboardHeight + self.getOffset(geometryProxy: geometryProxy) : 0)
-                        .onAppear {
-                            self.viewModel.configView()
-                            self.viewModel.subscribeToStateObservable()
-                    }
-                    .onDisappear {
-                        self.viewModel.dispose()
-                    }
-                    .animation(.default)
 
-                    Spacer()
-
-                    if !self.isKeyboardVisible() {
-                        self.getButtonValidate()
-                            .padding(.vertical, 30)
-                    }
-                }
-
-                VStack {
-                    Spacer()
-                    HStack {
-                        Spacer()
                         if self.viewState.addElementButton != nil {
                             ButtonAdd(
                                 buttonElementObservable: self.viewState.addElementButton
                             ) {
                                 self.viewModel.handleAddNimButton()
-                            }.offset(x: -20, y: -100)
+                            }.padding(.trailing, 2)
+                                .offset(x:( geometryProxy.size.width / 2) - 67)
                         }
+
+                        if self.keyboardFollower.isVisible {
+                            self.getButtonValidate()
+                                .padding(.vertical, 15)
+                        }
+
                     }
+                }.frame(
+                    width: geometryProxy.size.width,
+                    height: self.isKeyboardVisible()
+                        ? self.calculHeightWithKeyBoard(geometryProxy: geometryProxy)
+                        : self.calculHeightWithoutKeyBoard(geometryProxy: geometryProxy),
+                    alignment: .top
+                ).onAppear {
+                    self.viewModel.configView()
+                    self.viewModel.subscribeToStateObservable()
                 }
+                .onDisappear {
+                    self.viewModel.dispose()
+                }
+                .animation(.default)
+
+                Spacer()
+
+                if !self.isKeyboardVisible() {
+                    self.getButtonValidate()
+                        .padding(.bottom, 15)
+                }
+
             }.environmentObject(self.viewModel.viewState)
                 .environmentObject(self.keyboardFollower)
                 .environmentObject(
@@ -122,7 +116,7 @@ struct AddProducerFormView: View {
     }
 
     private func calculHeightWithoutKeyBoard(geometryProxy: GeometryProxy) -> CGFloat {
-        geometryProxy.size.height * 0.75
+        geometryProxy.size.height * 0.85
     }
 }
 
@@ -255,7 +249,7 @@ private struct ButtonAdd: View {
 
                 Text(self.getTitle())
                     .font(.system(size: 15))
-                .offset(y: -5)
+                    .offset(y: -5)
             }.frame(width: 67 , height: 60)
         }
         .frame(

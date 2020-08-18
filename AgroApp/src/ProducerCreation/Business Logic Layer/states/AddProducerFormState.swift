@@ -38,6 +38,7 @@ struct AddProducerFormState: Equatable {
         case checkIfAllInputElementIsValidActionResponse(isAllInputValid: Bool)
         case addNimInputElementActionResponse(indexOfNewNimInputElement: Int)
         case removeNimInputElementActionResponse(indexInputElementRemoved: Int, indexInputElementUpdateList: [Int])
+        case validateFormActionResponse(isAllInputElementRequiredIsValid: Bool)
         case notResponse
     }
 }
