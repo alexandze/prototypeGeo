@@ -9,7 +9,7 @@
 import UIKit
 
 class FieldDetailsTableViewHeader: UIView {
-    
+
     var titleFieldButton: String? {
         get {
             fieldButton.title(for: .normal)
@@ -18,20 +18,20 @@ class FieldDetailsTableViewHeader: UIView {
             fieldButton.setTitle(title, for: .normal)
         }
     }
-    
+
     var titleCulturalPracticeButton: String? {
         get {
             culturalPracticeButton.title(for: .normal)
         }
-        
+
         set(title) {
             culturalPracticeButton.setTitle(title, for: .normal)
         }
     }
-    
+
     private var handleFieldButton: (() -> Void)?
     private var handleCulturalPracticeButton: (() -> Void)?
-    
+
     private let fieldButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -44,14 +44,14 @@ class FieldDetailsTableViewHeader: UIView {
         button.titleLabel?.textAlignment = .center
         button.titleLabel?.lineBreakMode = .byWordWrapping
         button.backgroundColor = .gray
-        
+
         button.layer.shadowColor = UIColor.gray.cgColor
         button.layer.shadowOpacity = 1
         button.layer.shadowOffset = .zero
         button.layer.shadowRadius = 5
         return button
     }()
-    
+
     private let culturalPracticeButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -64,30 +64,30 @@ class FieldDetailsTableViewHeader: UIView {
         button.titleLabel?.textAlignment = .center
         button.titleLabel?.lineBreakMode = .byWordWrapping
         button.backgroundColor = .gray
-        
+
         button.layer.shadowColor = UIColor.gray.cgColor
         button.layer.shadowOpacity = 1
         button.layer.shadowOffset = .zero
         button.layer.shadowRadius = 5
         return button
     }()
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     init() {
         super.init(frame: .zero)
         self.positionFieldAndCulturalPracticeButton()
     }
-    
+
     private func positionFieldAndCulturalPracticeButton() {
         let viewButton = UIView(frame: .zero)
         viewButton.translatesAutoresizingMaskIntoConstraints = false
         viewButton.addSubview(fieldButton)
         viewButton.addSubview(culturalPracticeButton)
         addSubview(viewButton)
-        
+
         NSLayoutConstraint.activate([
             fieldButton.centerYAnchor.constraint(equalTo: viewButton.centerYAnchor),
             fieldButton.leadingAnchor.constraint(equalTo: viewButton.leadingAnchor),
@@ -101,8 +101,8 @@ class FieldDetailsTableViewHeader: UIView {
             viewButton.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 1),
             fieldButton.widthAnchor.constraint(equalTo: viewButton.widthAnchor, multiplier: 0.4),
             culturalPracticeButton.widthAnchor.constraint(equalTo: viewButton.widthAnchor, multiplier: 0.4)
-            
+
         ])
     }
-    
+
 }

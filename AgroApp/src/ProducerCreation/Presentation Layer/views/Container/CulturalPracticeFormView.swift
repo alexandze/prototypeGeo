@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 
 class CulturalPracticeFormView: UIView {
-    
+
     let fieldDetailsTableViewHeader: FieldDetailsTableViewHeader = {
         let fieldDetailsTableViewHeader = FieldDetailsTableViewHeader()
         fieldDetailsTableViewHeader.translatesAutoresizingMaskIntoConstraints = false
@@ -20,7 +20,7 @@ class CulturalPracticeFormView: UIView {
         fieldDetailsTableViewHeader.alpha = Util.getAlphaValue()
         return fieldDetailsTableViewHeader
     }()
-    
+
     var handleAddButtonFunc: (() -> Void)?
 
     required init?(coder: NSCoder) {
@@ -42,7 +42,7 @@ class CulturalPracticeFormView: UIView {
         tableView.rowHeight = 80
         return tableView
     }()
-    
+
     private func initConstraintTableView() {
         addSubview(tableView)
         addSubview(fieldDetailsTableViewHeader)
