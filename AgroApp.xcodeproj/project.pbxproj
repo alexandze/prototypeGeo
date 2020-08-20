@@ -12,6 +12,7 @@
 		7F1D50E124E35F5A00486C81 /* AddProducerFormFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1D50E024E35F5900486C81 /* AddProducerFormFactoryTests.swift */; };
 		7F34F01D24E76FF7001278CA /* AddProducerFormService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F34F01C24E76FF7001278CA /* AddProducerFormService.swift */; };
 		7F40B77124EB585900FE55EF /* HandlerValidateFormAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F40B77024EB585900FE55EF /* HandlerValidateFormAction.swift */; };
+		7F6546B224EDC8220040F30E /* FieldDetailsTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6546B124EDC8220040F30E /* FieldDetailsTableViewHeader.swift */; };
 		7F8AD78B24E9CA6E00C56282 /* HandlerRemoveNimInputElementAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8AD78A24E9CA6E00C56282 /* HandlerRemoveNimInputElementAction.swift */; };
 		7F8AD78E24EA0E7B00C56282 /* ElementUIDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8AD78D24EA0E7B00C56282 /* ElementUIDataFactory.swift */; };
 		7FD0BD5024E87A2E00EB86A3 /* Producer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD0BD4F24E87A2E00EB86A3 /* Producer.swift */; };
@@ -184,6 +185,7 @@
 		7F1D50E024E35F5900486C81 /* AddProducerFormFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProducerFormFactoryTests.swift; sourceTree = "<group>"; };
 		7F34F01C24E76FF7001278CA /* AddProducerFormService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProducerFormService.swift; sourceTree = "<group>"; };
 		7F40B77024EB585900FE55EF /* HandlerValidateFormAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerValidateFormAction.swift; sourceTree = "<group>"; };
+		7F6546B124EDC8220040F30E /* FieldDetailsTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldDetailsTableViewHeader.swift; sourceTree = "<group>"; };
 		7F8AD78A24E9CA6E00C56282 /* HandlerRemoveNimInputElementAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerRemoveNimInputElementAction.swift; sourceTree = "<group>"; };
 		7F8AD78D24EA0E7B00C56282 /* ElementUIDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementUIDataFactory.swift; sourceTree = "<group>"; };
 		7FD0BD4F24E87A2E00EB86A3 /* Producer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Producer.swift; sourceTree = "<group>"; };
@@ -589,6 +591,7 @@
 				9894340B2410FAF0003C0110 /* FieldSelectedViewCell.swift */,
 				98DB0F4A242866C50065963B /* SubtitleTableViewCell.swift */,
 				980ECA152430286D00AAD0AB /* HeaderPresentedView.swift */,
+				7F6546B124EDC8220040F30E /* FieldDetailsTableViewHeader.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -1242,6 +1245,7 @@
 				98BA0D81240CF43600948A26 /* UIViewExtention.swift in Sources */,
 				98F126A624C712CB001853D5 /* DelaiIncorporationFumier.swift in Sources */,
 				98DC7B5824E0667F00A898B6 /* HandlerGetListElementUIDataWihoutValue.swift in Sources */,
+				7F6546B224EDC8220040F30E /* FieldDetailsTableViewHeader.swift in Sources */,
 				9891610324DC8C3D005E1F7C /* AddProducerFormView.swift in Sources */,
 				98363B4823DEE34F00AFFC63 /* MapFieldRepository.swift in Sources */,
 				9805683423B92DD40056D199 /* FarmerFormated.swift in Sources */,
@@ -1433,7 +1437,7 @@
 				PRODUCT_NAME = AgroApp;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

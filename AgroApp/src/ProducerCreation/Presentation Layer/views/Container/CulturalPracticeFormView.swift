@@ -10,7 +10,17 @@ import UIKit
 import RxSwift
 
 class CulturalPracticeFormView: UIView {
-
+    
+    let fieldDetailsTableViewHeader: FieldDetailsTableViewHeader = {
+        let fieldDetailsTableViewHeader = FieldDetailsTableViewHeader()
+        fieldDetailsTableViewHeader.translatesAutoresizingMaskIntoConstraints = false
+        fieldDetailsTableViewHeader.titleFieldButton = "Parcelle"
+        fieldDetailsTableViewHeader.titleCulturalPracticeButton = "Pratique Culturelle"
+        fieldDetailsTableViewHeader.backgroundColor = Util.getBackgroundColor()
+        fieldDetailsTableViewHeader.alpha = Util.getAlphaValue()
+        return fieldDetailsTableViewHeader
+    }()
+    
     var handleAddButtonFunc: (() -> Void)?
 
     required init?(coder: NSCoder) {
@@ -32,15 +42,21 @@ class CulturalPracticeFormView: UIView {
         tableView.rowHeight = 80
         return tableView
     }()
-
+    
     private func initConstraintTableView() {
         addSubview(tableView)
+        addSubview(fieldDetailsTableViewHeader)
 
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: topAnchor),
+            fieldDetailsTableViewHeader.topAnchor.constraint(equalTo: topAnchor),
+            fieldDetailsTableViewHeader.leadingAnchor.constraint(equalTo: leadingAnchor),
+            fieldDetailsTableViewHeader.trailingAnchor.constraint(equalTo: trailingAnchor),
+            fieldDetailsTableViewHeader.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.1),
+            tableView.topAnchor.constraint(equalTo: fieldDetailsTableViewHeader.bottomAnchor),
             tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: trailingAnchor)
+            tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            tableView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.9)
         ])
     }
 
