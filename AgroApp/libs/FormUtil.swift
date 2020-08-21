@@ -12,6 +12,7 @@ import SwiftUI
 // MARK: - ElementUIData
 
 protocol ElementUIData {
+    var id: UUID {get set }
     var type: String {get set}
     var title: String {get set}
 }
@@ -87,6 +88,7 @@ class InputElementDataObservable: ElementUIDataObservable {
 
 struct InputElement: InputElementData {
     static let TYPE_ELEMENT = "INPUT_ELEMENT"
+    var id: UUID
     var type: String = InputElement.TYPE_ELEMENT
     var title: String
     var value: String
@@ -131,6 +133,7 @@ class InputElementObservable: InputElementDataObservable {
 
 struct InputElementWithRemoveButton: InputElementData {
     static let TYPE_ELEMENT = "INPUT_ELEMENT_REMOVE_BUTTON"
+    var id: UUID = UUID()
     var type: String = InputElementWithRemoveButton.TYPE_ELEMENT
     var title: String
     var value: String
@@ -180,10 +183,12 @@ class InputElementWithRemoveButtonObservable: InputElementDataObservable {
 
 struct ButtonElement: ElementUIData {
     static let TYPE_ELEMENT = "BUTTON"
+    var id = UUID()
     var type: String = ButtonElement.TYPE_ELEMENT
     var title: String
     var isEnabled: Bool
     var action: String
+    var backgroundColor: String
 }
 
 class ButtonElementObservable: ElementUIDataObservable {
@@ -206,9 +211,26 @@ class ButtonElementObservable: ElementUIDataObservable {
     }
 }
 
+// MARK: - SelectElement
+
+struct SelectElement: ElementUIData {
+    static let TYPE_ELEMENT = "SELECT_ELEMENT"
+    var id: UUID = UUID()
+    var type: String = SelectElement.TYPE_ELEMENT
+    var title: String
+    var value: String?
+    var isValid: Bool
+    var isRequired: Bool
+    var values: [String]
+}
+
 enum ElementFormAction: String {
     case add
     case remove
+}
+
+enum BackgroundColor: String {
+    case gray
 }
 
 enum KeyboardType: String {

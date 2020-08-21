@@ -11,7 +11,7 @@ import UIKit
 public class CulturalPracticeFormViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     var culturalPraticeViewModel: CulturalPraticeFormViewModel
-    let culturalPraticeView: CulturalPracticeFormView
+    let culturalPraticeFormView: CulturalPracticeFormView
     let tableView: UITableView
 
     required init?(coder: NSCoder) {
@@ -22,10 +22,10 @@ public class CulturalPracticeFormViewController: UIViewController, UITableViewDe
         culturalPraticeViewModel: CulturalPraticeFormViewModel
     ) {
         self.culturalPraticeViewModel = culturalPraticeViewModel
-        self.culturalPraticeView = CulturalPracticeFormView()
-        self.culturalPraticeViewModel.culturalPraticeView = self.culturalPraticeView
-        self.culturalPraticeViewModel.tableView = self.culturalPraticeView.tableView
-        self.tableView = self.culturalPraticeView.tableView
+        self.culturalPraticeFormView = CulturalPracticeFormView()
+        self.culturalPraticeViewModel.culturalPraticeView = self.culturalPraticeFormView
+        self.culturalPraticeViewModel.tableView = self.culturalPraticeFormView.tableView
+        self.tableView = self.culturalPraticeFormView.tableView
         super.init(nibName: nil, bundle: nil)
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -33,7 +33,7 @@ public class CulturalPracticeFormViewController: UIViewController, UITableViewDe
     }
 
     public override func loadView() {
-        self.view = self.culturalPraticeView
+        self.view = self.culturalPraticeFormView
     }
 
     public override func viewDidLoad() {
@@ -45,6 +45,14 @@ public class CulturalPracticeFormViewController: UIViewController, UITableViewDe
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         culturalPraticeViewModel.subscribeToCulturalPracticeStateObs()
+        
+        culturalPraticeFormView.initFieldButton {
+            self.culturalPraticeViewModel.handleFieldButton()
+        }
+        
+        culturalPraticeFormView.initCulturalPracticeButton {
+            self.culturalPraticeViewModel.handleCulturalPracticeButton()
+        }
     }
 
     public override func viewWillDisappear(_ animated: Bool) {
@@ -84,15 +92,17 @@ public class CulturalPracticeFormViewController: UIViewController, UITableViewDe
 
         switch culturalPraticeViewModel.getCulturePracticeElement(by: indexPath) {
         case let addElement as CulturalPracticeAddElement:
-            return culturalPraticeViewModel.initCellFor(addElement: addElement, cell: cell!)
+            return culturalPraticeFormView.initCell(cell, withData: addElement) {
+                [weak self] in self?.culturalPraticeViewModel.handleFuncAddDoseFumier()
+            }
         case let inputElement as CulturalPracticeInputElement:
-            return culturalPraticeViewModel.initCellFor(inputElement: inputElement, cell: cell!)
+            return culturalPraticeFormView.initCell(cell, withData: inputElement)
         case let inputMultiSelectContainer as CulturalPracticeContainerElement:
-            return culturalPraticeViewModel.initCellFor(containerElement: inputMultiSelectContainer, cell: cell!)
+            return culturalPraticeFormView.initCell(cell, withData: inputMultiSelectContainer)
         case let multiSelectElement as CulturalPracticeMultiSelectElement:
-            return culturalPraticeViewModel.initCellFor(multiSelectElement: multiSelectElement, cell: cell!)
+            return culturalPraticeFormView.initCell(cell, withData: multiSelectElement)
         default:
-            return cell!
+            return cell ?? UITableViewCell()
         }
     }
 

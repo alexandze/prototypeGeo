@@ -42,25 +42,21 @@ class CulturalPracticeFormView: UIView {
         tableView.rowHeight = 80
         return tableView
     }()
-
-    private func initConstraintTableView() {
-        addSubview(tableView)
-        addSubview(fieldDetailsTableViewHeader)
-
-        NSLayoutConstraint.activate([
-            fieldDetailsTableViewHeader.topAnchor.constraint(equalTo: topAnchor),
-            fieldDetailsTableViewHeader.leadingAnchor.constraint(equalTo: leadingAnchor),
-            fieldDetailsTableViewHeader.trailingAnchor.constraint(equalTo: trailingAnchor),
-            fieldDetailsTableViewHeader.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.1),
-            tableView.topAnchor.constraint(equalTo: fieldDetailsTableViewHeader.bottomAnchor),
-            tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            tableView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.9)
-        ])
+    
+    func initFieldButton(_ buttonElement: ButtonElement? = nil, withAction actionButton: @escaping () -> Void) {
+        fieldDetailsTableViewHeader.initHandleFieldButton {
+            actionButton()
+        }
     }
-
-    public func initCellFor(multiSelectElement: CulturalPracticeMultiSelectElement, cell: UITableViewCell) -> UITableViewCell {
+    
+    func initCulturalPracticeButton(_ buttonElement: ButtonElement? = nil, withAction actionButton: @escaping () -> Void) {
+        fieldDetailsTableViewHeader.initHandleCulturalPracticeButton {
+            actionButton()
+        }
+    }
+    
+    func initCell(_ cell: UITableViewCell?, withData multiSelectElement: CulturalPracticeMultiSelectElement) -> UITableViewCell {
+        guard let cell = cell else { return UITableViewCell() }
         removeContainerElementViewTo(containerView: cell.contentView)
         config(labelTitle: cell.textLabel, culturalPracticeElementProtocol: multiSelectElement)
         config(detailLabel: cell.detailTextLabel, culturalPracticeValueProtocol: multiSelectElement.value)
@@ -68,11 +64,12 @@ class CulturalPracticeFormView: UIView {
         return cell
     }
 
-    func initCellFor(
-        addElement: CulturalPracticeAddElement,
-        cell: UITableViewCell,
-        handleAddButton: @escaping () -> Void
+    func initCell(
+        _ cell: UITableViewCell?,
+        withData addElement: CulturalPracticeAddElement,
+        andHandle handleAddButton: @escaping () -> Void
     ) -> UITableViewCell {
+        guard let cell = cell else { return UITableViewCell() }
         removeContainerElementViewTo(containerView: cell.contentView)
         cell.detailTextLabel?.font = UIFont(name: "Arial", size: 20)
         cell.textLabel?.font = UIFont(name: "Arial", size: 15)
@@ -86,23 +83,21 @@ class CulturalPracticeFormView: UIView {
 
         return cell
     }
-
-    // TODO afficher les messages d'erreur pour les dose fumier
-    private func printMesageErrorNotCompletedDoseFumier() {
-        _ = Observable.just(0)
-            .delay(.seconds(2), scheduler: MainScheduler.instance)
-            .do(onNext: {_ in print("1") })
-            .delay(.seconds(2), scheduler: MainScheduler.instance)
-            .do(onNext: { _ in print("2") })
-            .subscribe()
+    
+    func createAddButton(handleAddButton: @escaping () -> Void) -> UIButton {
+        self.handleAddButtonFunc = handleAddButton
+        let imageAdd = getImageIconAdd()
+        let addButton = UIButton(type: .custom)
+        addButton.setImage(imageAdd, for: .normal)
+        addButton.tintColor = Util.getOppositeColorBlackOrWhite()
+        addButton.sizeToFit()
+        addButton.tag = TAG_ADD_BUTTON
+        addButton.addTarget(self, action: #selector(handleAddButton(sender:)), for: .touchUpInside)
+        return addButton
     }
-
-    // TODO afficher les messages d'erreur pour les dose fumier
-    private func printMessageErrorMaxDoseFumier() {
-
-    }
-
-    func initCellFor(containerElement: CulturalPracticeContainerElement, cell: UITableViewCell) -> UITableViewCell {
+    
+    func initCell(_ cell: UITableViewCell?, withData containerElement: CulturalPracticeContainerElement) -> UITableViewCell {
+        guard let cell = cell else { return UITableViewCell() }
         cell.textLabel?.text = nil
         cell.detailTextLabel?.text = nil
         cell.accessoryView = nil
@@ -111,8 +106,9 @@ class CulturalPracticeFormView: UIView {
         container.addViewTo(contentView: cell.contentView)
         return cell
     }
-
-    func initCellFor(inputElement: CulturalPracticeInputElement, cell: UITableViewCell) -> UITableViewCell {
+    
+    func initCell(_ cell: UITableViewCell?, withData inputElement: CulturalPracticeInputElement) -> UITableViewCell {
+        guard let cell = cell else { return UITableViewCell() }
         removeContainerElementViewTo(containerView: cell.contentView)
 
         config(
@@ -139,18 +135,6 @@ class CulturalPracticeFormView: UIView {
 
     private func removeContainerElementViewTo(containerView: UIView) {
         containerView.viewWithTag(ContainerElementView.TAG)?.removeFromSuperview()
-    }
-
-    public func createAddButton(handleAddButton: @escaping () -> Void) -> UIButton {
-        self.handleAddButtonFunc = handleAddButton
-        let imageAdd = getImageIconAdd()
-        let addButton = UIButton(type: .custom)
-        addButton.setImage(imageAdd, for: .normal)
-        addButton.tintColor = Util.getOppositeColorBlackOrWhite()
-        addButton.sizeToFit()
-        addButton.tag = TAG_ADD_BUTTON
-        addButton.addTarget(self, action: #selector(handleAddButton(sender:)), for: .touchUpInside)
-        return addButton
     }
 
     @objc private func handleAddButton(sender: UIButton) {
@@ -196,5 +180,37 @@ class CulturalPracticeFormView: UIView {
         }
 
         return unit
+    }
+    
+    private func initConstraintTableView() {
+        addSubview(tableView)
+        addSubview(fieldDetailsTableViewHeader)
+
+        NSLayoutConstraint.activate([
+            fieldDetailsTableViewHeader.topAnchor.constraint(equalTo: topAnchor),
+            fieldDetailsTableViewHeader.leadingAnchor.constraint(equalTo: leadingAnchor),
+            fieldDetailsTableViewHeader.trailingAnchor.constraint(equalTo: trailingAnchor),
+            fieldDetailsTableViewHeader.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.1),
+            tableView.topAnchor.constraint(equalTo: fieldDetailsTableViewHeader.bottomAnchor),
+            tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            tableView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.9)
+        ])
+    }
+
+    // TODO afficher les messages d'erreur pour les dose fumier
+    private func printMesageErrorNotCompletedDoseFumier() {
+        _ = Observable.just(0)
+            .delay(.seconds(2), scheduler: MainScheduler.instance)
+            .do(onNext: {_ in print("1") })
+            .delay(.seconds(2), scheduler: MainScheduler.instance)
+            .do(onNext: { _ in print("2") })
+            .subscribe()
+    }
+
+    // TODO afficher les messages d'erreur pour les dose fumier
+    private func printMessageErrorMaxDoseFumier() {
+
     }
 }

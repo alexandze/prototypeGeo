@@ -10,6 +10,7 @@
 		1D9906770E6E2074C3379909 /* Pods_AgroApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AC948D72A5D5DE7D8A1FDB4 /* Pods_AgroApp.framework */; };
 		7F1D50DE24E3509100486C81 /* AddProducerFormFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1D50DD24E3509100486C81 /* AddProducerFormFactory.swift */; };
 		7F1D50E124E35F5A00486C81 /* AddProducerFormFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1D50E024E35F5900486C81 /* AddProducerFormFactoryTests.swift */; };
+		7F3091F224EF2CC400FA2269 /* FieldDetailsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3091F124EF2CC400FA2269 /* FieldDetailsFactory.swift */; };
 		7F34F01D24E76FF7001278CA /* AddProducerFormService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F34F01C24E76FF7001278CA /* AddProducerFormService.swift */; };
 		7F40B77124EB585900FE55EF /* HandlerValidateFormAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F40B77024EB585900FE55EF /* HandlerValidateFormAction.swift */; };
 		7F6546B224EDC8220040F30E /* FieldDetailsTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6546B124EDC8220040F30E /* FieldDetailsTableViewHeader.swift */; };
@@ -183,6 +184,7 @@
 		7AC948D72A5D5DE7D8A1FDB4 /* Pods_AgroApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AgroApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F1D50DD24E3509100486C81 /* AddProducerFormFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProducerFormFactory.swift; sourceTree = "<group>"; };
 		7F1D50E024E35F5900486C81 /* AddProducerFormFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProducerFormFactoryTests.swift; sourceTree = "<group>"; };
+		7F3091F124EF2CC400FA2269 /* FieldDetailsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldDetailsFactory.swift; sourceTree = "<group>"; };
 		7F34F01C24E76FF7001278CA /* AddProducerFormService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProducerFormService.swift; sourceTree = "<group>"; };
 		7F40B77024EB585900FE55EF /* HandlerValidateFormAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerValidateFormAction.swift; sourceTree = "<group>"; };
 		7F6546B124EDC8220040F30E /* FieldDetailsTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldDetailsTableViewHeader.swift; sourceTree = "<group>"; };
@@ -397,6 +399,7 @@
 		7F1D50DC24E34FEA00486C81 /* factories */ = {
 			isa = PBXGroup;
 			children = (
+				7F3091F024EF2C7E00FA2269 /* FieldDetailsFactory */,
 				7F8AD78C24EA0C9F00C56282 /* AddProducerFormFactory */,
 			);
 			path = factories;
@@ -408,6 +411,14 @@
 				7F1D50E024E35F5900486C81 /* AddProducerFormFactoryTests.swift */,
 			);
 			path = factories;
+			sourceTree = "<group>";
+		};
+		7F3091F024EF2C7E00FA2269 /* FieldDetailsFactory */ = {
+			isa = PBXGroup;
+			children = (
+				7F3091F124EF2CC400FA2269 /* FieldDetailsFactory.swift */,
+			);
+			path = FieldDetailsFactory;
 			sourceTree = "<group>";
 		};
 		7F8AD78C24EA0C9F00C56282 /* AddProducerFormFactory */ = {
@@ -1243,6 +1254,7 @@
 				9854BFDD2409000E00E5AB8A /* ContainerTitleNavigationView.swift in Sources */,
 				7F40B77124EB585900FE55EF /* HandlerValidateFormAction.swift in Sources */,
 				98BA0D81240CF43600948A26 /* UIViewExtention.swift in Sources */,
+				7F3091F224EF2CC400FA2269 /* FieldDetailsFactory.swift in Sources */,
 				98F126A624C712CB001853D5 /* DelaiIncorporationFumier.swift in Sources */,
 				98DC7B5824E0667F00A898B6 /* HandlerGetListElementUIDataWihoutValue.swift in Sources */,
 				7F6546B224EDC8220040F30E /* FieldDetailsTableViewHeader.swift in Sources */,
