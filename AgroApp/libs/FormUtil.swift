@@ -17,6 +17,19 @@ protocol ElementUIData {
     var title: String {get set}
 }
 
+protocol ElementUIListData: ElementUIData {
+    var elements: [ElementUIData] {get set}
+}
+
+struct ElementUIListDataImpl: ElementUIListData {
+    static let TYPE_ELEMENT = "ELEMENT_UI_LIST_DATA"
+    var id: UUID = UUID()
+    var type: String = ElementUIListDataImpl.TYPE_ELEMENT
+    var title: String
+    var elements: [ElementUIData]
+}
+
+
 class ElementUIDataObservable: ObservableObject, Identifiable {
     var id = UUID()
     var type: String
@@ -33,7 +46,7 @@ class ElementUIDataObservable: ObservableObject, Identifiable {
 protocol InputElementData: ElementUIData {
     var type: String {get set}
     var title: String {get set}
-    var value: String {get set}
+    var value: String? {get set}
     var isValid: Bool {get set}
     var isRequired: Bool {get set}
     var regexPattern: String {get set}
@@ -88,14 +101,16 @@ class InputElementDataObservable: ElementUIDataObservable {
 
 struct InputElement: InputElementData {
     static let TYPE_ELEMENT = "INPUT_ELEMENT"
-    var id: UUID
+    var id: UUID = UUID()
     var type: String = InputElement.TYPE_ELEMENT
     var title: String
-    var value: String
+    var value: String?
     var isValid: Bool
     var isRequired: Bool
     var regexPattern: String
     var keyboardType: KeyboardType = .normal
+    var unitType: String?
+    var typeValue: String?
 }
 
 class InputElementObservable: InputElementDataObservable {
@@ -136,7 +151,7 @@ struct InputElementWithRemoveButton: InputElementData {
     var id: UUID = UUID()
     var type: String = InputElementWithRemoveButton.TYPE_ELEMENT
     var title: String
-    var value: String
+    var value: String?
     var isValid: Bool
     var isRequired: Bool
     var action: String
@@ -188,7 +203,8 @@ struct ButtonElement: ElementUIData {
     var title: String
     var isEnabled: Bool
     var action: String
-    var backgroundColor: String
+    var backgroundColor: String?
+    var unitType: String?
 }
 
 class ButtonElementObservable: ElementUIDataObservable {
@@ -222,6 +238,8 @@ struct SelectElement: ElementUIData {
     var isValid: Bool
     var isRequired: Bool
     var values: [String]
+    var unitType: String?
+    var typeValue: String?
 }
 
 enum ElementFormAction: String {

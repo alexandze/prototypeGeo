@@ -112,7 +112,5 @@ protocol CulturalPracticeElementProtocol {
 }
 
 
-protocol CulturalPracticeValue1 {
-    
-}
+
 

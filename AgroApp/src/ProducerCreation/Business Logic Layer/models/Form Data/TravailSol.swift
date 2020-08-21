@@ -9,7 +9,8 @@
 import Foundation
 
 enum TravailSol: Int, CulturalPracticeValueProtocol, Codable {
-    case labourAutomneTravailSecondairePrintemps = 1
+    case empty
+    case labourAutomneTravailSecondairePrintemps
     case chiselPulverisateurAutomneTravailSecondairePrintemps
     case dechaumageAuPrintempsTravailSecondairePrintemps
     case semiDirectOuBilons

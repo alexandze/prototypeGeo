@@ -8,74 +8,71 @@
 
 import Foundation
 
-enum BandeRiveraine: Int, CulturalPracticeValueProtocol, Codable {
-    case pasApplique = 1
+enum BandeRiveraine: Int, SelectValue, Codable {
+    case empty
+    case pasApplique
     case inferieura1M
     case de1A3M
     case de4MEtPlus
 
-    static func getValues() -> [(CulturalPracticeValueProtocol, String)]? {
+    func getTupleValues() -> [(Int, String)] {
         [
             (
-                BandeRiveraine.pasApplique,
-                NSLocalizedString("Ne s'applique pas", comment: "Bande riveraine ne s'applique pas")
+                BandeRiveraine.pasApplique.rawValue,
+                getValues()[0]
             ),
             (
-                BandeRiveraine.inferieura1M,
-                NSLocalizedString("Inférieur à 1m", comment: "Bande riveraine Inférieur à 1m")
+                BandeRiveraine.inferieura1M.rawValue,
+                getValues()[1]
             ),
             (
-                BandeRiveraine.de1A3M,
-                NSLocalizedString("1 à 3m", comment: "Bande riveraine 4m et plus")
+                BandeRiveraine.de1A3M.rawValue,
+                getValues()[2]
             ),
             (
-                BandeRiveraine.de4MEtPlus,
-                NSLocalizedString("4m et plus", comment: "Bande riveraine 4m et plus")
+                BandeRiveraine.de4MEtPlus.rawValue,
+                getValues()[3]
             )
         ]
     }
+    
+    func getValues() -> [String] {
+        [
+            NSLocalizedString("Ne s'applique pas", comment: "Bande riveraine ne s'applique pas"),
+            NSLocalizedString("Inférieur à 1m", comment: "Bande riveraine Inférieur à 1m"),
+            NSLocalizedString("1 à 3m", comment: "Bande riveraine1 à 3m"),
+            NSLocalizedString("4m et plus", comment: "Bande riveraine 4m et plus")
+        ]
+    }
 
-    static func getTitle() -> String {
+    func getTitle() -> String {
         NSLocalizedString("Bande riveraine", comment: "Titre bande riveraine")
     }
 
-    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
-        CulturalPracticeMultiSelectElement(
-            key: UUID().uuidString,
-            title: BandeRiveraine.getTitle(),
-            tupleCulturalTypeValue: BandeRiveraine.getValues()!,
-            value: culturalPractice?.bandeRiveraine
-        )
-    }
-
-    func getValue() -> String {
+    func getValue() -> String? {
         switch self {
         case .pasApplique:
             return NSLocalizedString("Ne s'applique pas", comment: "Bande riveraine ne s'applique pas")
         case .inferieura1M:
             return NSLocalizedString("Inférieur à 1m", comment: "Bande riveraine Inférieur à 1m")
         case .de1A3M:
-            return NSLocalizedString("1 à 3m", comment: "Bande riveraine 4m et plus")
+            return NSLocalizedString("1 à 3m", comment: "Bande riveraine 1 à 3m")
         case .de4MEtPlus:
             return NSLocalizedString("4m et plus", comment: "Bande riveraine 4m et plus")
+        case .empty:
+            return nil
         }
     }
 
-    func getUnitType() -> UnitType? {
-        nil
+    func getUnitType() -> String? {
+        return nil
     }
-
-    static func create(value: String) -> CulturalPracticeValueProtocol? {
-        nil
+    
+    func isRequired() -> Bool {
+        true
     }
-
-    static func getRegularExpression() -> String? {
-        nil
-    }
-
-    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
-        var newCulturalPractice = culturalPractice
-        newCulturalPractice.bandeRiveraine = self
-        return newCulturalPractice
+    
+    func getTypeValue() -> String {
+        "BandeRiveraine"
     }
 }

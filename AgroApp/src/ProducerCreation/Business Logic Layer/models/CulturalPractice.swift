@@ -10,14 +10,14 @@ import Foundation
 
 struct CulturalPractice {
     var id: Int?
-    var avaloir: Avaloir?
-    var bandeRiveraine: BandeRiveraine?
+    var avaloir: Avaloir? = Avaloir.empty
+    var bandeRiveraine: BandeRiveraine? = BandeRiveraine.empty
 
     var doseFumier: [DoseFumier?]?
     var periodeApplicationFumier: [PeriodeApplicationFumier?]?
     var delaiIncorporationFumier: [DelaiIncorporationFumier?]?
 
-    var travailSol: TravailSol?
+    var travailSol: TravailSol? = BandeRiveraine.empty
     var couvertureAssociee: CouvertureAssociee?
     var couvertureDerobee: CouvertureDerobee?
     var drainageSouterrain: DrainageSouterrain?

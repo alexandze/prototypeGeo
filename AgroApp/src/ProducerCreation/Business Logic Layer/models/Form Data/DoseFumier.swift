@@ -8,65 +8,38 @@
 
 import Foundation
 
-enum DoseFumier: CulturalPracticeValueProtocol {
+struct ç: InputValue {
+    var dose: Int?
 
-    case dose(quantite: Int)
-
-    static func getTitle() -> String {
+    func getTitle() -> String {
         NSLocalizedString(
             "Dose du fumier (quantité)",
             comment: "Dose du fumier (quantité)"
         )
     }
 
-    func getValue() -> String {
-        switch self {
-        case .dose(quantite: let quantite):
-            return String(quantite)
-        }
-    }
-
-    static func getValues() -> [(CulturalPracticeValueProtocol, String)]? {
-        return nil
-    }
-
-    static func getCulturalPracticeElement(id: Int, culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
-        let count = culturalPractice?.doseFumier?.count ?? -1
-
-        let doseFumier = count > id
-            ? culturalPractice!.doseFumier![id]
-            : nil
-
-        return CulturalPracticeInputElement(
-            key: UUID().uuidString,
-            title: getTitle(),
-            valueEmpty: DoseFumier.dose(quantite: 0),
-            value: doseFumier,
-            index: id
-        )
+    func getValue() -> String? {
+        dose != nil ? String(dose!) : nil
     }
 
     func getUnitType() -> UnitType? {
         .quantity
     }
-
-    static func create(value: String) -> CulturalPracticeValueProtocol? {
-        guard let quantityValue = Int(value) else { return nil }
-        return DoseFumier.dose(quantite: quantityValue)
+    
+    func isRequired() -> Bool {
+        true
     }
-
-    static func getRegularExpression() -> String? {
+    
+    func getRegexPattern() -> String {
         // TODO les doses fumiers doivent etre superieure a zero
         "^\\d*$"
     }
-
-    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
-        var newCulturalPractice = culturalPractice
-
-        if let index = index {
-            newCulturalPractice.doseFumier?[index] = self
-        }
-
-        return newCulturalPractice
+    
+    func getUnitType() -> String? {
+        UnitType.quantity.convertToString()
+    }
+    
+    func getTypeValue() -> String {
+        "BandeRiveraine"
     }
 }

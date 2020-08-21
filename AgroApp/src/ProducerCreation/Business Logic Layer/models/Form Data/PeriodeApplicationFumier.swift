@@ -8,46 +8,56 @@
 
 import Foundation
 
-enum PeriodeApplicationFumier: Int, CulturalPracticeValueProtocol, Codable {
-    case preSemi = 1
+enum PeriodeApplicationFumier: Int, SelectValue, Codable {
+    case empty
+    case preSemi
     case postLevee
     case automneHatif
     case automneTardif
 
-    static func getValues() -> [(CulturalPracticeValueProtocol, String)]? {
+    func getTupleValues() -> [(Int, String)]? {
         [
             (
-                PeriodeApplicationFumier.preSemi,
-                NSLocalizedString(
-                    "Pré-semi",
-                    comment: "Periode d'application du fumier Pré-semi"
-                )
+                PeriodeApplicationFumier.preSemi.rawValue,
+                getValues()[0]
             ),
             (
-                PeriodeApplicationFumier.postLevee,
-                NSLocalizedString(
-                    "Post-levée",
-                    comment: "Periode d'application du fumier Post-levée"
-                )
+                PeriodeApplicationFumier.postLevee.rawValue,
+                getValues()[1]
             ),
             (
-                PeriodeApplicationFumier.automneHatif,
-                NSLocalizedString(
-                    "Automne hâtif",
-                    comment: "Periode d'application du fumier Automne hâtif"
-                )
+                PeriodeApplicationFumier.automneHatif.rawValue,
+                getValues()[2]
             ),
             (
-                PeriodeApplicationFumier.automneTardif,
-                NSLocalizedString(
-                    "Automne tardif",
-                    comment: "Periode d'application du fumier Automne tardif"
-                )
+                PeriodeApplicationFumier.automneTardif.rawValue,
+                getValues()[3]
+            )
+        ]
+    }
+    
+    func getValues() -> [String] {
+        [
+            NSLocalizedString(
+                "Pré-semi",
+                comment: "Periode d'application du fumier Pré-semi"
+            ),
+            NSLocalizedString(
+                "Post-levée",
+                comment: "Periode d'application du fumier Post-levée"
+            ),
+            NSLocalizedString(
+                "Automne hâtif",
+                comment: "Periode d'application du fumier Automne hâtif"
+            ),
+            NSLocalizedString(
+                "Automne tardif",
+                comment: "Periode d'application du fumier Automne tardif"
             )
         ]
     }
 
-    func getValue() -> String {
+    func getValue() -> String? {
         switch self {
         case .preSemi:
             return NSLocalizedString(
@@ -69,6 +79,8 @@ enum PeriodeApplicationFumier: Int, CulturalPracticeValueProtocol, Codable {
                 "Automne tardif",
                 comment: "Periode d'application du fumier Automne tardif"
             )
+        case .empty:
+            return nil
         }
     }
 
@@ -79,40 +91,7 @@ enum PeriodeApplicationFumier: Int, CulturalPracticeValueProtocol, Codable {
         )
     }
 
-    static func getCulturalPracticeElement(id: Int, culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
-        let count = culturalPractice?.periodeApplicationFumier?.count ?? -1
-        let periodeApplicationFumier = count > id
-            ? culturalPractice!.periodeApplicationFumier![id]
-            : nil
-
-        return CulturalPracticeMultiSelectElement(
-            key: UUID().uuidString,
-            title: getTitle(),
-            tupleCulturalTypeValue: getValues()!,
-            value: periodeApplicationFumier,
-            index: id
-        )
-    }
-
     func getUnitType() -> UnitType? {
         nil
-    }
-
-    static func create(value: String) -> CulturalPracticeValueProtocol? {
-        nil
-    }
-
-    static func getRegularExpression() -> String? {
-        nil
-    }
-
-    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
-        var newCulturalPractice = culturalPractice
-
-        if let index = index {
-            newCulturalPractice.periodeApplicationFumier?[index] = self
-        }
-
-        return newCulturalPractice
     }
 }
