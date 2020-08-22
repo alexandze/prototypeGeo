@@ -10,11 +10,10 @@ import Foundation
 
 class FieldDetailsFactoryImpl: FieldDetailsFactory {
     
-    var cache: [[ElementUIData]]?
-    
     func getElementUIDataByCulturalPractice(_ culturalPracticeOp: CulturalPractice? = nil) -> [ElementUIData] {
         let culturalPractice = culturalPracticeOp ?? CulturalPractice()
         let mirror = Mirror(reflecting: culturalPractice)
+        
         let elementUIDataList = mirror.children.map(mapMirrorChildrenCulturalPractice(_:))
             .filter { $0 != nil  }
             .map { $0! }
@@ -31,18 +30,31 @@ class FieldDetailsFactoryImpl: FieldDetailsFactory {
         _ elementUIDataList: [ElementUIData],
         with elementUIDaListContainer: [[ElementUIData]]
     ) -> [ElementUIData] {
-        guard !elementUIDaListContainer.isEmpty && !elementUIDaListContainer[0].isEmpty else {
-            return []
+        
+        guard !elementUIDaListContainer[0].isEmpty else {
+            return elementUIDataList
         }
         
         var newElementUIDataList = [ElementUIListData]()
         var elementCurrent = [ElementUIData]()
         
         (0..<elementUIDaListContainer[0].count).forEach { indexElementUIData in
+            
             (0..<elementUIDaListContainer.count).forEach { indexArrayElementUIData in
-                elementCurrent.append(elementUIDaListContainer[indexArrayElementUIData][indexElementUIData])
+                
+                if Util.hasIndexInArray(elementUIDaListContainer, index: indexArrayElementUIData) &&
+                    Util.hasIndexInArray(elementUIDaListContainer[indexArrayElementUIData], index: indexElementUIData) {
+                    
+                    elementCurrent.append(elementUIDaListContainer[indexArrayElementUIData][indexElementUIData])
+                    
+                }
+                
             }
-            newElementUIDataList.append(ElementUIListDataImpl(title: "Dose Fumier \(indexElementUIData + 1)", elements: elementCurrent))
+            
+            if elementCurrent.count == CulturalPractice.MAX_DOSE_FUMIER {
+                newElementUIDataList.append(ElementUIListDataImpl(title: "Dose Fumier \(indexElementUIData + 1)", elements: elementCurrent))
+            }
+            
             elementCurrent = []
         }
         
@@ -50,61 +62,72 @@ class FieldDetailsFactoryImpl: FieldDetailsFactory {
     }
     
     private func mapMirrorChildrenCulturalPractice(_ child: Mirror.Child) -> ElementUIData? {
-        switch child.value {
-        case let selectValue as SelectValue:
-            return initElementUIDataBySelectValue(selectValue)
-        case let inputValue as InputValue:
-            return initElementUIDataByInputValue(inputValue)
-        default:
-            return nil
+        
+        if case Optional<Any>.none = child.value, let label = child.label {
+            return initElementUIDataWithNilValueByLabel(label)
         }
+        
+        if let selectValue = child.value as? SelectValue {
+            return initElementUIDataBySelectValue(selectValue)
+        }
+        
+        if let inputValue = child.value as? InputValue {
+            return initElementUIDataByInputValue(inputValue)
+        }
+        
+        return nil
     }
     
     private func mapMirrorChildrenCulturalPracticeContainer(_ child: Mirror.Child) -> [ElementUIData]? {
-        switch child.value {
-        case let selectValues as [SelectValue]:
-            return initElementUIDataBySelectValues(selectValues)
-        case let inputValues as [InputValue]:
-            return initElementUIDataByInputValues(inputValues)
-        default:
+        
+        guard let valueFormList = child.value as? [ValueForm] else {
             return nil
         }
+        
+        if let selectValueList = valueFormList as? [SelectValue] {
+            return initElementUIDataBySelectValues(selectValueList)
+        }
+        
+        if let inputValuesList = valueFormList as? [InputValue] {
+            return initElementUIDataByInputValues(inputValuesList)
+        }
+        
+        return nil
     }
     
     private func initElementUIDataBySelectValue(_ selectValue: SelectValue) -> ElementUIData {
         SelectElement(
-            title: selectValue.getTitle(),
+            title: type(of: selectValue).getTitle(),
             value: selectValue.getValue(),
-            isValid: selectValue.getValue() != nil,
-            isRequired: selectValue.isRequired(),
-            values: selectValue.getValues(),
-            unitType: selectValue.getUnitType(),
-            typeValue: selectValue.getTypeValue()
+            isValid: true,
+            isRequired: true,
+            values: type(of: selectValue).getValues(),
+            typeValue: type(of: selectValue).getTypeValue()
         )
     }
     
     private func initElementUIDataByInputValue(_ inputValue: InputValue) -> ElementUIData {
         InputElement(
-            title: inputValue.getTitle(),
+            title: type(of: inputValue).getTitle(),
             value: inputValue.getValue(),
-            isValid: inputValue.getValue() != nil,
-            isRequired: inputValue.isRequired(),
-            regexPattern: inputValue.getRegexPattern(),
-            unitType: inputValue.getUnitType(),
-            typeValue: inputValue.getTypeValue()
+            isValid: true,
+            isRequired: true,
+            regexPattern: type(of: inputValue).getRegexPattern(),
+            unitType: type(of: inputValue).getUnitType(),
+            typeValue: type(of: inputValue).getTypeValue(),
+            regex: makeRegularExpression(type(of: inputValue).getRegexPattern())
         )
     }
     
     private func initElementUIDataBySelectValues(_ selectValues: [SelectValue]) -> [ElementUIData] {
         selectValues.map { selectValue in
             SelectElement(
-                title: selectValue.getTitle(),
+                title: type(of: selectValue).getTitle(),
                 value: selectValue.getValue(),
-                isValid: selectValue.getValue() != nil,
-                isRequired: selectValue.isRequired(),
-                values: selectValue.getValues(),
-                unitType: selectValue.getUnitType(),
-                typeValue: selectValue.getTypeValue()
+                isValid: true,
+                isRequired: true,
+                values: type(of: selectValue).getValues(),
+                typeValue: type(of: selectValue).getTypeValue()
             )
         }
     }
@@ -112,17 +135,76 @@ class FieldDetailsFactoryImpl: FieldDetailsFactory {
     private func initElementUIDataByInputValues(_ inputValues: [InputValue]) -> [ElementUIData] {
         inputValues.map { inputValue in
             InputElement(
-                title: inputValue.getTitle(),
+                title: type(of: inputValue).getTitle(),
                 value: inputValue.getValue(),
-                isValid: inputValue.getValue() != nil,
-                isRequired: inputValue.isRequired(),
-                regexPattern: inputValue.getRegexPattern(),
-                unitType: inputValue.getUnitType(),
-                typeValue: inputValue.getTypeValue()
+                isValid: true,
+                isRequired: true,
+                regexPattern: type(of: inputValue).getRegexPattern(),
+                unitType: type(of: inputValue).getUnitType(),
+                typeValue: type(of: inputValue).getTypeValue(),
+                regex: makeRegularExpression(type(of: inputValue).getRegexPattern())
             )
         }
     }
     
+    private func initElementUIDataWithNilValueByLabel(_ label: String) -> ElementUIData? {
+        switch label {
+        case Avaloir.getTypeValue():
+            return createElementUIDataWithNilValue(Avaloir.self)
+        case BandeRiveraine.getTypeValue():
+            return createElementUIDataWithNilValue(BandeRiveraine.self)
+        case TravailSol.getTypeValue():
+            return createElementUIDataWithNilValue(TravailSol.self)
+        case CouvertureAssociee.getTypeValue():
+            return createElementUIDataWithNilValue(CouvertureAssociee.self)
+        case CouvertureDerobee.getTypeValue():
+            return createElementUIDataWithNilValue(CouvertureDerobee.self)
+        case DrainageSouterrain.getTypeValue():
+            return createElementUIDataWithNilValue(DrainageSouterrain.self)
+        case DrainageSurface.getTypeValue():
+            return createElementUIDataWithNilValue(DrainageSurface.self)
+        case ConditionProfilCultural.getTypeValue():
+            return createElementUIDataWithNilValue(ConditionProfilCultural.self)
+        case TauxApplicationPhosphoreRang.getTypeValue():
+            return createElementUIDataWithNilValue(TauxApplicationPhosphoreRang.self)
+        case TauxApplicationPhosphoreVolee.getTypeValue():
+            return createElementUIDataWithNilValue(TauxApplicationPhosphoreVolee.self)
+        case PMehlich3.getTypeValue():
+            return createElementUIDataWithNilValue(PMehlich3.self)
+        case AlMehlich3.getTypeValue():
+            return createElementUIDataWithNilValue(AlMehlich3.self)
+        case CultureAnneeEnCoursAnterieure.getTypeValue():
+            return createElementUIDataWithNilValue(CultureAnneeEnCoursAnterieure.self)
+        default:
+            return nil
+        }
+        
+    }
+    
+    private func createElementUIDataWithNilValue(_ selectValueType: SelectValue.Type) -> ElementUIData {
+        SelectElement(
+            title: selectValueType.getTitle(),
+            isValid: false,
+            isRequired: true,
+            values: selectValueType.getValues(),
+            typeValue: selectValueType.getTypeValue()
+        )
+    }
+    
+    private func createElementUIDataWithNilValue(_ inputValueType: InputValue.Type) -> ElementUIData {
+        InputElement(
+            title: inputValueType.getTitle(),
+            isValid: false,
+            isRequired: true,
+            regexPattern: inputValueType.getRegexPattern(),
+            unitType: inputValueType.getUnitType(),
+            typeValue: inputValueType.getTypeValue()
+        )
+    }
+    
+    private func makeRegularExpression(_ regexPattern: String) -> NSRegularExpression? {
+        return try? NSRegularExpression(pattern: regexPattern, options: [.caseInsensitive])
+    }
 }
 
 protocol FieldDetailsFactory {
@@ -130,19 +212,18 @@ protocol FieldDetailsFactory {
 }
 
 protocol SelectValue: ValueForm {
-    func isRequired() -> Bool
-    func getValues() -> [String]
-    func getTupleValues() -> [(Int, String)]
+    static func getValues() -> [String]
+    static func getTupleValues() -> [(Int, String)]
 }
 
 protocol InputValue: ValueForm {
-    func isRequired() -> Bool
-    func getRegexPattern() -> String
+    static func getRegexPattern() -> String
+    static func getUnitType() -> String
+    static func make(value: String) -> InputValue?
 }
 
 protocol ValueForm {
-    func getTitle() -> String
-    func getValue() -> String?
-    func getUnitType() -> String?
-    func getTypeValue() -> String
+    func getValue() -> String
+    static func getTypeValue() -> String
+    static func getTitle() -> String
 }

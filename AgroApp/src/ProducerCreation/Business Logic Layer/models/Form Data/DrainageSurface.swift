@@ -8,67 +8,52 @@
 
 import Foundation
 
-enum DrainageSurface: Int, CulturalPracticeValueProtocol, Codable {
+enum DrainageSurface: Int, SelectValue, Codable {
     case bon = 1
     case moyen
     case mauvais
-
-    static func getValues() -> [(CulturalPracticeValueProtocol, String)]? {
-        [
-            (
-                DrainageSurface.bon,
-                NSLocalizedString("Bon", comment: "Drainage de surface Bon")
-            ),
-            (
-                DrainageSurface.moyen,
-                NSLocalizedString("Moyen", comment: "Drainage de surface Moyen")
-            ),
-            (
-                DrainageSurface.mauvais,
-                NSLocalizedString("Mauvais", comment: "Drainage de surface Mauvais")
-            )
-        ]
-    }
-
+    
     func getValue() -> String {
         switch self {
         case .bon:
-            return NSLocalizedString("Bon", comment: "Drainage de surface Bon")
+            return DrainageSurface.getValues()[0]
         case .moyen:
-            return NSLocalizedString("Moyen", comment: "Drainage de surface Moyen")
+            return DrainageSurface.getValues()[1]
         case .mauvais:
-            return NSLocalizedString("Mauvais", comment: "Drainage de surface Mauvais")
+            return DrainageSurface.getValues()[2]
         }
+    }
+
+    static func getTupleValues() -> [(Int, String)] {
+        [
+            (
+                DrainageSurface.bon.rawValue,
+                getValues()[0]
+            ),
+            (
+                DrainageSurface.moyen.rawValue,
+                getValues()[1]
+            ),
+            (
+                DrainageSurface.mauvais.rawValue,
+                getValues()[2]
+            )
+        ]
+    }
+    
+    static func getValues() -> [String] {
+        [
+            NSLocalizedString("Bon", comment: "Drainage de surface Bon"),
+            NSLocalizedString("Moyen", comment: "Drainage de surface Moyen"),
+            NSLocalizedString("Mauvais", comment: "Drainage de surface Mauvais")
+        ]
     }
 
     static func getTitle() -> String {
         NSLocalizedString("Drainage de surface", comment: "Titre Drainage de surface")
     }
-
-    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
-        CulturalPracticeMultiSelectElement(
-            key: UUID().uuidString,
-            title: getTitle(),
-            tupleCulturalTypeValue: getValues()!,
-            value: culturalPractice?.drainageSurface
-        )
-    }
-
-    func getUnitType() -> UnitType? {
-        nil
-    }
-
-    static func create(value: String) -> CulturalPracticeValueProtocol? {
-        nil
-    }
-
-    static func getRegularExpression() -> String? {
-        nil
-    }
-
-    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
-        var newCulturalPractice = culturalPractice
-        newCulturalPractice.drainageSurface = self
-        return newCulturalPractice
+    
+    static func getTypeValue() -> String {
+        "drainageSurface"
     }
 }

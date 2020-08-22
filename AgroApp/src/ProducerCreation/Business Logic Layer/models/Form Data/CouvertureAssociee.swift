@@ -8,19 +8,19 @@
 
 import Foundation
 
-enum CouvertureAssociee: Int, CulturalPracticeValueProtocol, Codable {
+enum CouvertureAssociee: Int, SelectValue, Codable {
     case vrai = 1
     case faux = 0
 
-    static func getValues() -> [(CulturalPracticeValueProtocol, String)]? {
+    static func getTupleValues() -> [(Int, String)] {
         [
             (
-                CouvertureAssociee.vrai,
-                NSLocalizedString("Vrai", comment: "Couverture associée vrai")
+                CouvertureAssociee.vrai.rawValue,
+                getValues()[0]
             ),
             (
-                CouvertureAssociee.faux,
-                NSLocalizedString("Faux", comment: "Couverture associée faux")
+                CouvertureAssociee.faux.rawValue,
+                getValues()[1]
             )
         ]
     }
@@ -28,10 +28,17 @@ enum CouvertureAssociee: Int, CulturalPracticeValueProtocol, Codable {
     func getValue() -> String {
         switch self {
         case .vrai:
-            return NSLocalizedString("Vrai", comment: "Couverture associée vrai")
+            return CouvertureAssociee.getValues()[0]
         case .faux:
-            return NSLocalizedString("Faux", comment: "Couverture associée faux")
+            return CouvertureAssociee.getValues()[1]
         }
+    }
+    
+    static func getValues() -> [String] {
+        [
+            NSLocalizedString("Vrai", comment: "Couverture associée vrai"),
+             NSLocalizedString("Faux", comment: "Couverture associée faux")
+        ]
     }
 
     static func getTitle() -> String {
@@ -40,36 +47,8 @@ enum CouvertureAssociee: Int, CulturalPracticeValueProtocol, Codable {
             comment: "Title couverture associée"
         )
     }
-
-    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
-        let couvertureAssociee = culturalPractice?.couvertureAssociee != nil
-            ? culturalPractice!.couvertureAssociee!
-            : nil
-
-        return
-            CulturalPracticeMultiSelectElement(
-                key: UUID().uuidString,
-                title: getTitle(),
-                tupleCulturalTypeValue: getValues()!,
-                value: couvertureAssociee
-        )
-    }
-
-    func getUnitType() -> UnitType? {
-        nil
-    }
-
-    static func create(value: String) -> CulturalPracticeValueProtocol? {
-        nil
-    }
-
-    static func getRegularExpression() -> String? {
-        nil
-    }
-
-    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
-        var newCulturalPractice = culturalPractice
-        newCulturalPractice.couvertureAssociee = self
-        return newCulturalPractice
+    
+    static func getTypeValue() -> String {
+        "couvertureAssociee"
     }
 }

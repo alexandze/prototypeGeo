@@ -8,104 +8,72 @@
 
 import Foundation
 
-enum TravailSol: Int, CulturalPracticeValueProtocol, Codable {
-    case empty
-    case labourAutomneTravailSecondairePrintemps
+enum TravailSol: Int, SelectValue, Codable {
+    case labourAutomneTravailSecondairePrintemps = 1
     case chiselPulverisateurAutomneTravailSecondairePrintemps
     case dechaumageAuPrintempsTravailSecondairePrintemps
     case semiDirectOuBilons
-
-    static func getValues() -> [(CulturalPracticeValueProtocol, String)]? {
-        [
-            (
-                TravailSol.labourAutomneTravailSecondairePrintemps,
-                NSLocalizedString(
-                    "Labour à l'automne, travail secondaire au printemps",
-                    comment: "Travail du sol Labour à l'automne"
-                )
-            ),
-            (
-                TravailSol.chiselPulverisateurAutomneTravailSecondairePrintemps,
-                NSLocalizedString(
-                    "Chisel ou pulvérisateur à l'automne, travail secondaire au printemps",
-                    comment: "Travail du sol Chisel ou pulvérisateur à l'automne, travail secondaire au printemps"
-                )
-            ),
-            (
-                TravailSol.dechaumageAuPrintempsTravailSecondairePrintemps,
-                NSLocalizedString(
-                    "Déchaumage au printemps et travail secondaire au printemps",
-                    comment: "Travail du sol Déchaumage au printemps et travail secondaire au printemps"
-                )
-            ),
-            (
-                TravailSol.semiDirectOuBilons,
-                NSLocalizedString(
-                    "Semi direct ou bilons",
-                    comment: "Travail du sol Semi direct ou bilons"
-                )
-            )
-        ]
-    }
-
+    
     func getValue() -> String {
         switch self {
         case .labourAutomneTravailSecondairePrintemps:
-            return NSLocalizedString(
+            return TravailSol.getValues()[0]
+        case .chiselPulverisateurAutomneTravailSecondairePrintemps:
+            return TravailSol.getValues()[1]
+        case .dechaumageAuPrintempsTravailSecondairePrintemps:
+            return TravailSol.getValues()[2]
+        case .semiDirectOuBilons:
+            return TravailSol.getValues()[3]
+        }
+    }
+
+    static func getTupleValues() -> [(Int, String)] {
+        [
+            (
+                TravailSol.labourAutomneTravailSecondairePrintemps.rawValue,
+                getValues()[0]
+            ),
+            (
+                TravailSol.chiselPulverisateurAutomneTravailSecondairePrintemps.rawValue,
+                getValues()[1]
+            ),
+            (
+                TravailSol.dechaumageAuPrintempsTravailSecondairePrintemps.rawValue,
+                getValues()[2]
+            ),
+            (
+                TravailSol.semiDirectOuBilons.rawValue,
+                getValues()[3]
+            )
+        ]
+    }
+    
+    static func getValues() -> [String] {
+        [
+            NSLocalizedString(
                 "Labour à l'automne, travail secondaire au printemps",
                 comment: "Travail du sol Labour à l'automne"
-            )
-        case .chiselPulverisateurAutomneTravailSecondairePrintemps:
-            return NSLocalizedString(
+            ),
+            NSLocalizedString(
                 "Chisel ou pulvérisateur à l'automne, travail secondaire au printemps",
                 comment: "Travail du sol Chisel ou pulvérisateur à l'automne, travail secondaire au printemps"
-            )
-        case .dechaumageAuPrintempsTravailSecondairePrintemps:
-            return NSLocalizedString(
+            ),
+            NSLocalizedString(
                 "Déchaumage au printemps et travail secondaire au printemps",
                 comment: "Travail du sol Déchaumage au printemps et travail secondaire au printemps"
-            )
-        case .semiDirectOuBilons:
-            return NSLocalizedString(
+            ),
+            NSLocalizedString(
                 "Semi direct ou bilons",
                 comment: "Travail du sol Semi direct ou bilons"
             )
-        }
+        ]
     }
 
     static func getTitle() -> String {
         NSLocalizedString("Travail du sol", comment: "Title travail du sol")
     }
-
-    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
-        let travailSol = culturalPractice?.travailSol != nil
-            ? culturalPractice!.travailSol!
-            : nil
-
-        return CulturalPracticeMultiSelectElement(
-            key: UUID().uuidString,
-            title: TravailSol.getTitle(),
-            tupleCulturalTypeValue: getValues()!,
-            value: travailSol
-        )
-
-    }
-
-    func getUnitType() -> UnitType? {
-        nil
-    }
-
-    static func create(value: String) -> CulturalPracticeValueProtocol? {
-        nil
-    }
-
-    static func getRegularExpression() -> String? {
-        nil
-    }
-
-    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
-        var newCulturalPractice = culturalPractice
-        newCulturalPractice.travailSol = self
-        return newCulturalPractice
+    
+    static func getTypeValue() -> String {
+        "travailSol"
     }
 }

@@ -9,13 +9,25 @@
 import Foundation
 
 enum PeriodeApplicationFumier: Int, SelectValue, Codable {
-    case empty
-    case preSemi
+    case preSemi = 1
     case postLevee
     case automneHatif
     case automneTardif
+    
+    func getValue() -> String {
+        switch self {
+        case .preSemi:
+            return PeriodeApplicationFumier.getValues()[0]
+        case .postLevee:
+            return PeriodeApplicationFumier.getValues()[1]
+        case .automneHatif:
+            return PeriodeApplicationFumier.getValues()[2]
+        case .automneTardif:
+            return PeriodeApplicationFumier.getValues()[3]
+        }
+    }
 
-    func getTupleValues() -> [(Int, String)]? {
+    static func getTupleValues() -> [(Int, String)] {
         [
             (
                 PeriodeApplicationFumier.preSemi.rawValue,
@@ -36,7 +48,7 @@ enum PeriodeApplicationFumier: Int, SelectValue, Codable {
         ]
     }
     
-    func getValues() -> [String] {
+    static func getValues() -> [String] {
         [
             NSLocalizedString(
                 "Pré-semi",
@@ -56,42 +68,15 @@ enum PeriodeApplicationFumier: Int, SelectValue, Codable {
             )
         ]
     }
-
-    func getValue() -> String? {
-        switch self {
-        case .preSemi:
-            return NSLocalizedString(
-                "Pré-semi",
-                comment: "Periode d'application du fumier Pré-semi"
-            )
-        case .postLevee:
-            return NSLocalizedString(
-                "Post-levée",
-                comment: "Periode d'application du fumier Post-levée"
-            )
-        case .automneHatif:
-            return NSLocalizedString(
-                "Automne hâtif",
-                comment: "Periode d'application du fumier Automne hâtif"
-            )
-        case .automneTardif:
-            return NSLocalizedString(
-                "Automne tardif",
-                comment: "Periode d'application du fumier Automne tardif"
-            )
-        case .empty:
-            return nil
-        }
-    }
-
+    
     static func getTitle() -> String {
         NSLocalizedString(
             "Période d'application du fumier",
             comment: "Titre Période d'application du fumier"
         )
     }
-
-    func getUnitType() -> UnitType? {
-        nil
+    
+    static func getTypeValue() -> String {
+        "periodeApplicationFumier"
     }
 }

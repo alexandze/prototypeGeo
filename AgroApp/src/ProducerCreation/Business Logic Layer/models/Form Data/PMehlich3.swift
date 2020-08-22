@@ -8,52 +8,37 @@
 
 import Foundation
 
-enum PMehlich3: CulturalPracticeValueProtocol {
-    case taux(KilogramPerHectare)
-
+struct PMehlich3: InputValue {
+    var value: KilogramPerHectare
+    
+    func getValue() -> String {
+        String()
+    }
+    
     static func getTitle() -> String {
         NSLocalizedString(
             "P Mehlich-3",
             comment: "Titre P Mehlich-3"
         )
     }
-
-    func getValue() -> String {
-        switch self {
-        case .taux(let kilogramPerHectare):
-            return String(kilogramPerHectare)
-        }
+    
+    static func getUnitType() -> String {
+        UnitType.kgHa.convertToString()
     }
-
-    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
-        CulturalPracticeInputElement(
-            key: UUID().uuidString,
-            title: getTitle(),
-            valueEmpty: PMehlich3.taux(0),
-            value: culturalPractice?.pMehlich3
-        )
-    }
-
-    static func getValues() -> [(CulturalPracticeValueProtocol, String)]? {
-        nil
-    }
-
-    func getUnitType() -> UnitType? {
-        .kgHa
-    }
-
-    static func create(value: String) -> CulturalPracticeValueProtocol? {
-        guard let tauxValue = Double(value) else { return nil }
-        return PMehlich3.taux(tauxValue)
-    }
-
-    static func getRegularExpression() -> String? {
+    
+    static func getRegexPattern() -> String {
         "^\\d*\\.?\\d*$"
     }
-
-    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
-        var newCulturalPractice = culturalPractice
-        newCulturalPractice.pMehlich3 = self
-        return newCulturalPractice
+    
+    static func getTypeValue() -> String {
+        "pMehlich3"
+    }
+    
+    static func make(value: String) -> InputValue? {
+        guard let value = KilogramPerHectare(value) else {
+            return nil
+        }
+        
+        return PMehlich3(value: value)
     }
 }

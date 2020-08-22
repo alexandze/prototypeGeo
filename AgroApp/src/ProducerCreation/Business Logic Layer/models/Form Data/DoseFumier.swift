@@ -8,38 +8,38 @@
 
 import Foundation
 
-struct ç: InputValue {
-    var dose: Int?
+struct DoseFumier: InputValue {
+    var value: Int
+    
+    func getValue() -> String {
+        String(value)
+    }
 
-    func getTitle() -> String {
+    static func getTitle() -> String {
         NSLocalizedString(
             "Dose du fumier (quantité)",
             comment: "Dose du fumier (quantité)"
         )
     }
-
-    func getValue() -> String? {
-        dose != nil ? String(dose!) : nil
-    }
-
-    func getUnitType() -> UnitType? {
-        .quantity
+    
+    static func getUnitType() -> String {
+        UnitType.quantity.convertToString()
     }
     
-    func isRequired() -> Bool {
-        true
-    }
-    
-    func getRegexPattern() -> String {
+    static func getRegexPattern() -> String {
         // TODO les doses fumiers doivent etre superieure a zero
         "^\\d*$"
     }
     
-    func getUnitType() -> String? {
-        UnitType.quantity.convertToString()
+    static func getTypeValue() -> String {
+        "doseFumier"
     }
     
-    func getTypeValue() -> String {
-        "BandeRiveraine"
+    static func make(value: String) -> InputValue? {
+        guard let value = Int(value) else {
+            return nil
+        }
+        
+        return DoseFumier(value: value)
     }
 }

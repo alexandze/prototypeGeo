@@ -9,13 +9,25 @@
 import Foundation
 
 enum BandeRiveraine: Int, SelectValue, Codable {
-    case empty
     case pasApplique
     case inferieura1M
     case de1A3M
     case de4MEtPlus
-
-    func getTupleValues() -> [(Int, String)] {
+    
+    func getValue() -> String {
+        switch self {
+        case .pasApplique:
+            return BandeRiveraine.getValues()[0]
+        case .inferieura1M:
+            return BandeRiveraine.getValues()[1]
+        case .de1A3M:
+            return BandeRiveraine.getValues()[2]
+        case .de4MEtPlus:
+            return BandeRiveraine.getValues()[3]
+        }
+    }
+    
+    static func getTupleValues() -> [(Int, String)] {
         [
             (
                 BandeRiveraine.pasApplique.rawValue,
@@ -36,7 +48,7 @@ enum BandeRiveraine: Int, SelectValue, Codable {
         ]
     }
     
-    func getValues() -> [String] {
+    static func getValues() -> [String] {
         [
             NSLocalizedString("Ne s'applique pas", comment: "Bande riveraine ne s'applique pas"),
             NSLocalizedString("Inférieur à 1m", comment: "Bande riveraine Inférieur à 1m"),
@@ -45,34 +57,11 @@ enum BandeRiveraine: Int, SelectValue, Codable {
         ]
     }
 
-    func getTitle() -> String {
+    static func getTitle() -> String {
         NSLocalizedString("Bande riveraine", comment: "Titre bande riveraine")
     }
-
-    func getValue() -> String? {
-        switch self {
-        case .pasApplique:
-            return NSLocalizedString("Ne s'applique pas", comment: "Bande riveraine ne s'applique pas")
-        case .inferieura1M:
-            return NSLocalizedString("Inférieur à 1m", comment: "Bande riveraine Inférieur à 1m")
-        case .de1A3M:
-            return NSLocalizedString("1 à 3m", comment: "Bande riveraine 1 à 3m")
-        case .de4MEtPlus:
-            return NSLocalizedString("4m et plus", comment: "Bande riveraine 4m et plus")
-        case .empty:
-            return nil
-        }
-    }
-
-    func getUnitType() -> String? {
-        return nil
-    }
     
-    func isRequired() -> Bool {
-        true
-    }
-    
-    func getTypeValue() -> String {
-        "BandeRiveraine"
+    static func getTypeValue() -> String {
+        "bandeRiveraine"
     }
 }

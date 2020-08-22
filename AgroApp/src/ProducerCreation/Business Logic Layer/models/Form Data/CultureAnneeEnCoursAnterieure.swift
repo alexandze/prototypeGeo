@@ -8,7 +8,43 @@
 
 import Foundation
 
-enum CultureAnneeEnCoursAnterieure: String, CulturalPracticeValueProtocol, Codable {
+enum CultureAnneeEnCoursAnterieure: String, SelectValue, Codable {
+    
+    init?(rawValueIndex: Int) {
+        let listRawValue = CultureAnneeEnCoursAnterieure.listRawValue()
+        
+        guard Util.hasIndexInArray(listRawValue, index: rawValueIndex) else {
+            return nil
+        }
+        
+        switch listRawValue[rawValueIndex]  {
+        case CultureAnneeEnCoursAnterieure.auc.rawValue:
+            self = .auc
+        case CultureAnneeEnCoursAnterieure.avo.rawValue:
+            self = .avo
+        case CultureAnneeEnCoursAnterieure.ble.rawValue:
+            self = .ble
+        case CultureAnneeEnCoursAnterieure.cnl.rawValue:
+            self = .cnl
+        case CultureAnneeEnCoursAnterieure.foi.rawValue:
+            self = .foi
+        case CultureAnneeEnCoursAnterieure.mai.rawValue:
+            self = .mai
+        case CultureAnneeEnCoursAnterieure.mix.rawValue:
+            self = .mix
+        case CultureAnneeEnCoursAnterieure.non.rawValue:
+            self = .non
+        case CultureAnneeEnCoursAnterieure.org.rawValue:
+            self = .org
+        case CultureAnneeEnCoursAnterieure.ptf.rawValue:
+            self = .ptf
+        case CultureAnneeEnCoursAnterieure.soy.rawValue:
+            self = .soy
+        default:
+            return nil
+        }
+    }
+    
     case auc = "AUC"
     case avo = "AVO"
     case ble = "BLE"
@@ -20,87 +56,118 @@ enum CultureAnneeEnCoursAnterieure: String, CulturalPracticeValueProtocol, Codab
     case org = "ORG"
     case ptf = "PFT"
     case soy = "SOY"
-
-    static func getValues() -> [(CulturalPracticeValueProtocol, String)]? {
+    
+    
+    static func listRawValue() -> [String] {
+        [
+            "AUC",
+            "AVO",
+            "BLE",
+            "CNL",
+            "FOI",
+            "MAI",
+            "MIX",
+            "NON",
+            "ORG",
+            "PFT",
+            "SOY"
+        ]
+    }
+    
+    static func getTupleValues() -> [(Int, String)] {
         [
             (
-                CultureAnneeEnCoursAnterieure.auc,
-                NSLocalizedString("Autres céréales", comment: "Autres céréales")
+                0,
+                getValues()[0]
             ),
             (
-                CultureAnneeEnCoursAnterieure.avo,
-                NSLocalizedString("Avoine", comment: "Avoine")
+                1,
+                getValues()[1]
             ),
             (
-                CultureAnneeEnCoursAnterieure.ble,
-                NSLocalizedString("Blé", comment: "Blé")
+                2,
+                getValues()[2]
             ),
             (
-                CultureAnneeEnCoursAnterieure.cnl,
-                NSLocalizedString("Canola", comment: "Canola")
+                3,
+                getValues()[3]
             ),
             (
-                CultureAnneeEnCoursAnterieure.foi,
-                NSLocalizedString("Foin", comment: "Foin")
+                4,
+                getValues()[4]
             ),
             (
-                CultureAnneeEnCoursAnterieure.mai,
-                NSLocalizedString("Maï", comment: "Maï")
+                5,
+                getValues()[5]
             ),
             (
-                CultureAnneeEnCoursAnterieure.mix,
-                NSLocalizedString("Mixte", comment: "Mixte")
+                6,
+                getValues()[6]
             ),
             (
-                CultureAnneeEnCoursAnterieure.non,
-                NSLocalizedString(
-                    "Pas d'info, traité comme si c'était du foin",
-                    comment: "Pas d'info, traité comme si c'était du foin"
-                )
+                7,
+                getValues()[7]
             ),
             (
-                CultureAnneeEnCoursAnterieure.org,
-                NSLocalizedString("Orge", comment: "Orge")
+                8,
+                getValues()[8]
             ),
             (
-                CultureAnneeEnCoursAnterieure.ptf,
-                NSLocalizedString("Petits fruits", comment: "Petits fruits")
+                9,
+                getValues()[9]
             ),
             (
-                CultureAnneeEnCoursAnterieure.soy,
-                NSLocalizedString("Soya", comment: "Soya")
+                10,
+                getValues()[10]
             )
         ]
     }
-
+    
+    static func getValues() -> [String] {
+        [
+            NSLocalizedString("Autres céréales", comment: "Autres céréales"),
+            NSLocalizedString("Avoine", comment: "Avoine"),
+            NSLocalizedString("Blé", comment: "Blé"),
+            NSLocalizedString("Canola", comment: "Canola"),
+            NSLocalizedString("Foin", comment: "Foin"),
+            NSLocalizedString("Maï", comment: "Maï"),
+            NSLocalizedString("Mixte", comment: "Mixte"),
+            NSLocalizedString(
+                "Pas d'info, traité comme si c'était du foin",
+                comment: "Pas d'info, traité comme si c'était du foin"
+            ),
+            NSLocalizedString("Orge", comment: "Orge"),
+            NSLocalizedString("Petits fruits", comment: "Petits fruits"),
+            NSLocalizedString("Soya", comment: "Soya")
+        ]
+    }
+    
+    
     // swiftlint:disable all
     func getValue() -> String {
         switch self {
         case .auc:
-            return NSLocalizedString("Autres céréales", comment: "Autres céréales")
+            return CultureAnneeEnCoursAnterieure.getValues()[0]
         case .avo:
-            return NSLocalizedString("Avoine", comment: "Avoine")
+            return CultureAnneeEnCoursAnterieure.getValues()[1]
         case .ble:
-            return NSLocalizedString("Blé", comment: "Blé")
+            return CultureAnneeEnCoursAnterieure.getValues()[2]
         case .cnl:
-            return NSLocalizedString("Canola", comment: "Canola")
+            return CultureAnneeEnCoursAnterieure.getValues()[3]
         case .foi:
-            return NSLocalizedString("Foin", comment: "Foin")
+            return CultureAnneeEnCoursAnterieure.getValues()[4]
         case .mai:
-            return NSLocalizedString("Maï", comment: "Maï")
+            return CultureAnneeEnCoursAnterieure.getValues()[5]
         case .mix:
-            return NSLocalizedString("Mixte", comment: "Mixte")
+            return CultureAnneeEnCoursAnterieure.getValues()[6]
         case .non:
-            return NSLocalizedString(
-                "Pas d'info, traité comme si c'était du foin",
-                comment: "Pas d'info, traité comme si c'était du foin"
-            )
+            return CultureAnneeEnCoursAnterieure.getValues()[7]
         case .org:
-            return NSLocalizedString("Orge", comment: "Orge")
+            return CultureAnneeEnCoursAnterieure.getValues()[8]
         case .ptf:
-            return NSLocalizedString("Petits fruits", comment: "Petits fruits")
+            return CultureAnneeEnCoursAnterieure.getValues()[9]
         case .soy:
-            return NSLocalizedString("Soya", comment: "Soya")
+            return CultureAnneeEnCoursAnterieure.getValues()[10]
         }
     }
     
@@ -111,30 +178,7 @@ enum CultureAnneeEnCoursAnterieure: String, CulturalPracticeValueProtocol, Codab
         )
     }
     
-    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
-        CulturalPracticeMultiSelectElement(
-            key: UUID().uuidString,
-            title: getTitle(),
-            tupleCulturalTypeValue: getValues()!,
-            value: culturalPractice?.cultureAnneeEnCoursAnterieure
-        )
-    }
-    
-    func getUnitType() -> UnitType? {
-        nil
-    }
-    
-    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
-        var newCulturalPractice = culturalPractice
-        newCulturalPractice.cultureAnneeEnCoursAnterieure = self
-        return newCulturalPractice
-    }
-    
-    static func create(value: String) -> CulturalPracticeValueProtocol? {
-        nil
-    }
-    
-    static func getRegularExpression() -> String? {
-        nil
+    static func getTypeValue() -> String {
+        "cultureAnneeEnCoursAnterieure"
     }
 }

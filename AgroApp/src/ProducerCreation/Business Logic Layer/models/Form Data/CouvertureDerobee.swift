@@ -8,29 +8,36 @@
 
 import Foundation
 
-enum CouvertureDerobee: Int, CulturalPracticeValueProtocol, Codable {
+enum CouvertureDerobee: Int, SelectValue, Codable {
     case vrai = 1
     case faux = 0
 
-    static func getValues() -> [(CulturalPracticeValueProtocol, String)]? {
+    static func getTupleValues() -> [(Int, String)] {
         [
             (
-                CouvertureDerobee.vrai,
-                NSLocalizedString("Vrai", comment: "Couverture dérobée vrai")
+                CouvertureDerobee.vrai.rawValue,
+                getValues()[0]
             ),
             (
-                CouvertureDerobee.faux,
-                NSLocalizedString("Faux", comment: "Couverture dérobée faux")
+                CouvertureDerobee.faux.rawValue,
+                getValues()[1]
             )
+        ]
+    }
+    
+    static func getValues() -> [String] {
+        [
+            NSLocalizedString("Vrai", comment: "Couverture dérobée vrai"),
+            NSLocalizedString("Faux", comment: "Couverture dérobée faux")
         ]
     }
 
     func getValue() -> String {
         switch self {
         case .vrai:
-            return NSLocalizedString("Vrai", comment: "Couverture dérobée vrai")
+            return CouvertureDerobee.getValues()[0]
         case .faux:
-            return NSLocalizedString("Faux", comment: "Couverture dérobée faux")
+            return CouvertureDerobee.getValues()[1]
         }
     }
 
@@ -40,31 +47,8 @@ enum CouvertureDerobee: Int, CulturalPracticeValueProtocol, Codable {
             comment: "Title Couverture dérobée"
         )
     }
-
-    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
-        CulturalPracticeMultiSelectElement(
-            key: UUID().uuidString,
-            title: getTitle(),
-            tupleCulturalTypeValue: getValues()!,
-            value: culturalPractice?.couvertureDerobee
-        )
-    }
-
-    func getUnitType() -> UnitType? {
-        nil
-    }
-
-    static func create(value: String) -> CulturalPracticeValueProtocol? {
-        nil
-    }
-
-    static func getRegularExpression() -> String? {
-        nil
-    }
-
-    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
-        var newCulturalPractice = culturalPractice
-        newCulturalPractice.couvertureDerobee = self
-        return newCulturalPractice
+    
+    static func getTypeValue() -> String {
+        "couvertureDerobee"
     }
 }

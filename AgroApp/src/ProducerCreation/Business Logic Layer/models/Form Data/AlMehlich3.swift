@@ -8,9 +8,12 @@
 
 import Foundation
 
-enum AlMehlich3: CulturalPracticeValueProtocol {
-
-    case taux(Percentage)
+struct AlMehlich3: InputValue {
+    var value: Percentage
+    
+    func getValue() -> String {
+        String(value)
+    }
 
     static func getTitle() -> String {
         NSLocalizedString(
@@ -18,43 +21,24 @@ enum AlMehlich3: CulturalPracticeValueProtocol {
             comment: "AL Mehlich-3"
         )
     }
-
-    func getValue() -> String {
-        switch self {
-        case .taux(let percentage):
-            return String(percentage)
-        }
+    
+    static func getUnitType() -> String {
+        UnitType.percentage.convertToString()
     }
 
-    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
-        CulturalPracticeInputElement(
-            key: UUID().uuidString,
-            title: getTitle(),
-            valueEmpty: AlMehlich3.taux(0),
-            value: culturalPractice?.alMehlich3
-        )
-    }
-
-    static func getValues() -> [(CulturalPracticeValueProtocol, String)]? {
-        nil
-    }
-
-    func getUnitType() -> UnitType? {
-        .percentage
-    }
-
-    static func create(value: String) -> CulturalPracticeValueProtocol? {
-        guard let tauxValue = Double(value) else { return nil }
-        return AlMehlich3.taux(tauxValue)
-    }
-
-    static func getRegularExpression() -> String? {
+    static func getRegexPattern() -> String {
         "^\\d*\\.?\\d*$"
     }
-
-    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
-        var newCulturalPractice = culturalPractice
-        newCulturalPractice.alMehlich3 = self
-        return newCulturalPractice
+    
+    static func getTypeValue() -> String {
+        "alMehlich3"
+    }
+    
+    static func make(value: String) -> InputValue? {
+        guard let value = Percentage(value) else {
+            return nil
+        }
+        
+        return AlMehlich3(value: value)
     }
 }

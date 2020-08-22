@@ -109,8 +109,9 @@ struct InputElement: InputElementData {
     var isRequired: Bool
     var regexPattern: String
     var keyboardType: KeyboardType = .normal
-    var unitType: String?
-    var typeValue: String?
+    var unitType: String
+    var typeValue: String
+    var regex: NSRegularExpression?
 }
 
 class InputElementObservable: InputElementDataObservable {
@@ -238,8 +239,7 @@ struct SelectElement: ElementUIData {
     var isValid: Bool
     var isRequired: Bool
     var values: [String]
-    var unitType: String?
-    var typeValue: String?
+    var typeValue: String
 }
 
 enum ElementFormAction: String {

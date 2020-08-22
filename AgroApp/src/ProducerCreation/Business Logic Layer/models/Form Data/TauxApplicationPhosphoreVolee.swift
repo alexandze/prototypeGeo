@@ -8,9 +8,12 @@
 
 import Foundation
 
-enum TauxApplicationPhosphoreVolee: CulturalPracticeValueProtocol {
-
-    case taux(KilogramPerHectare)
+struct TauxApplicationPhosphoreVolee: InputValue {
+    var value: KilogramPerHectare
+    
+    func getValue() -> String {
+        String(value)
+    }
 
     static func getTitle() -> String {
         NSLocalizedString(
@@ -18,43 +21,24 @@ enum TauxApplicationPhosphoreVolee: CulturalPracticeValueProtocol {
             comment: "Titre Taux d'application de phosphore (engrais minéraux à la volée)"
         )
     }
-
-    func getValue() -> String {
-        switch self {
-        case .taux(let kilogramPerHectare):
-            return String(kilogramPerHectare)
-        }
+    
+    static func getUnitType() -> String {
+        UnitType.kgHa.convertToString()
     }
 
-    static func getValues() -> [(CulturalPracticeValueProtocol, String)]? {
-        nil
-    }
-
-    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
-        CulturalPracticeInputElement(
-            key: UUID().uuidString,
-            title: getTitle(),
-            valueEmpty: TauxApplicationPhosphoreVolee.taux(0),
-            value: culturalPractice?.tauxApplicationPhosphoreVolee
-        )
-    }
-
-    func getUnitType() -> UnitType? {
-        .kgHa
-    }
-
-    static func create(value: String) -> CulturalPracticeValueProtocol? {
-        guard let tauxValue = Double(value) else { return nil }
-        return TauxApplicationPhosphoreVolee.taux(tauxValue)
-    }
-
-    static func getRegularExpression() -> String? {
+    static func getRegexPattern() -> String {
         "^\\d*\\.?\\d*$"
     }
-
-    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
-        var newCulturalPractice = culturalPractice
-        newCulturalPractice.tauxApplicationPhosphoreVolee = self
-        return newCulturalPractice
+    
+    static func getTypeValue() -> String {
+        "tauxApplicationPhosphoreVolee"
+    }
+    
+    static func make(value: String) -> InputValue? {
+        guard let value = Double(value) else {
+            return nil
+        }
+        
+        return TauxApplicationPhosphoreVolee(value: value)
     }
 }

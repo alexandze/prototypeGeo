@@ -9,12 +9,22 @@
 import Foundation
 
 enum Avaloir: Int, SelectValue, Codable {
-    case empty
-    case absente
+    case absente = 1
     case captagePartiel
     case captageSystematique
+    
+    func getValue() -> String {
+        switch self {
+        case .absente:
+            return Avaloir.getValues()[0]
+        case .captagePartiel:
+            return Avaloir.getValues()[1]
+        case .captageSystematique:
+            return Avaloir.getValues()[2]
+        }
+    }
 
-    func getTupleValues() -> [(Int, String)] {
+    static func getTupleValues() -> [(Int, String)] {
         [
             (
                 Avaloir.absente.rawValue,
@@ -31,41 +41,20 @@ enum Avaloir: Int, SelectValue, Codable {
         ]
     }
     
-    func getValues() -> [String] {
+    static func getValues() -> [String] {
         return [
             NSLocalizedString("Absente", comment: "Avaloir absente"),
             NSLocalizedString("Captage Partiel", comment: "Avaloir captage partiel"),
             NSLocalizedString("Captage systématique", comment: "Avaloir Captage systématique")
         ]
     }
-
-    func getValue() -> String? {
-        switch self {
-        case .absente:
-            return NSLocalizedString("Absente", comment: "Avaloir absente")
-        case .captagePartiel:
-            return NSLocalizedString("Captage Partiel", comment: "Avaloir captage partiel")
-        case .captageSystematique:
-            return NSLocalizedString("Captage systématique", comment: "Avaloir Captage systématique")
-        case .empty:
-            return nil
-        }
-    }
-
-    func getTitle() -> String {
+    
+    static func getTitle() -> String {
         NSLocalizedString("Avaloir", comment: "Titre avaloir")
     }
     
-    func isRequired() -> Bool {
-        true
-    }
-    
-    func getUnitType() -> String? {
-        nil
-    }
-    
-    func getTypeValue() -> String {
-        return "Avaloir"
+    static func getTypeValue() -> String {
+        "avaloir"
     }
 }
 

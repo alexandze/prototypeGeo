@@ -8,24 +8,24 @@
 
 import Foundation
 
-enum DrainageSouterrain: Int, CulturalPracticeValueProtocol, Codable {
+enum DrainageSouterrain: Int, SelectValue, Codable {
     case systematique = 1
     case partiel
     case absent
 
-    static func getValues() -> [(CulturalPracticeValueProtocol, String)]? {
+    static func getTupleValues() -> [(Int, String)] {
         [
             (
-                DrainageSouterrain.systematique,
-                NSLocalizedString("Systématique", comment: "Drainage souterrain Systématique")
+                DrainageSouterrain.systematique.rawValue,
+                getValues()[0]
             ),
             (
-                DrainageSouterrain.partiel,
-                NSLocalizedString("Partiel", comment: "Drainage souterrain Partiel")
+                DrainageSouterrain.partiel.rawValue,
+                getValues()[1]
             ),
             (
-                DrainageSouterrain.absent,
-                NSLocalizedString("Absent", comment: "Drainage souterrain absent")
+                DrainageSouterrain.absent.rawValue,
+                getValues()[2]
             )
         ]
     }
@@ -33,12 +33,20 @@ enum DrainageSouterrain: Int, CulturalPracticeValueProtocol, Codable {
     func getValue() -> String {
         switch self {
         case .systematique:
-            return NSLocalizedString("Systématique", comment: "Drainage souterrain Systématique")
+            return DrainageSouterrain.getValues()[0]
         case .partiel:
-            return NSLocalizedString("Partiel", comment: "Drainage souterrain Partiel")
+            return DrainageSouterrain.getValues()[1]
         case .absent:
-            return NSLocalizedString("Absent", comment: "Drainage souterrain absent")
+            return DrainageSouterrain.getValues()[2]
         }
+    }
+    
+    static func getValues() -> [String] {
+        [
+            NSLocalizedString("Systématique", comment: "Drainage souterrain Systématique"),
+            NSLocalizedString("Partiel", comment: "Drainage souterrain Partiel"),
+            NSLocalizedString("Absent", comment: "Drainage souterrain absent")
+        ]
     }
 
     static func getTitle() -> String {
@@ -47,31 +55,8 @@ enum DrainageSouterrain: Int, CulturalPracticeValueProtocol, Codable {
             comment: "Title Drainage souterrain"
         )
     }
-
-    static func getCulturalPracticeElement(culturalPractice: CulturalPractice?) -> CulturalPracticeElementProtocol {
-        CulturalPracticeMultiSelectElement(
-            key: UUID().uuidString,
-            title: getTitle(),
-            tupleCulturalTypeValue: getValues()!,
-            value: culturalPractice?.drainageSouterrain
-        )
-    }
-
-    func getUnitType() -> UnitType? {
-        nil
-    }
-
-    static func create(value: String) -> CulturalPracticeValueProtocol? {
-        nil
-    }
-
-    static func getRegularExpression() -> String? {
-        nil
-    }
-
-    func changeValueOfCulturalPractice(_ culturalPractice: CulturalPractice, index: Int?) -> CulturalPractice {
-        var newCulturalPractice = culturalPractice
-        newCulturalPractice.drainageSouterrain = self
-        return newCulturalPractice
+    
+    static func getTypeValue() -> String {
+        "drainageSouterrain"
     }
 }
