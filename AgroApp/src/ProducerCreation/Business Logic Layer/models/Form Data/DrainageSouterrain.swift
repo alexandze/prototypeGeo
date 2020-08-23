@@ -29,6 +29,10 @@ enum DrainageSouterrain: Int, SelectValue, Codable {
             )
         ]
     }
+    
+    func getRawValue() -> Int {
+        self.rawValue
+    }
 
     func getValue() -> String {
         switch self {
@@ -58,5 +62,9 @@ enum DrainageSouterrain: Int, SelectValue, Codable {
     
     static func getTypeValue() -> String {
         "drainageSouterrain"
+    }
+    
+    static func make(rawValue: Int) -> SelectValue? {
+        self.init(rawValue: rawValue)
     }
 }

@@ -27,6 +27,10 @@ enum BandeRiveraine: Int, SelectValue, Codable {
         }
     }
     
+    func getRawValue() -> Int {
+        self.rawValue
+    }
+    
     static func getTupleValues() -> [(Int, String)] {
         [
             (
@@ -63,5 +67,9 @@ enum BandeRiveraine: Int, SelectValue, Codable {
     
     static func getTypeValue() -> String {
         "bandeRiveraine"
+    }
+    
+    static func make(rawValue: Int) -> SelectValue? {
+        self.init(rawValue: rawValue)
     }
 }

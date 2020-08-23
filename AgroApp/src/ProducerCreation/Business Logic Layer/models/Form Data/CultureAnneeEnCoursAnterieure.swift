@@ -45,6 +45,10 @@ enum CultureAnneeEnCoursAnterieure: String, SelectValue, Codable {
         }
     }
     
+    func getRawValue() -> Int {
+        CultureAnneeEnCoursAnterieure.listRawValue().firstIndex { $0 == self.rawValue } ?? -1
+    }
+    
     case auc = "AUC"
     case avo = "AVO"
     case ble = "BLE"
@@ -180,5 +184,9 @@ enum CultureAnneeEnCoursAnterieure: String, SelectValue, Codable {
     
     static func getTypeValue() -> String {
         "cultureAnneeEnCoursAnterieure"
+    }
+    
+    static func make(rawValue: Int) -> SelectValue? {
+        self.init(rawValueIndex: rawValue)
     }
 }

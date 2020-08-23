@@ -18,7 +18,7 @@ extension CulturalPracticeFormReducerHandler {
 
             let util = UtilUpdateCulturalPracticeElementAction(
                 state: state,
-                culturalPracticeElementProtocole: action.culturalPracticeElementProtocol,
+                elementUIData: action.elementUIData,
                 culturalPractice: state.currentField?.culturalPratice,
                 fieldFromAction: action.field
             )
@@ -37,13 +37,13 @@ extension CulturalPracticeFormReducerHandler {
             util: UtilUpdateCulturalPracticeElementAction?
         ) -> UtilUpdateCulturalPracticeElementAction? {
             if let sections = util?.state?.sections,
-                let culturalPracticeElementProtocole = util?.culturalPracticeElementProtocole,
+                let elementUIData = util?.elementUIData,
                 var newUtil = util {
                 var firstIndexRow: Int?
 
                 let firstIndexSection = sections.firstIndex { section in
-                    firstIndexRow = section.rowData.firstIndex { culturalPracticeElement in
-                        return culturalPracticeElementProtocole.key == culturalPracticeElement.key
+                    firstIndexRow = section.rowData.firstIndex { elementUIDataFromSection in
+                        return elementUIData.id == elementUIDataFromSection.id
                     }
 
                     return firstIndexRow != nil
@@ -65,20 +65,20 @@ extension CulturalPracticeFormReducerHandler {
         ) -> UtilUpdateCulturalPracticeElementAction? {
             guard var copySection = util?.state?.sections,
                 let indexPathFind = util?.indexOfCulturalPracticeElement,
-                let culturalPracticeElementProtocol = util?.culturalPracticeElementProtocole,
+                let elementUIData = util?.elementUIData,
                 var newUtil = util
                 else { return nil }
 
-            copySection[indexPathFind.section].rowData[indexPathFind.row] = culturalPracticeElementProtocol
+            copySection[indexPathFind.section].rowData[indexPathFind.row] = elementUIData
             newUtil.sectionsUpdate = copySection
             return newUtil
         }
 
         private func isContainerElement(util: UtilUpdateCulturalPracticeElementAction?) -> UtilUpdateCulturalPracticeElementAction? {
-            guard let culturalPracticeElementProtocole = util?.culturalPracticeElementProtocole,
+            guard let elementUIData = util?.elementUIData,
                 var newUtil = util
                 else { return nil }
-            newUtil.isContainerElement = (culturalPracticeElementProtocole as? CulturalPracticeContainerElement) != nil
+            newUtil.isContainerElement = (elementUIData as? ElementUIListData) != nil
             return newUtil
         }
 
@@ -86,12 +86,12 @@ extension CulturalPracticeFormReducerHandler {
             util: UtilUpdateCulturalPracticeElementAction?
         ) -> UtilUpdateCulturalPracticeElementAction? {
             guard
-                (util?.culturalPracticeElementProtocole as? CulturalPracticeInputElement) != nil ||
-                    (util?.culturalPracticeElementProtocole as? CulturalPracticeMultiSelectElement) != nil
+                (util?.elementUIData as? InputElement) != nil ||
+                    (util?.elementUIData as? SelectElement) != nil
                 else { return util }
 
             guard let fieldFromAction = util?.fieldFromAction,
-                let culturalPracticeElement = util?.culturalPracticeElementProtocole,
+                let elementUIData = util?.elementUIData,
                 var newUtil = util else { return nil }
 
             let culturalPractice = util?.culturalPractice ??
@@ -158,10 +158,10 @@ extension CulturalPracticeFormReducerHandler {
 
     private struct UtilUpdateCulturalPracticeElementAction {
         var state: CulturalPracticeFormState?
-        var culturalPracticeElementProtocole: CulturalPracticeElementProtocol?
+        var elementUIData: ElementUIData?
         var culturalPractice: CulturalPractice?
         var indexOfCulturalPracticeElement: IndexPath?
-        var sectionsUpdate: [Section<CulturalPracticeElementProtocol>]?
+        var sectionsUpdate: [Section<ElementUIData>]?
         var isContainerElement: Bool?
         var fieldFromAction: Field?
     }

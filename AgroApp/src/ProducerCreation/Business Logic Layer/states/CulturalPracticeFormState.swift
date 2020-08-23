@@ -15,33 +15,33 @@ struct CulturalPracticeFormState: Equatable {
 
     var uuidState: String
     var currentField: Field?
-    var sections: [Section<CulturalPracticeElementProtocol>]?
+    var sections: [Section<ElementUIData>]?
     var title: String?
     var isFinishCompletedCurrentContainer: Bool?
     var responseAction: ResponseAction?
 
     enum ResponseAction {
-        case reloadAllListElementResponse
+        case selectFieldOnListActionResponse
         case insertContainerElementResponse(indexPath: [IndexPath])
         case updateElementResponse(indexPath: [IndexPath])
-
-        case willSelectElementOnListResponse(
-            culturalPracticeElement: CulturalPracticeElementProtocol,
+        
+        case selectElementOnListResponse(
+            elementUIData: ElementUIData,
             field: Field
         )
-
+        
         case removeDoseFumierResponse(
             indexPathsRemove: [IndexPath],
             indexPathsAdd: [IndexPath]?
         )
-
-        case canNotSelectElementOnListResponse(culturalPracticeElement: CulturalPracticeElementProtocol)
+        
+        case canNotSelectElementOnListResponse(elementUIData: ElementUIData)
         case notResponse
     }
 
     public func changeValues(
         currentField: Field? = nil,
-        sections: [Section<CulturalPracticeElementProtocol>]? = nil,
+        sections: [Section<ElementUIData>]? = nil,
         title: String? = nil,
         isFinishCompletedCurrentContainer: Bool? = nil,
         responseAction: ResponseAction? = nil

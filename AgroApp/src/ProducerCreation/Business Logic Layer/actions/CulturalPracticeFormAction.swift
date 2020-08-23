@@ -14,7 +14,7 @@ struct CulturalPracticeFormAction {
     struct AddCulturalPracticeInputMultiSelectContainer: Action {}
 
     struct UpdateCulturalPracticeElementAction: Action {
-        let culturalPracticeElementProtocol: CulturalPracticeElementProtocol
+        let elementUIData: ElementUIData
         let field: Field
     }
 

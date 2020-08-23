@@ -12,6 +12,8 @@ import UIKit
 struct Section<T> {
     let sectionName: String
     var rowData: [T]
+    var typeSection: String?
+    var index: Int?
 }
 
 extension UIImage {

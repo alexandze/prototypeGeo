@@ -23,6 +23,10 @@ enum DrainageSurface: Int, SelectValue, Codable {
             return DrainageSurface.getValues()[2]
         }
     }
+    
+    func getRawValue() -> Int {
+        self.rawValue
+    }
 
     static func getTupleValues() -> [(Int, String)] {
         [
@@ -55,5 +59,9 @@ enum DrainageSurface: Int, SelectValue, Codable {
     
     static func getTypeValue() -> String {
         "drainageSurface"
+    }
+    
+    static func make(rawValue: Int) -> SelectValue? {
+        self.init(rawValue: rawValue)
     }
 }

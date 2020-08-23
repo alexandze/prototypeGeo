@@ -19,8 +19,8 @@ extension Reducers {
                 .HandlerDidSelectedFieldOnMapAction().handle(action: selectedFieldOnMapAction, state)
         case let deselectFieldOnMap as MapFieldAction.WillDeselectFieldOnMapAction:
             return FieldListReducerHandler().handle(delectFieldOnMapAction: deselectFieldOnMap, state)
-        case let willSelectFieldOnListAction as FieldListAction.WillSelectFieldOnListAction:
-            return FieldListReducerHandler().handle(willSelectFieldOnListAction: willSelectFieldOnListAction, state)
+        case let selectFieldOnListAction as FieldListAction.SelectFieldOnListAction:
+            return FieldListReducerHandler().handle(selectFieldOnListAction: willSelectFieldOnListAction, state)
         case let isAppearAction as FieldListAction.IsAppearAction:
             return FieldListReducerHandler().handle(isAppearAction: isAppearAction, state)
         case let updateFieldAction as FieldListAction.UpdateFieldAction:
@@ -37,7 +37,7 @@ extension Reducers {
 
 class FieldListReducerHandler {
     func handle(
-        willSelectFieldOnListAction: FieldListAction.WillSelectFieldOnListAction,
+        willSelectFieldOnListAction: FieldListAction.SelectFieldOnListAction,
         _ state: FieldListState
     ) -> FieldListState {
         let fieldSelected = willSelectFieldOnListAction.field

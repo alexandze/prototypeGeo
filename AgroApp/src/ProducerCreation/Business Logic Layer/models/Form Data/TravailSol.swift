@@ -26,6 +26,10 @@ enum TravailSol: Int, SelectValue, Codable {
             return TravailSol.getValues()[3]
         }
     }
+    
+    func getRawValue() -> Int {
+        self.rawValue
+    }
 
     static func getTupleValues() -> [(Int, String)] {
         [
@@ -75,5 +79,9 @@ enum TravailSol: Int, SelectValue, Codable {
     
     static func getTypeValue() -> String {
         "travailSol"
+    }
+    
+    static func make(rawValue: Int) -> SelectValue? {
+        self.init(rawValue: rawValue)
     }
 }

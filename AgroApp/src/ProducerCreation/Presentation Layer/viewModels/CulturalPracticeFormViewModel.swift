@@ -44,13 +44,13 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
                     self.setState(state: culturalPracticeState)
 
                     switch responseAction {
-                    case .reloadAllListElementResponse:
+                    case .selectFieldOnListActionResponse:
                         self.handleReloadAllListElementResponse()
                     case .insertContainerElementResponse(indexPath: let indexPaths):
                         self.handleInsertContainerElementResponse(indexPaths: indexPaths)
                     case .updateElementResponse(indexPath: let indexPaths):
                         self.handleUpdateElementResponse(indexPath: indexPaths[0])
-                    case .willSelectElementOnListResponse(
+                    case .selectElementOnListResponse(
                         culturalPracticeElement: let culturalPracticeElementSelected,
                         field: let field):
                         self.handleWillSelectElementOnListResponse(

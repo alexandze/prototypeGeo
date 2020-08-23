@@ -23,7 +23,11 @@ enum Avaloir: Int, SelectValue, Codable {
             return Avaloir.getValues()[2]
         }
     }
-
+    
+    func getRawValue() -> Int {
+        rawValue
+    }
+    
     static func getTupleValues() -> [(Int, String)] {
         [
             (
@@ -55,6 +59,10 @@ enum Avaloir: Int, SelectValue, Codable {
     
     static func getTypeValue() -> String {
         "avaloir"
+    }
+    
+    static func make(rawValue: Int) -> SelectValue? {
+        self.init(rawValue: rawValue)
     }
 }
 

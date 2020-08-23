@@ -24,6 +24,10 @@ enum ConditionProfilCultural: Int, SelectValue, Codable {
         }
     }
     
+    func getRawValue() -> Int {
+        self.rawValue
+    }
+    
     static func getTupleValues() -> [(Int, String)] {
         [
             (
@@ -67,5 +71,9 @@ enum ConditionProfilCultural: Int, SelectValue, Codable {
     
     static func getTypeValue() -> String {
         "conditionProfilCultural"
+    }
+    
+    static func make(rawValue: Int) -> SelectValue? {
+        self.init(rawValue: rawValue)
     }
 }

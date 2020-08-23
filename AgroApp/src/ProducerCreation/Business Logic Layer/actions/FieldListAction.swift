@@ -10,7 +10,7 @@ import Foundation
 import ReSwift
 
 struct FieldListAction {
-    struct WillSelectFieldOnListAction: Action {
+    struct SelectFieldOnListAction: Action {
         var field: Field
     }
 

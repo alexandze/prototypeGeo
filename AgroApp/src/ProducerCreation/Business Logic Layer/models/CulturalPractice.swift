@@ -8,6 +8,8 @@
 
 import Foundation
 
+// ********** Not change name of Cultural practice porperties. The name of properties is use for reflection **************
+// ********** If you change name, change a getTypeValue() func of SelectValue, InputValue *************
 struct CulturalPractice {
     var id: Int?
     var avaloir: Avaloir?

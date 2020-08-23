@@ -26,6 +26,10 @@ enum DelaiIncorporationFumier: Int, SelectValue, Codable {
             return DelaiIncorporationFumier.getValues()[3]
         }
     }
+    
+    func getRawValue() -> Int {
+        self.rawValue
+    }
 
     static func getTupleValues() -> [(Int, String)] {
         [
@@ -78,5 +82,9 @@ enum DelaiIncorporationFumier: Int, SelectValue, Codable {
     
     static func getTypeValue() -> String {
         "delaiIncorporationFumier"
+    }
+    
+    static func make(rawValue: Int) -> SelectValue? {
+        self.init(rawValue: rawValue)
     }
 }

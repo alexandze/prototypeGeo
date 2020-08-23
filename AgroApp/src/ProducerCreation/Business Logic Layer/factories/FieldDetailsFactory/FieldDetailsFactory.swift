@@ -9,30 +9,101 @@
 import Foundation
 
 class FieldDetailsFactoryImpl: FieldDetailsFactory {
+    let titleAddDoseFumier = "Ajouter une dose fumier"
+    let subtitleAddDoseFumier = "Cliquer sur boutton"
     
-    func getElementUIDataByCulturalPractice(_ culturalPracticeOp: CulturalPractice? = nil) -> [ElementUIData] {
+    func makeSectionListElementUIData(_ culturalPracticeOp: CulturalPractice? = nil) ->
+    [Section<ElementUIData>] {
+        var elementUIDataList = makeElementUIDataForValueForm(culturalPracticeOp)
+        elementUIDataList = addRowWithButtonAddDoseFumier(elementUIDataList)
+        let elementUIDaListContainer = makeElementUIDataForListValueForm(culturalPracticeOp)
+        let elementUIListData = makeElementUIListData(elementUIDaListContainer)
+        return makeSectionListByElementUIDataList(elementUIDataList: (elementUIDataList + elementUIListData))
+    }
+    
+    func makeSectionListElementUIDataByResetSectionElementUIListData(
+        _ culturalPractice: CulturalPractice,
+        _ sectionList: [Section<ElementUIData>]
+    ) -> [Section<ElementUIData>] {
+        let indexRemoveList = findAllIndexSectionWithElementUIDataList(sectionList: sectionList)
+        var copySectionList = sectionList
+        
+        indexRemoveList.sorted().reversed().forEach { indexRemove in
+            copySectionList = removeSectionByIndex(copySectionList, indexRemove)
+        }
+        
+        let elementUIDaListContainer = makeElementUIDataForListValueForm(culturalPractice)
+        let elementUIListData =  makeElementUIListData(elementUIDaListContainer)
+        let newSection = makeSectionListByElementUIDataList(elementUIDataList: elementUIListData)
+        return copySectionList + newSection
+    }
+    
+    private func findAllIndexSectionWithElementUIDataList(sectionList: [Section<ElementUIData>]) -> [Int] {
+        var indexList = [Int]()
+        
+        (0..<sectionList.count).forEach { index in
+            if let typeSection = sectionList[index].typeSection, typeSection == ElementUIListData.TYPE_ELEMENT {
+                indexList.append(index)
+            }
+        }
+        
+        return indexList
+    }
+    
+    private func removeSectionByIndex(_ sectionList: [Section<ElementUIData>], _ index: Int) -> [Section<ElementUIData>] {
+        var copySectionList = sectionList
+        
+        if Util.hasIndexInArray(copySectionList, index: index) {
+            copySectionList.remove(at: index)
+        }
+        
+        return copySectionList
+    }
+    
+    private func makeSectionListByElementUIDataList(elementUIDataList: [ElementUIData]) -> [Section<ElementUIData>] {
+        elementUIDataList.map { elementUIData in
+            if let elementUIDataList = elementUIData as? ElementUIListData {
+                return Section<ElementUIData>(
+                    sectionName: elementUIDataList.title,
+                    rowData: elementUIDataList.elements,
+                    typeSection: elementUIDataList.type,
+                    index: elementUIDataList.index
+                )
+            }
+            
+            return Section<ElementUIData>(
+                sectionName: elementUIData.title,
+                rowData: [elementUIData],
+                typeSection: elementUIData.type
+            )
+        }
+    }
+    
+    private func makeElementUIDataForValueForm(_ culturalPracticeOp: CulturalPractice? = nil) -> [ElementUIData] {
         let culturalPractice = culturalPracticeOp ?? CulturalPractice()
         let mirror = Mirror(reflecting: culturalPractice)
         
-        let elementUIDataList = mirror.children.map(mapMirrorChildrenCulturalPractice(_:))
+        return mirror.children.map(mapMirrorChildrenCulturalPractice(_:))
             .filter { $0 != nil  }
             .map { $0! }
+    }
+    
+    private func makeElementUIDataForListValueForm(_ culturalPracticeOp: CulturalPractice? = nil) -> [[ElementUIData]] {
+        let culturalPractice = culturalPracticeOp ?? CulturalPractice()
+        let mirror = Mirror(reflecting: culturalPractice)
         
-        let elementUIDaListContainer = mirror.children
+        return mirror.children
             .map(mapMirrorChildrenCulturalPracticeContainer(_:))
             .filter { $0 != nil }
             .map { $0! }
-        
-        return fusionElementUIDataList(elementUIDataList, with: elementUIDaListContainer)
     }
     
-    private func fusionElementUIDataList(
-        _ elementUIDataList: [ElementUIData],
-        with elementUIDaListContainer: [[ElementUIData]]
+    private func makeElementUIListData(
+        _ elementUIDaListContainer: [[ElementUIData]]
     ) -> [ElementUIData] {
         
-        guard !elementUIDaListContainer[0].isEmpty else {
-            return elementUIDataList
+        guard !elementUIDaListContainer.isEmpty && !elementUIDaListContainer[0].isEmpty else {
+            return []
         }
         
         var newElementUIDataList = [ElementUIListData]()
@@ -52,13 +123,19 @@ class FieldDetailsFactoryImpl: FieldDetailsFactory {
             }
             
             if elementCurrent.count == CulturalPractice.MAX_DOSE_FUMIER {
-                newElementUIDataList.append(ElementUIListDataImpl(title: "Dose Fumier \(indexElementUIData + 1)", elements: elementCurrent))
+                newElementUIDataList.append(
+                    ElementUIListData(
+                        title: "Dose Fumier",
+                        elements: elementCurrent,
+                        index: indexElementUIData
+                    )
+                )
             }
             
             elementCurrent = []
         }
         
-        return elementUIDataList + newElementUIDataList
+        return newElementUIDataList
     }
     
     private func mapMirrorChildrenCulturalPractice(_ child: Mirror.Child) -> ElementUIData? {
@@ -102,7 +179,8 @@ class FieldDetailsFactoryImpl: FieldDetailsFactory {
             isValid: true,
             isRequired: true,
             values: type(of: selectValue).getValues(),
-            typeValue: type(of: selectValue).getTypeValue()
+            typeValue: type(of: selectValue).getTypeValue(),
+            rawValue: selectValue.getRawValue()
         )
     }
     
@@ -127,7 +205,8 @@ class FieldDetailsFactoryImpl: FieldDetailsFactory {
                 isValid: true,
                 isRequired: true,
                 values: type(of: selectValue).getValues(),
-                typeValue: type(of: selectValue).getTypeValue()
+                typeValue: type(of: selectValue).getTypeValue(),
+                rawValue: selectValue.getRawValue()
             )
         }
     }
@@ -145,6 +224,18 @@ class FieldDetailsFactoryImpl: FieldDetailsFactory {
                 regex: makeRegularExpression(type(of: inputValue).getRegexPattern())
             )
         }
+    }
+    
+    private func addRowWithButtonAddDoseFumier(_ elementUIDataList: [ElementUIData]) -> [ElementUIData] {
+        let rowWithButtonAddDoseFunier = RowWithButton(
+            title: titleAddDoseFumier,
+            subTitle: subtitleAddDoseFumier,
+            action: ElementFormAction.add.rawValue
+        )
+        
+        var copyElementUIDataList = elementUIDataList
+        copyElementUIDataList.append(rowWithButtonAddDoseFunier)
+        return copyElementUIDataList
     }
     
     private func initElementUIDataWithNilValueByLabel(_ label: String) -> ElementUIData? {
@@ -208,12 +299,19 @@ class FieldDetailsFactoryImpl: FieldDetailsFactory {
 }
 
 protocol FieldDetailsFactory {
+    func makeSectionListElementUIData(_ culturalPracticeOp: CulturalPractice?) -> [Section<ElementUIData>]
     
+    func makeSectionListElementUIDataByResetSectionElementUIListData(
+        _ culturalPractice: CulturalPractice,
+        _ sectionList: [Section<ElementUIData>]
+    ) -> [Section<ElementUIData>]
 }
 
 protocol SelectValue: ValueForm {
+    func getRawValue() -> Int
     static func getValues() -> [String]
     static func getTupleValues() -> [(Int, String)]
+    static func make(rawValue: Int) -> SelectValue?
 }
 
 protocol InputValue: ValueForm {
@@ -223,7 +321,9 @@ protocol InputValue: ValueForm {
 }
 
 protocol ValueForm {
+    
     func getValue() -> String
+    
     static func getTypeValue() -> String
     static func getTitle() -> String
 }

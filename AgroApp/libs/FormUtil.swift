@@ -17,19 +17,6 @@ protocol ElementUIData {
     var title: String {get set}
 }
 
-protocol ElementUIListData: ElementUIData {
-    var elements: [ElementUIData] {get set}
-}
-
-struct ElementUIListDataImpl: ElementUIListData {
-    static let TYPE_ELEMENT = "ELEMENT_UI_LIST_DATA"
-    var id: UUID = UUID()
-    var type: String = ElementUIListDataImpl.TYPE_ELEMENT
-    var title: String
-    var elements: [ElementUIData]
-}
-
-
 class ElementUIDataObservable: ObservableObject, Identifiable {
     var id = UUID()
     var type: String
@@ -240,6 +227,7 @@ struct SelectElement: ElementUIData {
     var isRequired: Bool
     var values: [String]
     var typeValue: String
+    var rawValue: Int?
 }
 
 enum ElementFormAction: String {
@@ -263,4 +251,23 @@ enum KeyboardType: String {
             return .emailAddress
         }
     }
+}
+
+
+struct RowWithButton: ElementUIData {
+    static let TYPE_ELEMENT = "ROW_WITH_BUTTON"
+    var id: UUID = UUID()
+    var type: String = "ROW"
+    var title: String
+    var subTitle: String?
+    var action: String
+}
+
+struct ElementUIListData: ElementUIData {
+    static let TYPE_ELEMENT = "ELEMENT_UI_LIST_DATA"
+    var id: UUID = UUID()
+    var type: String = ElementUIListData.TYPE_ELEMENT
+    var title: String
+    var elements: [ElementUIData]
+    var index: Int
 }

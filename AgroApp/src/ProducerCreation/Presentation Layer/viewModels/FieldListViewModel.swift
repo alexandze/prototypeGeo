@@ -204,7 +204,7 @@ extension FieldListViewModelImpl {
 
     private func dispatchWillSelectFieldOnListAction(indexPath: IndexPath) {
         let fieldSelected = fieldList[indexPath.row]
-        let action = FieldListAction.WillSelectFieldOnListAction(field: fieldSelected)
+        let action = FieldListAction.SelectFieldOnListAction(field: fieldSelected)
         dispatch(action: action)
     }
 

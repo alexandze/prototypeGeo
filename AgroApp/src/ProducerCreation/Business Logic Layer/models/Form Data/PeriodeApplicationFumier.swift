@@ -26,6 +26,10 @@ enum PeriodeApplicationFumier: Int, SelectValue, Codable {
             return PeriodeApplicationFumier.getValues()[3]
         }
     }
+    
+    func getRawValue() -> Int {
+        self.rawValue
+    }
 
     static func getTupleValues() -> [(Int, String)] {
         [
@@ -78,5 +82,9 @@ enum PeriodeApplicationFumier: Int, SelectValue, Codable {
     
     static func getTypeValue() -> String {
         "periodeApplicationFumier"
+    }
+    
+    static func make(rawValue: Int) -> SelectValue? {
+        self.init(rawValue: rawValue)
     }
 }
