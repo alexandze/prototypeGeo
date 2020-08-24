@@ -14,30 +14,32 @@ struct InputFormCulturalPracticeState: Equatable {
     }
 
     var uuidState: String
-    var inputElement: CulturalPracticeInputElement?
+    var sectionInputElement: Section<ElementUIData>?
     var field: Field?
-    var inputFormSubAction: InputFormCulturalPracticeSubAction?
+    var inputFormCulturalPracticeActionResponse: InputFormCulturalPracticeActionResponse?
     var isDirty: Bool?
+    
+    enum InputFormCulturalPracticeActionResponse {
+        case inputElementSelectedOnListActionResponse
+        case closeInputFormWithSaveActionResponse
+        case noAction
+        case closeInputFormWithoutSaveActionResponse
+    }
 
     func changeValue(
-        inputElement: CulturalPracticeInputElement? = nil,
+        sectionInputElement: Section<ElementUIData>? = nil,
         field: Field? = nil,
-        inputFormSubAction: InputFormCulturalPracticeSubAction? = nil,
+        inputFormCulturalPracticeActionResponse: InputFormCulturalPracticeActionResponse? = nil,
         isDirty: Bool? = nil
     ) -> InputFormCulturalPracticeState {
         InputFormCulturalPracticeState(
             uuidState: UUID().uuidString,
-            inputElement: inputElement ?? self.inputElement,
+            sectionInputElement: sectionInputElement ?? self.sectionInputElement,
             field: field ?? self.field,
-            inputFormSubAction: inputFormSubAction ?? self.inputFormSubAction,
+            inputFormCulturalPracticeActionResponse: inputFormCulturalPracticeActionResponse ?? self.inputFormCulturalPracticeActionResponse,
             isDirty: isDirty ?? self.isDirty
         )
     }
 }
 
-enum InputFormCulturalPracticeSubAction {
-    case newFormData
-    case closeWithSave
-    case noAction
-    case closeWithoutSave
-}
+

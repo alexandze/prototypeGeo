@@ -17,7 +17,6 @@ final class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeVie
     var disposableInputFormCulturalViewState: Disposable?
     var disposableDispatcher: Disposable?
     var disposableActivateAnimation: Disposable?
-    var inputElement: CulturalPracticeInputElement?
     var firstInputValue: String?
     var regularExpressionForInputValue: NSRegularExpression?
     var field: Field?
@@ -126,9 +125,8 @@ final class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeVie
         )
     }
 
-    private func setValue(inputElement: CulturalPracticeInputElement, field: Field) {
-        self.inputElement = inputElement
-        self.field = field
+    private func setValue() {
+        
     }
 
     private func setValuesViewState() {

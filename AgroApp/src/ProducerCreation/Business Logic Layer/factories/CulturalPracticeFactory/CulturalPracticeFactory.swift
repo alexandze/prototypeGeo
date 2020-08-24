@@ -20,8 +20,8 @@ class CulturalPracticeFactoryImpl: CulturalPracticeFactory {
         self.culturalPracticeRemoveFactory = culturalPracticeRemoveFactory
     }
     
-    func makeCulturalPracticeByUpdate(_ culturalPractice: CulturalPractice? = nil, _ elementUIData: ElementUIData) -> CulturalPractice? {
-        culturalPracticeUpdateFactory.makeCulturalPracticeByUpdate(culturalPractice, elementUIData)
+    func makeCulturalPracticeByUpdate(_ culturalPractice: CulturalPractice, _ section: Section<ElementUIData>) -> CulturalPractice? {
+        culturalPracticeUpdateFactory.makeCulturalPracticeByUpdate(culturalPractice, section)
     }
     
     func makeCulturalPraticeByRemove(_ culturalPractice: CulturalPractice, section: Section<ElementUIData>) -> CulturalPractice {
@@ -31,6 +31,6 @@ class CulturalPracticeFactoryImpl: CulturalPracticeFactory {
 }
 
 protocol CulturalPracticeFactory {
-    func makeCulturalPracticeByUpdate(_ culturalPractice: CulturalPractice?, _ elementUIData: ElementUIData) -> CulturalPractice?
+    func makeCulturalPracticeByUpdate(_ culturalPractice: CulturalPractice, _ section: Section<ElementUIData>) -> CulturalPractice?
     func makeCulturalPraticeByRemove(_ culturalPractice: CulturalPractice, section: Section<ElementUIData>) -> CulturalPractice
 }

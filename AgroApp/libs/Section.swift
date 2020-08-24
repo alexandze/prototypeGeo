@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 struct Section<T> {
+    let id: UUID = UUID()
     let sectionName: String
     var rowData: [T]
     var typeSection: String?

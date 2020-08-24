@@ -80,13 +80,13 @@ class CulturalPraticeFormInteractionImpl: CulturalPraticeFormInteraction {
     func dispatchAddDoseFumier() {
         _ = Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(
-                CulturalPracticeFormAction.AddCulturalPracticeInputMultiSelectContainer()
+                CulturalPracticeFormAction.AddDoseFumierAction()
             )
         }
     }
 
     func dispathWillSelectElementOnList(indexPath: IndexPath) {
-        let action = CulturalPracticeFormAction.WillSelectElementOnListAction(indexPath: indexPath)
+        let action = CulturalPracticeFormAction.SelectElementOnListAction(indexPath: indexPath)
 
         _ = Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(action)

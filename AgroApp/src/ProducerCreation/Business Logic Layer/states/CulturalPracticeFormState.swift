@@ -17,17 +17,21 @@ struct CulturalPracticeFormState: Equatable {
     var currentField: Field?
     var sections: [Section<ElementUIData>]?
     var title: String?
-    var isFinishCompletedCurrentContainer: Bool?
+    var isFinishCompletedLastDoseFumier: Bool?
     var responseAction: ResponseAction?
 
     enum ResponseAction {
         case selectFieldOnListActionResponse
-        case insertContainerElementResponse(indexPath: [IndexPath])
+        case addDoseFumierActionResponse(
+            indexPath: [IndexPath],
+            isMaxDoseFumier: Bool,
+            isFinishCompletedLastDoseFumier: Bool
+        )
+        
         case updateElementResponse(indexPath: [IndexPath])
         
         case selectElementOnListResponse(
-            elementUIData: ElementUIData,
-            field: Field
+            section: Section<ElementUIData>
         )
         
         case removeDoseFumierResponse(
@@ -51,7 +55,7 @@ struct CulturalPracticeFormState: Equatable {
             currentField: currentField ?? self.currentField,
             sections: sections ?? self.sections,
             title: title ?? self.title,
-            isFinishCompletedCurrentContainer: isFinishCompletedCurrentContainer ?? self.isFinishCompletedCurrentContainer,
+            isFinishCompletedLastDoseFumier: isFinishCompletedCurrentContainer ?? self.isFinishCompletedLastDoseFumier,
             responseAction: responseAction ?? self.responseAction
         )
     }

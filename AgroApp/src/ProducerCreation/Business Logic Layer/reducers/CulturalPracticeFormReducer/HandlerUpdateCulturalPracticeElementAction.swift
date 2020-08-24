@@ -10,6 +10,11 @@ import Foundation
 import ReSwift
 extension CulturalPracticeFormReducerHandler {
     class HandlerUpdateCulturalPracticeElementAction: HandlerReducer {
+        let culturalPracticeFactory: CulturalPracticeFactory
+        
+        init(culturalPracticeFactory: CulturalPracticeFactory = CulturalPracticeFactoryImpl()) {
+            self.culturalPracticeFactory = culturalPracticeFactory
+        }
 
         func handle(
             action: CulturalPracticeFormAction.UpdateCulturalPracticeElementAction,
@@ -18,136 +23,99 @@ extension CulturalPracticeFormReducerHandler {
 
             let util = UtilUpdateCulturalPracticeElementAction(
                 state: state,
-                elementUIData: action.elementUIData,
-                culturalPractice: state.currentField?.culturalPratice,
-                fieldFromAction: action.field
+                newSection: action.section,
+                newField: action.field
             )
-
+            
+            // cherche l'index a metter a jour
+            // mettre a jour l'index
+            // mettre a jour la pratique culturelle par la section
+            // mettre a jour le field avec la pratique culturelle
+            
             return (
-                findCulturalPracticeElementIndex(util:) >>>
-                    updateSectionWithNewCulturalPracticeElement(util:) >>>
-                    isContainerElement(util:) >>>
-                    updateFieldifInputAndSelectElement(util:) >>>
-                    updateFieldIfContainerElement(util:) >>>
-                    createNewState(util:)
+                findIndexSectionForUpdate(util: ) >>>
+                    updataSectionList(util: ) >>>
+                    updateCulturalPractice(util: ) >>>
+                    updateField(util: ) >>>
+                    newState(util: )
                 )(util) ?? state.changeValues(responseAction: .notResponse)
         }
-
-        private func findCulturalPracticeElementIndex(
-            util: UtilUpdateCulturalPracticeElementAction?
-        ) -> UtilUpdateCulturalPracticeElementAction? {
-            if let sections = util?.state?.sections,
-                let elementUIData = util?.elementUIData,
-                var newUtil = util {
-                var firstIndexRow: Int?
-
-                let firstIndexSection = sections.firstIndex { section in
-                    firstIndexRow = section.rowData.firstIndex { elementUIDataFromSection in
-                        return elementUIData.id == elementUIDataFromSection.id
-                    }
-
-                    return firstIndexRow != nil
+        
+        private func findIndexSectionForUpdate(util: UtilUpdateCulturalPracticeElementAction?) -> UtilUpdateCulturalPracticeElementAction? {
+            guard var newUtil = util,
+                let sectionList = newUtil.state.sections else {
+                return nil
+            }
+            
+            var indexFindOp: IndexPath?
+            
+            (0..<sectionList.count).forEach { index in
+                if sectionList[index].id == newUtil.newSection.id {
+                    indexFindOp = IndexPath(row: 0, section: index)
                 }
-
-                let indexPath = firstIndexRow != nil && firstIndexSection != nil
-                    ? IndexPath(row: firstIndexRow!, section: firstIndexSection!)
-                    : nil
-
-                newUtil.indexOfCulturalPracticeElement = indexPath
-                return newUtil
             }
-
-            return nil
-        }
-
-        private func updateSectionWithNewCulturalPracticeElement(
-            util: UtilUpdateCulturalPracticeElementAction?
-        ) -> UtilUpdateCulturalPracticeElementAction? {
-            guard var copySection = util?.state?.sections,
-                let indexPathFind = util?.indexOfCulturalPracticeElement,
-                let elementUIData = util?.elementUIData,
-                var newUtil = util
-                else { return nil }
-
-            copySection[indexPathFind.section].rowData[indexPathFind.row] = elementUIData
-            newUtil.sectionsUpdate = copySection
+            
+            guard let indexFind = indexFindOp else {
+                return nil
+            }
+            
+            newUtil.indexFind = indexFind
             return newUtil
         }
-
-        private func isContainerElement(util: UtilUpdateCulturalPracticeElementAction?) -> UtilUpdateCulturalPracticeElementAction? {
-            guard let elementUIData = util?.elementUIData,
-                var newUtil = util
-                else { return nil }
-            newUtil.isContainerElement = (elementUIData as? ElementUIListData) != nil
+        
+        private func updataSectionList(util: UtilUpdateCulturalPracticeElementAction?) -> UtilUpdateCulturalPracticeElementAction? {
+            guard var newUtil = util,
+                let sectionList = newUtil.state.sections,
+                let indexFind = newUtil.indexFind
+                else {
+                return nil
+            }
+            
+            var newSectionList = sectionList
+            newSectionList[indexFind.section] = newUtil.newSection
+            newUtil.newSectionList = newSectionList
             return newUtil
         }
-
-        private func updateFieldifInputAndSelectElement(
-            util: UtilUpdateCulturalPracticeElementAction?
-        ) -> UtilUpdateCulturalPracticeElementAction? {
-            guard
-                (util?.elementUIData as? InputElement) != nil ||
-                    (util?.elementUIData as? SelectElement) != nil
-                else { return util }
-
-            guard let fieldFromAction = util?.fieldFromAction,
-                let elementUIData = util?.elementUIData,
-                var newUtil = util else { return nil }
-
-            let culturalPractice = util?.culturalPractice ??
-                CulturalPractice(id: fieldFromAction.id)
-
-            guard let newCulturalPracticeWithNewValue = culturalPracticeElement.value?
-                .changeValueOfCulturalPractice(
-                    culturalPractice,
-                    index: util?.culturalPracticeElementProtocole?.getIndex()
-                ) else { return nil }
-
-            newUtil.culturalPractice = newCulturalPracticeWithNewValue
+        
+        private func updateCulturalPractice(util: UtilUpdateCulturalPracticeElementAction?) -> UtilUpdateCulturalPracticeElementAction? {
+            guard var newUtil = util,
+                let culturalPractice = newUtil.newField.culturalPratice
+                else {
+                    return nil
+            }
+            
+            newUtil.newCulturalPractice = culturalPracticeFactory.makeCulturalPracticeByUpdate(culturalPractice, newUtil.newSection)
+            
+            guard newUtil.newCulturalPractice != nil else {
+                return nil
+            }
+            
             return newUtil
         }
-
-        private func updateFieldIfContainerElement(
-            util: UtilUpdateCulturalPracticeElementAction?
-        ) -> UtilUpdateCulturalPracticeElementAction? {
-            guard let containerElement = util?.culturalPracticeElementProtocole as? CulturalPracticeContainerElement
-                else { return util }
-
-            let countInputElement = containerElement.culturalInputElement.count
-            var previousUtil = util
-            let countSelectElement = containerElement.culturalPracticeMultiSelectElement.count
-
-            (0..<countInputElement).forEach { index in
-                previousUtil?.culturalPracticeElementProtocole = containerElement.culturalInputElement[index]
-                previousUtil = updateFieldifInputAndSelectElement(util: previousUtil)
-            }
-
-            (0..<countSelectElement).forEach { index in
-                previousUtil?.culturalPracticeElementProtocole = containerElement.culturalPracticeMultiSelectElement[index]
-                previousUtil = updateFieldifInputAndSelectElement(
-                    util: previousUtil
-                )
-            }
-
-            return previousUtil
+        
+        private func updateField(util: UtilUpdateCulturalPracticeElementAction?) -> UtilUpdateCulturalPracticeElementAction? {
+            guard var newUtil = util else { return nil }
+            newUtil.newField.culturalPratice = newUtil.newCulturalPractice
+            return newUtil
         }
-
-        private func createNewState(util: UtilUpdateCulturalPracticeElementAction?) -> CulturalPracticeFormState? {
-            guard let newSections = util?.sectionsUpdate,
-                let newCulturalPractice = util?.culturalPractice,
-                let isContainerElement = util?.isContainerElement,
-                let indexOfCulturalPracticeElement = util?.indexOfCulturalPracticeElement,
-                var copyCurrentField = util?.state?.currentField,
-                let state = util?.state
-                else { return nil }
-
-            copyCurrentField.culturalPratice = newCulturalPractice
-
-            return state.changeValues(
-                currentField: copyCurrentField,
-                sections: newSections,
-                isFinishCompletedCurrentContainer: isContainerElement ? true : state.isFinishCompletedCurrentContainer,
-                responseAction: .updateElementResponse(indexPath: [indexOfCulturalPracticeElement])
+        
+        private func newState(util: UtilUpdateCulturalPracticeElementAction?) -> CulturalPracticeFormState? {
+            guard let newUtil = util,
+                let newSectionList = newUtil.newSectionList,
+                let indexFind = newUtil.indexFind
+                else {
+                    return nil
+            }
+            
+            let isFinishCompletedCurrentContainer = newUtil.newSection.typeSection == ElementUIListData.TYPE_ELEMENT
+                ? true
+                : newUtil.state.isFinishCompletedLastDoseFumier
+            
+            return newUtil.state.changeValues(
+                currentField: newUtil.newField,
+                sections: newSectionList,
+                isFinishCompletedCurrentContainer: isFinishCompletedCurrentContainer,
+                responseAction: .updateElementResponse(indexPath: [indexFind])
             )
         }
 
@@ -157,12 +125,12 @@ extension CulturalPracticeFormReducerHandler {
     }
 
     private struct UtilUpdateCulturalPracticeElementAction {
-        var state: CulturalPracticeFormState?
-        var elementUIData: ElementUIData?
-        var culturalPractice: CulturalPractice?
-        var indexOfCulturalPracticeElement: IndexPath?
-        var sectionsUpdate: [Section<ElementUIData>]?
-        var isContainerElement: Bool?
-        var fieldFromAction: Field?
+        var state: CulturalPracticeFormState
+        var newSection: Section<ElementUIData>
+        var newField: Field
+        var indexFind: IndexPath?
+        var newSectionList: [Section<ElementUIData>]?
+        var newCulturalPractice: CulturalPractice?
+        
     }
 }

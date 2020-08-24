@@ -10,19 +10,26 @@ import Foundation
 
 class CulturalPracticeUpdateFactoryImpl: CulturalPracticeUpdateFactory {
     
-    func makeCulturalPracticeByUpdate(_ culturalPractice: CulturalPractice? = nil, _ elementUIData: ElementUIData) -> CulturalPractice? {
-        let culturalPractice = culturalPractice ?? CulturalPractice()
+    func makeCulturalPracticeByUpdate(_ culturalPractice: CulturalPractice, _ section: Section<ElementUIData>) -> CulturalPractice? {
+        var copyCuturalPractice = culturalPractice
         
-        switch elementUIData {
-         case _ as SelectElement:
-            return makeCulturalPractice(culturalPractice, elementUIData)
-        case _ as InputElement:
-            return makeCulturalPractice(culturalPractice, elementUIData)
-        case let elementUIListData as ElementUIListData:
-            return makeCulturalPractice(culturalPractice, elementUIListData)
-        default:
-            return nil
+        if let index = section.index, section.typeSection == ElementUIListData.TYPE_ELEMENT {
+            section.rowData.forEach { elementUIData in
+                makeCulturalPractice(copyCuturalPractice, elementUIData, index).map {
+                    copyCuturalPractice = $0
+                }
+            }
         }
+        
+        if (section.typeSection == InputElement.TYPE_ELEMENT || section.typeSection == SelectElement.TYPE_ELEMENT) {
+            section.rowData.forEach { elementUIData in
+                makeCulturalPractice(copyCuturalPractice, elementUIData).map {
+                    copyCuturalPractice = $0
+                }
+            }
+        }
+        
+        return copyCuturalPractice
     }
     
     private func makeCulturalPractice(_ culturalPractice: CulturalPractice, _ elemenetUIData: ElementUIData, _ index: Int? = nil) -> CulturalPractice? {
@@ -35,25 +42,6 @@ class CulturalPracticeUpdateFactoryImpl: CulturalPracticeUpdateFactory {
             return nil
         }
     }
-    
-    private func makeCulturalPractice(
-        _ culturalPractice: CulturalPractice,
-        _ elementUIListData: ElementUIListData
-    ) -> CulturalPractice? {
-        let index = elementUIListData.index
-        var copyCulturalPractice = culturalPractice
-        
-        elementUIListData.elements.forEach { elementUIData in
-            let newCulturalPracticeOp = makeCulturalPractice(copyCulturalPractice, elementUIData, index)
-            
-            if let newCulturalPractice = newCulturalPracticeOp {
-                copyCulturalPractice = newCulturalPractice
-            }
-        }
-        
-        return copyCulturalPractice
-    }
-    
     
     private func makeCulturalPractice(
         _ culturalPractice: CulturalPractice,
@@ -170,5 +158,5 @@ class CulturalPracticeUpdateFactoryImpl: CulturalPracticeUpdateFactory {
 }
 
 protocol CulturalPracticeUpdateFactory {
-    func makeCulturalPracticeByUpdate(_ culturalPractice: CulturalPractice?, _ elementUIData: ElementUIData) -> CulturalPractice?
+     func makeCulturalPracticeByUpdate(_ culturalPractice: CulturalPractice, _ section: Section<ElementUIData>) -> CulturalPractice?
 }

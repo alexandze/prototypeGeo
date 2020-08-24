@@ -11,14 +11,15 @@ import Foundation
 class FieldDetailsFactoryImpl: FieldDetailsFactory {
     let titleAddDoseFumier = "Ajouter une dose fumier"
     let subtitleAddDoseFumier = "Cliquer sur boutton"
+    let titleDoseFumier = "Dose Fumier"
     
     func makeSectionListElementUIData(_ culturalPracticeOp: CulturalPractice? = nil) ->
-    [Section<ElementUIData>] {
-        var elementUIDataList = makeElementUIDataForValueForm(culturalPracticeOp)
-        elementUIDataList = addRowWithButtonAddDoseFumier(elementUIDataList)
-        let elementUIDaListContainer = makeElementUIDataForListValueForm(culturalPracticeOp)
-        let elementUIListData = makeElementUIListData(elementUIDaListContainer)
-        return makeSectionListByElementUIDataList(elementUIDataList: (elementUIDataList + elementUIListData))
+        [Section<ElementUIData>] {
+            var elementUIDataList = makeElementUIDataForValueForm(culturalPracticeOp)
+            elementUIDataList = addRowWithButtonAddDoseFumier(elementUIDataList)
+            let elementUIDaListContainer = makeElementUIDataForListValueForm(culturalPracticeOp)
+            let elementUIListData = makeElementUIListData(elementUIDaListContainer)
+            return makeSectionListByElementUIDataList(elementUIDataList: (elementUIDataList + elementUIListData))
     }
     
     func makeSectionListElementUIDataByResetSectionElementUIListData(
@@ -36,6 +37,51 @@ class FieldDetailsFactoryImpl: FieldDetailsFactory {
         let elementUIListData =  makeElementUIListData(elementUIDaListContainer)
         let newSection = makeSectionListByElementUIDataList(elementUIDataList: elementUIListData)
         return copySectionList + newSection
+    }
+    
+    func makeSectionWitNewDoseFumier(
+        _ sectionList: [Section<ElementUIData>]
+    ) -> [Section<ElementUIData>] {
+        var index = findLastIndexDoseFumier(sectionList) ?? -1
+        index += 1
+        let newSectionDoseFumier = createSectionDoseFumier(index: index)
+        return addDoseFumierToSectionList(sectionList, newSectionDoseFumier)
+    }
+    
+    private func findLastIndexDoseFumier(_ sectionList: [Section<ElementUIData>]) -> Int? {
+        let indexFind = (0..<sectionList.count).reversed().firstIndex { index in
+            sectionList[index].typeSection == ElementUIListData.TYPE_ELEMENT
+        }
+        
+        return indexFind.map { $0.base - 1 }
+    }
+    
+    private func createSectionDoseFumier(index: Int) -> Section<ElementUIData> {
+        let elementUIDataListDoseFumier = [
+            DoseFumier.getTypeValue(),
+            PeriodeApplicationFumier.getTypeValue(),
+            DelaiIncorporationFumier.getTypeValue()
+            ]
+            .map { label in
+                initElementUIDataWithNilValueByLabel(label)
+        }.filter { $0 != nil }
+            .map { $0! }
+        
+        return Section(
+            sectionName: titleDoseFumier,
+            rowData: elementUIDataListDoseFumier,
+            typeSection: ElementUIListData.TYPE_ELEMENT,
+            index: index
+        )
+    }
+    
+    private func addDoseFumierToSectionList(
+        _ sectionList: [Section<ElementUIData>],
+        _ sectionDoseFumier: Section<ElementUIData>
+    ) -> [Section<ElementUIData>] {
+        var copySection = sectionList
+        copySection.append(sectionDoseFumier)
+        return copySection
     }
     
     private func findAllIndexSectionWithElementUIDataList(sectionList: [Section<ElementUIData>]) -> [Int] {
@@ -125,7 +171,7 @@ class FieldDetailsFactoryImpl: FieldDetailsFactory {
             if elementCurrent.count == CulturalPractice.MAX_DOSE_FUMIER {
                 newElementUIDataList.append(
                     ElementUIListData(
-                        title: "Dose Fumier",
+                        title: titleDoseFumier,
                         elements: elementCurrent,
                         index: indexElementUIData
                     )
@@ -305,6 +351,10 @@ protocol FieldDetailsFactory {
         _ culturalPractice: CulturalPractice,
         _ sectionList: [Section<ElementUIData>]
     ) -> [Section<ElementUIData>]
+    
+    func makeSectionWitNewDoseFumier(
+           _ sectionList: [Section<ElementUIData>]
+       ) -> [Section<ElementUIData>]
 }
 
 protocol SelectValue: ValueForm {

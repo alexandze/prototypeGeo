@@ -8,8 +8,20 @@
 
 import Foundation
 extension CulturalPracticeFormReducerHandler {
+    
     class HandlerRemoveDoseFumierAction: HandlerReducer {
-
+        
+        let culturalPracticeFactory: CulturalPracticeFactory
+        let fieldDetailsFactory: FieldDetailsFactory
+        
+        init(
+            culturalPracticeFactory: CulturalPracticeFactory = CulturalPracticeFactoryImpl(),
+            fieldDetailsFactory: FieldDetailsFactory = FieldDetailsFactoryImpl()
+        ) {
+            self.culturalPracticeFactory = culturalPracticeFactory
+            self.fieldDetailsFactory = fieldDetailsFactory
+        }
+        
         func handle(
             action: CulturalPracticeFormAction.RemoveDoseFumierAction,
             _ state: CulturalPracticeFormState
@@ -18,216 +30,236 @@ extension CulturalPracticeFormReducerHandler {
                 indexPathDoseFumierFromAction: action.indexPath,
                 state: state
             )
+            
+            // verifier si c est un elementUIDataList
+            // verifier si le container que l'ont veut supprimer a une value
+            // conserver les autres container qui non pas de valeur
+            // suprimmer la valeur dans la pratique culuralle
+            // recreer les sectionElementUIdata list en fonction des valeurs des prartiques culutrelle
+            // ajouter la section conserver
+            // cherche les index a supprimer
+            // cherche les index a recreer
 
             return (
-                checkIfRemoveContainerElementHasValue(util:) >>>
-                    hasContainerElementForNotRemoveWithNoValue(util:) >>>
-                    getIndexDoseFumierFromCulturalPracticeElement(util:) >>>
-                    removeDoseFumierWithIndex(util:) >>>
-                    createContainerElementsIfHasCulturalPractice(util:) >>>
-                    createContainerElementsWithNoValueIfHasNoValue(util:) >>>
-                    getAllIndexPathContainerElementForRemove(util:) >>>
-                    getAllIndexPathContainerElementForAddIfHas(util:) >>>
-                    removeAllCulturalPracticeContainerElement(util:) >>>
-                    addNewCulturalPracticeContainerElementIfThere(util:) >>>
-                    newState(util:)
+                checkIfElementUIDataList(util: ) >>>
+                    checkIfRemoveContainerElementHasValue(util:) >>>
+                    conserveEmptyElementUIdataList(util:) >>>
+                    removeValueInCululturalPracticeBySection(util:) >>>
+                    resetSection(util: ) >>>
+                    addEmptySection(util: ) >>>
+                    getRemoveIndexList(util: ) >>>
+                    getAddIndexList(util:) >>>
+                    setFieldWithNewCulturalPractice(util:) >>>
+                    newState(util: )
                 )(util) ?? state.changeValues(responseAction: .notResponse)
+        }
+        
+        private func checkIfElementUIDataList(util: UtilRemoveDoseFumierAction?) -> UtilRemoveDoseFumierAction? {
+            guard let newUtil = util,
+                let sectionList = newUtil.state.sections
+                else { return nil }
+            
+            let indexPath = newUtil.indexPathDoseFumierFromAction
+            var isSectionElementUIdataList = false
+            
+            if Util.hasIndexInArray(sectionList, index: indexPath.section) {
+                 isSectionElementUIdataList = sectionList[indexPath.section].typeSection == ElementUIListData.TYPE_ELEMENT
+            }
+            
+            
+            guard isSectionElementUIdataList else {
+                return nil
+            }
+            
+            return newUtil
         }
 
         private func checkIfRemoveContainerElementHasValue(
             util: UtilRemoveDoseFumierAction?
         ) -> UtilRemoveDoseFumierAction? {
             guard let sections = util?.state.sections,
-                var newUtil = util,
-                let containerElement =
-                sections[newUtil.indexPathDoseFumierFromAction.section]
-                    .rowData[newUtil.indexPathDoseFumierFromAction.row]
-                    as? CulturalPracticeContainerElement
-                else { return nil }
-
-            newUtil.isContainerHasValue = containerElement.hasAllValueCompleted()
-            return newUtil
-        }
-
-        private func hasContainerElementForNotRemoveWithNoValue(
-            util: UtilRemoveDoseFumierAction?
-        ) -> UtilRemoveDoseFumierAction? {
-            guard let section = util?.state.sections,
-                let indexPath = util?.indexPathDoseFumierFromAction,
-                var newUtil = util
-                else { return nil  }
-
-            (1..<section[indexPath.section].rowData.count).forEach { index in
-                guard index != indexPath.row,
-                    let conainerElement = section[indexPath.section].rowData[index] as? CulturalPracticeContainerElement,
-                    !conainerElement.hasAllValueCompleted()
-                    else { return }
-
-                newUtil.hasContainerElementForNotRemoveWithNotValue = true
+                var newUtil = util else { return nil }
+            
+            let sectionElementUIListData = sections[newUtil.indexPathDoseFumierFromAction.section]
+            var isContainerHasValue = false
+            
+            sectionElementUIListData.rowData.forEach { elementUIData in
+                if let selectElement = elementUIData as? SelectElement, let _ = selectElement.rawValue {
+                    isContainerHasValue = true
+                }
+                
+                if let inputElement = elementUIData as? InputElement, let _ = inputElement.value {
+                    isContainerHasValue = true
+                }
             }
-
+            
+            newUtil.isContainerHasValue = isContainerHasValue
             return newUtil
         }
-
-        private func getIndexDoseFumierFromCulturalPracticeElement(
-            util: UtilRemoveDoseFumierAction?
-        ) -> UtilRemoveDoseFumierAction? {
-            guard let sections = util?.state.sections,
-                let indexPathDoseFumierFromAction = util?.indexPathDoseFumierFromAction,
-                var newUtil = util
+        
+        private func conserveEmptyElementUIdataList(util: UtilRemoveDoseFumierAction?) -> UtilRemoveDoseFumierAction? {
+            guard var newUtil = util,
+                let sectionList = newUtil.state.sections else { return nil }
+            
+            newUtil.conserveEmptyELementUIListData = []
+            
+            (0..<sectionList.count).forEach { index in
+                if index != newUtil.indexPathDoseFumierFromAction.section &&
+                    sectionList[index].typeSection == ElementUIListData.TYPE_ELEMENT &&
+                       !allValueIsValidInSection(section: sectionList[index]) {
+                    newUtil.conserveEmptyELementUIListData?.append(sectionList[index])
+                }
+            }
+            
+            return newUtil
+        }
+        
+        private func removeValueInCululturalPracticeBySection(util: UtilRemoveDoseFumierAction?) -> UtilRemoveDoseFumierAction? {
+            guard var newUtil = util,
+                let sectionForRemove = newUtil.state.sections?[newUtil.indexPathDoseFumierFromAction.section],
+                let culuralPractice = newUtil.state.currentField?.culturalPratice
                 else { return nil }
-            let index = sections[indexPathDoseFumierFromAction.section].rowData[indexPathDoseFumierFromAction.row].getIndex()
-            newUtil.indexDoseFumierFromCulturalPracticeElement = index
+            
+            newUtil.newCulturalPractice = culturalPracticeFactory
+                    .makeCulturalPraticeByRemove(culuralPractice, section: sectionForRemove)
+            
             return newUtil
         }
-
-        private func removeDoseFumierWithIndex(
-            util: UtilRemoveDoseFumierAction?
-        ) -> UtilRemoveDoseFumierAction? {
-            guard var newUtil = util else { return nil }
-            guard let culturalPractice = util?.state.currentField?.culturalPratice
-                else { return util }
-
-            newUtil.culturalPracticeWithDoseRemoveByIndex =
-                culturalPractice.removeDoseFumierIndex(indexRemove: util?.indexDoseFumierFromCulturalPracticeElement)
-
+        
+        private func resetSection(util: UtilRemoveDoseFumierAction?) -> UtilRemoveDoseFumierAction? {
+            guard var newUtil = util,
+                let sectionList = newUtil.state.sections,
+                let newCulturalPractice = newUtil.newCulturalPractice else {
+                return nil
+            }
+            
+            newUtil.newSectionList = fieldDetailsFactory
+                .makeSectionListElementUIDataByResetSectionElementUIListData(newCulturalPractice, sectionList)
+            
             return newUtil
         }
-
-        private func createContainerElementsIfHasCulturalPractice(
-            util: UtilRemoveDoseFumierAction?
-        ) -> UtilRemoveDoseFumierAction? {
-            guard var newUtil = util else { return nil }
-            guard let culturalPractice = util?.culturalPracticeWithDoseRemoveByIndex
-                else { return util }
-
-            newUtil.newCulturalPracticeElementContainer = CulturalPractice.getCulturalPracticeDynamic(from: culturalPractice)
-            return newUtil
-        }
-
-        private func createContainerElementsWithNoValueIfHasNoValue(
-            util: UtilRemoveDoseFumierAction?
-        ) -> UtilRemoveDoseFumierAction? {
-            guard let hasContainerElementForNotRemoveWithNotValue = util?.hasContainerElementForNotRemoveWithNotValue,
-                hasContainerElementForNotRemoveWithNotValue else { return util }
-
-            guard var newUtil = util else { return nil }
-
-            let indexForContainerWithNoValue = newUtil.newCulturalPracticeElementContainer?.count ?? 0
-
-            let containerWithNotValue = CulturalPractice.createCulturalPracticeInputMultiSelectContainer(
-                index: indexForContainerWithNoValue
-            )
-
-            if var newCulturalPracticeElementContainer = newUtil.newCulturalPracticeElementContainer {
-                newCulturalPracticeElementContainer.append(containerWithNotValue)
-                newUtil.newCulturalPracticeElementContainer = newCulturalPracticeElementContainer
+        
+        private func addEmptySection(util: UtilRemoveDoseFumierAction?) -> UtilRemoveDoseFumierAction? {
+            guard var newUtil = util,
+                var newSectionList = newUtil.newSectionList,
+                let sectionEmptyElementUIData = newUtil.conserveEmptyELementUIListData
+                else {
+                    return nil
+            }
+            
+            guard !sectionEmptyElementUIData.isEmpty else {
                 return newUtil
             }
-
-            newUtil.newCulturalPracticeElementContainer = [containerWithNotValue]
+            
+            let countSection = newSectionList.count
+            let lastSectiom = newSectionList[countSection - 1]
+            
+            if var lastIndex = lastSectiom.index {
+                sectionEmptyElementUIData.forEach { sectionEmpty in
+                    var copySectionEmpty = sectionEmpty
+                    lastIndex += 1
+                    copySectionEmpty.index = lastIndex
+                    newSectionList.append(copySectionEmpty)
+                }
+            }
+            
+            newUtil.newSectionList = newSectionList
             return newUtil
         }
-
-        private func getAllIndexPathContainerElementForRemove(
-            util: UtilRemoveDoseFumierAction?
-        ) -> UtilRemoveDoseFumierAction? {
-            guard let sections = util?.state.sections,
-                let indexPathRemoveDoseFromAction = util?.indexPathDoseFumierFromAction,
-                var newUtil = util
+        
+        
+        private func getRemoveIndexList(util: UtilRemoveDoseFumierAction?) -> UtilRemoveDoseFumierAction? {
+            guard var newUtil = util,
+                let previousSectionList = newUtil.state.sections
                 else { return nil }
-
-            var doseFumierRemoveIndexPaths = [IndexPath]()
-            let containerSection = sections[indexPathRemoveDoseFromAction.section]
-
-            // Le premier element est le add Element
-            (1..<containerSection.rowData.count).forEach { index in
-                doseFumierRemoveIndexPaths.append(IndexPath(row: index, section: indexPathRemoveDoseFromAction.section))
+            
+            var indexRemoveList = [IndexPath]()
+            
+            (0..<previousSectionList.count).forEach { index in
+                if previousSectionList[index].typeSection == ElementUIListData.TYPE_ELEMENT {
+                    indexRemoveList.append(IndexPath(row: 0, section: index))
+                }
             }
-
-            newUtil.doseFumierRemoveIndexPaths = doseFumierRemoveIndexPaths
+            
+            newUtil.indexRemoveList = indexRemoveList
             return newUtil
         }
-
-        private func getAllIndexPathContainerElementForAddIfHas(
-            util: UtilRemoveDoseFumierAction?
-        ) -> UtilRemoveDoseFumierAction? {
-            guard var newUtil = util else { return nil }
-            guard let culturalPracticeContainerElements = util?.newCulturalPracticeElementContainer else { return util }
-            var indexPathAdd = [IndexPath]()
-
-            (0..<culturalPracticeContainerElements.count).forEach { index in
-                indexPathAdd.append(IndexPath(row: (index + 1), section: newUtil.indexPathDoseFumierFromAction.section))
+        
+        private func getAddIndexList(util: UtilRemoveDoseFumierAction?) -> UtilRemoveDoseFumierAction? {
+            guard var newUtil = util,
+                let newSectionList = newUtil.newSectionList else {
+                    return nil
             }
-
-            newUtil.doseFumierAddIndexPaths = indexPathAdd
+            
+            var indexAddList = [IndexPath]()
+            
+            (0..<newSectionList.count).forEach { index in
+                if newSectionList[index].typeSection == ElementUIListData.TYPE_ELEMENT {
+                    indexAddList.append(IndexPath(row: 0, section: index))
+                }
+            }
+            
+            newUtil.indexAddList = indexAddList
             return newUtil
         }
-
-        private func removeAllCulturalPracticeContainerElement(
-            util: UtilRemoveDoseFumierAction?
-        ) -> UtilRemoveDoseFumierAction? {
-            guard var sections = util?.state.sections,
-                let indexPathRemove = util?.doseFumierRemoveIndexPaths,
-                var newUtil = util
-                else { return nil }
-
-            indexPathRemove.sorted().reversed().forEach { indexPath in
-                sections[indexPath.section].rowData.remove(at: indexPath.row)
+        
+        private func setFieldWithNewCulturalPractice(util: UtilRemoveDoseFumierAction?) -> UtilRemoveDoseFumierAction? {
+            guard var newUtil = util,
+                var newField = newUtil.state.currentField,
+                let newCuluralPractice = newUtil.newCulturalPractice else {
+                    return nil
             }
-
-            newUtil.sectionWithAllContainerElementRemoved = sections
+            
+            newField.culturalPratice = newCuluralPractice
+            newUtil.newField = newField
             return newUtil
         }
-
-        private func addNewCulturalPracticeContainerElementIfThere(
-            util: UtilRemoveDoseFumierAction?
-        ) -> UtilRemoveDoseFumierAction? {
-            guard var sections = util?.sectionWithAllContainerElementRemoved,
-                let indexPathDoseFumierFromAction = util?.indexPathDoseFumierFromAction,
-                var newUtil = util else { return nil }
-
-            guard let culturalPracticeElementContainer = util?.newCulturalPracticeElementContainer
-                else { return util }
-
-            culturalPracticeElementContainer.forEach { element in
-                sections[indexPathDoseFumierFromAction.section].rowData.append(element)
-            }
-
-            newUtil.sectionWithAllContainerElementRemoved = sections
-            return newUtil
-        }
-
+        
         private func newState(util: UtilRemoveDoseFumierAction?) -> CulturalPracticeFormState? {
-            guard let state = util?.state,
-                let sections = util?.sectionWithAllContainerElementRemoved,
-                let indexPathRemove = util?.doseFumierRemoveIndexPaths,
-                let isContainerHasElement = util?.isContainerHasValue,
-                let culturalPractice = util?.culturalPracticeWithDoseRemoveByIndex,
-                var currentField = util?.state.currentField
-                else { return nil }
-
-            currentField.culturalPratice = culturalPractice
-
-            return state.changeValues(
-                currentField: currentField,
-                sections: sections,
-                isFinishCompletedCurrentContainer: isContainerHasElement ? state.isFinishCompletedCurrentContainer : true,
-                responseAction: .removeDoseFumierResponse(indexPathsRemove: indexPathRemove, indexPathsAdd: util?.doseFumierAddIndexPaths)
+            guard let newUtil = util,
+                let indexRemoveList = newUtil.indexRemoveList,
+                let indexAddList = newUtil.indexAddList,
+                let newSection = newUtil.newSectionList,
+                let newField = newUtil.newField,
+                let isContainerHasValue = newUtil.isContainerHasValue else {
+                return nil
+            }
+            
+            return newUtil.state.changeValues(
+                currentField: newField,
+                sections: newSection,
+                isFinishCompletedCurrentContainer: isContainerHasValue ? newUtil.state.isFinishCompletedLastDoseFumier : true,
+                responseAction: .removeDoseFumierResponse(indexPathsRemove: indexRemoveList, indexPathsAdd: indexAddList)
             )
         }
+        
+        private func allValueIsValidInSection(section: Section<ElementUIData>) -> Bool {
+            var isAllValueValid = true
+            
+            section.rowData.forEach { elementUIData in
+                if let selectElement = elementUIData as? SelectElement, selectElement.rawValue == nil {
+                    isAllValueValid = false
+                }
+                
+                if let inputElement = elementUIData as? InputElement, inputElement.value == nil {
+                    isAllValueValid = false
+                }
+            }
+            
+            return isAllValueValid
+        }
+
     }
 
     private struct UtilRemoveDoseFumierAction {
         var indexPathDoseFumierFromAction: IndexPath
         var state: CulturalPracticeFormState
-        var indexDoseFumierFromCulturalPracticeElement: Int?
-        var culturalPracticeWithDoseRemoveByIndex: CulturalPractice?
-        var newCulturalPracticeElementContainer: [CulturalPracticeElementProtocol]?
-        var doseFumierRemoveIndexPaths: [IndexPath]?
-        var doseFumierAddIndexPaths: [IndexPath]?
-        var sectionWithAllContainerElementRemoved: [Section<CulturalPracticeElementProtocol>]?
         var isContainerHasValue: Bool?
-        var hasContainerElementForNotRemoveWithNotValue: Bool?
+        var conserveEmptyELementUIListData: [Section<ElementUIData>]?
+        var newCulturalPractice: CulturalPractice?
+        var newSectionList: [Section<ElementUIData>]?
+        var indexRemoveList: [IndexPath]?
+        var indexAddList: [IndexPath]?
+        var newField: Field?
     }
 }

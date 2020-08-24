@@ -11,14 +11,12 @@ import ReSwift
 
 struct InputFormCulturalPracticeAction {
     struct InputElementSelectedOnListAction: Action {
-        let culturalPracticeInputElement: CulturalPracticeInputElement
+        let sectionInputElement: Section<ElementUIData>
         let field: Field
-        let subAction: InputFormCulturalPracticeSubAction
     }
 
     struct CloseInputFormWithSaveAction: Action {
         let inputValue: String
-        let subAction: InputFormCulturalPracticeSubAction = .closeWithSave
     }
 
     struct CloseInputFormWithoutSaveAction: Action { }
