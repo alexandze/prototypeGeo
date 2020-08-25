@@ -20,19 +20,35 @@ extension InputFormCulturalPracticeReducerHandler {
                 field: action.field
             )
             
-            return newState(util: util) ?? state
+            return (
+                makeInputElementObservable(util: ) >>>
+                    newState(util:)
+                )(util) ?? state
+        }
+        
+        private func makeInputElementObservable(util: UtilInputElementSelectedOnListAction?) -> UtilInputElementSelectedOnListAction? {
+            guard var newUtil = util,
+                Util.hasIndexInArray(newUtil.sectionInputElement.rowData, index: 0),
+                let inputElement = newUtil.sectionInputElement.rowData[0] as? InputElement else {
+                    return nil
+            }
+            
+            newUtil.inputElementObservable = inputElement.toInputElementObservable()
+            return newUtil
         }
         
         private func newState(util: UtilInputElementSelectedOnListAction?) -> InputFormCulturalPracticeState? {
-            guard let newUtil = util else {
-                return nil
+            guard let newUtil = util,
+                let inputElementObservable = newUtil.inputElementObservable else {
+                    return nil
             }
             
             return newUtil.state.changeValue(
                 sectionInputElement: newUtil.sectionInputElement,
+                inputElementObservable: inputElementObservable,
                 field: newUtil.field,
-                inputFormCulturalPracticeActionResponse: .inputElementSelectedOnListActionResponse,
-                isDirty: false
+                isDirty: false,
+                actionResponse: .inputElementSelectedOnListActionResponse
             )
         }
     }
@@ -41,5 +57,6 @@ extension InputFormCulturalPracticeReducerHandler {
         let state: InputFormCulturalPracticeState
         let sectionInputElement: Section<ElementUIData>
         let field: Field
+        var inputElementObservable: InputElementObservable?
     }
 }

@@ -22,9 +22,10 @@ class ElementUIDataObservable: ObservableObject, Identifiable {
     var type: String
     var title: String
 
-    init(type: String, title: String) {
+    init(id: UUID? = nil, type: String, title: String) {
         self.type = type
         self.title = title
+        id.map { self.id = $0 }
     }
 }
 
@@ -48,8 +49,12 @@ class InputElementDataObservable: ElementUIDataObservable {
     var keyboardType: KeyboardType
     var regex: NSRegularExpression?
     var number: Int?
+    var unitType: String?
+    var typeValue: String?
+    
 
     init(
+        id: UUID? = nil,
         type: String,
         title: String,
         value: String,
@@ -58,7 +63,9 @@ class InputElementDataObservable: ElementUIDataObservable {
         regexPattern: String,
         keyboardType: KeyboardType = .normal,
         regex: NSRegularExpression? = nil,
-        number: Int? = nil
+        number: Int? = nil,
+        unitType: String? = nil,
+        typeValue: String? = nil
     ) {
         self.value = value
         self.isValid = isValid
@@ -67,6 +74,14 @@ class InputElementDataObservable: ElementUIDataObservable {
         self.keyboardType = keyboardType
         self.regex = regex
         self.number = number
+        self.unitType = unitType
+        self.typeValue = typeValue
+        
+        if let id = id {
+            super.init(id: id, type: type, title: title)
+            return
+        }
+        
         super.init(type: type, title: title)
     }
 
@@ -96,15 +111,33 @@ struct InputElement: InputElementData {
     var isRequired: Bool
     var regexPattern: String
     var keyboardType: KeyboardType = .normal
-    var unitType: String
-    var typeValue: String
+    var unitType: String?
+    var typeValue: String?
     var regex: NSRegularExpression?
+    
+    func toInputElementObservable() -> InputElementObservable {
+        InputElementObservable(
+            id: id,
+            type: type,
+            title: title,
+            value: value ?? "",
+            isValid: isValid,
+            isRequired: isRequired,
+            regexPattern: regexPattern,
+            keyboardType: keyboardType,
+            regex: regex,
+            unitType: unitType,
+            typeValue: typeValue
+        )
+    }
 }
 
 class InputElementObservable: InputElementDataObservable {
     static let TYPE_ELEMENT = "INPUT_ELEMENT"
 
-    init(
+    override init(
+        id: UUID? = nil,
+        type: String? = nil,
         title: String,
         value: String,
         isValid: Bool,
@@ -112,10 +145,13 @@ class InputElementObservable: InputElementDataObservable {
         regexPattern: String,
         keyboardType: KeyboardType = .normal,
         regex: NSRegularExpression? = nil,
-        number: Int? = nil
+        number: Int? = nil,
+        unitType: String? = nil,
+        typeValue: String? = nil
     ) {
         super.init(
-            type: InputElementObservable.TYPE_ELEMENT,
+            id: id,
+            type: type ?? InputElementObservable.TYPE_ELEMENT,
             title: title,
             value: value,
             isValid: isValid,
@@ -123,7 +159,25 @@ class InputElementObservable: InputElementDataObservable {
             regexPattern: regexPattern,
             keyboardType: keyboardType,
             regex: regex,
-            number: number
+            number: number,
+            unitType: unitType,
+            typeValue: typeValue
+        )
+    }
+    
+    func toInputElement() -> InputElement {
+        InputElement(
+            id: id,
+            type: type,
+            title: title,
+            value: value,
+            isValid: isValid,
+            isRequired: isRequired,
+            regexPattern: regexPattern,
+            keyboardType: keyboardType,
+            unitType: unitType,
+            typeValue: typeValue,
+            regex: regex
         )
     }
 

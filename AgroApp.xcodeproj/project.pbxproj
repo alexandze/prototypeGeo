@@ -26,6 +26,7 @@
 		7F8AD78E24EA0E7B00C56282 /* ElementUIDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8AD78D24EA0E7B00C56282 /* ElementUIDataFactory.swift */; };
 		7F95178A24F34B9A00BAE845 /* HandlerSelectElementOnListAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F95178924F34B9A00BAE845 /* HandlerSelectElementOnListAction.swift */; };
 		7F95178C24F354A300BAE845 /* HandleAddDoseFumierAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F95178B24F354A300BAE845 /* HandleAddDoseFumierAction.swift */; };
+		7FB78A2A24F4952500FBCA9A /* HandlerCloseInputFormWithoutSaveAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB78A2924F4952500FBCA9A /* HandlerCloseInputFormWithoutSaveAction.swift */; };
 		7FD0BD5024E87A2E00EB86A3 /* Producer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD0BD4F24E87A2E00EB86A3 /* Producer.swift */; };
 		7FD0BD5224E87C6800EB86A3 /* Enterprise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD0BD5124E87C6800EB86A3 /* Enterprise.swift */; };
 		7FD0BD5424E8856800EB86A3 /* HandlerAddNimInputElementAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD0BD5324E8856800EB86A3 /* HandlerAddNimInputElementAction.swift */; };
@@ -210,6 +211,7 @@
 		7F8AD78D24EA0E7B00C56282 /* ElementUIDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementUIDataFactory.swift; sourceTree = "<group>"; };
 		7F95178924F34B9A00BAE845 /* HandlerSelectElementOnListAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerSelectElementOnListAction.swift; sourceTree = "<group>"; };
 		7F95178B24F354A300BAE845 /* HandleAddDoseFumierAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleAddDoseFumierAction.swift; sourceTree = "<group>"; };
+		7FB78A2924F4952500FBCA9A /* HandlerCloseInputFormWithoutSaveAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerCloseInputFormWithoutSaveAction.swift; sourceTree = "<group>"; };
 		7FD0BD4F24E87A2E00EB86A3 /* Producer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Producer.swift; sourceTree = "<group>"; };
 		7FD0BD5124E87C6800EB86A3 /* Enterprise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enterprise.swift; sourceTree = "<group>"; };
 		7FD0BD5324E8856800EB86A3 /* HandlerAddNimInputElementAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerAddNimInputElementAction.swift; sourceTree = "<group>"; };
@@ -467,6 +469,7 @@
 				98D4628A24AEDF2C00DD53BD /* InputFormCulturalPracticeFormReducer.swift */,
 				7F65187B24F36E92003CA9E6 /* HandlerCloseInputFormWithSaveAction.swift */,
 				7F65187D24F37494003CA9E6 /* HandlerInputElementSelectedOnListAction.swift */,
+				7FB78A2924F4952500FBCA9A /* HandlerCloseInputFormWithoutSaveAction.swift */,
 			);
 			path = InputFormCulturalPracticeFormReducer;
 			sourceTree = "<group>";
@@ -1294,6 +1297,7 @@
 				98DB0F5724297F960065963B /* TableState.swift in Sources */,
 				98EBA95424B1654A00D233D0 /* InputFormCulturalPracticeAction.swift in Sources */,
 				9830049024AC2B8300CDF624 /* ProducerCreationDependencyContainer.swift in Sources */,
+				7FB78A2A24F4952500FBCA9A /* HandlerCloseInputFormWithoutSaveAction.swift in Sources */,
 				98F1269E24C6F029001853D5 /* Avaloir.swift in Sources */,
 				7F34F01D24E76FF7001278CA /* AddProducerFormService.swift in Sources */,
 				9847564524AED2FC0048A503 /* InputFormCulturalPracticeView.swift in Sources */,

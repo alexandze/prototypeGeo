@@ -14,6 +14,7 @@ final class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeVie
     private let stateObserver: Observable<InputFormCulturalPracticeState>
     private let actionDispatcher: ActionDispatcher
     let viewState: ViewState
+    var state: InputFormCulturalPracticeState?
     var disposableInputFormCulturalViewState: Disposable?
     var disposableDispatcher: Disposable?
     var disposableActivateAnimation: Disposable?
@@ -36,16 +37,13 @@ final class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeVie
         self.disposableInputFormCulturalViewState = stateObserver
             .observeOn(Util.getSchedulerMain())
             .subscribe {event in
-                guard let inputElement = event.element?.inputElement,
-                    let field = event.element?.field,
-                    let subAction = event.element?.inputFormSubAction
+                guard let state = event.element,
+                    let actionResponse = state.actionResponse
                     else { return }
 
-                self.setValue(inputElement: inputElement, field: field)
-                self.initRegularExpression()
-                self.setFirstInputValue()
+                self.setValue(state: state)
 
-                switch subAction {
+                switch actionResponse {
                 case .newFormData:
                     self.handleNewFormData()
                 case .closeWithSave:
@@ -68,73 +66,18 @@ final class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeVie
         disposableActivateAnimation?.dispose()
     }
 
-    func isInputValueValid(_ inputValue: String) -> Bool {
-        let inputValueTrim = trim(inputValue: inputValue)
-
-        guard !inputValueTrim.isEmpty,
-            let regularExpressionForInputValue =  regularExpressionForInputValue else { return false }
-
-        let matches = mathesRegularExpression(
-            inputValueTrim: inputValueTrim,
-            regularExpression: regularExpressionForInputValue
-        )
-
-        return matches.count == 1
-    }
-
     func configView() {
         self.settingViewController?.setBackgroundColor(Util.getBackgroundColor())
         self.settingViewController?.setAlpha(Util.getAlphaValue())
         self.settingViewController?.setIsModalInPresentation(true)
     }
 
-    private func setFirstInputValue() {
-        guard firstInputValue == nil,
-            let culturalPracticeValueProtocol = inputElement?.value else {
-                firstInputValue = ""
-                return
-        }
-
-        firstInputValue = culturalPracticeValueProtocol.getValue()
-    }
-
-    private func trim(inputValue: String) -> String {
-        inputValue.trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-
-    private func createRegularExpressionFrom() throws -> NSRegularExpression {
-        let regularExpressionString = type(of: inputElement!.valueEmpty).getRegularExpression()!
-        return try NSRegularExpression(pattern: regularExpressionString, options: [])
-    }
-
-    private func initRegularExpression() {
-        guard regularExpressionForInputValue == nil else { return }
-
-        do {
-            regularExpressionForInputValue = try createRegularExpressionFrom()
-        } catch { }
-    }
-
-    private func mathesRegularExpression(
-        inputValueTrim: String,
-        regularExpression: NSRegularExpression
-    ) -> [NSTextCheckingResult] {
-        regularExpression.matches(
-            in: inputValueTrim, options: [],
-            range: NSRange(location: 0, length: inputValueTrim.count)
-        )
-    }
-
-    private func setValue() {
-        
+    private func setValue(state: InputFormCulturalPracticeState) {
+        self.state = state
     }
 
     private func setValuesViewState() {
-        viewState.title = inputElement!.title
-        viewState.subTitle = "Veuillez saisir la valeur pour la parcelle \(field?.id != nil ? String(field!.id) : ""))"
-        viewState.inputTitle = inputElement!.valueEmpty.getUnitType()?.convertToString() ?? ""
-        viewState.inputValue = inputElement!.value?.getValue() ?? ""
-        viewState.unitType = inputElement!.valueEmpty.getUnitType()?.convertToString() ?? ""
+        
     }
 
     /// Activated animation of view. There is one second timeout for activate animation
@@ -150,8 +93,7 @@ final class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeVie
     }
 
     private func getValueFromInputElement() -> String {
-        guard let inputValue = inputElement?.value?.getValue() else { return "" }
-        return inputValue
+        
     }
 
     private func dismissForm() {
@@ -159,7 +101,7 @@ final class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeVie
     }
 
     private func isFormDirty() -> Bool {
-        return firstInputValue! != viewState.inputValue
+        
     }
 
     private func printAlert() {
@@ -171,11 +113,7 @@ final class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeVie
     }
 
     class ViewState: ObservableObject {
-        @Published var inputValue: String = ""
-        @Published var inputTitle: String = ""
-        @Published var subTitle: String = ""
-        @Published var title: String = ""
-        @Published var unitType: String = ""
+        
         @Published var hasAnimation: Bool = false
         @Published var isDismissForm: Bool = false
         @Published var isPrintAlert: Bool = false
@@ -206,7 +144,7 @@ extension InputFormCulturalPracticeViewModelImpl {
     }
 
     func handleCloseButton() {
-        if isFormDirty() && isInputValueValid(viewState.inputValue) {
+        if isFormDirty() {
             return printAlert()
         }
 
@@ -229,31 +167,16 @@ extension InputFormCulturalPracticeViewModelImpl {
 // Dispatcher
 extension InputFormCulturalPracticeViewModelImpl {
     private func dispatchCloseInputFormWithSaveAction() {
-        let closeInputFormWithSaveAction = InputFormCulturalPracticeAction
-            .CloseInputFormWithSaveAction(inputValue: trim(inputValue: viewState.inputValue))
-        _ = Util.runInSchedulerBackground {
-            self.actionDispatcher.dispatch(closeInputFormWithSaveAction)
-        }
+        
     }
 
     private func dispathUpdateCulturalPracticeElementAction() {
         guard let field = field else { return }
-
-        let action = CulturalPracticeFormAction
-            .UpdateCulturalPracticeElementAction(
-                culturalPracticeElementProtocol: inputElement!,
-                field: field
-        )
-        _ = Util.runInSchedulerBackground {
-            self.actionDispatcher.dispatch(action)
-        }
+        
     }
 
     private func dispatchCloseInputFormWithoutSaveAction() {
-        let action = InputFormCulturalPracticeAction.CloseInputFormWithoutSaveAction()
-        _ = Util.runInSchedulerBackground {
-            self.actionDispatcher.dispatch(action)
-        }
+        
     }
 }
 

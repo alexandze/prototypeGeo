@@ -15,9 +15,10 @@ struct InputFormCulturalPracticeState: Equatable {
 
     var uuidState: String
     var sectionInputElement: Section<ElementUIData>?
+    var inputElementObservable: InputElementObservable?
     var field: Field?
-    var inputFormCulturalPracticeActionResponse: InputFormCulturalPracticeActionResponse?
     var isDirty: Bool?
+    var actionResponse: InputFormCulturalPracticeActionResponse?
     
     enum InputFormCulturalPracticeActionResponse {
         case inputElementSelectedOnListActionResponse
@@ -28,16 +29,18 @@ struct InputFormCulturalPracticeState: Equatable {
 
     func changeValue(
         sectionInputElement: Section<ElementUIData>? = nil,
+        inputElementObservable: InputElementObservable? = nil,
         field: Field? = nil,
-        inputFormCulturalPracticeActionResponse: InputFormCulturalPracticeActionResponse? = nil,
-        isDirty: Bool? = nil
+        isDirty: Bool? = nil,
+        actionResponse: InputFormCulturalPracticeActionResponse? = nil
     ) -> InputFormCulturalPracticeState {
         InputFormCulturalPracticeState(
             uuidState: UUID().uuidString,
             sectionInputElement: sectionInputElement ?? self.sectionInputElement,
+            inputElementObservable: inputElementObservable ?? self.inputElementObservable,
             field: field ?? self.field,
-            inputFormCulturalPracticeActionResponse: inputFormCulturalPracticeActionResponse ?? self.inputFormCulturalPracticeActionResponse,
-            isDirty: isDirty ?? self.isDirty
+            isDirty: isDirty ?? self.isDirty,
+            actionResponse: actionResponse ?? self.actionResponse
         )
     }
 }
