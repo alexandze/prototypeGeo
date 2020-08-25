@@ -92,6 +92,10 @@ class FieldDetailsTableViewHeader: UIView {
         buttonCulturalPractice.addTarget(self, action: #selector(handleCulturalPracticeButton(button:)), for: .touchUpInside)
     }
     
+    func initDefaultColorButton() {
+        setColorSelectedButton(button: buttonField)
+    }
+    
     @objc private func handleFieldButton(button: UIButton) {
         setColorSelectedButton(button: button)
         actionFieldButton?()

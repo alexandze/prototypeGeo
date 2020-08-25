@@ -25,4 +25,7 @@ struct CulturalPracticeFormAction {
     struct RemoveDoseFumierAction: Action {
         let indexPath: IndexPath
     }
+    
+    struct PrintParcelleSectionListAction: Action { }
+    struct PrintCulturalPracticeSectionListAction: Action { }
 }

@@ -39,6 +39,10 @@ extension Reducers {
                 action: removeDoseFumierAction,
                 state
             )
+        case let printParcelleSectionListAction as CulturalPracticeFormAction.PrintParcelleSectionListAction:
+            return CulturalPracticeFormReducerHandler().handle(printParcelleSectionListAction: printParcelleSectionListAction, state)
+        case let printCulturalPracticeSectionList as CulturalPracticeFormAction.PrintCulturalPracticeSectionListAction:
+            return CulturalPracticeFormReducerHandler().handle(printCulturalPracticeSectionList: printCulturalPracticeSectionList, state)
         default:
             break
         }
@@ -48,13 +52,33 @@ extension Reducers {
 }
 
 class CulturalPracticeFormReducerHandler {
+    
+    func handle(
+        printParcelleSectionListAction: CulturalPracticeFormAction.PrintParcelleSectionListAction,
+        _ state: CulturalPracticeFormState
+    ) -> CulturalPracticeFormState {
+        state.changeValues(
+            currentSectionElement: state.sectionsFieldElement,
+            responseAction: .printParcelleSectionListActionResponse
+        )
+    }
+    
+    func handle(
+        printCulturalPracticeSectionList: CulturalPracticeFormAction.PrintCulturalPracticeSectionListAction,
+        _ state: CulturalPracticeFormState
+    ) -> CulturalPracticeFormState {
+        state.changeValues(
+            currentSectionElement: state.sectionsCulturalPracticeElement,
+            responseAction: .printCulturalPracticeSectionListAction
+        )
+    }
 
     func handle(
         willSelectElementOnList: CulturalPracticeFormAction.WillSelectElementOnListAction,
         _ state: CulturalPracticeFormState
     ) -> CulturalPracticeFormState {
         let indexPathSelected = willSelectElementOnList.indexPath
-        let culturalPracticeElement = state.sections![indexPathSelected.section].rowData[indexPathSelected.row]
+        let culturalPracticeElement = state.currentSectionElement![indexPathSelected.section].rowData[indexPathSelected.row]
 
         guard (culturalPracticeElement as? CulturalPracticeMultiSelectElement) != nil ||
             (culturalPracticeElement as? CulturalPracticeInputElement) != nil ||
@@ -76,11 +100,16 @@ class CulturalPracticeFormReducerHandler {
 
         let culturalPracticeElements = CulturalPractice
             .getCulturalPracticeElement(culturalPractice: field.culturalPratice)
-
+        
+        let idPleinTerreInputElement = IdPleineTerre.getCulturalPracticeElement(field: field)
+        let sectionIdPleineTerre = Section(sectionName: idPleinTerreInputElement.title, rowData: [idPleinTerreInputElement])
+        
         return CulturalPracticeFormState(
             uuidState: UUID().uuidString,
             currentField: selectedFieldOnListAction.field,
-            sections: createSection(by: culturalPracticeElements),
+            currentSectionElement: [sectionIdPleineTerre],
+            sectionsCulturalPracticeElement: createSection(by: culturalPracticeElements),
+            sectionsFieldElement: [sectionIdPleineTerre],
             title: "Pratiques culturelles parcelle \(field.id)",
             responseAction: .reloadAllListElementResponse
         )
@@ -126,7 +155,7 @@ class CulturalPracticeFormReducerHandler {
         state: CulturalPracticeFormState
     ) -> CulturalPracticeFormState? {
 
-        guard let indexSectionDoseFumier = findSectionDoseFumier(sections: state.sections!) else {
+        guard let indexSectionDoseFumier = findSectionDoseFumier(sections: state.sectionsCulturalPracticeElement!) else {
             //TODO subAction not have section dose fumier
             return nil
         }
@@ -136,7 +165,7 @@ class CulturalPracticeFormReducerHandler {
             return nil
         }
 
-        let totalDoseFumier = getTotalDoseFumier(indexSectionDoseFumier: indexSectionDoseFumier, sections: state.sections!)
+        let totalDoseFumier = getTotalDoseFumier(indexSectionDoseFumier: indexSectionDoseFumier, sections: state.sectionsCulturalPracticeElement!)
 
         guard isPossibleAddFumierDose(currentTotalDose: totalDoseFumier) else {
             // TODO subAction can not add dose, because is max dose
@@ -147,11 +176,13 @@ class CulturalPracticeFormReducerHandler {
 
         // TODO refactoring
         return handleUpdateState(state: state) { (state: CulturalPracticeFormState) -> CulturalPracticeFormState in
-            var copySection = state.sections!
+            var copySection = state.sectionsCulturalPracticeElement!
+            
             copySection[indexSectionDoseFumier].rowData.append(inputMultiSelectContainer!)
 
             return state.changeValues(
-                sections: copySection,
+                currentSectionElement: copySection,
+                sectionsCulturalPracticeElement: copySection,
                 isFinishCompletedCurrentContainer: false,
                 responseAction: .insertContainerElementResponse(
                     indexPath: [
@@ -199,11 +230,11 @@ class CulturalPracticeFormReducerHandler {
     ) -> CulturalPracticeFormState {
         var copyState = state
 
-        copyState.sections![sectionIndex].rowData.append(inputMultiSelectContainer)
+        copyState.sectionsCulturalPracticeElement![sectionIndex].rowData.append(inputMultiSelectContainer)
         copyState.uuidState = UUID().uuidString
         copyState.responseAction = .insertContainerElementResponse(indexPath: [
             IndexPath(
-                row: copyState.sections![sectionIndex].rowData.count - 1,
+                row: copyState.sectionsCulturalPracticeElement![sectionIndex].rowData.count - 1,
                 section: sectionIndex
             )
             ]

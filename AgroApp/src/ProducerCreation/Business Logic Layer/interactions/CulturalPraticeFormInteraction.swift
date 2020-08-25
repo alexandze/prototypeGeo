@@ -109,6 +109,22 @@ class CulturalPraticeFormInteractionImpl: CulturalPraticeFormInteraction {
             self.actionDispatcher.dispatch(action)
         }
     }
+    
+    func dispatchPrintParcelleSectionListAction() {
+        _ = Util.runInSchedulerBackground {
+            self.actionDispatcher.dispatch(
+                CulturalPracticeFormAction.PrintParcelleSectionListAction()
+            )
+        }
+    }
+    
+    func dispatchPrintCulturalPracticeSectionListAction() {
+        _ = Util.runInSchedulerBackground {
+            self.actionDispatcher.dispatch(
+                CulturalPracticeFormAction.PrintCulturalPracticeSectionListAction()
+            )
+        }
+    }
 
     private func createSelectedSelectElementOnListAction(
         culturalPracticeSelectElement: CulturalPracticeElementProtocol,
@@ -155,4 +171,6 @@ protocol CulturalPraticeFormInteraction {
     func dispatchSetTitleAction(title: String?)
     func dispatchRemoveDoseFumierAction(indexPath: IndexPath)
     func dispatchUpdateFieldAction(field: Field?)
+    func dispatchPrintParcelleSectionListAction()
+    func dispatchPrintCulturalPracticeSectionListAction()
 }

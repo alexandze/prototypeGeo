@@ -77,12 +77,12 @@ class FieldListReducerHandler {
     ) -> CulturalPracticeFormState {
         var copyState = state
 
-        copyState.sections![sectionIndex].rowData.append(inputMultiSelectContainer)
+        copyState.sectionsCulturalPracticeElement![sectionIndex].rowData.append(inputMultiSelectContainer)
         copyState.uuidState = UUID().uuidString
 
         copyState.responseAction = .insertContainerElementResponse(indexPath: [
             IndexPath(
-                row: copyState.sections![sectionIndex].rowData.count - 1,
+                row: copyState.sectionsCulturalPracticeElement![sectionIndex].rowData.count - 1,
                 section: sectionIndex
             )
             ]

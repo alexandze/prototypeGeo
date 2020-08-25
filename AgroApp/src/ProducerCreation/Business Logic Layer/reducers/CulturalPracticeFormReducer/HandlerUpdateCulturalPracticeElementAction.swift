@@ -36,7 +36,7 @@ extension CulturalPracticeFormReducerHandler {
         private func findCulturalPracticeElementIndex(
             util: UtilUpdateCulturalPracticeElementAction?
         ) -> UtilUpdateCulturalPracticeElementAction? {
-            if let sections = util?.state?.sections,
+            if let sections = util?.state?.currentSectionElement,
                 let culturalPracticeElementProtocole = util?.culturalPracticeElementProtocole,
                 var newUtil = util {
                 var firstIndexRow: Int?
@@ -63,7 +63,7 @@ extension CulturalPracticeFormReducerHandler {
         private func updateSectionWithNewCulturalPracticeElement(
             util: UtilUpdateCulturalPracticeElementAction?
         ) -> UtilUpdateCulturalPracticeElementAction? {
-            guard var copySection = util?.state?.sections,
+            guard var copySection = util?.state?.currentSectionElement,
                 let indexPathFind = util?.indexOfCulturalPracticeElement,
                 let culturalPracticeElementProtocol = util?.culturalPracticeElementProtocole,
                 var newUtil = util
@@ -142,10 +142,13 @@ extension CulturalPracticeFormReducerHandler {
                 else { return nil }
 
             copyCurrentField.culturalPratice = newCulturalPractice
+            copyCurrentField.idPleinTerre = newCulturalPractice.idPleinTerre
 
             return state.changeValues(
                 currentField: copyCurrentField,
-                sections: newSections,
+                currentSectionElement: newSections,
+                sectionsCulturalPracticeElement: newSections.count == state.sectionsCulturalPracticeElement?.count ? newSections : state.sectionsCulturalPracticeElement,
+                sectionsFieldElement: newSections.count == state.sectionsFieldElement?.count ? newSections :  state.sectionsFieldElement,
                 isFinishCompletedCurrentContainer: isContainerElement ? true : state.isFinishCompletedCurrentContainer,
                 responseAction: .updateElementResponse(indexPath: [indexOfCulturalPracticeElement])
             )

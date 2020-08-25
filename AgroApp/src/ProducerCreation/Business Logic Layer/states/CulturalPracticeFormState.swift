@@ -15,7 +15,9 @@ struct CulturalPracticeFormState: Equatable {
 
     var uuidState: String
     var currentField: Field?
-    var sections: [Section<CulturalPracticeElementProtocol>]?
+    var currentSectionElement: [Section<CulturalPracticeElementProtocol>]?
+    var sectionsCulturalPracticeElement: [Section<CulturalPracticeElementProtocol>]?
+    var sectionsFieldElement: [Section<CulturalPracticeElementProtocol>]?
     var title: String?
     var isFinishCompletedCurrentContainer: Bool?
     var responseAction: ResponseAction?
@@ -36,12 +38,16 @@ struct CulturalPracticeFormState: Equatable {
         )
 
         case canNotSelectElementOnListResponse(culturalPracticeElement: CulturalPracticeElementProtocol)
+        case printParcelleSectionListActionResponse
+        case printCulturalPracticeSectionListAction
         case notResponse
     }
 
     public func changeValues(
         currentField: Field? = nil,
-        sections: [Section<CulturalPracticeElementProtocol>]? = nil,
+        currentSectionElement: [Section<CulturalPracticeElementProtocol>]? = nil,
+        sectionsCulturalPracticeElement: [Section<CulturalPracticeElementProtocol>]? = nil,
+        sectionsFieldElement: [Section<CulturalPracticeElementProtocol>]? = nil,
         title: String? = nil,
         isFinishCompletedCurrentContainer: Bool? = nil,
         responseAction: ResponseAction? = nil
@@ -49,7 +55,9 @@ struct CulturalPracticeFormState: Equatable {
         CulturalPracticeFormState(
             uuidState: UUID().uuidString,
             currentField: currentField ?? self.currentField,
-            sections: sections ?? self.sections,
+            currentSectionElement: currentSectionElement ?? self.currentSectionElement,
+            sectionsCulturalPracticeElement: sectionsCulturalPracticeElement ?? self.sectionsCulturalPracticeElement,
+            sectionsFieldElement: sectionsFieldElement ?? self.sectionsFieldElement,
             title: title ?? self.title,
             isFinishCompletedCurrentContainer: isFinishCompletedCurrentContainer ?? self.isFinishCompletedCurrentContainer,
             responseAction: responseAction ?? self.responseAction

@@ -45,6 +45,7 @@ public class CulturalPracticeFormViewController: UIViewController, UITableViewDe
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         culturalPraticeViewModel.subscribeToCulturalPracticeStateObs()
+        culturalPraticeFormView.initDefaultColorButtonHeader()
         
         culturalPraticeFormView.initFieldButton {
             self.culturalPraticeViewModel.handleFieldButton()

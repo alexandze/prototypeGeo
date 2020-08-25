@@ -37,7 +37,7 @@ extension CulturalPracticeFormReducerHandler {
         private func checkIfRemoveContainerElementHasValue(
             util: UtilRemoveDoseFumierAction?
         ) -> UtilRemoveDoseFumierAction? {
-            guard let sections = util?.state.sections,
+            guard let sections = util?.state.sectionsCulturalPracticeElement,
                 var newUtil = util,
                 let containerElement =
                 sections[newUtil.indexPathDoseFumierFromAction.section]
@@ -52,7 +52,7 @@ extension CulturalPracticeFormReducerHandler {
         private func hasContainerElementForNotRemoveWithNoValue(
             util: UtilRemoveDoseFumierAction?
         ) -> UtilRemoveDoseFumierAction? {
-            guard let section = util?.state.sections,
+            guard let section = util?.state.sectionsCulturalPracticeElement,
                 let indexPath = util?.indexPathDoseFumierFromAction,
                 var newUtil = util
                 else { return nil  }
@@ -72,7 +72,7 @@ extension CulturalPracticeFormReducerHandler {
         private func getIndexDoseFumierFromCulturalPracticeElement(
             util: UtilRemoveDoseFumierAction?
         ) -> UtilRemoveDoseFumierAction? {
-            guard let sections = util?.state.sections,
+            guard let sections = util?.state.sectionsCulturalPracticeElement,
                 let indexPathDoseFumierFromAction = util?.indexPathDoseFumierFromAction,
                 var newUtil = util
                 else { return nil }
@@ -132,7 +132,7 @@ extension CulturalPracticeFormReducerHandler {
         private func getAllIndexPathContainerElementForRemove(
             util: UtilRemoveDoseFumierAction?
         ) -> UtilRemoveDoseFumierAction? {
-            guard let sections = util?.state.sections,
+            guard let sections = util?.state.sectionsCulturalPracticeElement,
                 let indexPathRemoveDoseFromAction = util?.indexPathDoseFumierFromAction,
                 var newUtil = util
                 else { return nil }
@@ -167,7 +167,7 @@ extension CulturalPracticeFormReducerHandler {
         private func removeAllCulturalPracticeContainerElement(
             util: UtilRemoveDoseFumierAction?
         ) -> UtilRemoveDoseFumierAction? {
-            guard var sections = util?.state.sections,
+            guard var sections = util?.state.sectionsCulturalPracticeElement,
                 let indexPathRemove = util?.doseFumierRemoveIndexPaths,
                 var newUtil = util
                 else { return nil }
@@ -211,7 +211,8 @@ extension CulturalPracticeFormReducerHandler {
 
             return state.changeValues(
                 currentField: currentField,
-                sections: sections,
+                currentSectionElement: sections,
+                sectionsCulturalPracticeElement: sections,
                 isFinishCompletedCurrentContainer: isContainerHasElement ? state.isFinishCompletedCurrentContainer : true,
                 responseAction: .removeDoseFumierResponse(indexPathsRemove: indexPathRemove, indexPathsAdd: util?.doseFumierAddIndexPaths)
             )

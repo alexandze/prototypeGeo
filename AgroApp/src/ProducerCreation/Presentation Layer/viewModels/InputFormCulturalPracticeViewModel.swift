@@ -105,7 +105,7 @@ final class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeVie
 
     private func createRegularExpressionFrom() throws -> NSRegularExpression {
         let regularExpressionString = type(of: inputElement!.valueEmpty).getRegularExpression()!
-        return try NSRegularExpression(pattern: regularExpressionString, options: [])
+        return try NSRegularExpression(pattern: regularExpressionString, options: [.caseInsensitive])
     }
 
     private func initRegularExpression() {

@@ -28,6 +28,7 @@ struct CulturalPractice {
     var pMehlich3: PMehlich3?
     var alMehlich3: AlMehlich3?
     var cultureAnneeEnCoursAnterieure: CultureAnneeEnCoursAnterieure?
+    var idPleinTerre: IdPleineTerre?
 
     static let MAX_DOSE_FUMIER = 3
 

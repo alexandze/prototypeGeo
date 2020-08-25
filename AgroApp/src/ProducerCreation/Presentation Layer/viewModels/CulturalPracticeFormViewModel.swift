@@ -61,6 +61,10 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
                         break
                     case .removeDoseFumierResponse(indexPathsRemove: let indexPathsRemove, indexPathsAdd: let indexPathsAdd):
                         self.handleRemoveDoseFumier(indexPathsRemove: indexPathsRemove, indexPathsAdd: indexPathsAdd)
+                    case .printParcelleSectionListActionResponse:
+                        self.handlePrintParcelleSectionListActionResponse()
+                    case .printCulturalPracticeSectionListAction:
+                        self.handlePrintCulturalPracticeSectionListAction()
                     case .notResponse:
                         break
                     }
@@ -74,11 +78,11 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
     }
 
     func getNumberOfSection() -> Int {
-        state?.sections?.count ?? 0
+        state?.currentSectionElement?.count ?? 0
     }
 
     func getNumberRow(in section: Int) -> Int {
-        state?.sections?[section].rowData.count ?? 0
+        state?.currentSectionElement?[section].rowData.count ?? 0
     }
 
     func registerCell() {
@@ -90,7 +94,7 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
     }
 
     func getCulturePracticeElement(by indexPath: IndexPath) -> CulturalPracticeElementProtocol? {
-        state?.sections?[indexPath.section].rowData[indexPath.row]
+        state?.currentSectionElement?[indexPath.section].rowData[indexPath.row]
     }
     
     private func presentSelectFormCulturalPracticeController() {
@@ -127,11 +131,11 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
 extension CulturalPraticeFormViewModelImpl {
     
     func handleFieldButton() {
-        print("Handle parcelle button")
+        culturalPraticeFormInteraction.dispatchPrintParcelleSectionListAction()
     }
     
     func handleCulturalPracticeButton() {
-        print("Handle culural practice button")
+        culturalPraticeFormInteraction.dispatchPrintCulturalPracticeSectionListAction()
     }
     
     func handleFuncAddDoseFumier() {
@@ -235,6 +239,14 @@ extension CulturalPraticeFormViewModelImpl {
         ).subscribe { _ in
             self.presentSelectFormCulturalPracticeController()
         }
+    }
+    
+    private func handlePrintParcelleSectionListActionResponse() {
+        self.tableView?.reloadData()
+    }
+    
+    private func handlePrintCulturalPracticeSectionListAction() {
+        self.tableView?.reloadData()
     }
 }
 

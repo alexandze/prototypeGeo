@@ -55,6 +55,10 @@ class CulturalPracticeFormView: UIView {
         }
     }
     
+    func initDefaultColorButtonHeader() {
+        fieldDetailsTableViewHeader.initDefaultColorButton()
+    }
+    
     func initCell(_ cell: UITableViewCell?, withData multiSelectElement: CulturalPracticeMultiSelectElement) -> UITableViewCell {
         guard let cell = cell else { return UITableViewCell() }
         removeContainerElementViewTo(containerView: cell.contentView)
