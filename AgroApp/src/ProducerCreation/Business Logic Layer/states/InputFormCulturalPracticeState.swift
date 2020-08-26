@@ -25,6 +25,8 @@ struct InputFormCulturalPracticeState: Equatable {
         case closeInputFormWithSaveActionResponse
         case noAction
         case closeInputFormWithoutSaveActionResponse
+        case checkIfInputValueIsValidActionResponse
+        case checkIfFormIsValidAndDirtyForPrintAlertActionResponse(isPrintAlert: Bool)
     }
 
     func changeValue(

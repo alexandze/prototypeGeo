@@ -14,10 +14,16 @@ struct InputFormCulturalPracticeAction {
         let sectionInputElement: Section<ElementUIData>
         let field: Field
     }
-
+    
     struct CloseInputFormWithSaveAction: Action {
         let inputValue: String
     }
 
     struct CloseInputFormWithoutSaveAction: Action { }
+    
+    struct CheckIfInputValueIsValidAction: Action {
+        let inputValue: String
+    }
+    
+    struct CheckIfFormIsValidAndDirtyForPrintAlertAction: Action { }
 }

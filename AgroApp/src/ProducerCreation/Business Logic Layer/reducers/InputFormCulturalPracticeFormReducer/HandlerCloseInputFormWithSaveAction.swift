@@ -18,22 +18,33 @@ extension InputFormCulturalPracticeReducerHandler {
             let util = UtilCloseInputFormWithSaveAction(state: state, inputValue: action.inputValue)
             
             return (
-                setSectionWithInputValue(util: ) >>>
+                checkIfInputValueIsValid(util: ) >>>
+                    setSectionWithInputValue(util: ) >>>
                     newState(util:)
-            )(util) ?? state
+                )(util) ?? state
+        }
+        
+        private func checkIfInputValueIsValid(util: UtilCloseInputFormWithSaveAction?) -> UtilCloseInputFormWithSaveAction? {
+            guard let newUtil = util,
+                let inputElementObservable = newUtil.state.inputElementObservable,
+                inputElementObservable.isInputValid()
+                else { return nil }
             
+            return newUtil
         }
         
         private func setSectionWithInputValue(util: UtilCloseInputFormWithSaveAction?) -> UtilCloseInputFormWithSaveAction? {
             guard var newUtil = util,
                 var sectionInputElement = newUtil.state.sectionInputElement,
                 Util.hasIndexInArray(sectionInputElement.rowData, index: 0),
-                var inputElement = sectionInputElement.rowData[0] as? InputElement
-                    else {
-                return nil
+                var inputElement = sectionInputElement.rowData[0] as? InputElement,
+                let inputElementObservable = newUtil.state.inputElementObservable
+                else {
+                    return nil
             }
             
-            inputElement.value = newUtil.inputValue
+            inputElement.value = inputElementObservable.value
+            inputElement.isValid = true
             sectionInputElement.rowData[0] = inputElement
             newUtil.newSectionInputElement = sectionInputElement
             return newUtil
@@ -41,14 +52,13 @@ extension InputFormCulturalPracticeReducerHandler {
         
         private func newState(util: UtilCloseInputFormWithSaveAction?) -> InputFormCulturalPracticeState? {
             guard let newUtil = util,
-                let newSectionInputElement = newUtil.newSectionInputElement
-                else {
-                return nil
+                let newSectionInputElement = newUtil.newSectionInputElement else {
+                    return nil
             }
             
             return newUtil.state.changeValue(
                 sectionInputElement: newSectionInputElement,
-                inputFormCulturalPracticeActionResponse: .closeInputFormWithSaveActionResponse
+                actionResponse: .closeInputFormWithSaveActionResponse
             )
         }
     }

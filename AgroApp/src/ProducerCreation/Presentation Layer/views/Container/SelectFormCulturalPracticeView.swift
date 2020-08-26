@@ -28,7 +28,7 @@ class SelectFormCulturalPracticeView: UIView {
         button.setTitle(NSLocalizedString("Valider", comment: "Valider button"), for: .normal)
         button.backgroundColor =  Util.getGreenColor()
         button.layer.cornerRadius = 10
-        button.addTarget(self, action: #selector(handle(buttonValidate:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleButtonValidate(_:)), for: .touchUpInside)
         return button
     }()
 
@@ -52,14 +52,20 @@ class SelectFormCulturalPracticeView: UIView {
             preferredStyle: .alert
         )
     }()
+    
+    let pickerView: UIPickerView = {
+        let picker = UIPickerView()
+        picker.translatesAutoresizingMaskIntoConstraints = false
+        return picker
+    }()
 
-    public var textTitle: String? {
+    var textTitle: String? {
         didSet {
-            headerPresentedView.textTitle = textTitle!
+            headerPresentedView.textTitle = textTitle ?? ""
         }
     }
 
-    public var textDetail: String? {
+    var textDetail: String? {
         didSet {
             labelDetail.text = textDetail
         }
@@ -78,26 +84,19 @@ class SelectFormCulturalPracticeView: UIView {
         initConstraintHeaderPresentedView()
         initButtonValidate()
         initConstraintScrollView()
+        initPickerView()
+        initLabelDetail()
+    }
+    
+    func initHandleCloseButton(_ handleCloseFunc: @escaping () -> Void) {
+        self.headerPresentedView.handleCloseButtonWith(handleCloseFunc)
     }
 
-    public func getLabelForPickerView(text: String, widthPickerView: CGFloat) -> UILabel {
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: widthPickerView * 0.9, height: 60))
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.text = text
-        label.textColor = Util.getOppositeColorBlackOrWhite()
-        label.font =  label.font.withSize(15)
-        label.sizeToFit()
-        return label
+    func initHandleValidateButton(_ handleValidateFunc: @escaping () -> Void) {
+        self.handleButtonValidateFunc = handleValidateFunc
     }
-
-    public func reuseLabelPickerView(label: UILabel, text: String) -> UILabel {
-        label.text = text
-        label.sizeToFit()
-        return label
-    }
-
-    public func addAlertAction(handleYesAction: @escaping () -> Void, handleNoAction: @escaping () -> Void) {
+    
+    func initAlertAction(_ handleYesAction: @escaping () -> Void, _ handleNoAction: @escaping () -> Void) {
         let alertActionYes = createAlertActionYes {
             handleYesAction()
         }
@@ -110,6 +109,23 @@ class SelectFormCulturalPracticeView: UIView {
         alert.addAction(alertActionNo)
     }
 
+    func getLabelForPickerView(text: String, widthPickerView: CGFloat) -> UILabel {
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: widthPickerView * 0.9, height: 60))
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.text = text
+        label.textColor = Util.getOppositeColorBlackOrWhite()
+        label.font =  label.font.withSize(15)
+        label.sizeToFit()
+        return label
+    }
+
+    func reuseLabelPickerView(label: UILabel, text: String) -> UILabel {
+        label.text = text
+        label.sizeToFit()
+        return label
+    }
+    
     private func createAlertActionYes(handleFunc: @escaping () -> Void) -> UIAlertAction {
         let alertAction = UIAlertAction(
             title: NSLocalizedString("Oui", comment: "Oui"),
@@ -155,7 +171,7 @@ class SelectFormCulturalPracticeView: UIView {
         ])
     }
 
-    private func initLabelDetail(pickerView: UIPickerView) {
+    private func initLabelDetail() {
         scrollView.addSubview(labelDetail)
 
         NSLayoutConstraint.activate([
@@ -165,7 +181,7 @@ class SelectFormCulturalPracticeView: UIView {
         ])
     }
 
-    func initPickerView(pickerView: UIPickerView) {
+   private func initPickerView() {
         scrollView.addSubview(pickerView)
         pickerView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -175,9 +191,6 @@ class SelectFormCulturalPracticeView: UIView {
             //pickerView.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 0.20),
             pickerView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.7)
         ])
-
-        initLabelDetail(pickerView: pickerView)
-
     }
 
     private func initButtonValidate() {
@@ -191,25 +204,12 @@ class SelectFormCulturalPracticeView: UIView {
         ])
     }
 
-    func handleCloseButton(_ handleCloseFunc: @escaping () -> Void) {
-        self.headerPresentedView.handleCloseButtonWith(handleCloseFunc)
-    }
-
-    func handleValidateButton(_ handleValidateFunc: @escaping () -> Void) {
-        self.handleButtonValidateFunc = handleValidateFunc
-    }
-
-    @objc private func handle(buttonValidate: UIButton) {
+    @objc private func handleButtonValidate(_ buttonValidate: UIButton) {
         handleButtonValidateFunc?()
     }
 
     private func configView() {
         backgroundColor = Util.getBackgroundColor()
         alpha = Util.getAlphaValue()
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
     }
 }

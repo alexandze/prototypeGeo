@@ -335,7 +335,8 @@ class FieldDetailsFactoryImpl: FieldDetailsFactory {
             isRequired: true,
             regexPattern: inputValueType.getRegexPattern(),
             unitType: inputValueType.getUnitType(),
-            typeValue: inputValueType.getTypeValue()
+            typeValue: inputValueType.getTypeValue(),
+            regex: makeRegularExpression(inputValueType.getRegexPattern())
         )
     }
     

@@ -47,32 +47,28 @@ extension CulturalPracticeFormReducerHandler {
                 return nil
             }
             
-            var indexFindOp: IndexPath?
-            
-            (0..<sectionList.count).forEach { index in
-                if sectionList[index].id == newUtil.newSection.id {
-                    indexFindOp = IndexPath(row: 0, section: index)
-                }
+            let indexSectionFindOp = (0..<sectionList.count).firstIndex { index in
+                sectionList[index].id == newUtil.newSection.id
             }
             
-            guard let indexFind = indexFindOp else {
+            guard let indexSectionFind = indexSectionFindOp else {
                 return nil
             }
             
-            newUtil.indexFind = indexFind
+            newUtil.indexSectionPathFind = IndexPath(row: 0, section: indexSectionFind)
             return newUtil
         }
         
         private func updataSectionList(util: UtilUpdateCulturalPracticeElementAction?) -> UtilUpdateCulturalPracticeElementAction? {
             guard var newUtil = util,
                 let sectionList = newUtil.state.sections,
-                let indexFind = newUtil.indexFind
+                let indexPathSectionFind = newUtil.indexSectionPathFind
                 else {
                 return nil
             }
             
             var newSectionList = sectionList
-            newSectionList[indexFind.section] = newUtil.newSection
+            newSectionList[indexPathSectionFind.section] = newUtil.newSection
             newUtil.newSectionList = newSectionList
             return newUtil
         }
@@ -102,7 +98,7 @@ extension CulturalPracticeFormReducerHandler {
         private func newState(util: UtilUpdateCulturalPracticeElementAction?) -> CulturalPracticeFormState? {
             guard let newUtil = util,
                 let newSectionList = newUtil.newSectionList,
-                let indexFind = newUtil.indexFind
+                let indexFind = newUtil.indexSectionPathFind
                 else {
                     return nil
             }
@@ -128,7 +124,7 @@ extension CulturalPracticeFormReducerHandler {
         var state: CulturalPracticeFormState
         var newSection: Section<ElementUIData>
         var newField: Field
-        var indexFind: IndexPath?
+        var indexSectionPathFind: IndexPath?
         var newSectionList: [Section<ElementUIData>]?
         var newCulturalPractice: CulturalPractice?
         

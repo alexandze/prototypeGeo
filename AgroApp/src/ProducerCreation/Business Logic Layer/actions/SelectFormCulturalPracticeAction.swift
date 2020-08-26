@@ -10,23 +10,20 @@ import Foundation
 import ReSwift
 
 struct SelectFormCulturalPracticeAction {
-    struct SelectElementSelectedOnList: Action {
-        let culturalPracticeElement: CulturalPracticeElementProtocol
+    struct SelectElementSelectedOnListAction: Action {
+        let section: Section<ElementUIData>
         let field: Field
-        let subAction: SelectFormCulturalPracticeSubAction
     }
 
-    struct ClosePresentedViewControllerAction: Action {
+    struct CloseSelectFormWithSaveAction: Action {
         let indexSelected: Int
     }
 
-    struct ClosePresentedViewControllerWithSaveAction: Action {
-        let indexSelected: Int
-    }
+    struct CloseSelectFormWithoutSaveAction: Action { }
 
-    struct ClosePresentedViewControllerWithoutSaveAction: Action { }
-
-    struct SetFormIsDirtyAction: Action {
+    struct SetSelectFormIsDirtyAction: Action {
         let isDirty: Bool
     }
+    
+    struct CheckIfFormIsDirtyAction: Action { }
 }

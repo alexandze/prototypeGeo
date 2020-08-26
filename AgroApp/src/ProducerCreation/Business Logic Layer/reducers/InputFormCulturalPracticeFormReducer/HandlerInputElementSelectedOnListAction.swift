@@ -22,6 +22,7 @@ extension InputFormCulturalPracticeReducerHandler {
             
             return (
                 makeInputElementObservable(util: ) >>>
+                    checkIfInputElementIsValid(util: ) >>>
                     newState(util:)
                 )(util) ?? state
         }
@@ -34,6 +35,17 @@ extension InputFormCulturalPracticeReducerHandler {
             }
             
             newUtil.inputElementObservable = inputElement.toInputElementObservable()
+            return newUtil
+        }
+        
+        private func checkIfInputElementIsValid(util: UtilInputElementSelectedOnListAction?) -> UtilInputElementSelectedOnListAction? {
+            guard var newUtil = util,
+                let inputElementObservalble = newUtil.inputElementObservable else {
+                    return nil
+            }
+            
+            inputElementObservalble.isValid = inputElementObservalble.isInputValid()
+            newUtil.inputElementObservable = inputElementObservalble
             return newUtil
         }
         

@@ -20,7 +20,6 @@ public class SelectFormCulturalPracticeViewController: UIViewController, UIPicke
     init(culturalPracticeFormViewModel: SelectFormCulturalPracticeViewModel) {
         self.selectFormCulturalPracticeViewModel = culturalPracticeFormViewModel
         super.init(nibName: nil, bundle: nil)
-        self.selectFormCulturalPracticeViewModel.viewController = self
     }
 
     public override func loadView() {
@@ -29,6 +28,41 @@ public class SelectFormCulturalPracticeViewController: UIViewController, UIPicke
 
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        isModalInPresentation = true
+        
+        selectFormCulturalPracticeView.initHandleCloseButton { [weak self] in
+            self?.selectFormCulturalPracticeViewModel.handleCloseButton()
+        }
+        
+        selectFormCulturalPracticeView.initHandleValidateButton { [weak self] in
+            self?.selectFormCulturalPracticeViewModel.handleValidateButton()
+        }
+        
+        selectFormCulturalPracticeView.initAlertAction(
+            selectFormCulturalPracticeViewModel.handleYesButtonAlert,
+            selectFormCulturalPracticeViewModel.handleNoButtonAlert
+        )
+        
+        selectFormCulturalPracticeViewModel.getSelectedRow = { [weak self] in
+            self?.selectFormCulturalPracticeView.pickerView.selectedRow(inComponent: 1) ?? 0
+        }
+        
+        selectFormCulturalPracticeViewModel.setSelectedRow = { [weak self] row in
+            self?.selectFormCulturalPracticeView.pickerView.selectRow(row, inComponent: 1, animated: true)
+        }
+        
+        selectFormCulturalPracticeViewModel.reloadPickerView = { [weak self] in
+            self?.selectFormCulturalPracticeView.pickerView.reloadAllComponents()
+        }
+        
+        selectFormCulturalPracticeViewModel.setTitleText = { [weak self] title in
+            self?.selectFormCulturalPracticeView.textTitle = title
+        }
+        
+        selectFormCulturalPracticeViewModel.setDetailText = { [weak self] detailText in
+            self?.selectFormCulturalPracticeView.textDetail = detailText
+        }
+        
         selectFormCulturalPracticeViewModel.subscribeToCulturalPracticeFormObs()
     }
 
@@ -46,22 +80,28 @@ public class SelectFormCulturalPracticeViewController: UIViewController, UIPicke
     }
 
     public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        selectFormCulturalPracticeViewModel.pickerView(numberOfRowsInComponent: component)
+        selectFormCulturalPracticeViewModel.getNumberOfRows()
     }
 
     public func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        self.selectFormCulturalPracticeViewModel.pickerView(pickerView, rowHeightForComponent: component)
+        45
     }
 
     public func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
-        self.selectFormCulturalPracticeViewModel.pickerView(pickerView, widthForComponent: component)
+        self.selectFormCulturalPracticeView.pickerView.frame.size.width
     }
 
     public func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-        selectFormCulturalPracticeViewModel.pickerView(pickerView: pickerView, viewForRow: row, forComponent: component, reusingView: view)
-    }
-
-    public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        self.selectFormCulturalPracticeViewModel.dispatchFormIsDirty()
+        if let label = view as? UILabel {
+            return selectFormCulturalPracticeView.reuseLabelPickerView(
+                label: label,
+                text: selectFormCulturalPracticeViewModel.getValueByRow(row) ?? ""
+            )
+        }
+        
+        return selectFormCulturalPracticeView.getLabelForPickerView(
+            text: selectFormCulturalPracticeViewModel.getValueByRow(row) ?? "",
+            widthPickerView: selectFormCulturalPracticeView.pickerView.frame.width
+        )
     }
 }

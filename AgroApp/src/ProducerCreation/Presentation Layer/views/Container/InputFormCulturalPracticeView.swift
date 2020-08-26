@@ -14,7 +14,7 @@ struct InputFormCulturalPracticeView: View {
     @ObservedObject var viewState: InputFormCulturalPracticeViewModelImpl.ViewState
     @ObservedObject var keyboardFollower: KeyboardFollower
     var disposableDismissForm: Disposable?
-
+    
     init(
         viewModel: InputFormCulturalPracticeViewModel,
         keyboardFollower: KeyboardFollower
@@ -23,49 +23,54 @@ struct InputFormCulturalPracticeView: View {
         self.viewState = viewModel.viewState
         self.keyboardFollower = keyboardFollower
     }
-
+    
     var body: some View {
         GeometryReader { (geometry: GeometryProxy) in
-
+            
             VStack {
-                HeaderView(title: self.viewState.title) { self.viewModel.handleCloseButton() }
-                Spacer()
-
-                CenterView(
-                    inputValue: self.$viewState.inputValue,
-                    inputTitle: self.viewState.inputTitle,
-                    subtitle: self.viewState.subTitle,
-                    isInputValueValid: self.isInputValueValid,
-                    unitType: self.viewState.unitType,
-                    textButtonValidate: self.viewState.textButtonValidate,
-                    textErrorMessage: self.viewState.textErrorMessage
-                ) {
-                    self.viewModel.handleButtonValidate()
-                }.animation(self.viewState.hasAnimation ? .default : nil)
-
-                Text(!self.isInputValueValid ? self.viewState.textErrorMessage : "")
-                    .font(.system(size: 15))
-                    .bold()
-                    .foregroundColor(.red)
-                    .multilineTextAlignment(.center)
-                    //.padding(.bottom, self.keyboardFollower.keyboardHeight)
-                    .animation(self.viewState.hasAnimation ? .default : nil)
-                    .edgesIgnoringSafeArea(
-                        self.keyboardFollower.isVisible ? .bottom : []
-                )
-
-                if self.keyboardFollower.keyboardHeight == 0 {
+                if self.viewState.inputElementObservale != nil {
+                    HeaderView(title: self.viewState.inputElementObservale.title) { self.viewModel.handleCloseButton() }
                     Spacer()
+                    
+                    
+                    CenterView(
+                        inputValue: self.$viewState.inputElementObservale.value,
+                        inputTitle: self.viewState.inputElementObservale.title,
+                        subtitle: self.viewState.inputElementObservale.subtitle ?? "",
+                        isInputValueValid: self.viewState.inputElementObservale.isValid,
+                        unitType: self.viewState.inputElementObservale.unitType ?? "",
+                        textButtonValidate: self.viewState.textButtonValidate,
+                        textErrorMessage: self.viewState.textErrorMessage
+                    ) {
+                        self.viewModel.handleButtonValidate()
+                    }.animation(self.viewState.hasAnimation ? .default : nil)
+                    
+                    
+                    
+                    Text(!self.viewState.inputElementObservale.isValid ? self.viewState.textErrorMessage : "")
+                        .font(.system(size: 15))
+                        .bold()
+                        .foregroundColor(.red)
+                        .multilineTextAlignment(.center)
+                        //.padding(.bottom, self.keyboardFollower.keyboardHeight)
+                        .animation(self.viewState.hasAnimation ? .default : nil)
+                        .edgesIgnoringSafeArea(
+                            self.keyboardFollower.isVisible ? .bottom : []
+                    )
+                    
+                    if self.keyboardFollower.keyboardHeight == 0 {
+                        Spacer()
+                    }
+                    
+                    ButtonValidate(
+                        textButtonValidate: self.viewState.textButtonValidate,
+                        actionValidateButton: {self.viewModel.handleButtonValidate()},
+                        isInputValueValid: self.viewState.inputElementObservale.isValid
+                    ).padding(.bottom, 5)
+                        .padding(.bottom, self.keyboardFollower.keyboardHeight)
+                        .animation(self.viewState.hasAnimation ? .default : nil)
                 }
-
-                ButtonValidate(
-                    textButtonValidate: self.viewState.textButtonValidate,
-                    actionValidateButton: {self.viewModel.handleButtonValidate()},
-                    isInputValueValid: self.isInputValueValid
-                ).padding(.bottom, 5)
-                    .padding(.bottom, self.keyboardFollower.keyboardHeight)
-                    .animation(self.viewState.hasAnimation ? .default : nil)
-
+                
             }
             .environmentObject(DimensionScreen(width: geometry.size.width, height: geometry.size.height))
             .onAppear {
@@ -91,25 +96,21 @@ struct InputFormCulturalPracticeView: View {
             }
         }
     }
-
-    var isInputValueValid: Bool {
-        return viewModel.isInputValueValid(viewState.inputValue)
-    }
 }
 
 private struct HeaderView: View {
     var title: String
     var actionCloseButton: () -> Void
     @EnvironmentObject var dimensionScreen: DimensionScreen
-
+    
     var body: some View {
         HStack(alignment: .top) {
             UIButtonRepresentable { self.actionCloseButton() }
                 .fixedSize()
                 .offset(x: 5, y: 5)
-
+            
             Spacer()
-
+            
             Text(title)
                 .font(.system(size: 25))
                 .bold()
@@ -117,7 +118,7 @@ private struct HeaderView: View {
                 .lineLimit(3)
                 .multilineTextAlignment(.center)
                 .offset(x: -15, y: 10)
-
+            
             Spacer()
         }
     }
@@ -133,7 +134,7 @@ private struct CenterView: View {
     let textErrorMessage: String
     let actionValidateButton: () -> Void
     @EnvironmentObject var dimensionScreen: DimensionScreen
-
+    
     var body: some View {
         VStack {
             Text(subtitle)
@@ -142,15 +143,15 @@ private struct CenterView: View {
                 .lineLimit(3)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 10)
-
+            
             TextFieldWithStyle(inputValue: $inputValue, inputTitle: inputTitle)
         }
     }
-
+    
     func getWidthValidateButton() -> CGFloat {
         dimensionScreen.width * 0.6
     }
-
+    
     func getHeightValidateButton() -> CGFloat {
         dimensionScreen.height * 0.09
     }
@@ -161,7 +162,7 @@ private struct TextFieldWithStyle: View {
     let inputTitle: String
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var dimensionScreen: DimensionScreen
-
+    
     var body: some View {
         TextField(inputTitle, text: $inputValue)
             .keyboardType(.numbersAndPunctuation)
@@ -182,7 +183,7 @@ private struct ButtonValidate: View {
     let actionValidateButton: () -> Void
     let isInputValueValid: Bool
     @EnvironmentObject var dimensionScreen: DimensionScreen
-
+    
     var body: some View {
         Button(action: { self.actionValidateButton()  }) {
             Text(textButtonValidate)
@@ -206,12 +207,12 @@ private struct ButtonValidate: View {
             .cornerRadius(10)
             .disabled(!self.isInputValueValid)
     }
-
+    
     func getWidthValidateButton() -> CGFloat {
         dimensionScreen.width * 0.6
-
+        
     }
-
+    
     func getHeightValidateButton() -> CGFloat {
         dimensionScreen.height * 0.09
     }

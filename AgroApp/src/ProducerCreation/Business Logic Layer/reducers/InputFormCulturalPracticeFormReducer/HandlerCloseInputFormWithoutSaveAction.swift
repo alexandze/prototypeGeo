@@ -24,7 +24,7 @@ extension InputFormCulturalPracticeReducerHandler {
             }
             
             return newUtil.state.changeValue(
-                inputFormCulturalPracticeActionResponse: .closeInputFormWithoutSaveActionResponse
+                actionResponse: .closeInputFormWithoutSaveActionResponse
             )
         }
     }

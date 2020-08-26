@@ -51,7 +51,7 @@ class InputElementDataObservable: ElementUIDataObservable {
     var number: Int?
     var unitType: String?
     var typeValue: String?
-    
+    var subtitle: String?
 
     init(
         id: UUID? = nil,
@@ -65,7 +65,8 @@ class InputElementDataObservable: ElementUIDataObservable {
         regex: NSRegularExpression? = nil,
         number: Int? = nil,
         unitType: String? = nil,
-        typeValue: String? = nil
+        typeValue: String? = nil,
+        subtitle: String? = nil
     ) {
         self.value = value
         self.isValid = isValid
@@ -76,6 +77,7 @@ class InputElementDataObservable: ElementUIDataObservable {
         self.number = number
         self.unitType = unitType
         self.typeValue = typeValue
+        self.subtitle = subtitle
         
         if let id = id {
             super.init(id: id, type: type, title: title)
@@ -114,6 +116,7 @@ struct InputElement: InputElementData {
     var unitType: String?
     var typeValue: String?
     var regex: NSRegularExpression?
+    var subtitle: String?
     
     func toInputElementObservable() -> InputElementObservable {
         InputElementObservable(
@@ -127,7 +130,8 @@ struct InputElement: InputElementData {
             keyboardType: keyboardType,
             regex: regex,
             unitType: unitType,
-            typeValue: typeValue
+            typeValue: typeValue,
+            subtitle: subtitle
         )
     }
 }
@@ -147,7 +151,8 @@ class InputElementObservable: InputElementDataObservable {
         regex: NSRegularExpression? = nil,
         number: Int? = nil,
         unitType: String? = nil,
-        typeValue: String? = nil
+        typeValue: String? = nil,
+        subtitle: String? = nil
     ) {
         super.init(
             id: id,
@@ -161,7 +166,8 @@ class InputElementObservable: InputElementDataObservable {
             regex: regex,
             number: number,
             unitType: unitType,
-            typeValue: typeValue
+            typeValue: typeValue,
+            subtitle: subtitle
         )
     }
     

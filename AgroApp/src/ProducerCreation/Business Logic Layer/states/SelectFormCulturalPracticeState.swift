@@ -14,31 +14,36 @@ struct SelectFormCulturalPracticeState: Equatable {
     }
 
     var uuidState: String
-    var culturalPraticeElement: CulturalPracticeElementProtocol?
+    var selectElement: SelectElement?
+    var section: Section<ElementUIData>?
     var field: Field?
-    var selectFormCulturalParacticeSubAction: SelectFormCulturalPracticeSubAction?
     var isDirty: Bool?
+    var actionResponse: SelectFormCulturalPracticeActionResponse?
 
     func changeValue(
-        culturalPraticeElement: CulturalPracticeElementProtocol? = nil,
+        selectElement: SelectElement? = nil,
+        section: Section<ElementUIData>? = nil,
         field: Field? = nil,
         isDirty: Bool? = nil,
-        culturalPracticeSubAction: SelectFormCulturalPracticeSubAction? = nil
+        actionResponse: SelectFormCulturalPracticeActionResponse? = nil
     ) -> SelectFormCulturalPracticeState {
         SelectFormCulturalPracticeState(
             uuidState: UUID().uuidString,
-            culturalPraticeElement: culturalPraticeElement ?? self.culturalPraticeElement,
+            selectElement: selectElement ?? self.selectElement,
+            section: section ?? self.section,
             field: field ?? self.field,
-            selectFormCulturalParacticeSubAction: culturalPracticeSubAction ?? self.selectFormCulturalParacticeSubAction,
-            isDirty: isDirty ?? self.isDirty
+            isDirty: isDirty ?? self.isDirty,
+            actionResponse: actionResponse ?? self.actionResponse
         )
+    }
+    
+    enum SelectFormCulturalPracticeActionResponse {
+        case selectElementSelectedOnListActionResponse
+        case closeSelectFormWithSaveActionResponse
+        case closeSelectFormWithoutSaveAction
+        case setSelectFormIsDirtyActionResponse
+        case checkIfFormIsDirtyActionResponse
     }
 }
 
-enum SelectFormCulturalPracticeSubAction {
-    case newDataForm
-    case printAlert
-    case formIsDirty
-    case closeWithSave
-    case closeWithoutSave
-}
+

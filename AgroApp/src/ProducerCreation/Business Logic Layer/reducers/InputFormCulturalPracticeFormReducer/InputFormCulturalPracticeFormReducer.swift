@@ -23,6 +23,12 @@ extension Reducers {
         case let action as InputFormCulturalPracticeAction.CloseInputFormWithoutSaveAction:
             return InputFormCulturalPracticeReducerHandler
                 .HandlerCloseInputFormWithoutSaveAction().handle(action: action, state)
+        case let checkIfInputValueIsValidAction as InputFormCulturalPracticeAction.CheckIfInputValueIsValidAction:
+            return InputFormCulturalPracticeReducerHandler
+                .HandlerCheckIfInputValueIsValidAction().handle(action: checkIfInputValueIsValidAction, state)
+        case let checkIfFormIsValidAndDirtyForPrintAlertAction as InputFormCulturalPracticeAction.CheckIfFormIsValidAndDirtyForPrintAlertAction:
+            return InputFormCulturalPracticeReducerHandler
+                .HandlerCheckIfFormIsValidAndDirtyForPrintAlertAction().handle(action: checkIfFormIsValidAndDirtyForPrintAlertAction, state)
         default:
             return state
         }
