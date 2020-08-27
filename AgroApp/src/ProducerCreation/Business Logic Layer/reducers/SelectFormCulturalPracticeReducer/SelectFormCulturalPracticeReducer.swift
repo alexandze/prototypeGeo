@@ -17,11 +17,18 @@ extension Reducers {
         case let selectedElementOnListAction as SelectFormCulturalPracticeAction.SelectElementSelectedOnListAction:
             return SelectFormCulturalPracticeHandlerReducer
                 .HandlerSelectElementSelectedOnListAction().handle(action: selectedElementOnListAction, state)
+        case let closeSelectFormWithSaveAction as SelectFormCulturalPracticeAction.CloseSelectFormWithSaveAction:
+            return SelectFormCulturalPracticeHandlerReducer
+                .HandlerCloseSelectFormWithSaveAction().handle(action: closeSelectFormWithSaveAction, state)
+        case let closeSelectFormWithoutSaveAction as SelectFormCulturalPracticeAction.CloseSelectFormWithoutSaveAction:
+            return SelectFormCulturalPracticeHandlerReducer
+                .HandlerCloseSelectFormWithoutSaveAction().handle(action: closeSelectFormWithoutSaveAction, state)
+        case let checkIfFormIsDirtyAction as SelectFormCulturalPracticeAction.CheckIfFormIsDirtyAction:
+            return SelectFormCulturalPracticeHandlerReducer
+                .HandlerCheckIfFormIsDirtyAction().handle(action: checkIfFormIsDirtyAction, state)
         default:
-            break
+            return state
         }
-
-        return state
     }
 }
 

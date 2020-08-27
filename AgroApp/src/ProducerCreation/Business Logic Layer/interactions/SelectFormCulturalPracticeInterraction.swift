@@ -22,8 +22,36 @@ class SelectFormCulturalPracticeInterractionImpl: SelectFormCulturalPracticeInte
             )
         }
     }
+    
+    func updateCulturalPracticeElementAction(_ section: Section<ElementUIData>,_ field: Field) {
+        _ = Util.runInSchedulerBackground { [weak self] in
+            self?.actionDispatcher.dispatch(
+                CulturalPracticeFormAction.UpdateCulturalPracticeElementAction(section: section, field: field)
+            )
+        }
+    }
+    
+    func closeSelectFormWithoutSaveAction() {
+        _ = Util.runInSchedulerBackground { [weak self] in
+            self?.actionDispatcher.dispatch(
+                SelectFormCulturalPracticeAction.CloseSelectFormWithoutSaveAction()
+            )
+        }
+    }
+    
+    func checkIfFormIsDirtyAction(_ indexSelected: Int) {
+        _ = Util.runInSchedulerBackground { [weak self] in
+            self?.actionDispatcher.dispatch(
+                SelectFormCulturalPracticeAction.CheckIfFormIsDirtyAction(indexSelected: indexSelected)
+            )
+        }
+    }
 }
 
 protocol SelectFormCulturalPracticeInterraction {
     func closeSelectFormWithSaveAction(indexSelected: Int)
+    func updateCulturalPracticeElementAction(_ section: Section<ElementUIData>,_ field: Field)
+    func closeSelectFormWithoutSaveAction()
+    func checkIfFormIsDirtyAction(_ indexSelected: Int)
+    
 }

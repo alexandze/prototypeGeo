@@ -17,14 +17,12 @@ struct SelectFormCulturalPracticeState: Equatable {
     var selectElement: SelectElement?
     var section: Section<ElementUIData>?
     var field: Field?
-    var isDirty: Bool?
     var actionResponse: SelectFormCulturalPracticeActionResponse?
 
     func changeValue(
         selectElement: SelectElement? = nil,
         section: Section<ElementUIData>? = nil,
         field: Field? = nil,
-        isDirty: Bool? = nil,
         actionResponse: SelectFormCulturalPracticeActionResponse? = nil
     ) -> SelectFormCulturalPracticeState {
         SelectFormCulturalPracticeState(
@@ -32,7 +30,6 @@ struct SelectFormCulturalPracticeState: Equatable {
             selectElement: selectElement ?? self.selectElement,
             section: section ?? self.section,
             field: field ?? self.field,
-            isDirty: isDirty ?? self.isDirty,
             actionResponse: actionResponse ?? self.actionResponse
         )
     }
@@ -41,8 +38,7 @@ struct SelectFormCulturalPracticeState: Equatable {
         case selectElementSelectedOnListActionResponse
         case closeSelectFormWithSaveActionResponse
         case closeSelectFormWithoutSaveAction
-        case setSelectFormIsDirtyActionResponse
-        case checkIfFormIsDirtyActionResponse
+        case checkIfFormIsDirtyActionResponse(isDirty: Bool)
     }
 }
 

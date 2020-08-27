@@ -63,6 +63,18 @@ public class SelectFormCulturalPracticeViewController: UIViewController, UIPicke
             self?.selectFormCulturalPracticeView.textDetail = detailText
         }
         
+        selectFormCulturalPracticeViewModel.dismissViewController = {[weak self] in
+            self?.dismiss(animated: true)
+        }
+        
+        self.selectFormCulturalPracticeViewModel.printAlert = {[weak self] in
+            guard let self = self else {
+                return
+            }
+            
+            self.present(self.selectFormCulturalPracticeView.alert, animated: true)
+        }
+        
         selectFormCulturalPracticeViewModel.subscribeToCulturalPracticeFormObs()
     }
 

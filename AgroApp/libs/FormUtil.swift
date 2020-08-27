@@ -285,7 +285,7 @@ struct SelectElement: ElementUIData {
     var value: String?
     var isValid: Bool
     var isRequired: Bool
-    var values: [String]
+    var values: [(Int,String)]
     var typeValue: String
     var rawValue: Int?
 }

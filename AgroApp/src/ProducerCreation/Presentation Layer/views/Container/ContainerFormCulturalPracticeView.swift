@@ -103,7 +103,6 @@ private struct HeaderView: View {
 }
 
 private struct CenterView: View {
-    @Binding var inputValues: [String]
     @Binding var selecteValues: [Int]
     var inputElements: [CulturalPracticeInputElement]
     var selectElements: [CulturalPracticeMultiSelectElement]
@@ -128,8 +127,7 @@ private struct CenterView: View {
 }
 
 private struct InputElementListView: View {
-    var inputElements: [CulturalPracticeInputElement]
-    @Binding var inputValues: [String]
+    @ObservedObject var inputElements: [InputElementObservable] = []
     var isPrintMessageErrorInputValues: [Bool]
     var textErrorMessage: String
 
@@ -172,7 +170,7 @@ private struct InputElementListView: View {
 }
 
 private struct PickerListView: View {
-    var selectElements: [CulturalPracticeMultiSelectElement]
+    var selectElements: [SelectElement]
     @Binding var selectValue: [Int]
     @EnvironmentObject var dimensionScreen: DimensionScreen
 

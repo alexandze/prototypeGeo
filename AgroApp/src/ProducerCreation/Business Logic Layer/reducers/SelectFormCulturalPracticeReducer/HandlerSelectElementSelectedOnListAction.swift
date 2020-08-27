@@ -50,7 +50,6 @@ extension SelectFormCulturalPracticeHandlerReducer {
                 selectElement: newSelectElement,
                 section: newUtil.sectionSelected,
                 field: newUtil.fieldSelected,
-                isDirty: false,
                 actionResponse: .selectElementSelectedOnListActionResponse
             )
         }

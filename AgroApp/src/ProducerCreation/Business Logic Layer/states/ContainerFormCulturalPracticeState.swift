@@ -14,21 +14,13 @@ struct ContainerFormCulturalPracticeState: Equatable {
     }
 
     var uuidState: String
-    var containerElement: CulturalPracticeContainerElement?
     var field: Field?
-    var isDirty: Bool?
-    var subAction: SubAction?
-    var inputElements: [CulturalPracticeInputElement]?
-    var selectElements: [CulturalPracticeMultiSelectElement]?
-    var inputValues: [String]?
-    var selectValues: [Int]?
-    var previousInputValues: [String]?
-    var previousSelectValues: [Int]?
+    var section: Section<ElementUIData>?
+    var elementUIDataObservableList: [ElementUIDataObservable]?
     var isFormValid: Bool?
-    var inputRegularExpressions: [NSRegularExpression]?
-    var isPrintMessageErrorInputValues: [Bool]?
+    var actionResponse: ActionResponse?
 
-    enum SubAction {
+    enum ActionResponse {
         case containerElementSelectedOnListActionSuccess
         case checkIfFormIsDirtyActionSuccess
         case checkIfInputValueIsValidActionSuccess
@@ -36,35 +28,8 @@ struct ContainerFormCulturalPracticeState: Equatable {
     }
 
     func changeValue(
-        containerElement: CulturalPracticeContainerElement? = nil,
-        field: Field? = nil,
-        isDirty: Bool? = nil,
-        subAction: SubAction? = nil,
-        inputElements: [CulturalPracticeInputElement]? = nil,
-        selectElements: [CulturalPracticeMultiSelectElement]? = nil,
-        inputValues: [String]? = nil,
-        selectValues: [Int]? = nil,
-        previousInputValues: [String]? = nil,
-        previousSelectValues: [Int]? = nil,
-        isFormValid: Bool? = nil,
-        inputRegularExpressions: [NSRegularExpression]? = nil,
-        isPrintMessageErrorInputValues: [Bool]? = nil
+        
     ) -> ContainerFormCulturalPracticeState {
-        ContainerFormCulturalPracticeState(
-            uuidState: UUID().uuidString,
-            containerElement: containerElement ?? self.containerElement,
-            field: field ?? self.field,
-            isDirty: isDirty ?? self.isDirty,
-            subAction: subAction ?? self.subAction,
-            inputElements: inputElements ?? self.inputElements,
-            selectElements: selectElements ?? self.selectElements,
-            inputValues: inputValues ?? self.inputValues,
-            selectValues: selectValues ?? self.selectValues,
-            previousInputValues: previousInputValues ?? self.previousInputValues,
-            previousSelectValues: previousSelectValues ?? self.previousSelectValues,
-            isFormValid: isFormValid ?? self.isFormValid,
-            inputRegularExpressions: inputRegularExpressions ?? self.inputRegularExpressions,
-            isPrintMessageErrorInputValues: isPrintMessageErrorInputValues ?? self.isPrintMessageErrorInputValues
-        )
+        
     }
 }

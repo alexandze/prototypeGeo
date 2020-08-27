@@ -224,7 +224,7 @@ class FieldDetailsFactoryImpl: FieldDetailsFactory {
             value: selectValue.getValue(),
             isValid: true,
             isRequired: true,
-            values: type(of: selectValue).getValues(),
+            values: type(of: selectValue).getTupleValues(),
             typeValue: type(of: selectValue).getTypeValue(),
             rawValue: selectValue.getRawValue()
         )
@@ -250,7 +250,7 @@ class FieldDetailsFactoryImpl: FieldDetailsFactory {
                 value: selectValue.getValue(),
                 isValid: true,
                 isRequired: true,
-                values: type(of: selectValue).getValues(),
+                values: type(of: selectValue).getTupleValues(),
                 typeValue: type(of: selectValue).getTypeValue(),
                 rawValue: selectValue.getRawValue()
             )
@@ -323,7 +323,7 @@ class FieldDetailsFactoryImpl: FieldDetailsFactory {
             title: selectValueType.getTitle(),
             isValid: false,
             isRequired: true,
-            values: selectValueType.getValues(),
+            values: selectValueType.getTupleValues(),
             typeValue: selectValueType.getTypeValue()
         )
     }

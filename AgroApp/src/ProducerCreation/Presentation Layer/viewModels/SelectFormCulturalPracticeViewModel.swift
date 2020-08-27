@@ -15,12 +15,13 @@ class SelectFormCulturalPracticeViewModelImpl: SelectFormCulturalPracticeViewMod
     let selectFormCulturalPracticeInterraction: SelectFormCulturalPracticeInterraction
     var disposableCulturalPracticeFormObs: Disposable?
     var disposableDispatcher: Disposable?
-    let actionDispatcher: ActionDispatcher
     var setSelectedRow: ((Int) -> Void)?
     var getSelectedRow: (() -> Int)?
     var reloadPickerView: (() -> Void)?
     var setTitleText: ((String) -> Void)?
     var setDetailText: ((String) -> Void)?
+    var dismissViewController: (() -> Void)?
+    var printAlert: (() -> Void)?
     var state: SelectFormCulturalPracticeState?
 
     init(
@@ -43,7 +44,11 @@ class SelectFormCulturalPracticeViewModelImpl: SelectFormCulturalPracticeViewMod
             case .selectElementSelectedOnListActionResponse:
                 self.handleSelectElementSelectedOnListActionResponse()
             case .closeSelectFormWithSaveActionResponse:
-                
+                self.handleCloseSelectFormWithSaveActionResponse()
+            case .closeSelectFormWithoutSaveAction:
+                self.handleCloseSelectFormWithoutSaveAction()
+            case .checkIfFormIsDirtyActionResponse(isDirty: let isDirty):
+                self.handleCheckIfFormIsDirtyActionResponse(isDirty)
             }
         }
     }
@@ -64,7 +69,7 @@ class SelectFormCulturalPracticeViewModelImpl: SelectFormCulturalPracticeViewMod
             return nil
         }
         
-        return valueList[row]
+        return valueList[row].1
     }
     
     private func setTextForm() {
@@ -85,7 +90,11 @@ class SelectFormCulturalPracticeViewModelImpl: SelectFormCulturalPracticeViewMod
 // extention handler methode
 extension SelectFormCulturalPracticeViewModelImpl {
     func handleCloseButton() {
+        guard let indexSelected = getSelectedRow?() else {
+            return
+        }
         
+        selectFormCulturalPracticeInterraction.checkIfFormIsDirtyAction(indexSelected)
     }
     
     func handleValidateButton() {
@@ -97,11 +106,20 @@ extension SelectFormCulturalPracticeViewModelImpl {
     }
     
     func handleYesButtonAlert() {
-        
+        self.selectFormCulturalPracticeInterraction.closeSelectFormWithoutSaveAction()
     }
     
     func handleNoButtonAlert() {
+        selectFormCulturalPracticeInterraction.closeSelectFormWithoutSaveAction()
+    }
+    
+    private func handleCheckIfFormIsDirtyActionResponse(_ isDirty: Bool) {
+        if isDirty {
+            printAlert?()
+            return
+        }
         
+        self.selectFormCulturalPracticeInterraction.closeSelectFormWithoutSaveAction()
     }
     
     private func handleSelectElementSelectedOnListActionResponse() {
@@ -110,7 +128,17 @@ extension SelectFormCulturalPracticeViewModelImpl {
     }
     
     private func handleCloseSelectFormWithSaveActionResponse() {
+        guard let field = state?.field,
+            let section = state?.section else {
+                return
+        }
         
+        selectFormCulturalPracticeInterraction.updateCulturalPracticeElementAction(section, field)
+        dismissViewController?()
+    }
+    
+    private func handleCloseSelectFormWithoutSaveAction() {
+        dismissViewController?()
     }
 }
 
@@ -120,6 +148,8 @@ protocol SelectFormCulturalPracticeViewModel {
     var reloadPickerView: (() -> Void)? { get set }
     var setTitleText: ((String) -> Void)? { get set }
     var setDetailText: ((String) -> Void)? { get set }
+    var dismissViewController: (() -> Void)? { get set }
+    var printAlert: (() -> Void)? { get set }
     func subscribeToCulturalPracticeFormObs()
     func disposeToCulturalPracticeFormObs()
     func handleCloseButton()
