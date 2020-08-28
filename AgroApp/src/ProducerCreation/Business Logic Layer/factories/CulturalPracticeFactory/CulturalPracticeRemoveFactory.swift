@@ -39,7 +39,6 @@ class CulturalPracticeRemoveFactoryImpl: CulturalPracticeRemoveFactory {
         
         return copyCulturalPractice
     }
-    
 }
 
 protocol CulturalPracticeRemoveFactory {

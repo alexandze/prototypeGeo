@@ -24,6 +24,9 @@
 		7F5E1F5024F5BB4B00B3762D /* HandlerCheckIfFormIsValidAndDirtyForPrintAlertAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5E1F4F24F5BB4B00B3762D /* HandlerCheckIfFormIsValidAndDirtyForPrintAlertAction.swift */; };
 		7F5E1F5324F604D600B3762D /* HandlerSelectElementSelectedOnListAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5E1F5224F604D600B3762D /* HandlerSelectElementSelectedOnListAction.swift */; };
 		7F5E1F5524F6137600B3762D /* SelectFormCulturalPracticeInterraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5E1F5424F6137600B3762D /* SelectFormCulturalPracticeInterraction.swift */; };
+		7F63514524F884CD00EFD229 /* HandlerContainerElementSelectedOnListAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F63514424F884CD00EFD229 /* HandlerContainerElementSelectedOnListAction.swift */; };
+		7F63514724F8994500EFD229 /* ContainerFormCulturalPracticeInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F63514624F8994500EFD229 /* ContainerFormCulturalPracticeInteraction.swift */; };
+		7F63514924F8A54800EFD229 /* HandlerContainerCheckIfInputValueIsValidAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F63514824F8A54800EFD229 /* HandlerContainerCheckIfInputValueIsValidAction.swift */; };
 		7F65187C24F36E92003CA9E6 /* HandlerCloseInputFormWithSaveAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F65187B24F36E92003CA9E6 /* HandlerCloseInputFormWithSaveAction.swift */; };
 		7F65187E24F37494003CA9E6 /* HandlerInputElementSelectedOnListAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F65187D24F37494003CA9E6 /* HandlerInputElementSelectedOnListAction.swift */; };
 		7F6546B224EDC8220040F30E /* FieldDetailsTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6546B124EDC8220040F30E /* FieldDetailsTableViewHeader.swift */; };
@@ -32,6 +35,9 @@
 		7F95178A24F34B9A00BAE845 /* HandlerSelectElementOnListAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F95178924F34B9A00BAE845 /* HandlerSelectElementOnListAction.swift */; };
 		7F95178C24F354A300BAE845 /* HandleAddDoseFumierAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F95178B24F354A300BAE845 /* HandleAddDoseFumierAction.swift */; };
 		7FB78A2A24F4952500FBCA9A /* HandlerCloseInputFormWithoutSaveAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB78A2924F4952500FBCA9A /* HandlerCloseInputFormWithoutSaveAction.swift */; };
+		7FBEF40124F8B21300716014 /* HandlerCloseContainerFormWithSaveAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBEF40024F8B21300716014 /* HandlerCloseContainerFormWithSaveAction.swift */; };
+		7FBEF40324F8C5C600716014 /* HandlerCheckIfFormIsDirtyAndValidAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBEF40224F8C5C600716014 /* HandlerCheckIfFormIsDirtyAndValidAction.swift */; };
+		7FBEF40524F8D82900716014 /* HandlerCloseContainerFormWithoutSaveAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBEF40424F8D82900716014 /* HandlerCloseContainerFormWithoutSaveAction.swift */; };
 		7FD0BD5024E87A2E00EB86A3 /* Producer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD0BD4F24E87A2E00EB86A3 /* Producer.swift */; };
 		7FD0BD5224E87C6800EB86A3 /* Enterprise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD0BD5124E87C6800EB86A3 /* Enterprise.swift */; };
 		7FD0BD5424E8856800EB86A3 /* HandlerAddNimInputElementAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD0BD5324E8856800EB86A3 /* HandlerAddNimInputElementAction.swift */; };
@@ -217,6 +223,9 @@
 		7F5E1F4F24F5BB4B00B3762D /* HandlerCheckIfFormIsValidAndDirtyForPrintAlertAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerCheckIfFormIsValidAndDirtyForPrintAlertAction.swift; sourceTree = "<group>"; };
 		7F5E1F5224F604D600B3762D /* HandlerSelectElementSelectedOnListAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerSelectElementSelectedOnListAction.swift; sourceTree = "<group>"; };
 		7F5E1F5424F6137600B3762D /* SelectFormCulturalPracticeInterraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFormCulturalPracticeInterraction.swift; sourceTree = "<group>"; };
+		7F63514424F884CD00EFD229 /* HandlerContainerElementSelectedOnListAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerContainerElementSelectedOnListAction.swift; sourceTree = "<group>"; };
+		7F63514624F8994500EFD229 /* ContainerFormCulturalPracticeInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerFormCulturalPracticeInteraction.swift; sourceTree = "<group>"; };
+		7F63514824F8A54800EFD229 /* HandlerContainerCheckIfInputValueIsValidAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerContainerCheckIfInputValueIsValidAction.swift; sourceTree = "<group>"; };
 		7F65187B24F36E92003CA9E6 /* HandlerCloseInputFormWithSaveAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerCloseInputFormWithSaveAction.swift; sourceTree = "<group>"; };
 		7F65187D24F37494003CA9E6 /* HandlerInputElementSelectedOnListAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerInputElementSelectedOnListAction.swift; sourceTree = "<group>"; };
 		7F6546B124EDC8220040F30E /* FieldDetailsTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldDetailsTableViewHeader.swift; sourceTree = "<group>"; };
@@ -225,6 +234,9 @@
 		7F95178924F34B9A00BAE845 /* HandlerSelectElementOnListAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerSelectElementOnListAction.swift; sourceTree = "<group>"; };
 		7F95178B24F354A300BAE845 /* HandleAddDoseFumierAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleAddDoseFumierAction.swift; sourceTree = "<group>"; };
 		7FB78A2924F4952500FBCA9A /* HandlerCloseInputFormWithoutSaveAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerCloseInputFormWithoutSaveAction.swift; sourceTree = "<group>"; };
+		7FBEF40024F8B21300716014 /* HandlerCloseContainerFormWithSaveAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerCloseContainerFormWithSaveAction.swift; sourceTree = "<group>"; };
+		7FBEF40224F8C5C600716014 /* HandlerCheckIfFormIsDirtyAndValidAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerCheckIfFormIsDirtyAndValidAction.swift; sourceTree = "<group>"; };
+		7FBEF40424F8D82900716014 /* HandlerCloseContainerFormWithoutSaveAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerCloseContainerFormWithoutSaveAction.swift; sourceTree = "<group>"; };
 		7FD0BD4F24E87A2E00EB86A3 /* Producer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Producer.swift; sourceTree = "<group>"; };
 		7FD0BD5124E87C6800EB86A3 /* Enterprise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enterprise.swift; sourceTree = "<group>"; };
 		7FD0BD5324E8856800EB86A3 /* HandlerAddNimInputElementAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerAddNimInputElementAction.swift; sourceTree = "<group>"; };
@@ -482,6 +494,19 @@
 			path = SelectFormCulturalPracticeReducer;
 			sourceTree = "<group>";
 		};
+		7F63514324F8846500EFD229 /* ContainerFormCulturalPracticeReducer */ = {
+			isa = PBXGroup;
+			children = (
+				98CB79D024B81A1300EFFF19 /* ContainerFormCulturalPracticeReducer.swift */,
+				7F63514424F884CD00EFD229 /* HandlerContainerElementSelectedOnListAction.swift */,
+				7F63514824F8A54800EFD229 /* HandlerContainerCheckIfInputValueIsValidAction.swift */,
+				7FBEF40024F8B21300716014 /* HandlerCloseContainerFormWithSaveAction.swift */,
+				7FBEF40224F8C5C600716014 /* HandlerCheckIfFormIsDirtyAndValidAction.swift */,
+				7FBEF40424F8D82900716014 /* HandlerCloseContainerFormWithoutSaveAction.swift */,
+			);
+			path = ContainerFormCulturalPracticeReducer;
+			sourceTree = "<group>";
+		};
 		7F8AD78C24EA0C9F00C56282 /* AddProducerFormFactory */ = {
 			isa = PBXGroup;
 			children = (
@@ -588,6 +613,7 @@
 				9854BFFE240B9DD500E5AB8A /* CulturalPraticeFormInteraction.swift */,
 				7F5E1F4B24F59CAA00B3762D /* InputFormCulturalPracticeInteraction.swift */,
 				7F5E1F5424F6137600B3762D /* SelectFormCulturalPracticeInterraction.swift */,
+				7F63514624F8994500EFD229 /* ContainerFormCulturalPracticeInteraction.swift */,
 			);
 			path = interactions;
 			sourceTree = "<group>";
@@ -598,11 +624,11 @@
 				98363B4123DEDF6600AFFC63 /* MapFieldAction.swift */,
 				989CA7CD24C1AC6800AD3108 /* FieldListAction.swift */,
 				98EBA95324B1654A00D233D0 /* InputFormCulturalPracticeAction.swift */,
-				98CB79CE24B817EA00EFFF19 /* ContainerFormCulturalPracticeAction.swift */,
 				989090A924C1530800AFC080 /* ContainerTitleNavigationAction.swift */,
 				9810DA49242F184A00545A23 /* CulturalPracticeFormAction.swift */,
 				9891610624DC93CF005E1F7C /* AddProducerFormAction.swift */,
 				9810DA4D242F1F9A00545A23 /* SelectFormCulturalPracticeAction.swift */,
+				98CB79CE24B817EA00EFFF19 /* ContainerFormCulturalPracticeAction.swift */,
 			);
 			path = actions;
 			sourceTree = "<group>";
@@ -610,13 +636,13 @@
 		98363B3423DECB2800AFFC63 /* reducers */ = {
 			isa = PBXGroup;
 			children = (
+				7F63514324F8846500EFD229 /* ContainerFormCulturalPracticeReducer */,
 				7F5E1F5124F6045D00B3762D /* SelectFormCulturalPracticeReducer */,
 				7F95178D24F36E3100BAE845 /* InputFormCulturalPracticeFormReducer */,
 				9891610824DC93F6005E1F7C /* AddProducerFormReducer */,
 				98C2A84024D5BE8600A8625C /* FieldListReducer */,
 				98A8D9C424D40BE800041391 /* CulturalPracticeFormReducer */,
 				989090AB24C18B9D00AFC080 /* MapFieldReducer.swift */,
-				98CB79D024B81A1300EFFF19 /* ContainerFormCulturalPracticeReducer.swift */,
 				989090A724C1517400AFC080 /* ContainerTitleNavigationReducer.swift */,
 			);
 			path = reducers;
@@ -1309,6 +1335,7 @@
 				9810DA42242F0FCA00545A23 /* SelectFormCulturalPracticeViewController.swift in Sources */,
 				980ECA142430261700AAD0AB /* SelectFormCulturalPracticeView.swift in Sources */,
 				9805683823B954630056D199 /* FarmerTableViewModel.swift in Sources */,
+				7F63514524F884CD00EFD229 /* HandlerContainerElementSelectedOnListAction.swift in Sources */,
 				98F126AA24C71658001853D5 /* CouvertureAssociee.swift in Sources */,
 				98B9992423B50E0800CA7EF9 /* Section.swift in Sources */,
 				7F95178A24F34B9A00BAE845 /* HandlerSelectElementOnListAction.swift in Sources */,
@@ -1335,9 +1362,11 @@
 				98F1269E24C6F029001853D5 /* Avaloir.swift in Sources */,
 				7F34F01D24E76FF7001278CA /* AddProducerFormService.swift in Sources */,
 				9847564524AED2FC0048A503 /* InputFormCulturalPracticeView.swift in Sources */,
+				7F63514724F8994500EFD229 /* ContainerFormCulturalPracticeInteraction.swift in Sources */,
 				98363B5123DEEC7A00AFFC63 /* mapFieldMiddleware.swift in Sources */,
 				9860400423BD868A00D5B538 /* FarmerTableVIewControllerState.swift in Sources */,
 				7F5E1F5524F6137600B3762D /* SelectFormCulturalPracticeInterraction.swift in Sources */,
+				7FBEF40524F8D82900716014 /* HandlerCloseContainerFormWithoutSaveAction.swift in Sources */,
 				98D1929B23C034A600BF9A7A /* FamerViewCell.swift in Sources */,
 				98943408240F901D003C0110 /* SelectedFieldRightCalloutView.swift in Sources */,
 				9854BFFB240B956400E5AB8A /* CulturalPracticeFormState.swift in Sources */,
@@ -1369,6 +1398,7 @@
 				98363B2D23DECA3F00AFFC63 /* MapFieldViewController.swift in Sources */,
 				98A2C54A240E6BD9002A884B /* PayloadFieldAnnotation.swift in Sources */,
 				7F5E1F5324F604D600B3762D /* HandlerSelectElementSelectedOnListAction.swift in Sources */,
+				7FBEF40124F8B21300716014 /* HandlerCloseContainerFormWithSaveAction.swift in Sources */,
 				7F5B76BF24F1A2AD00392605 /* CulturalPracticeFactory.swift in Sources */,
 				989090A424C059C000AFC080 /* ContainerTitleNavigationViewModel.swift in Sources */,
 				98F126BA24C8F078001853D5 /* AlMehlich3.swift in Sources */,
@@ -1399,6 +1429,7 @@
 				98363B3023DECA9F00AFFC63 /* MapFieldViewModel.swift in Sources */,
 				98D1929023BFFF7C00BF9A7A /* Actions.swift in Sources */,
 				9847564724AED9FC0048A503 /* InputFormCulturalPracticeViewModel.swift in Sources */,
+				7FBEF40324F8C5C600716014 /* HandlerCheckIfFormIsDirtyAndValidAction.swift in Sources */,
 				98B9990823B5076000CA7EF9 /* SceneDelegate.swift in Sources */,
 				7FEF13C724F72C460034B96C /* HandlerCloseSelectFormWithoutSaveAction.swift in Sources */,
 				98D192A023C03E0800BF9A7A /* GetFarmersMiddleware.swift in Sources */,
@@ -1407,6 +1438,7 @@
 				7FD0BD5024E87A2E00EB86A3 /* Producer.swift in Sources */,
 				98CB79CD24B8166200EFFF19 /* ContainerFormCulturalPracticeState.swift in Sources */,
 				98363B4A23DEE3C900AFFC63 /* UtilFileReader.swift in Sources */,
+				7F63514924F8A54800EFD229 /* HandlerContainerCheckIfInputValueIsValidAction.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

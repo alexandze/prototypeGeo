@@ -324,13 +324,17 @@ class FieldDetailsFactoryImpl: FieldDetailsFactory {
             isValid: false,
             isRequired: true,
             values: selectValueType.getTupleValues(),
-            typeValue: selectValueType.getTypeValue()
+            typeValue: selectValueType.getTypeValue(),
+            rawValue: Util.hasIndexInArray(selectValueType.getTupleValues(), index: 0)
+                ? selectValueType.getTupleValues()[0].0
+                : 0
         )
     }
     
     private func createElementUIDataWithNilValue(_ inputValueType: InputValue.Type) -> ElementUIData {
         InputElement(
             title: inputValueType.getTitle(),
+            value: "",
             isValid: false,
             isRequired: true,
             regexPattern: inputValueType.getRegexPattern(),

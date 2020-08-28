@@ -11,27 +11,17 @@ import ReSwift
 
 struct ContainerFormCulturalPracticeAction {
     struct ContainerElementSelectedOnListAction: Action {
-        var containerElement: CulturalPracticeContainerElement
+        var section: Section<ElementUIData>
         var field: Field
-        var subAction:  ContainerFormCulturalPracticeState.SubAction = .containerElementSelectedOnListActionSuccess
     }
 
-    struct CheckIfFormIsDirtyAndValidAction: Action {
-        var inputValues: [String]
-        var selectValue: [Int]
-    }
+    struct CheckIfFormIsDirtyAndValidAction: Action { }
 
     struct CheckIfInputValueIsValidAction: Action {
-        var inputValues: [String]
+        var id: UUID
+        var value: String
     }
-
-    struct CheckIfFormIsValidAction: Action {
-        var inputValues: [String]
-        var selectValue: [Int]
-    }
-
-    struct UpdateContainerElementAction: Action {
-        var inputValues: [String]
-        var selectValues: [Int]
-    }
+    
+    struct CloseContainerFormWithSaveAction: Action { }
+    struct CloseContainerFormWithoutSaveAction: Action { }
 }

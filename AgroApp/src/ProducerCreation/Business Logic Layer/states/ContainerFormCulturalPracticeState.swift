@@ -21,15 +21,27 @@ struct ContainerFormCulturalPracticeState: Equatable {
     var actionResponse: ActionResponse?
 
     enum ActionResponse {
-        case containerElementSelectedOnListActionSuccess
-        case checkIfFormIsDirtyActionSuccess
-        case checkIfInputValueIsValidActionSuccess
-        case updateContainerElementActionSuccess
+        case containerElementSelectedOnListActionResponse
+        case checkIfFormIsDirtyAndValidAction(isPrintAlert: Bool)
+        case checkIfInputValueIsValidActionResponse(indexElementUIData: Int)
+        case closeContainerFormWithSaveActionResponse
+        case closeContainerFormWithoutSaveActionResponse
     }
 
     func changeValue(
-        
+        field: Field? = nil,
+        section: Section<ElementUIData>? = nil,
+        elementUIDataObservableList: [ElementUIDataObservable]? = nil,
+        isFormValid: Bool? = nil,
+        actionResponse: ActionResponse
     ) -> ContainerFormCulturalPracticeState {
-        
+        ContainerFormCulturalPracticeState(
+            uuidState: UUID().uuidString,
+            field: field ?? self.field,
+            section: section ?? self.section,
+            elementUIDataObservableList: elementUIDataObservableList ?? self.elementUIDataObservableList,
+            isFormValid: isFormValid ?? self.isFormValid,
+            actionResponse: actionResponse
+        )
     }
 }

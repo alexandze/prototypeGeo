@@ -27,6 +27,14 @@ class ElementUIDataObservable: ObservableObject, Identifiable {
         self.title = title
         id.map { self.id = $0 }
     }
+    
+    func toInputElementObservable() -> InputElementObservable? {
+        self as? InputElementObservable
+    }
+    
+    func toSelectElementObservable() -> SelectElementObservable? {
+        self as? SelectElementObservable
+    }
 }
 
 // MARK: - ImputElementData
@@ -34,7 +42,7 @@ class ElementUIDataObservable: ObservableObject, Identifiable {
 protocol InputElementData: ElementUIData {
     var type: String {get set}
     var title: String {get set}
-    var value: String? {get set}
+    var value: String {get set}
     var isValid: Bool {get set}
     var isRequired: Bool {get set}
     var regexPattern: String {get set}
@@ -108,7 +116,7 @@ struct InputElement: InputElementData {
     var id: UUID = UUID()
     var type: String = InputElement.TYPE_ELEMENT
     var title: String
-    var value: String?
+    var value: String
     var isValid: Bool
     var isRequired: Bool
     var regexPattern: String
@@ -123,7 +131,7 @@ struct InputElement: InputElementData {
             id: id,
             type: type,
             title: title,
-            value: value ?? "",
+            value: value,
             isValid: isValid,
             isRequired: isRequired,
             regexPattern: regexPattern,
@@ -199,7 +207,7 @@ struct InputElementWithRemoveButton: InputElementData {
     var id: UUID = UUID()
     var type: String = InputElementWithRemoveButton.TYPE_ELEMENT
     var title: String
-    var value: String?
+    var value: String
     var isValid: Bool
     var isRequired: Bool
     var action: String
@@ -287,7 +295,66 @@ struct SelectElement: ElementUIData {
     var isRequired: Bool
     var values: [(Int,String)]
     var typeValue: String
-    var rawValue: Int?
+    var rawValue: Int
+    
+    func toSelectElementObservable() -> SelectElementObservable {
+        SelectElementObservable(
+            id: id,
+            type: type,
+            title: title,
+            value: value,
+            isValid: isValid,
+            isRequired: isRequired,
+            values: values,
+            typeValue: typeValue,
+            rawValue: rawValue
+        )
+    }
+}
+
+class SelectElementObservable: ElementUIDataObservable {
+    static let TYPE_ELEMENT = "SELECT_ELEMENT"
+    var value: String?
+    var isValid: Bool
+    var isRequired: Bool
+    var values:  [(Int,String)]
+    var typeValue: String
+    @Published var rawValue: Int
+    
+    init(
+        id: UUID? = nil,
+        type: String? = nil,
+        title: String,
+        value: String?,
+        isValid: Bool,
+        isRequired: Bool,
+        values:  [(Int,String)],
+        typeValue: String,
+        rawValue: Int
+    ) {
+        self.value = value
+        self.isValid = isValid
+        self.isRequired = true
+        self.values = values
+        self.typeValue = typeValue
+        self.rawValue = rawValue
+        let type = type ?? SelectElementObservable.TYPE_ELEMENT
+        super.init(id: id, type: type, title: title)
+    }
+    
+    func toSelectElement() -> SelectElement {
+        SelectElement(
+            id: id,
+            type: type,
+            title: title,
+            value: value,
+            isValid: isValid,
+            isRequired: isRequired,
+            values: values,
+            typeValue: typeValue,
+            rawValue: rawValue
+        )
+    }
 }
 
 enum ElementFormAction: String {
@@ -312,7 +379,6 @@ enum KeyboardType: String {
         }
     }
 }
-
 
 struct RowWithButton: ElementUIData {
     static let TYPE_ELEMENT = "ROW_WITH_BUTTON"

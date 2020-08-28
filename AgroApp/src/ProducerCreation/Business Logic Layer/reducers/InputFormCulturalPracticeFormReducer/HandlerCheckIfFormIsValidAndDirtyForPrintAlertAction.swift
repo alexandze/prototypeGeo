@@ -9,7 +9,6 @@
 import Foundation
 
 extension InputFormCulturalPracticeReducerHandler {
-    
     class HandlerCheckIfFormIsValidAndDirtyForPrintAlertAction: HandlerReducer {
         func handle(
             action: InputFormCulturalPracticeAction.CheckIfFormIsValidAndDirtyForPrintAlertAction,

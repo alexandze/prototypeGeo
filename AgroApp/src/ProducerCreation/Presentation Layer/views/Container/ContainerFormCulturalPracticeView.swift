@@ -12,7 +12,7 @@ struct ContainerFormCulturalPracticeView: View {
     let viewModel: ContainerFormCulturalPracticeViewModel
     @ObservedObject var viewState: ContainerFormCulturalPracticeViewModelImpl.ViewState
     @ObservedObject var keyboardFollower: KeyboardFollower
-
+    
     init(
         viewModel: ContainerFormCulturalPracticeViewModel,
         keyboardFollower: KeyboardFollower
@@ -21,7 +21,7 @@ struct ContainerFormCulturalPracticeView: View {
         self.viewState = viewModel.viewState
         self.keyboardFollower = keyboardFollower
     }
-
+    
     var body: some View {
         GeometryReader { (geometry: GeometryProxy) in
             VStack {
@@ -29,29 +29,21 @@ struct ContainerFormCulturalPracticeView: View {
                     title: self.viewState.titleForm,
                     actionCloseButton: { self.viewModel.handleButtonClose() }
                 )
-
+                
                 Spacer()
-
-                CenterView(
-                    inputValues: self.$viewState.inputValues,
-                    selecteValues: self.$viewState.selectValue,
-                    inputElements: self.viewState.inputElements,
-                    selectElements: self.viewState.selectElements,
-                    isPrintMessageErrorInputValues: self.viewState.isPrintMessageErrorInputValues,
-                    textErrorMessage: self.viewState.textErrorMessage
-                )
-
+                
+                CenterView(viewState: self.viewState)
+                
                 Spacer()
-
+                
                 ButtonValidate(
                     isButtonActivated: self.viewState.isFormValid,
                     handleButton: { self.viewModel.handleButtonValidate() }
                 ).padding(.bottom, 10)
-
+                
             }.onAppear {
                 self.viewModel.configView()
                 self.viewModel.subscribeToStateObserver()
-                self.viewModel.subscribeToChangeInputValue()
             }.onDisappear {
                 self.viewModel.disposeObserver()
             }.environmentObject(
@@ -59,7 +51,7 @@ struct ContainerFormCulturalPracticeView: View {
             ).alert(isPresented: self.$viewState.presentAlert, content: self.createAlert)
         }
     }
-
+    
     private func createAlert() -> Alert {
         Alert(
             title: Text(self.viewState.textAlert),
@@ -80,15 +72,15 @@ private struct HeaderView: View {
     var title: String
     var actionCloseButton: () -> Void
     @EnvironmentObject var dimensionScreen: DimensionScreen
-
+    
     var body: some View {
         HStack(alignment: .top) {
             UIButtonRepresentable { self.actionCloseButton() }
                 .fixedSize()
                 .offset(x: 5, y: 5)
-
+            
             Spacer()
-
+            
             Text(title)
                 .font(.system(size: 25))
                 .bold()
@@ -96,136 +88,99 @@ private struct HeaderView: View {
                 .lineLimit(3)
                 .multilineTextAlignment(.center)
                 .offset(x: -15, y: 10)
-
+            
             Spacer()
         }
     }
 }
 
 private struct CenterView: View {
-    @Binding var selecteValues: [Int]
-    var inputElements: [CulturalPracticeInputElement]
-    var selectElements: [CulturalPracticeMultiSelectElement]
+    @ObservedObject var viewState: ContainerFormCulturalPracticeViewModelImpl.ViewState
     @EnvironmentObject var dimensionScreen: DimensionScreen
-    var isPrintMessageErrorInputValues: [Bool]
-    var textErrorMessage: String
-
+    
     var body: some View {
         ScrollView {
             VStack {
-                InputElementListView(
-                    inputElements: inputElements,
-                    inputValues: $inputValues,
-                    isPrintMessageErrorInputValues: isPrintMessageErrorInputValues,
-                    textErrorMessage: textErrorMessage
-                )
-
-                PickerListView(selectElements: selectElements, selectValue: $selecteValues)
+                ForEach(self.viewState.elementUIDataObservableList) { (elementUIData: ElementUIDataObservable) in
+                    if elementUIData.type == InputElementObservable.TYPE_ELEMENT &&
+                        self.canCastToInputElementObservable(elementUIData) {
+                        TextFieldWithStyle(inputElement: elementUIData.toInputElementObservable()!)
+                    }
+                    
+                    if elementUIData.type == SelectElementObservable.TYPE_ELEMENT &&
+                        self.canCastToSelectElementObservable(elementUIData) {
+                        PickerView(selectElementObservable: elementUIData.toSelectElementObservable()!)
+                    }
+                }
             }
         }
     }
-}
-
-private struct InputElementListView: View {
-    @ObservedObject var inputElements: [InputElementObservable] = []
-    var isPrintMessageErrorInputValues: [Bool]
-    var textErrorMessage: String
-
-    var body: some View {
-        ForEach((0..<inputElements.count), id: \.self) { index in
-            VStack {
-                Text(self.inputElements[index].title)
-                    .font(.system(size: 15))
-                    .bold()
-                    .lineLimit(3)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 10)
-                    .padding(.bottom, 5)
-
-                TextFieldWithStyle(
-                    inputValue: self.$inputValues[index],
-                    inputTitle:self.inputElements[index].valueEmpty.getUnitType()!.convertToString()
-                )
-
-                if self.isPrintMessageErrorInputValuesReady(
-                    isPrintMessageErrorInputValues: self.isPrintMessageErrorInputValues,
-                    index: index) {
-                    Text(!self.isPrintMessageErrorInputValues[index] ? self.textErrorMessage : "")
-                        .font(.system(size: 15))
-                        .bold()
-                        .foregroundColor(.red)
-                        .multilineTextAlignment(.center)
-                        .animation(.default)
-                }
-            }.padding(
-                index == 0 ? .vertical : .bottom,
-                30
-            )
-        }
+    
+    func canCastToInputElementObservable(_ elementUIData: ElementUIDataObservable) -> Bool {
+        elementUIData.toInputElementObservable() != nil
     }
-
-    func isPrintMessageErrorInputValuesReady(isPrintMessageErrorInputValues: [Bool], index: Int) -> Bool {
-        isPrintMessageErrorInputValues.count > index
+    
+    func canCastToSelectElementObservable(_ elementUIData: ElementUIDataObservable) -> Bool {
+        elementUIData.toSelectElementObservable() != nil
     }
 }
 
-private struct PickerListView: View {
-    var selectElements: [SelectElement]
-    @Binding var selectValue: [Int]
+private struct PickerView: View {
+    @ObservedObject var selectElementObservable: SelectElementObservable
     @EnvironmentObject var dimensionScreen: DimensionScreen
-
+    
     var body: some View {
-        ForEach((0..<selectElements.count), id: \.self) { indexElement in
-            VStack {
-                Text(self.selectElements[indexElement].title)
-                    .font(.system(size: 15))
-                    .bold()
-                    .lineLimit(3)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 10)
-                    .padding(.bottom, 5)
-
-                if self.isSelectValueIsReady(selectValue: self.selectValue, index: indexElement) {
-                    Picker(selection: self.$selectValue[indexElement], label: Text("")) {
-                        ForEach((0..<self.selectElements[indexElement].tupleCulturalTypeValue.count), id: \.self) { indexTupleValue in
-                            Text(self.selectElements[indexElement].tupleCulturalTypeValue[indexTupleValue].1)
-                                .font(.system(size: 15))
-                                .tag(indexTupleValue)
-                        }
-                    }.frame(
-                        width: self.dimensionScreen.width * 0.1,
-                        height: self.dimensionScreen.height * 0.1, alignment: .center
-                    ).pickerStyle(WheelPickerStyle())
+        VStack {
+            Text(self.selectElementObservable.title)
+                .font(.system(size: 15))
+                .bold()
+                .lineLimit(3)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 10)
+                .padding(.bottom, 5)
+            
+            
+            Picker(selection: self.$selectElementObservable.rawValue, label: Text("")) {
+                ForEach((0..<self.selectElementObservable.values.count), id: \.self) { indexTupleValue in
+                    Text(self.selectElementObservable.values[indexTupleValue].1)
+                        .font(.system(size: 15))
+                        .tag(indexTupleValue)
                 }
-            }.padding(.bottom, 70)
-        }
-    }
-
-    func isSelectValueIsReady(selectValue: [Int], index: Int) -> Bool {
-        selectValue.count > index
+            }.frame(
+                width: self.dimensionScreen.width * 0.1,
+                height: self.dimensionScreen.height * 0.1, alignment: .center
+            ).pickerStyle(WheelPickerStyle())
+            
+        }.padding(.bottom, 70)
     }
 }
 
 private struct TextFieldWithStyle: View {
-    @Binding var inputValue: String
-
-    let inputTitle: String
+    @ObservedObject var inputElement: InputElementObservable
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var dimensionScreen: DimensionScreen
-
+    
     var body: some View {
-        TextField(inputTitle, text: $inputValue)
-            .keyboardType(.numbersAndPunctuation)
-            .font(.system(size: 25))
-            .padding(.horizontal, 10)
-            .frame(
-                width: self.dimensionScreen.width * 0.3,
-                height: (self.dimensionScreen.height * 0.1),
-                alignment: .center
-        )
-            .background(colorScheme == .dark ? Color.black : Color.white)
-            .cornerRadius(5)
-
+        VStack {
+            Text(self.inputElement.title)
+                .font(.system(size: 15))
+                .bold()
+                .lineLimit(3)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 10)
+                .padding(.bottom, 5)
+            
+            TextField(self.inputElement.title, text: self.$inputElement.value)
+                .keyboardType(.numbersAndPunctuation)
+                .font(.system(size: 25))
+                .padding(.horizontal, 10)
+                .frame(
+                    width: self.dimensionScreen.width * 0.3,
+                    height: self.dimensionScreen.height * 0.1,
+                    alignment: .center
+            ).background(colorScheme == .dark ? Color.black : Color.white)
+                .cornerRadius(5)
+        }
     }
 }
 
@@ -233,7 +188,7 @@ private struct ButtonValidate: View {
     var isButtonActivated: Bool
     var handleButton: () -> Void
     @EnvironmentObject var dimensionScreen: DimensionScreen
-
+    
     var body: some View {
         Button(action: { self.handleButton() }) {
             Text("Valider")
@@ -246,22 +201,20 @@ private struct ButtonValidate: View {
                     maxHeight: self.getHeightValidateButton(),
                     alignment: .center
             )
-        }
-        .frame(
+        }.frame(
             width: self.getWidthValidateButton(),
             height: self.getHeightValidateButton(),
             alignment: .center
-        )
-            .foregroundColor(.white)
+        ).foregroundColor(.white)
             .background(Color(Util.getGreenColor()))
             .cornerRadius(10)
             .disabled(!self.isButtonActivated)
     }
-
+    
     func getWidthValidateButton() -> CGFloat {
         dimensionScreen.width * 0.6
     }
-
+    
     func getHeightValidateButton() -> CGFloat {
         dimensionScreen.height * 0.09
     }

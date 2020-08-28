@@ -17,33 +17,36 @@ extension SelectFormCulturalPracticeHandlerReducer {
             let util = UtilHandlerCloseSelectFormWithSaveAction(state: state, indexSelected: action.indexSelected)
             
             return (
-                getRawSelectedByIndex(util: ) >>>
-                    setRawValueOfSelectElement(util: ) >>>
+                getRawAndValueSelectedByIndex(util: ) >>>
+                    setRawAndValueOfSelectElement(util: ) >>>
                     setSectionWithSelectElement(util: ) >>>
                     newState(util: )
-            )(util) ?? state
+                )(util) ?? state
         }
         
-        private func getRawSelectedByIndex(util: UtilHandlerCloseSelectFormWithSaveAction?) -> UtilHandlerCloseSelectFormWithSaveAction? {
+        private func getRawAndValueSelectedByIndex(util: UtilHandlerCloseSelectFormWithSaveAction?) -> UtilHandlerCloseSelectFormWithSaveAction? {
             guard var newUtil = util,
                 let selectElement = newUtil.state.selectElement,
                 Util.hasIndexInArray(selectElement.values, index: newUtil.indexSelected)
-            else {
-                return nil
+                else {
+                    return nil
             }
             
             newUtil.rawValueSelected = selectElement.values[newUtil.indexSelected].0
+            newUtil.valueSelected = selectElement.values[newUtil.indexSelected].1
             return newUtil
         }
         
-        private func setRawValueOfSelectElement(util: UtilHandlerCloseSelectFormWithSaveAction?) -> UtilHandlerCloseSelectFormWithSaveAction? {
+        private func setRawAndValueOfSelectElement(util: UtilHandlerCloseSelectFormWithSaveAction?) -> UtilHandlerCloseSelectFormWithSaveAction? {
             guard var newUtil = util,
                 let rawSelected = newUtil.rawValueSelected,
-                 var selectElement = newUtil.state.selectElement else {
-                return nil
+                let valueSelected = newUtil.valueSelected,
+                var selectElement = newUtil.state.selectElement else {
+                    return nil
             }
             
             selectElement.rawValue = rawSelected
+            selectElement.value = valueSelected
             newUtil.newSelectElement = selectElement
             return newUtil
         }
@@ -53,8 +56,8 @@ extension SelectFormCulturalPracticeHandlerReducer {
                 let newSelectElement = newUtil.newSelectElement,
                 var section = newUtil.state.section,
                 Util.hasIndexInArray(section.rowData, index: 0)
-            else {
-                return nil
+                else {
+                    return nil
             }
             
             section.rowData[0] = newSelectElement
@@ -66,8 +69,8 @@ extension SelectFormCulturalPracticeHandlerReducer {
             guard let newUtil = util,
                 let newSection = newUtil.newSection,
                 let newSelectElement = newUtil.newSelectElement
-            else {
-                return nil
+                else {
+                    return nil
             }
             
             return newUtil.state.changeValue(
@@ -82,6 +85,7 @@ extension SelectFormCulturalPracticeHandlerReducer {
         var state: SelectFormCulturalPracticeState
         var indexSelected: Int
         var rawValueSelected: Int?
+        var valueSelected: String?
         var newSelectElement: SelectElement?
         var newSection: Section<ElementUIData>?
     }

@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import RxSwift
+import ReSwift
 
 // TODO afficher les messages deinit seulement en mode debug
 // TODO deinit les states
@@ -89,6 +90,12 @@ class Util {
             return Disposables.create()
         }.subscribeOn(Util.getSchedulerBackgroundForReSwift())
         .subscribe()
+    }
+    
+    static public func dispatchActionInSchedulerReSwift(_ action: Action, actionDispatcher: ActionDispatcher) {
+        let _  = runInSchedulerBackground {
+            actionDispatcher.dispatch(action)
+        }
     }
 
     static public func createRunCompletable(_ funcRun: @escaping () -> Void) -> Completable {

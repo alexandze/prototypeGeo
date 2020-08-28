@@ -28,12 +28,7 @@ extension SelectFormCulturalPracticeHandlerReducer {
                 return nil
             }
             
-            guard let initRawValue = selectElement.rawValue else {
-                newUtil.isFormDirty = true
-                return newUtil
-            }
-            
-            newUtil.isFormDirty = initRawValue != newUtil.indexSelected
+            newUtil.isFormDirty = selectElement.rawValue != newUtil.indexSelected
             return newUtil
         }
         
