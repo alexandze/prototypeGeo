@@ -21,9 +21,9 @@ class ContainerElementView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(containerElement: CulturalPracticeContainerElement) {
+    init(elementUIListData: ElementUIListData) {
         super.init(frame: .zero)
-        initView(containerElement: containerElement)
+        initView(elementUIListData)
     }
 
     func addViewTo(contentView: UIView) {
@@ -37,17 +37,20 @@ class ContainerElementView: UIView {
         ])
     }
 
-    private func initView(containerElement: CulturalPracticeContainerElement) {
-        let labels = createLabelsFor(containerElement: containerElement)
-        initContraintOf(labelsTitleAndValue: labels, containerElement: containerElement)
+    private func initView(_ elementUIDataList: ElementUIListData) {
+        let labels = createLabelsWithElementUIListData(elementUIDataList)
+        initContraintOfLabelsTitleAndValue(labels, titleContainer: elementUIDataList.title)
     }
 
-    private func initContraintOf(labelsTitleAndValue: [(UILabel, (UILabel, UIImageView))], containerElement: CulturalPracticeContainerElement) {
+    private func initContraintOfLabelsTitleAndValue(
+        _ labelsTitleAndValue: [(UILabel, (UILabel, UIImageView))],
+        titleContainer: String
+    ) {
         (0..<labelsTitleAndValue.count).forEach { index in
             self.addToParentView(labelsTitleAndValue: labelsTitleAndValue[index])
 
             if index == 0 {
-                let titleCellLabel = createLabelFor(titleCell: containerElement.title)
+                let titleCellLabel = createLabelFor(titleCell: titleContainer)
                 addToParentView(label: titleCellLabel)
                 NSLayoutConstraint.activate(createContraintToParentViewFor(titleCellLabel: titleCellLabel))
 
@@ -149,22 +152,22 @@ class ContainerElementView: UIView {
         parentView.addSubview(label)
     }
 
-    private func createLabelsFor(containerElement: CulturalPracticeContainerElement) -> [(UILabel, (UILabel, UIImageView))] {
-        let inputTitlesValues = initLabelTitleAndValueWith(culturalInputElement: containerElement.culturalInputElement)
-        let multiSlectTitlesValues = initLabelTitleAndValueWith(culturalMultiSelectElement: containerElement.culturalPracticeMultiSelectElement)
-        return (inputTitlesValues + multiSlectTitlesValues)
+    private func createLabelsWithElementUIListData(_ containerElement: ElementUIListData) -> [(UILabel, (UILabel, UIImageView))] {
+        let inputTitlesValues = initLabelTitleAndValueInputElement(containerElement.elements)
+        let selectTitlesValues = initLabelTitleAndValueSelectElement(containerElement.elements)
+        return (inputTitlesValues + selectTitlesValues)
     }
 
-    private func initLabelTitleAndValueWith(culturalInputElement: [CulturalPracticeElementProtocol]) -> [(UILabel, (UILabel, UIImageView))] {
+    private func initLabelTitleAndValueInputElement(_ elements: [ElementUIData]) -> [(UILabel, (UILabel, UIImageView))] {
         var labelTitleValue: [(UILabel, (UILabel, UIImageView))] = []
 
-        (0..<culturalInputElement.count).forEach { index in
-            if let culturalPracticeInputElement = culturalInputElement[index] as? CulturalPracticeInputElement {
+        (0..<elements.count).forEach { index in
+            if let inputElement = elements[index] as? InputElement {
 
                 labelTitleValue.append(
                     (
-                        createLabelFor(title: culturalPracticeInputElement.title),
-                        createLabelFor(culturalPracticeValue: culturalPracticeInputElement.value)
+                        createLabelWithTitle(inputElement.title),
+                        createLabelWithValue(inputElement.value)
                     )
                 )
             }
@@ -173,15 +176,15 @@ class ContainerElementView: UIView {
         return labelTitleValue
     }
 
-    private func initLabelTitleAndValueWith(culturalMultiSelectElement: [CulturalPracticeElementProtocol]) -> [(UILabel, (UILabel, UIImageView))] {
+    private func initLabelTitleAndValueSelectElement(_ elements: [ElementUIData]) -> [(UILabel, (UILabel, UIImageView))] {
         var labelTitleValue: [(UILabel, (UILabel, UIImageView))] = []
 
-        (0..<culturalMultiSelectElement.count).forEach { index in
-            if let culturalPracticeMultiSelectElement = culturalMultiSelectElement[index] as? CulturalPracticeMultiSelectElement {
+        (0..<elements.count).forEach { index in
+            if let selectElement = elements[index] as? SelectElement {
                 labelTitleValue.append(
                     (
-                        createLabelFor(title: culturalPracticeMultiSelectElement.title),
-                        createLabelFor(culturalPracticeValue: culturalPracticeMultiSelectElement.value)
+                        createLabelWithTitle(selectElement.title),
+                        createLabelWithValue(selectElement.value)
                     )
                 )
             }
@@ -200,7 +203,7 @@ class ContainerElementView: UIView {
         return label
     }
 
-    private func createLabelFor(title: String) -> UILabel {
+    private func createLabelWithTitle(_ title: String) -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
@@ -210,14 +213,14 @@ class ContainerElementView: UIView {
         return label
     }
 
-    private func createLabelFor(culturalPracticeValue: CulturalPracticeValueProtocol?) -> (UILabel, UIImageView) {
+    private func createLabelWithValue(_ value: String?) -> (UILabel, UIImageView) {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         label.font = UIFont(name: "Arial", size: 20)
 
-        if culturalPracticeValue != nil {
-            label.text = culturalPracticeValue!.getValue()
+        if let value = value, !value.isEmpty {
+            label.text = value
             label.textColor = Util.getGreenColor()
             return (label, createImageViewYes())
         }

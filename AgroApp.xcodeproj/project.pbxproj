@@ -582,9 +582,9 @@
 				98363B2C23DECA3F00AFFC63 /* MapFieldViewController.swift */,
 				9854BFE0240A1C3C00E5AB8A /* ContainerMapAndTitleNavigationController.swift */,
 				98BA0D7A240CDC2800948A26 /* ContainerTitleNavigationViewController.swift */,
-				98457B652423E5FA00AF4C90 /* CulturalPracticeFormViewController.swift */,
 				9854BFD42408F53400E5AB8A /* FieldListViewController.swift */,
 				9810DA41242F0FCA00545A23 /* SelectFormCulturalPracticeViewController.swift */,
+				98457B652423E5FA00AF4C90 /* CulturalPracticeFormViewController.swift */,
 			);
 			path = viewControllers;
 			sourceTree = "<group>";
@@ -595,11 +595,11 @@
 				98363B2F23DECA9F00AFFC63 /* MapFieldViewModel.swift */,
 				9847564624AED9FC0048A503 /* InputFormCulturalPracticeViewModel.swift */,
 				989090A324C059C000AFC080 /* ContainerTitleNavigationViewModel.swift */,
-				9854BFF8240B901A00E5AB8A /* CulturalPracticeFormViewModel.swift */,
 				9854BFE2240A1D6200E5AB8A /* FieldListViewModel.swift */,
 				9891610424DC932D005E1F7C /* AddProducerFormViewModel.swift */,
 				9810DA43242F0FE800545A23 /* SelectFormCulturalPracticeViewModel.swift */,
 				98CB79D424B82B3D00EFFF19 /* ContainerFormCulturalPracticeViewModel.swift */,
+				9854BFF8240B901A00E5AB8A /* CulturalPracticeFormViewModel.swift */,
 			);
 			path = viewModels;
 			sourceTree = "<group>";

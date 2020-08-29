@@ -395,5 +395,5 @@ struct ElementUIListData: ElementUIData {
     var type: String = ElementUIListData.TYPE_ELEMENT
     var title: String
     var elements: [ElementUIData]
-    var index: Int
+    let index: Int
 }

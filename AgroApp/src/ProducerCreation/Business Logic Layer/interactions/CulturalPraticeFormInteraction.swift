@@ -10,6 +10,7 @@ import Foundation
 import RxSwift
 
 class CulturalPraticeFormInteractionImpl: CulturalPraticeFormInteraction {
+    
     let actionDispatcher: ActionDispatcher
 
     // MARK: - Methods
@@ -17,142 +18,98 @@ class CulturalPraticeFormInteractionImpl: CulturalPraticeFormInteraction {
         self.actionDispatcher = actionDispatcher
     }
 
-    func dispatchSetCurrentViewControllerInNavigationAction() {
+    func setCurrentViewControllerInNavigationAction() {
         let action = ContainerTitleNavigationAction
-            .SetCurrentViewControllerAction(currentViewControllerInNavigation: .fieldList)
+            .SetCurrentViewControllerAction(currentViewControllerInNavigation: .culturalPracticeForm)
         _ = Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(action)
         }
     }
 
     /// action for set title of TitleNavigationViewController
-    func dispatchSetTitleAction(title: String?) {
-        let action = ContainerTitleNavigationAction.SetTitleAction(title: title ?? "")
+    func setTitleAction(title: String) {
+        let action = ContainerTitleNavigationAction.SetTitleAction(title: title)
 
         _ = Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(action)
         }
     }
 
-    func dispatchSelectedSelectElementOnListObs(
-        culturalPracticeElement: CulturalPracticeElementProtocol,
+    func selectedSelectElementOnListActionObs(
+        section: Section<ElementUIData>,
         field: Field
     ) -> Completable {
         Util.createRunCompletable {
-            let action = self.createSelectedSelectElementOnListAction(
-                culturalPracticeSelectElement: culturalPracticeElement,
-                field: field
-            )
-
+            let action = SelectFormCulturalPracticeAction
+                .SelectElementSelectedOnListAction(section: section, field: field)
+            
             self.actionDispatcher.dispatch(action)
         }
     }
 
-    func dispatchSelectedInputElementOnListObs(
-        inputElement: CulturalPracticeInputElement,
+    func selectedInputElementOnListActionObs(
+        section: Section<ElementUIData>,
         field: Field
     ) -> Completable {
         Util.createRunCompletable {
-            let action = self.createSelectedInputElementOnListAction(
-                inputElement: inputElement,
-                field: field
-            )
-
+            let action = InputFormCulturalPracticeAction
+                .InputElementSelectedOnListAction(sectionInputElement: section, field: field)
+            
             self.actionDispatcher.dispatch(action)
         }
     }
 
-    func dispatchSelectedContainerElementOnListObs(
-        containerElement: CulturalPracticeContainerElement,
-        field: Field
-    ) -> Completable {
-        Util.createRunCompletable {
-            let action = ContainerFormCulturalPracticeAction
-                .ContainerElementSelectedOnListAction(
-                    containerElement: containerElement,
-                    field: field
-            )
-
-            self.actionDispatcher.dispatch(action)
-        }
+    func addDoseFumierAction() {
+        Util.dispatchActionInSchedulerReSwift(CulturalPracticeFormAction.AddDoseFumierAction(), actionDispatcher: actionDispatcher)
     }
 
-    func dispatchAddDoseFumier() {
-        _ = Util.runInSchedulerBackground {
-            self.actionDispatcher.dispatch(
-                CulturalPracticeFormAction.AddDoseFumierAction()
-            )
-        }
-    }
-
-    func dispathWillSelectElementOnList(indexPath: IndexPath) {
+    func selectElementOnListAction(indexPath: IndexPath) {
         let action = CulturalPracticeFormAction.SelectElementOnListAction(indexPath: indexPath)
-
-        _ = Util.runInSchedulerBackground {
-            self.actionDispatcher.dispatch(action)
-        }
+        Util.dispatchActionInSchedulerReSwift(action, actionDispatcher: actionDispatcher)
     }
 
-    func dispatchRemoveDoseFumierAction(indexPath: IndexPath) {
+    func removeDoseFumierAction(indexPath: IndexPath) {
         let action = CulturalPracticeFormAction.RemoveDoseFumierAction(indexPath: indexPath)
-
-        _ = Util.runInSchedulerBackground {
-            self.actionDispatcher.dispatch(action)
-        }
+        Util.dispatchActionInSchedulerReSwift(action, actionDispatcher: actionDispatcher)
     }
 
-    func dispatchUpdateFieldAction(field: Field?) {
-        guard let field = field else { return }
+    func updateFieldAction(field: Field) {
         let action = FieldListAction.UpdateFieldAction(field: field)
-
-        _ = Util.runInSchedulerBackground {
+        Util.dispatchActionInSchedulerReSwift(action, actionDispatcher: actionDispatcher)
+    }
+    
+    func selectedContainerElementObs(section: Section<ElementUIData>, field: Field) -> Completable {
+        Util.createRunCompletable {
+            let action = ContainerFormCulturalPracticeAction.ContainerElementSelectedOnListAction(section: section, field: field)
             self.actionDispatcher.dispatch(action)
         }
     }
-
-    private func createSelectedSelectElementOnListAction(
-        culturalPracticeSelectElement: CulturalPracticeElementProtocol,
-        field: Field
-    ) -> SelectFormCulturalPracticeAction.SelectElementSelectedOnList {
-        SelectFormCulturalPracticeAction.SelectElementSelectedOnList(
-            culturalPracticeElement: culturalPracticeSelectElement,
-            field: field,
-            subAction: SelectFormCulturalPracticeSubAction.newDataForm
-        )
-    }
-
-    private func createSelectedInputElementOnListAction(
-        inputElement: CulturalPracticeInputElement,
-        field: Field
-    ) -> InputFormCulturalPracticeAction.InputElementSelectedOnListAction {
-        InputFormCulturalPracticeAction.InputElementSelectedOnListAction(
-            culturalPracticeInputElement: inputElement,
-            field: field,
-            subAction: .newFormData)
-    }
+    
+    
+    
 }
 
 protocol CulturalPraticeFormInteraction {
-    func dispatchSetCurrentViewControllerInNavigationAction()
-    func dispathWillSelectElementOnList(indexPath: IndexPath)
-    func dispatchAddDoseFumier()
+    func setCurrentViewControllerInNavigationAction()
+    func addDoseFumierAction()
+    func selectElementOnListAction(indexPath: IndexPath)
 
-    func dispatchSelectedContainerElementOnListObs(
-        containerElement: CulturalPracticeContainerElement,
+    func selectedInputElementOnListActionObs(
+        section: Section<ElementUIData>,
         field: Field
     ) -> Completable
 
-    func dispatchSelectedInputElementOnListObs(
-        inputElement: CulturalPracticeInputElement,
+    func selectedContainerElementObs(
+        section: Section<ElementUIData>,
         field: Field
     ) -> Completable
 
-    func dispatchSelectedSelectElementOnListObs(
-        culturalPracticeElement: CulturalPracticeElementProtocol,
+    func selectedSelectElementOnListActionObs(
+         section: Section<ElementUIData>,
         field: Field
     ) -> Completable
 
-    func dispatchSetTitleAction(title: String?)
-    func dispatchRemoveDoseFumierAction(indexPath: IndexPath)
-    func dispatchUpdateFieldAction(field: Field?)
+    func setTitleAction(title: String)
+    func removeDoseFumierAction(indexPath: IndexPath)
+    func updateFieldAction(field: Field)
 }

@@ -80,23 +80,19 @@ extension CulturalPracticeFormReducerHandler {
                 return newUtil.state.changeValues(
                     sections: newSectionList,
                     isFinishCompletedCurrentContainer: false ,
-                    responseAction: .addDoseFumierActionResponse(indexPath: [indexPath], isMaxDoseFumier: false, isFinishCompletedLastDoseFumier: true)
+                    responseAction: .addDoseFumierActionResponse(indexPaths: [indexPath], isMaxDoseFumier: false, isFinishCompletedLastDoseFumier: true)
                 )
             }
             
             return newUtil.state.changeValues(
                 responseAction: .addDoseFumierActionResponse(
-                    indexPath: [],
+                    indexPaths: [],
                     isMaxDoseFumier: isMaxDoseFumier,
                     isFinishCompletedLastDoseFumier: isFinishCompletedLastDoseFumier
                 )
             )
             
         }
-        
-        
-        
-        
     }
     
     private struct UtilHandleAddDoseFumierAction {

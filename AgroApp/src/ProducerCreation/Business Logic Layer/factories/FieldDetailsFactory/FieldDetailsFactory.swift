@@ -63,7 +63,7 @@ class FieldDetailsFactoryImpl: FieldDetailsFactory {
             DelaiIncorporationFumier.getTypeValue()
             ]
             .map { label in
-                initElementUIDataWithNilValueByLabel(label)
+                initElementUIDataWithNilValueByLabelDoseFumier(label)
         }.filter { $0 != nil }
             .map { $0! }
         
@@ -73,6 +73,19 @@ class FieldDetailsFactoryImpl: FieldDetailsFactory {
             typeSection: ElementUIListData.TYPE_ELEMENT,
             index: index
         )
+    }
+    
+    private func initElementUIDataWithNilValueByLabelDoseFumier(_ label: String) -> ElementUIData? {
+        switch label {
+        case DoseFumier.getTypeValue():
+            return createElementUIDataWithNilValue(DoseFumier.self)
+        case PeriodeApplicationFumier.getTypeValue():
+            return createElementUIDataWithNilValue(PeriodeApplicationFumier.self)
+        case DelaiIncorporationFumier.getTypeValue():
+            return createElementUIDataWithNilValue(DelaiIncorporationFumier.self)
+        default:
+            return nil
+        }
     }
     
     private func addDoseFumierToSectionList(
@@ -317,6 +330,8 @@ class FieldDetailsFactoryImpl: FieldDetailsFactory {
         }
         
     }
+    
+    
     
     private func createElementUIDataWithNilValue(_ selectValueType: SelectValue.Type) -> ElementUIData {
         SelectElement(

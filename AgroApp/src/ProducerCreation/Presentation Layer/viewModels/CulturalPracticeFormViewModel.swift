@@ -11,18 +11,18 @@ import RxSwift
 import UIKit
 
 class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
-    
+    var reloadTableView: (() -> Void)?
+    var insertSections: (([IndexPath]) -> Void)?
+    var reloadSections: (([IndexPath]) -> Void)?
     var cellId: String = UUID().uuidString
     var headerFooterSectionViewId: String = UUID().uuidString
     let culturalPracticeStateObs: Observable<CulturalPracticeFormState>
     let culturalPraticeFormInteraction: CulturalPraticeFormInteraction
-    var tableView: UITableView?
     var culturalPracticeStateDisposable: Disposable?
-    var culturalPraticeView: CulturalPracticeFormView?
     var disposableDispatcher: Disposable?
     var state: CulturalPracticeFormState?
     weak var viewController: CulturalPracticeFormViewController?
-
+    
     init(
         culturalPracticeStateObs: Observable<CulturalPracticeFormState>,
         culturalPraticeFormInteraction: CulturalPraticeFormInteraction
@@ -30,7 +30,7 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
         self.culturalPracticeStateObs = culturalPracticeStateObs
         self.culturalPraticeFormInteraction = culturalPraticeFormInteraction
     }
-
+    
     func subscribeToCulturalPracticeStateObs() {
         self.culturalPracticeStateDisposable =
             culturalPracticeStateObs
@@ -40,83 +40,79 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
                         let responseAction = culturalPracticeState.responseAction,
                         let self = self
                         else { return }
-
+                    
                     self.setState(state: culturalPracticeState)
-
+                    
                     switch responseAction {
                     case .selectFieldOnListActionResponse:
-                        self.handleReloadAllListElementResponse()
-                    case .insertContainerElementResponse(indexPath: let indexPaths):
-                        self.handleInsertContainerElementResponse(indexPaths: indexPaths)
-                    case .updateElementResponse(indexPath: let indexPaths):
-                        self.handleUpdateElementResponse(indexPath: indexPaths[0])
-                    case .selectElementOnListResponse(
-                        culturalPracticeElement: let culturalPracticeElementSelected,
-                        field: let field):
-                        self.handleWillSelectElementOnListResponse(
-                            culturalParacticeElementSelected: culturalPracticeElementSelected,
-                            field: field
-                        )
-                    case .canNotSelectElementOnListResponse(culturalPracticeElement: _):
-                        break
+                        self.handleSelectFieldOnListActionResponse()
+                    case .addDoseFumierActionResponse(
+                        indexPaths: let indexPaths,
+                        isMaxDoseFumier: let isMaxDoseFumier,
+                        isFinishCompletedLastDoseFumier: let isFinishCompletedLastDoseFumier):
+                        self.handleAddDoseFumierActionResponse(indexPaths, isMaxDoseFumier, isFinishCompletedLastDoseFumier)
+                    case .updateElementResponse(indexPaths: let indexPaths):
+                        self.handleUpdateElementResponse(indexPaths)
+                    case .selectElementOnListResponse(section: let section):
+                        
                     case .removeDoseFumierResponse(indexPathsRemove: let indexPathsRemove, indexPathsAdd: let indexPathsAdd):
-                        self.handleRemoveDoseFumier(indexPathsRemove: indexPathsRemove, indexPathsAdd: indexPathsAdd)
+                        
                     case .notResponse:
                         break
                     }
         }
     }
-
+    
     func disposeToCulturalPracticeStateObs() {
+        // TODO creater une fonction dans util
         _ = Util.runInSchedulerBackground {
             self.culturalPracticeStateDisposable?.dispose()
         }
     }
-
+    
     func getNumberOfSection() -> Int {
-        state?.sections?.count ?? 0
-    }
-
-    func getNumberRow(in section: Int) -> Int {
-        state?.sections?[section].rowData.count ?? 0
-    }
-
-    func registerCell() {
-        self.tableView?.register(SubtitleTableViewCell.self, forCellReuseIdentifier: self.cellId)
-    }
-
-    func registerHeaderFooterViewSection() {
-        self.tableView?.register(UITableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: headerFooterSectionViewId)
-    }
-
-    func getCulturePracticeElement(by indexPath: IndexPath) -> CulturalPracticeElementProtocol? {
-        state?.sections?[indexPath.section].rowData[indexPath.row]
+        self.state?.sections?.count ?? 0
     }
     
-    private func presentSelectFormCulturalPracticeController() {
-        let appDependency = viewController!.getAppDelegate()!.appDependencyContainer
-        viewController?.present(appDependency.processInitCulturalPracticeFormViewController(), animated: true)
+    func getTypeSectionByIndexPath(_ indexPath: IndexPath) -> String {
+        self.state?.sections?[indexPath.section].typeSection ?? ""
     }
-
-    private func presentInputFormCulturalPracticeHostingController() {
-        guard let appDependency = Util.getAppDependency() else { return }
-        let inputFormCulturalPracticeHostingController = appDependency.processInitInputFormCulturalPracticeHostingController()
-
-        viewController?.present(inputFormCulturalPracticeHostingController, animated: true)
+    
+    func getElementUIDataByIndexPath(_ indexPath: IndexPath) -> ElementUIData? {
+        guard let sections = state?.sections,
+            Util.hasIndexInArray(sections, index: indexPath.section),
+            Util.hasIndexInArray(sections[indexPath.section].rowData, index: indexPath.row),
+            let typeSection = sections[indexPath.section].typeSection else {
+            return nil
+        }
+        
+        switch typeSection {
+        case InputElement.TYPE_ELEMENT:
+            return sections[indexPath.section].rowData[indexPath.row]
+        case SelectElement.TYPE_ELEMENT:
+            return sections[indexPath.section].rowData[indexPath.row]
+        case ElementUIListData.TYPE_ELEMENT:
+            return ElementUIListData(
+                title: sections[indexPath.section].sectionName,
+                elements: sections[indexPath.section].rowData,
+                index: sections[indexPath.section].index ?? 0
+            )
+        case RowWithButton.TYPE_ELEMENT:
+            return sections[indexPath.section].rowData[indexPath.row]
+        default:
+            return nil
+        }
     }
-
-    private func presentContainerFormCulturalPracticeHostingController() {
-        guard let appDependency = Util.getAppDependency() else { return }
-        let containerFormCulturalPracticeHostingController = appDependency
-            .makeContainerFormCulturalPracticeHostingController()
-
-        viewController?.present(containerFormCulturalPracticeHostingController, animated: true)
+    
+    func handleCanEditRowByIndexPath(_ indexPath: IndexPath) -> Bool {
+        guard let element = getElementUIDataByIndexPath(indexPath) else { return false }
+        return element is ElementUIListData
     }
-
+    
     private func setState(state: CulturalPracticeFormState) {
         self.state = state
     }
-
+    
     deinit {
         print("***** denit CulturalPraticeFormViewModelImpl *******")
     }
@@ -125,136 +121,69 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
 // MARK: - handle methode
 
 extension CulturalPraticeFormViewModelImpl {
-    
     func handleFieldButton() {
-        print("Handle parcelle button")
+        // TODO action pour afficher la liste des information sur la parcelle
     }
     
     func handleCulturalPracticeButton() {
-        print("Handle culural practice button")
+        // TODO action pour afficher la liste des informations sur les pratiques culutrelles
     }
     
-    func handleFuncAddDoseFumier() {
-        self.culturalPraticeFormInteraction.dispatchAddDoseFumier()
+    func handleSelectRow(_ indexPath: IndexPath) {
+        guard let typeSection = state?.sections?[indexPath.section].typeSection,
+            typeSection != RowWithButton.TYPE_ELEMENT else { return }
+        
+        culturalPraticeFormInteraction.selectElementOnListAction(indexPath: indexPath)
     }
-
-    func handleRemoveDoseFumierOnTableView(editingStyle: UITableViewCell.EditingStyle, indexPath: IndexPath) {
-        switch editingStyle {
-        case .delete:
-            culturalPraticeFormInteraction.dispatchRemoveDoseFumierAction(indexPath: indexPath)
-        default:
-            break
+    
+    func handleAddDoseFumierButton() {
+        culturalPraticeFormInteraction.addDoseFumierAction()
+    }
+    
+    func handleRemoveDoseFumierButtonByIndexPath(_ indexPath: IndexPath, editingStyle: UITableViewCell.EditingStyle) {
+        if case UITableViewCell.EditingStyle.delete = editingStyle {
+            return culturalPraticeFormInteraction.removeDoseFumierAction(indexPath: indexPath)
         }
     }
-
-    func handleCanEditRow(indexPath: IndexPath) -> Bool {
-        (getCulturePracticeElement(by: indexPath) as? CulturalPracticeContainerElement) != nil
+    
+    private func handleSelectFieldOnListActionResponse() {
+        reloadTableView?()
+        culturalPraticeFormInteraction.setCurrentViewControllerInNavigationAction()
+        culturalPraticeFormInteraction.setTitleAction(title: state?.title ?? "")
     }
-
-    func tableView(didSelectRowAt indexPath: IndexPath) {
-        self.culturalPraticeFormInteraction.dispathWillSelectElementOnList(indexPath: indexPath)
-    }
-
-    private func handleRemoveDoseFumier(indexPathsRemove: [IndexPath], indexPathsAdd: [IndexPath]?) {
-        self.tableView?.performBatchUpdates({
-            self.tableView?.deleteRows(at: indexPathsRemove.sorted().reversed(), with: .left)
-
-            indexPathsAdd.map {
-                self.tableView?.insertRows(at: $0.sorted().reversed(), with: .left)
-            }
-
-        })
-
-        self.culturalPraticeFormInteraction.dispatchUpdateFieldAction(field: state?.currentField)
-    }
-
-    private func handleReloadAllListElementResponse() {
-        self.tableView?.reloadData()
-        self.culturalPraticeFormInteraction.dispatchSetCurrentViewControllerInNavigationAction()
-        self.culturalPraticeFormInteraction.dispatchSetTitleAction(title: state?.title)
-    }
-
-    private func handleInsertContainerElementResponse(
-        indexPaths: [IndexPath]
+    
+    private func handleAddDoseFumierActionResponse(
+        _ indexPaths: [IndexPath],
+        _ isMaxDoseFumier: Bool,
+        _ isFinishCompletedLastDoseFumier: Bool
     ) {
+        guard !isMaxDoseFumier && isFinishCompletedLastDoseFumier && !indexPaths.isEmpty else {
+            return
+        }
+        
+        self.insertSections?(indexPaths)
+    }
+    
+    private func handleUpdateElementResponse(_ indexPaths: [IndexPath]) {
         guard !indexPaths.isEmpty else { return }
-        self.tableView?.insertRows(at: indexPaths, with: .right)
-        self.tableView?.scrollToRow(at: indexPaths[0], at: .top, animated: true)
-    }
-
-    private func handleUpdateElementResponse(indexPath: IndexPath) {
-        self.tableView?.reloadRows(at: [indexPath], with: .fade)
-        self.culturalPraticeFormInteraction.dispatchUpdateFieldAction(field: state?.currentField)
-    }
-
-    private func handleWillSelectElementOnListResponse(
-        culturalParacticeElementSelected: CulturalPracticeElementProtocol,
-        field: Field
-    ) {
-        switch culturalParacticeElementSelected {
-        case let selectElement as CulturalPracticeMultiSelectElement:
-            self.handleSelectedSelectElementOnList(selectElement: selectElement, field)
-        case let inputElement as CulturalPracticeInputElement:
-            self.handleSelectedInputElement(inputElement: inputElement, field)
-        case let containerElement as CulturalPracticeContainerElement:
-            self.handleSelectedContainerOnList(containerElement: containerElement, field)
-        default:
-            break
-        }
-    }
-
-    private func handleSelectedContainerOnList(
-        containerElement: CulturalPracticeContainerElement,
-        _ field: Field
-    ) {
-        _ = culturalPraticeFormInteraction.dispatchSelectedContainerElementOnListObs(containerElement: containerElement, field: field)
-            .subscribe { _ in
-                self.presentContainerFormCulturalPracticeHostingController()
-        }
-    }
-
-    private func handleSelectedInputElement(
-        inputElement: CulturalPracticeInputElement,
-        _ field: Field
-    ) {
-        _ = culturalPraticeFormInteraction.dispatchSelectedInputElementOnListObs(
-            inputElement: inputElement,
-            field: field
-        ).subscribe { _ in
-            self.presentInputFormCulturalPracticeHostingController()
-        }
-    }
-
-    private func handleSelectedSelectElementOnList(
-        selectElement: CulturalPracticeMultiSelectElement,
-        _ field: Field
-    ) {
-        _ = culturalPraticeFormInteraction.dispatchSelectedSelectElementOnListObs(
-            culturalPracticeElement: selectElement,
-            field: field
-        ).subscribe { _ in
-            self.presentSelectFormCulturalPracticeController()
-        }
+        
+        reloadSections?(indexPaths)
     }
 }
 
 protocol CulturalPraticeFormViewModel {
-    var tableView: UITableView? {get set}
-    var cellId: String {get}
-    var culturalPraticeView: CulturalPracticeFormView? {get set}
-    var viewController: CulturalPracticeFormViewController? {get set}
-    var headerFooterSectionViewId: String {get}
-    func subscribeToCulturalPracticeStateObs()
-    func disposeToCulturalPracticeStateObs()
+    var reloadTableView: (() -> Void)? { get set }
+    var insertSections: (([IndexPath]) -> Void)? { get set }
+    var reloadSections: (([IndexPath]) -> Void)? { get set }
     func getNumberOfSection() -> Int
-    func getNumberRow(in section: Int) -> Int
-    func registerCell()
-    func getCulturePracticeElement(by indexPath: IndexPath) -> CulturalPracticeElementProtocol?
-    func registerHeaderFooterViewSection()
-    func tableView(didSelectRowAt indexPath: IndexPath)
-    func handleRemoveDoseFumierOnTableView(editingStyle: UITableViewCell.EditingStyle, indexPath: IndexPath)
-    func handleCanEditRow(indexPath: IndexPath) -> Bool
-    func handleFuncAddDoseFumier()
+    func subscribeToCulturalPracticeStateObs()
     func handleFieldButton()
     func handleCulturalPracticeButton()
+    func disposeToCulturalPracticeStateObs()
+    func getTypeSectionByIndexPath(_ indexPath: IndexPath) -> String
+    func handleSelectRow(_ indexPath: IndexPath)
+    func getElementUIDataByIndexPath(_ indexPath: IndexPath) -> ElementUIData?
+    func handleAddDoseFumierButton()
+    func handleRemoveDoseFumierButtonByIndexPath(_ indexPath: IndexPath, editingStyle: UITableViewCell.EditingStyle)
+    func handleCanEditRowByIndexPath(_ indexPath: IndexPath) -> Bool
 }

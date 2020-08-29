@@ -111,7 +111,7 @@ extension CulturalPracticeFormReducerHandler {
                 currentField: newUtil.newField,
                 sections: newSectionList,
                 isFinishCompletedCurrentContainer: isFinishCompletedCurrentContainer,
-                responseAction: .updateElementResponse(indexPath: [indexFind])
+                responseAction: .updateElementResponse(indexPaths: [indexFind])
             )
         }
 

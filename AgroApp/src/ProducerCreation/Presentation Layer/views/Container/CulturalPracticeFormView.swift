@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 
 class CulturalPracticeFormView: UIView {
-
+    
     let fieldDetailsTableViewHeader: FieldDetailsTableViewHeader = {
         let fieldDetailsTableViewHeader = FieldDetailsTableViewHeader()
         fieldDetailsTableViewHeader.translatesAutoresizingMaskIntoConstraints = false
@@ -20,20 +20,20 @@ class CulturalPracticeFormView: UIView {
         fieldDetailsTableViewHeader.alpha = Util.getAlphaValue()
         return fieldDetailsTableViewHeader
     }()
-
+    
     var handleAddButtonFunc: (() -> Void)?
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     init() {
         super.init(frame: .zero)
         initConstraintTableView()
     }
-
+    
     let TAG_ADD_BUTTON = 50
-
+    
     public let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -55,32 +55,40 @@ class CulturalPracticeFormView: UIView {
         }
     }
     
-    func initCell(_ cell: UITableViewCell?, withData multiSelectElement: CulturalPracticeMultiSelectElement) -> UITableViewCell {
-        guard let cell = cell else { return UITableViewCell() }
-        removeContainerElementViewTo(containerView: cell.contentView)
-        config(labelTitle: cell.textLabel, culturalPracticeElementProtocol: multiSelectElement)
-        config(detailLabel: cell.detailTextLabel, culturalPracticeValueProtocol: multiSelectElement.value)
-        configAccessoryView(of: cell, culturalPracticeProtocol: multiSelectElement.value)
+    func initCell(_ cell: UITableViewCell, withData selectElement: SelectElement) -> UITableViewCell {
+        removeContainerElementViewToContainerView(cell.contentView)
+        configLabelTitle(cell.textLabel, elementUIData: selectElement)
+        configDetailLabel(cell.detailTextLabel, value: selectElement.value)
+        configAccessoryViewCell(cell, value: selectElement.value)
         return cell
     }
-
+    
     func initCell(
-        _ cell: UITableViewCell?,
-        withData addElement: CulturalPracticeAddElement,
+        _ cell: UITableViewCell,
+        withData rowWithButton: RowWithButton,
         andHandle handleAddButton: @escaping () -> Void
     ) -> UITableViewCell {
-        guard let cell = cell else { return UITableViewCell() }
-        removeContainerElementViewTo(containerView: cell.contentView)
+        removeContainerElementViewToContainerView(cell.contentView)
         cell.detailTextLabel?.font = UIFont(name: "Arial", size: 20)
         cell.textLabel?.font = UIFont(name: "Arial", size: 15)
         cell.textLabel?.text = NSLocalizedString("Cliquer sur le boutton", comment: "Cliquer sur le boutton")
         cell.detailTextLabel?.textColor = Util.getOppositeColorBlackOrWhite()
-        cell.detailTextLabel?.text = addElement.title
-
+        cell.detailTextLabel?.text = rowWithButton.title
+        
         if !(cell.accessoryView is UIButton) {
             cell.accessoryView = createAddButton(handleAddButton: handleAddButton)
         }
-
+        
+        return cell
+    }
+    
+    func initCell(_ cell: UITableViewCell, withData elementUIListData: ElementUIListData) -> UITableViewCell {
+        cell.textLabel?.text = nil
+        cell.detailTextLabel?.text = nil
+        cell.accessoryView = nil
+        removeContainerElementViewToContainerView(cell.contentView)
+        let container = ContainerElementView(elementUIListData: elementUIListData)
+        container.addViewTo(contentView: cell.contentView)
         return cell
     }
     
@@ -96,96 +104,76 @@ class CulturalPracticeFormView: UIView {
         return addButton
     }
     
-    func initCell(_ cell: UITableViewCell?, withData containerElement: CulturalPracticeContainerElement) -> UITableViewCell {
-        guard let cell = cell else { return UITableViewCell() }
-        cell.textLabel?.text = nil
-        cell.detailTextLabel?.text = nil
-        cell.accessoryView = nil
-        removeContainerElementViewTo(containerView: cell.contentView)
-        let container = ContainerElementView(containerElement: containerElement)
-        container.addViewTo(contentView: cell.contentView)
+    func initCell(
+        _ cell: UITableViewCell,
+        inputElement: InputElement
+    ) -> UITableViewCell {
+        removeContainerElementViewToContainerView(cell.contentView)
+        
+        configLabelTitle(cell.textLabel, elementUIData: inputElement)
+        configDetailLabel(cell.detailTextLabel, value: inputElement.value, unitType: inputElement.unitType)
+        
+        configAccessoryViewCell(cell, value: inputElement.value)
         return cell
     }
     
-    func initCell(_ cell: UITableViewCell?, withData inputElement: CulturalPracticeInputElement) -> UITableViewCell {
-        guard let cell = cell else { return UITableViewCell() }
-        removeContainerElementViewTo(containerView: cell.contentView)
-
-        config(
-            labelTitle: cell.textLabel,
-            culturalPracticeElementProtocol: inputElement
-        )
-
-        config(detailLabel: cell.detailTextLabel, culturalPracticeValueProtocol: inputElement.value)
-        configAccessoryView(of: cell, culturalPracticeProtocol: inputElement.value)
-        return cell
-    }
-
-    private func configAccessoryView(of cell: UITableViewCell, culturalPracticeProtocol: CulturalPracticeValueProtocol?) {
-        if culturalPracticeProtocol != nil {
+    private func configAccessoryViewCell(_ cell: UITableViewCell, value: String?) {
+        if let value = value, !value.isEmpty {
             let imageViewYes = UIImageView(image: getImageIconYes())
             cell.accessoryView = imageViewYes
             return imageViewYes.sizeToFit()
         }
-
+        
         let imageViewNo = UIImageView(image: getImageIconNo())
         cell.accessoryView = imageViewNo
         imageViewNo.sizeToFit()
     }
-
-    private func removeContainerElementViewTo(containerView: UIView) {
+    
+    private func removeContainerElementViewToContainerView(_ containerView: UIView) {
         containerView.viewWithTag(ContainerElementView.TAG)?.removeFromSuperview()
     }
-
+    
     @objc private func handleAddButton(sender: UIButton) {
         self.handleAddButtonFunc?()
     }
-
-    private func config(detailLabel: UILabel?, culturalPracticeValueProtocol: CulturalPracticeValueProtocol?) {
+    
+    private func configDetailLabel(_ detailLabel: UILabel?, value: String? = nil, unitType: String? = nil) {
         detailLabel?.font = UIFont(name: "Arial", size: 20)
         detailLabel?.numberOfLines = 2
-
-        if culturalPracticeValueProtocol != nil {
-            detailLabel?.text = culturalPracticeValueProtocol!.getValue() + " " + getUnitFrom(culturalPracticeValueProtocol: culturalPracticeValueProtocol!)
+        
+        if let value = value, !value.isEmpty {
+            detailLabel?.text = value + " " + (unitType ?? "")
             detailLabel?.textColor = Util.getGreenColor()
             return
         }
-
+        
         detailLabel?.text = NSLocalizedString("Veuillez choisir une valeur", comment: "Veuillez choisir une valuer")
         detailLabel?.textColor = .red
     }
-
+    
     private func getImageIconYes() -> UIImage? {
         UIImage(named: "yes48")
     }
-
+    
     private func getImageIconNo() -> UIImage? {
         UIImage(named: "no48")
     }
-
+    
     private func getImageIconAdd() -> UIImage? {
         UIImage(named: "add48")?.withRenderingMode(.alwaysTemplate)
     }
-
-    private func config(labelTitle: UILabel?, culturalPracticeElementProtocol: CulturalPracticeElementProtocol) {
+    
+    private func configLabelTitle(_ labelTitle: UILabel?, elementUIData: ElementUIData) {
         labelTitle?.font = UIFont(name: "Arial", size: 15)
         labelTitle?.textColor = Util.getOppositeColorBlackOrWhite()
         labelTitle?.numberOfLines = 2
-        labelTitle?.text = culturalPracticeElementProtocol.title
-    }
-
-    private func getUnitFrom(culturalPracticeValueProtocol: CulturalPracticeValueProtocol) -> String {
-        guard let unit = culturalPracticeValueProtocol.getUnitType()?.convertToString() else {
-            return ""
-        }
-
-        return unit
+        labelTitle?.text = elementUIData.title
     }
     
     private func initConstraintTableView() {
         addSubview(tableView)
         addSubview(fieldDetailsTableViewHeader)
-
+        
         NSLayoutConstraint.activate([
             fieldDetailsTableViewHeader.topAnchor.constraint(equalTo: topAnchor),
             fieldDetailsTableViewHeader.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -198,7 +186,7 @@ class CulturalPracticeFormView: UIView {
             tableView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.9)
         ])
     }
-
+    
     // TODO afficher les messages d'erreur pour les dose fumier
     private func printMesageErrorNotCompletedDoseFumier() {
         _ = Observable.just(0)
@@ -208,9 +196,9 @@ class CulturalPracticeFormView: UIView {
             .do(onNext: { _ in print("2") })
             .subscribe()
     }
-
+    
     // TODO afficher les messages d'erreur pour les dose fumier
     private func printMessageErrorMaxDoseFumier() {
-
+        
     }
 }

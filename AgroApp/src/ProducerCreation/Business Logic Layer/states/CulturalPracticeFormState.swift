@@ -23,12 +23,12 @@ struct CulturalPracticeFormState: Equatable {
     enum ResponseAction {
         case selectFieldOnListActionResponse
         case addDoseFumierActionResponse(
-            indexPath: [IndexPath],
+            indexPaths: [IndexPath],
             isMaxDoseFumier: Bool,
             isFinishCompletedLastDoseFumier: Bool
         )
         
-        case updateElementResponse(indexPath: [IndexPath])
+        case updateElementResponse(indexPaths: [IndexPath])
         
         case selectElementOnListResponse(
             section: Section<ElementUIData>
@@ -39,7 +39,6 @@ struct CulturalPracticeFormState: Equatable {
             indexPathsAdd: [IndexPath]?
         )
         
-        case canNotSelectElementOnListResponse(elementUIData: ElementUIData)
         case notResponse
     }
 
