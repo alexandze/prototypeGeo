@@ -19,19 +19,19 @@ class CulturalPracticeRemoveFactoryImpl: CulturalPracticeRemoveFactory {
         
         var copyCulturalPractice = culturalPractice
         
-        if var doseFumiers = culturalPractice.doseFumier,
+        if var doseFumiers = copyCulturalPractice.doseFumier,
             Util.hasIndexInArray(doseFumiers, index: index) {
             doseFumiers.remove(at: index)
             copyCulturalPractice.doseFumier = doseFumiers
         }
         
-        if var periodeApplicationFumier = culturalPractice.periodeApplicationFumier,
+        if var periodeApplicationFumier = copyCulturalPractice.periodeApplicationFumier,
             Util.hasIndexInArray(periodeApplicationFumier, index: index) {
             periodeApplicationFumier.remove(at: index)
             copyCulturalPractice.periodeApplicationFumier = periodeApplicationFumier
         }
         
-        if var delaiIncorporationFumier = culturalPractice.delaiIncorporationFumier,
+        if var delaiIncorporationFumier = copyCulturalPractice.delaiIncorporationFumier,
             Util.hasIndexInArray(delaiIncorporationFumier, index: index) {
             delaiIncorporationFumier.remove(at: index)
             copyCulturalPractice.delaiIncorporationFumier = delaiIncorporationFumier

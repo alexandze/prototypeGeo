@@ -32,7 +32,6 @@ struct InputFormCulturalPracticeView: View {
                     HeaderView(title: self.viewState.inputElementObservale.title) { self.viewModel.handleCloseButton() }
                     Spacer()
                     
-                    
                     CenterView(
                         inputValue: self.$viewState.inputElementObservale.value,
                         inputTitle: self.viewState.inputElementObservale.title,
@@ -43,20 +42,7 @@ struct InputFormCulturalPracticeView: View {
                         textErrorMessage: self.viewState.textErrorMessage
                     ) {
                         self.viewModel.handleButtonValidate()
-                    }.animation(self.viewState.hasAnimation ? .default : nil)
-                    
-                    
-                    
-                    Text(!self.viewState.inputElementObservale.isValid ? self.viewState.textErrorMessage : "")
-                        .font(.system(size: 15))
-                        .bold()
-                        .foregroundColor(.red)
-                        .multilineTextAlignment(.center)
-                        //.padding(.bottom, self.keyboardFollower.keyboardHeight)
-                        .animation(self.viewState.hasAnimation ? .default : nil)
-                        .edgesIgnoringSafeArea(
-                            self.keyboardFollower.isVisible ? .bottom : []
-                    )
+                    }.padding()
                     
                     if self.keyboardFollower.keyboardHeight == 0 {
                         Spacer()
@@ -68,7 +54,6 @@ struct InputFormCulturalPracticeView: View {
                         isInputValueValid: self.viewState.inputElementObservale.isValid
                     ).padding(.bottom, 5)
                         .padding(.bottom, self.keyboardFollower.keyboardHeight)
-                        .animation(self.viewState.hasAnimation ? .default : nil)
                 }
                 
             }
@@ -79,20 +64,20 @@ struct InputFormCulturalPracticeView: View {
             }
             .onDisappear {
                 self.viewModel.disposeToObs()
-            }
-            .alert(isPresented: self.$viewState.isPrintAlert) {
-                Alert(
-                    title: Text(self.viewState.textAlert),
-                    message: Text(""),
-                    primaryButton: .cancel(
-                        Text("Oui"),
-                        action: { self.viewModel.handleAlertYesButton() }
-                    ),
-                    secondaryButton: .default(
-                        Text("Non"),
-                        action: { self.viewModel.handleAlertNoButton() }
+            }.animation(.default)
+                .alert(isPresented: self.$viewState.isPrintAlert) {
+                    Alert(
+                        title: Text(self.viewState.textAlert),
+                        message: Text(""),
+                        primaryButton: .cancel(
+                            Text("Oui"),
+                            action: { self.viewModel.handleAlertYesButton() }
+                        ),
+                        secondaryButton: .default(
+                            Text("Non"),
+                            action: { self.viewModel.handleAlertNoButton() }
+                        )
                     )
-                )
             }
         }
     }
@@ -144,7 +129,7 @@ private struct CenterView: View {
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 10)
             
-            TextFieldWithStyle(inputValue: $inputValue, inputTitle: inputTitle)
+            TextFieldWithStyle(inputValue: $inputValue, inputTitle: inputTitle, isValid: isInputValueValid)
         }
     }
     
@@ -160,6 +145,7 @@ private struct CenterView: View {
 private struct TextFieldWithStyle: View {
     @Binding var inputValue: String
     let inputTitle: String
+    var isValid: Bool
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var dimensionScreen: DimensionScreen
     
@@ -174,7 +160,15 @@ private struct TextFieldWithStyle: View {
                 alignment: .center
         )
             .background(colorScheme == .dark ? Color.black : Color.white)
-            .cornerRadius(5)
+            .overlay(
+                RoundedRectangle(cornerRadius: 5)
+                    .stroke(lineWidth: 2)
+                    .foregroundColor(self.getForegroundColorOfRoundedRectangle())
+        )
+    }
+    
+    private func getForegroundColorOfRoundedRectangle() -> Color {
+        self.isValid ? .green : .red
     }
 }
 
@@ -203,7 +197,7 @@ private struct ButtonValidate: View {
             alignment: .center
         )
             .foregroundColor(.white)
-            .background(Color(Util.getGreenColor()))
+            .background(self.getBackgroundColor())
             .cornerRadius(10)
             .disabled(!self.isInputValueValid)
     }
@@ -215,5 +209,9 @@ private struct ButtonValidate: View {
     
     func getHeightValidateButton() -> CGFloat {
         dimensionScreen.height * 0.09
+    }
+    
+    private func getBackgroundColor() -> Color {
+        self.isInputValueValid ? Color(Util.getGreenColor()) : .red
     }
 }

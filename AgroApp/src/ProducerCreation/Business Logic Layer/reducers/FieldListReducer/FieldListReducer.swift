@@ -20,7 +20,7 @@ extension Reducers {
         case let deselectFieldOnMap as MapFieldAction.WillDeselectFieldOnMapAction:
             return FieldListReducerHandler().handle(delectFieldOnMapAction: deselectFieldOnMap, state)
         case let selectFieldOnListAction as FieldListAction.SelectFieldOnListAction:
-            return FieldListReducerHandler().handle(selectFieldOnListAction: willSelectFieldOnListAction, state)
+            return FieldListReducerHandler().handle(selectFieldOnListAction: selectFieldOnListAction, state)
         case let isAppearAction as FieldListAction.IsAppearAction:
             return FieldListReducerHandler().handle(isAppearAction: isAppearAction, state)
         case let updateFieldAction as FieldListAction.UpdateFieldAction:
@@ -37,10 +37,10 @@ extension Reducers {
 
 class FieldListReducerHandler {
     func handle(
-        willSelectFieldOnListAction: FieldListAction.SelectFieldOnListAction,
+        selectFieldOnListAction: FieldListAction.SelectFieldOnListAction,
         _ state: FieldListState
     ) -> FieldListState {
-        let fieldSelected = willSelectFieldOnListAction.field
+        let fieldSelected = selectFieldOnListAction.field
 
         return state.changeValue(
             currentField: fieldSelected,
@@ -68,27 +68,6 @@ class FieldListReducerHandler {
         }
 
         return newFieldListState != nil ? newFieldListState! : state
-    }
-
-    private func setCulturalPractice(
-        state: CulturalPracticeFormState,
-        _ sectionIndex: Int,
-        _ inputMultiSelectContainer: CulturalPracticeElementProtocol
-    ) -> CulturalPracticeFormState {
-        var copyState = state
-
-        copyState.sections![sectionIndex].rowData.append(inputMultiSelectContainer)
-        copyState.uuidState = UUID().uuidString
-
-        copyState.responseAction = .insertContainerElementResponse(indexPath: [
-            IndexPath(
-                row: copyState.sections![sectionIndex].rowData.count - 1,
-                section: sectionIndex
-            )
-            ]
-        )
-
-        return copyState
     }
 
     private func handleRemoveFieldInState(state: FieldListState, index: Int) -> FieldListState {

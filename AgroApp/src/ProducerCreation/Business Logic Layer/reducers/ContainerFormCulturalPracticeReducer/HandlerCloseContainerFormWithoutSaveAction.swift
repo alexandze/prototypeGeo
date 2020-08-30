@@ -27,7 +27,7 @@ extension ContainerFormCulturalPracticeHandler {
         }
     }
     
-    struct UtilHandlerCloseContainerFormWithoutSaveAction {
+    private struct UtilHandlerCloseContainerFormWithoutSaveAction {
         let state: ContainerFormCulturalPracticeState
     }
 }

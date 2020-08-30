@@ -42,18 +42,24 @@ class FieldDetailsFactoryImpl: FieldDetailsFactory {
     func makeSectionWitNewDoseFumier(
         _ sectionList: [Section<ElementUIData>]
     ) -> [Section<ElementUIData>] {
-        var index = findLastIndexDoseFumier(sectionList) ?? -1
+        var index = findLastIndexDoseFumier(sectionList)
         index += 1
         let newSectionDoseFumier = createSectionDoseFumier(index: index)
         return addDoseFumierToSectionList(sectionList, newSectionDoseFumier)
     }
     
-    private func findLastIndexDoseFumier(_ sectionList: [Section<ElementUIData>]) -> Int? {
-        let indexFind = (0..<sectionList.count).reversed().firstIndex { index in
+    private func findLastIndexDoseFumier(_ sectionList: [Section<ElementUIData>]) -> Int {
+        let indexFindOp = (0..<sectionList.count).reversed().firstIndex { index in
             sectionList[index].typeSection == ElementUIListData.TYPE_ELEMENT
         }
         
-        return indexFind.map { $0.base - 1 }
+        if let indexFind = indexFindOp,
+            Util.hasIndexInArray(sectionList, index: (indexFind.base - 1)),
+            let lastIndexFind = sectionList[indexFind.base - 1].index {
+            return lastIndexFind
+        }
+        
+        return -1
     }
     
     private func createSectionDoseFumier(index: Int) -> Section<ElementUIData> {
@@ -78,11 +84,11 @@ class FieldDetailsFactoryImpl: FieldDetailsFactory {
     private func initElementUIDataWithNilValueByLabelDoseFumier(_ label: String) -> ElementUIData? {
         switch label {
         case DoseFumier.getTypeValue():
-            return createElementUIDataWithNilValue(DoseFumier.self)
+            return makeElementUIData(DoseFumier.self)
         case PeriodeApplicationFumier.getTypeValue():
-            return createElementUIDataWithNilValue(PeriodeApplicationFumier.self)
+            return makeElementUIData(PeriodeApplicationFumier.self)
         case DelaiIncorporationFumier.getTypeValue():
-            return createElementUIDataWithNilValue(DelaiIncorporationFumier.self)
+            return makeElementUIData(DelaiIncorporationFumier.self)
         default:
             return nil
         }
@@ -142,7 +148,7 @@ class FieldDetailsFactoryImpl: FieldDetailsFactory {
         let culturalPractice = culturalPracticeOp ?? CulturalPractice()
         let mirror = Mirror(reflecting: culturalPractice)
         
-        return mirror.children.map(mapMirrorChildrenCulturalPractice(_:))
+        return mirror.children.map(mapMirrorChildrenCulturalPractice(culturalPractice))
             .filter { $0 != nil  }
             .map { $0! }
     }
@@ -152,7 +158,7 @@ class FieldDetailsFactoryImpl: FieldDetailsFactory {
         let mirror = Mirror(reflecting: culturalPractice)
         
         return mirror.children
-            .map(mapMirrorChildrenCulturalPracticeContainer(_:))
+            .map(mapMirrorChildrenCulturalPracticeContainer(culturalPractice))
             .filter { $0 != nil }
             .map { $0! }
     }
@@ -197,91 +203,19 @@ class FieldDetailsFactoryImpl: FieldDetailsFactory {
         return newElementUIDataList
     }
     
-    private func mapMirrorChildrenCulturalPractice(_ child: Mirror.Child) -> ElementUIData? {
-        
-        if case Optional<Any>.none = child.value, let label = child.label {
-            return initElementUIDataWithNilValueByLabel(label)
+    private func mapMirrorChildrenCulturalPractice(_ culturalPractice: CulturalPractice) -> (Mirror.Child) -> ElementUIData? {
+    { (child: Mirror.Child) in
+        if let label = child.label {
+            return self.initElementUIDataByLabel(label, culturalPractice)
         }
-        
-        if let selectValue = child.value as? SelectValue {
-            return initElementUIDataBySelectValue(selectValue)
-        }
-        
-        if let inputValue = child.value as? InputValue {
-            return initElementUIDataByInputValue(inputValue)
-        }
-        
         return nil
-    }
-    
-    private func mapMirrorChildrenCulturalPracticeContainer(_ child: Mirror.Child) -> [ElementUIData]? {
-        
-        guard let valueFormList = child.value as? [ValueForm] else {
-            return nil
-        }
-        
-        if let selectValueList = valueFormList as? [SelectValue] {
-            return initElementUIDataBySelectValues(selectValueList)
-        }
-        
-        if let inputValuesList = valueFormList as? [InputValue] {
-            return initElementUIDataByInputValues(inputValuesList)
-        }
-        
-        return nil
-    }
-    
-    private func initElementUIDataBySelectValue(_ selectValue: SelectValue) -> ElementUIData {
-        SelectElement(
-            title: type(of: selectValue).getTitle(),
-            value: selectValue.getValue(),
-            isValid: true,
-            isRequired: true,
-            values: type(of: selectValue).getTupleValues(),
-            typeValue: type(of: selectValue).getTypeValue(),
-            rawValue: selectValue.getRawValue()
-        )
-    }
-    
-    private func initElementUIDataByInputValue(_ inputValue: InputValue) -> ElementUIData {
-        InputElement(
-            title: type(of: inputValue).getTitle(),
-            value: inputValue.getValue(),
-            isValid: true,
-            isRequired: true,
-            regexPattern: type(of: inputValue).getRegexPattern(),
-            unitType: type(of: inputValue).getUnitType(),
-            typeValue: type(of: inputValue).getTypeValue(),
-            regex: makeRegularExpression(type(of: inputValue).getRegexPattern())
-        )
-    }
-    
-    private func initElementUIDataBySelectValues(_ selectValues: [SelectValue]) -> [ElementUIData] {
-        selectValues.map { selectValue in
-            SelectElement(
-                title: type(of: selectValue).getTitle(),
-                value: selectValue.getValue(),
-                isValid: true,
-                isRequired: true,
-                values: type(of: selectValue).getTupleValues(),
-                typeValue: type(of: selectValue).getTypeValue(),
-                rawValue: selectValue.getRawValue()
-            )
         }
     }
     
-    private func initElementUIDataByInputValues(_ inputValues: [InputValue]) -> [ElementUIData] {
-        inputValues.map { inputValue in
-            InputElement(
-                title: type(of: inputValue).getTitle(),
-                value: inputValue.getValue(),
-                isValid: true,
-                isRequired: true,
-                regexPattern: type(of: inputValue).getRegexPattern(),
-                unitType: type(of: inputValue).getUnitType(),
-                typeValue: type(of: inputValue).getTypeValue(),
-                regex: makeRegularExpression(type(of: inputValue).getRegexPattern())
-            )
+    private func mapMirrorChildrenCulturalPracticeContainer(_ culturalPractice: CulturalPractice) -> (Mirror.Child) -> [ElementUIData]? {
+    { (child: Mirror.Child) in
+        guard let label = child.label else { return nil }
+        return self.initElementUIDataForDoseFumier(label, culturalPractice)
         }
     }
     
@@ -297,59 +231,94 @@ class FieldDetailsFactoryImpl: FieldDetailsFactory {
         return copyElementUIDataList
     }
     
-    private func initElementUIDataWithNilValueByLabel(_ label: String) -> ElementUIData? {
+    private func initElementUIDataByLabel(_ label: String, _ culturalPractice: CulturalPractice) -> ElementUIData? {
         switch label {
         case Avaloir.getTypeValue():
-            return createElementUIDataWithNilValue(Avaloir.self)
+            return makeElementUIData(Avaloir.self, culturalPractice.avaloir)
         case BandeRiveraine.getTypeValue():
-            return createElementUIDataWithNilValue(BandeRiveraine.self)
+            return makeElementUIData(BandeRiveraine.self, culturalPractice.bandeRiveraine)
         case TravailSol.getTypeValue():
-            return createElementUIDataWithNilValue(TravailSol.self)
+            return makeElementUIData(TravailSol.self, culturalPractice.travailSol)
         case CouvertureAssociee.getTypeValue():
-            return createElementUIDataWithNilValue(CouvertureAssociee.self)
+            return makeElementUIData(CouvertureAssociee.self, culturalPractice.couvertureAssociee)
         case CouvertureDerobee.getTypeValue():
-            return createElementUIDataWithNilValue(CouvertureDerobee.self)
+            return makeElementUIData(CouvertureDerobee.self, culturalPractice.couvertureDerobee)
         case DrainageSouterrain.getTypeValue():
-            return createElementUIDataWithNilValue(DrainageSouterrain.self)
+            return makeElementUIData(DrainageSouterrain.self, culturalPractice.drainageSouterrain)
         case DrainageSurface.getTypeValue():
-            return createElementUIDataWithNilValue(DrainageSurface.self)
+            return makeElementUIData(DrainageSurface.self, culturalPractice.drainageSurface)
         case ConditionProfilCultural.getTypeValue():
-            return createElementUIDataWithNilValue(ConditionProfilCultural.self)
+            return makeElementUIData(ConditionProfilCultural.self, culturalPractice.conditionProfilCultural)
         case TauxApplicationPhosphoreRang.getTypeValue():
-            return createElementUIDataWithNilValue(TauxApplicationPhosphoreRang.self)
+            return makeElementUIData(TauxApplicationPhosphoreRang.self, culturalPractice.tauxApplicationPhosphoreRang)
         case TauxApplicationPhosphoreVolee.getTypeValue():
-            return createElementUIDataWithNilValue(TauxApplicationPhosphoreVolee.self)
+            return makeElementUIData(TauxApplicationPhosphoreVolee.self, culturalPractice.tauxApplicationPhosphoreVolee)
         case PMehlich3.getTypeValue():
-            return createElementUIDataWithNilValue(PMehlich3.self)
+            return makeElementUIData(PMehlich3.self, culturalPractice.pMehlich3)
         case AlMehlich3.getTypeValue():
-            return createElementUIDataWithNilValue(AlMehlich3.self)
+            return makeElementUIData(AlMehlich3.self, culturalPractice.alMehlich3)
         case CultureAnneeEnCoursAnterieure.getTypeValue():
-            return createElementUIDataWithNilValue(CultureAnneeEnCoursAnterieure.self)
+            return makeElementUIData(CultureAnneeEnCoursAnterieure.self, culturalPractice.cultureAnneeEnCoursAnterieure)
         default:
             return nil
         }
-        
     }
     
+    private func initElementUIDataForDoseFumier(_ label: String, _ culturalPractice: CulturalPractice) -> [ElementUIData]? {
+        switch label {
+        case DoseFumier.getTypeValue():
+            return makeElementUIDataList(DoseFumier.self, culturalPractice.doseFumier)
+        case PeriodeApplicationFumier.getTypeValue():
+            return makeElementUIDataList(PeriodeApplicationFumier.self, culturalPractice.periodeApplicationFumier)
+        case DelaiIncorporationFumier.getTypeValue():
+            return makeElementUIDataList(DelaiIncorporationFumier.self, culturalPractice.delaiIncorporationFumier)
+        default:
+            return nil
+        }
+    }
     
+    private func makeElementUIDataList(_ selectValueType: SelectValue.Type, _ selectValueList: [SelectValue]?) -> [ElementUIData]? {
+        guard let selectValueList = selectValueList else {
+            return nil
+        }
+        
+        return selectValueList.map { selectValue in
+            self.makeElementUIData(selectValueType, selectValue)
+        }
+    }
     
-    private func createElementUIDataWithNilValue(_ selectValueType: SelectValue.Type) -> ElementUIData {
-        SelectElement(
+    private func makeElementUIDataList(_ inputValueType: InputValue.Type, _ inputValueList: [InputValue]?) -> [ElementUIData]? {
+        guard let inputValueList = inputValueList else {
+            return nil
+        }
+        
+        return inputValueList.map { inputValue in
+            self.makeElementUIData(inputValueType, inputValue)
+        }
+    }
+    
+    private func makeElementUIData(_ selectValueType: SelectValue.Type, _ selectValue: SelectValue? = nil) -> ElementUIData {
+        let rawValue = selectValue?.getRawValue() ??
+            (Util.hasIndexInArray(selectValueType.getTupleValues(), index: 0)
+                ? selectValueType.getTupleValues()[0].0
+                : 0)
+        
+        return SelectElement(
             title: selectValueType.getTitle(),
-            isValid: false,
+            value: selectValue?.getValue(),
+            isValid: selectValue?.getValue() != nil,
             isRequired: true,
             values: selectValueType.getTupleValues(),
             typeValue: selectValueType.getTypeValue(),
-            rawValue: Util.hasIndexInArray(selectValueType.getTupleValues(), index: 0)
-                ? selectValueType.getTupleValues()[0].0
-                : 0
+            rawValue: rawValue,
+            indexValue: findIndexValueByRawValue(rawValue, values: selectValueType.getTupleValues())
         )
     }
     
-    private func createElementUIDataWithNilValue(_ inputValueType: InputValue.Type) -> ElementUIData {
-        InputElement(
+    private func makeElementUIData(_ inputValueType: InputValue.Type, _ inputValue: InputValue? = nil) -> ElementUIData {
+        var inputElement = InputElement(
             title: inputValueType.getTitle(),
-            value: "",
+            value: inputValue?.getValue() ?? "",
             isValid: false,
             isRequired: true,
             regexPattern: inputValueType.getRegexPattern(),
@@ -357,6 +326,15 @@ class FieldDetailsFactoryImpl: FieldDetailsFactory {
             typeValue: inputValueType.getTypeValue(),
             regex: makeRegularExpression(inputValueType.getRegexPattern())
         )
+        
+        inputElement.isValid = inputElement.isInputValid()
+        return inputElement
+    }
+    
+    private func findIndexValueByRawValue(_ rawValue: Int, values: [(Int, String)]) -> Int? {
+        values.firstIndex { tupleRawValue in
+            tupleRawValue.0 == rawValue
+        }
     }
     
     private func makeRegularExpression(_ regexPattern: String) -> NSRegularExpression? {
@@ -373,8 +351,8 @@ protocol FieldDetailsFactory {
     ) -> [Section<ElementUIData>]
     
     func makeSectionWitNewDoseFumier(
-           _ sectionList: [Section<ElementUIData>]
-       ) -> [Section<ElementUIData>]
+        _ sectionList: [Section<ElementUIData>]
+    ) -> [Section<ElementUIData>]
 }
 
 protocol SelectValue: ValueForm {

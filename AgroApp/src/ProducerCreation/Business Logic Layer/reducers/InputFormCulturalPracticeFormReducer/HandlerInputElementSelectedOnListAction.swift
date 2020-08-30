@@ -21,16 +21,28 @@ extension InputFormCulturalPracticeReducerHandler {
             )
             
             return (
-                makeInputElementObservable(util: ) >>>
+                makeSubTitle(util: ) >>>
+                    makeInputElementObservable(util: ) >>>
                     checkIfInputElementIsValid(util: ) >>>
                     newState(util:)
                 )(util) ?? state
         }
         
-        private func makeInputElementObservable(util: UtilInputElementSelectedOnListAction?) -> UtilInputElementSelectedOnListAction? {
+        private func makeSubTitle(util: UtilInputElementSelectedOnListAction?) -> UtilInputElementSelectedOnListAction? {
             guard var newUtil = util,
                 Util.hasIndexInArray(newUtil.sectionInputElement.rowData, index: 0),
-                let inputElement = newUtil.sectionInputElement.rowData[0] as? InputElement else {
+                var inputElement = newUtil.sectionInputElement.rowData[0] as? InputElement else {
+                    return nil
+            }
+            
+            inputElement.subtitle = "Veuillez saisir une valeur pour la parcelle \(newUtil.field.id)"
+            newUtil.newInputElement = inputElement
+            return newUtil
+        }
+        
+        private func makeInputElementObservable(util: UtilInputElementSelectedOnListAction?) -> UtilInputElementSelectedOnListAction? {
+            guard var newUtil = util,
+                let inputElement = newUtil.newInputElement else {
                     return nil
             }
             
@@ -70,5 +82,6 @@ extension InputFormCulturalPracticeReducerHandler {
         let sectionInputElement: Section<ElementUIData>
         let field: Field
         var inputElementObservable: InputElementObservable?
+        var newInputElement: InputElement?
     }
 }

@@ -36,7 +36,7 @@ struct CulturalPracticeFormState: Equatable {
         
         case removeDoseFumierResponse(
             indexPathsRemove: [IndexPath],
-            indexPathsAdd: [IndexPath]?
+            indexPathsAdd: [IndexPath]
         )
         
         case notResponse

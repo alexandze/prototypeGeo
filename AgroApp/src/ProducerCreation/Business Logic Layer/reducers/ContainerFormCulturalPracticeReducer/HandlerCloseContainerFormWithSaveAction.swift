@@ -19,6 +19,7 @@ extension ContainerFormCulturalPracticeHandler {
             return (
                 checkIfAllInputValueIsValid(util: ) >>>
                     convertElementUIDataObservableToElementUIData(util: ) >>>
+                    setValueIndexRawOfSelectElement(util: ) >>>
                     makeSectionElementUIData(util: ) >>>
                     newState(util: )
             )(util) ?? state
@@ -60,6 +61,29 @@ extension ContainerFormCulturalPracticeHandler {
             }.filter { $0 != nil }
                 .map { $0! }
             
+            return newUtil
+        }
+        
+        private func setValueIndexRawOfSelectElement(
+            util: UtilHandlerCloseContainerFormWithSaveAction?
+        ) -> UtilHandlerCloseContainerFormWithSaveAction? {
+            guard var newUtil = util,
+                var newElementUIDataList = newUtil.newElementUIDataList
+            else {
+                return nil
+            }
+            
+            (0..<newElementUIDataList.count).forEach { index in
+                if var selectElement = newElementUIDataList[index] as? SelectElement,
+                    let indexSelected = selectElement.indexValue,
+                    Util.hasIndexInArray(selectElement.values, index: indexSelected) {
+                    selectElement.value = selectElement.values[indexSelected].1
+                    selectElement.rawValue = selectElement.values[indexSelected].0
+                    newElementUIDataList[index] = selectElement
+                }
+            }
+            
+            newUtil.newElementUIDataList = newElementUIDataList
             return newUtil
         }
         

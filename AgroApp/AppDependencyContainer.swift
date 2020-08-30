@@ -120,7 +120,7 @@ class AppDependencyContainerImpl: AppDependencyContainer {
         producerCreationDependencyContainer.makeCulturalPracticeFormViewController()
     }
 
-    func processInitCulturalPracticeFormViewController() -> SelectFormCulturalPracticeViewController {
+    func processInitSelectFormCulturalPracticeViewController() -> SelectFormCulturalPracticeViewController {
         producerCreationDependencyContainer.makeSelectFormCulturalPracticeViewController()
     }
 
@@ -149,7 +149,7 @@ protocol AppDependencyContainer {
 
     func processInitCulturalPracticeViewController() -> CulturalPracticeFormViewController
 
-    func processInitCulturalPracticeFormViewController() -> SelectFormCulturalPracticeViewController
+    func processInitSelectFormCulturalPracticeViewController() -> SelectFormCulturalPracticeViewController
 
     func processInitInputFormCulturalPracticeHostingController() -> SettingViewController<InputFormCulturalPracticeView>
 

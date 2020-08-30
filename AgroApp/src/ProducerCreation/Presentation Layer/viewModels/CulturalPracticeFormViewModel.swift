@@ -14,6 +14,10 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
     var reloadTableView: (() -> Void)?
     var insertSections: (([IndexPath]) -> Void)?
     var reloadSections: (([IndexPath]) -> Void)?
+    var presentInputFormController: (() -> Void)?
+    var presentSelectFormController: (() -> Void)?
+    var presentContainerElementController: (() -> Void)?
+    var deletedAndAddSection: (([IndexPath], [IndexPath]) -> Void)?
     var cellId: String = UUID().uuidString
     var headerFooterSectionViewId: String = UUID().uuidString
     let culturalPracticeStateObs: Observable<CulturalPracticeFormState>
@@ -54,9 +58,9 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
                     case .updateElementResponse(indexPaths: let indexPaths):
                         self.handleUpdateElementResponse(indexPaths)
                     case .selectElementOnListResponse(section: let section):
-                        
+                        self.handleSelectElementOnListResponse(section)
                     case .removeDoseFumierResponse(indexPathsRemove: let indexPathsRemove, indexPathsAdd: let indexPathsAdd):
-                        
+                        self.handleRemoveDoseFumierResponse(indexPathsRemove, indexPathsAdd)
                     case .notResponse:
                         break
                     }
@@ -83,7 +87,7 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
             Util.hasIndexInArray(sections, index: indexPath.section),
             Util.hasIndexInArray(sections[indexPath.section].rowData, index: indexPath.row),
             let typeSection = sections[indexPath.section].typeSection else {
-            return nil
+                return nil
         }
         
         switch typeSection {
@@ -111,6 +115,38 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
     
     private func setState(state: CulturalPracticeFormState) {
         self.state = state
+    }
+    
+    private func presentInputElementAction(_ section: Section<ElementUIData>, _ field: Field) {
+        _ = culturalPraticeFormInteraction
+            .selectedInputElementOnListActionObs(section: section, field: field)
+            .subscribe {[weak self] _ in
+                self?.presentInputFormController?()
+        }
+    }
+    
+    private func presentSelectElementAction(_ section: Section<ElementUIData>, _ field: Field) {
+        _ = culturalPraticeFormInteraction
+            .selectedSelectElementOnListActionObs(section: section, field: field)
+            .subscribe { [weak self] _ in
+                self?.presentSelectFormController?()
+        }
+    }
+    
+    private func presentContainerElementAction(_ section: Section<ElementUIData>, _ field: Field) {
+        _ = culturalPraticeFormInteraction
+            .selectedContainerElementObs(section: section, field: field)
+            .subscribe { [weak self] _ in
+                self?.presentContainerElementController?()
+        }
+    }
+    
+    private func dispatchUpdateFieldAction() {
+        guard let field = state?.currentField else {
+            return
+        }
+        
+        culturalPraticeFormInteraction.updateFieldAction(field: field)
     }
     
     deinit {
@@ -166,8 +202,29 @@ extension CulturalPraticeFormViewModelImpl {
     
     private func handleUpdateElementResponse(_ indexPaths: [IndexPath]) {
         guard !indexPaths.isEmpty else { return }
-        
         reloadSections?(indexPaths)
+        dispatchUpdateFieldAction()
+    }
+    
+    private func handleSelectElementOnListResponse(_ section: Section<ElementUIData>) {
+        guard let typeSection = section.typeSection,
+            let field = state?.currentField else { return }
+        
+        switch typeSection {
+        case InputElement.TYPE_ELEMENT:
+            self.presentInputElementAction(section, field)
+        case SelectElement.TYPE_ELEMENT:
+            self.presentSelectElementAction(section, field)
+        case ElementUIListData.TYPE_ELEMENT:
+            self.presentContainerElementAction(section, field)
+        default:
+            return
+        }
+    }
+    
+    private func handleRemoveDoseFumierResponse(_ indexPathsRemove: [IndexPath], _ indexPathsAdd: [IndexPath]) {
+        deletedAndAddSection?(indexPathsRemove, indexPathsAdd)
+        dispatchUpdateFieldAction()
     }
 }
 
@@ -175,6 +232,10 @@ protocol CulturalPraticeFormViewModel {
     var reloadTableView: (() -> Void)? { get set }
     var insertSections: (([IndexPath]) -> Void)? { get set }
     var reloadSections: (([IndexPath]) -> Void)? { get set }
+    var deletedAndAddSection: (([IndexPath], [IndexPath]) -> Void)? { get set }
+    var presentInputFormController: (() -> Void)? { get set}
+    var presentSelectFormController: (() -> Void)? { get set }
+    var presentContainerElementController: (() -> Void)? { get set }
     func getNumberOfSection() -> Int
     func subscribeToCulturalPracticeStateObs()
     func handleFieldButton()
@@ -186,4 +247,5 @@ protocol CulturalPraticeFormViewModel {
     func handleAddDoseFumierButton()
     func handleRemoveDoseFumierButtonByIndexPath(_ indexPath: IndexPath, editingStyle: UITableViewCell.EditingStyle)
     func handleCanEditRowByIndexPath(_ indexPath: IndexPath) -> Bool
+    
 }

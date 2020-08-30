@@ -35,11 +35,9 @@ struct SelectFormCulturalPracticeState: Equatable {
     }
     
     enum SelectFormCulturalPracticeActionResponse {
-        case selectElementSelectedOnListActionResponse
+        case selectElementSelectedOnListActionResponse(currentIndexRow: Int)
         case closeSelectFormWithSaveActionResponse
         case closeSelectFormWithoutSaveAction
         case checkIfFormIsDirtyActionResponse(isDirty: Bool)
     }
 }
-
-

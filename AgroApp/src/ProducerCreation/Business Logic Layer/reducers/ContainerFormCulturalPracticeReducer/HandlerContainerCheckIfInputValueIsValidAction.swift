@@ -51,11 +51,13 @@ extension ContainerFormCulturalPracticeHandler {
             inputElementObservable.isValid = inputElementObservable.isInputValid()
             newElementUIDataObservableList[indexElementUIData] = inputElementObservable
             newUtil.newElementUIDataObservableList = newElementUIDataObservableList
+            newUtil.isFormValid = inputElementObservable.isValid
             return newUtil
         }
         
         private func newState(util: UtilHandlerCheckIfInputValueIsValidAction?) -> ContainerFormCulturalPracticeState? {
             guard let newUtil = util,
+                let isFormIsValid = newUtil.isFormValid,
                 let newElementUIDataObservableList = newUtil.newElementUIDataObservableList,
                 let indexElementUIData = newUtil.indexElementUIData else {
                     return nil
@@ -63,6 +65,7 @@ extension ContainerFormCulturalPracticeHandler {
             
             return newUtil.state.changeValue(
                 elementUIDataObservableList: newElementUIDataObservableList,
+                isFormValid: isFormIsValid,
                 actionResponse: .checkIfInputValueIsValidActionResponse(indexElementUIData: indexElementUIData)
             )
         }
@@ -74,5 +77,6 @@ extension ContainerFormCulturalPracticeHandler {
         let valueElementUIData: String
         var indexElementUIData: Int?
         var newElementUIDataObservableList: [ElementUIDataObservable]?
+        var isFormValid: Bool?
     }
 }

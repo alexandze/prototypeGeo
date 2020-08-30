@@ -39,7 +39,7 @@ class ContainerElementView: UIView {
 
     private func initView(_ elementUIDataList: ElementUIListData) {
         let labels = createLabelsWithElementUIListData(elementUIDataList)
-        initContraintOfLabelsTitleAndValue(labels, titleContainer: elementUIDataList.title)
+        initContraintOfLabelsTitleAndValue(labels, titleContainer: "\(elementUIDataList.title) \(elementUIDataList.index + 1)")
     }
 
     private func initContraintOfLabelsTitleAndValue(

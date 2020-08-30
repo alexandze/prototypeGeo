@@ -14,7 +14,13 @@ extension ContainerFormCulturalPracticeHandler {
             action: ContainerFormCulturalPracticeAction.CheckIfFormIsDirtyAndValidAction,
             _ state: ContainerFormCulturalPracticeState
         ) -> ContainerFormCulturalPracticeState {
+            let util = UtilHandlerCheckIfFormIsDirtyAndValidAction(state: state)
             
+            return (
+                isAllInputElementValid(util: ) >>>
+                    hasDirtyElement(util: ) >>>
+                    newState(util: )
+            )(util) ?? state
         }
         
         private func isAllInputElementValid(util: UtilHandlerCheckIfFormIsDirtyAndValidAction?) -> UtilHandlerCheckIfFormIsDirtyAndValidAction? {

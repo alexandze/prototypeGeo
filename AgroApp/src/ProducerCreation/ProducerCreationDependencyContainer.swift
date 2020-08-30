@@ -33,7 +33,7 @@ class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContain
     func makeSelectFormCulturalPracticeViewModel() -> SelectFormCulturalPracticeViewModel {
         SelectFormCulturalPracticeViewModelImpl(
             culturalPracticeFormObs: makeSelectFormCulturalPracticeStateObservable(),
-            actionDispatcher: stateStore
+            selectFormCulturalPracticeInterraction: SelectFormCulturalPracticeInterractionImpl(actionDispatcher: stateStore)
         )
     }
 
@@ -164,7 +164,7 @@ class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContain
         InputFormCulturalPracticeViewModelImpl(
             stateObserver: makeInputFormCuluralPracticeObservable(),
             viewState: InputFormCulturalPracticeViewModelImpl.ViewState(),
-            actionDispatcher: self.stateStore
+            inputFormCulturalPracticeInterraction: InputFormCulturalPracticeInteractionImpl(actionDispatcher: stateStore)
         )
     }
 
@@ -195,7 +195,7 @@ class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContain
         ContainerFormCulturalPracticeViewModelImpl(
             stateObserver: makeContainerFormCulturalPracticeObservable(),
             viewState: ContainerFormCulturalPracticeViewModelImpl.ViewState(),
-            actionDispatcher: self.stateStore
+            interaction: ContainerFormCulturalPracticeInteractionImpl(actionDispatcher: stateStore)
         )
     }
 

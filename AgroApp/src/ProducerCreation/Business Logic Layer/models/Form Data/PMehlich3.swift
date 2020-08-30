@@ -12,7 +12,7 @@ struct PMehlich3: InputValue {
     var value: KilogramPerHectare
     
     func getValue() -> String {
-        String()
+        String(value)
     }
     
     static func getTitle() -> String {

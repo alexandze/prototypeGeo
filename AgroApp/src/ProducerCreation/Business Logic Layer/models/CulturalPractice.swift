@@ -12,7 +12,7 @@ import Foundation
 // ********** If you change name, change a getTypeValue() func of SelectValue, InputValue *************
 struct CulturalPractice {
     var id: Int?
-    var avaloir: Avaloir?
+    var avaloir: SelectValue?
     var bandeRiveraine: BandeRiveraine?
 
     var doseFumier: [DoseFumier]?
@@ -66,12 +66,14 @@ extension CulturalPractice: Codable {
             doseFumier = decodeDoseFumier(container: container)
             
             periodeApplicationFumier = decodePeriodeApplicationFumiers(
-                container: container
+                container: container,
+                countDoseFumier: doseFumier?.count ?? 0
             )
             
             
             delaiIncorporationFumier = decodeDelaiIncorporationFumiers(
-                container: container
+                container: container,
+                countDoseFumier: doseFumier?.count ?? 0
             )
             
             travailSol = try? container.decode(
@@ -184,11 +186,15 @@ extension CulturalPractice: Codable {
     }
     
     private func decodeDelaiIncorporationFumiers(
-        container: KeyedDecodingContainer<CulturalPractice.CodingKeys>
+        container: KeyedDecodingContainer<CulturalPractice.CodingKeys>,
+        countDoseFumier: Int
     ) -> [DelaiIncorporationFumier]? {
         let delaiIncorporationFumiersFromJson = decodeValues(
             container: container,
-            codingKeys: [.delaiIncorporationFumier1, .delaiIncorporationFumier2, .delaiIncorporationFumier3],
+            codingKeys: getCondingKeyArrayByCountDoseFumier(
+                countDoseFumier,
+                [.delaiIncorporationFumier1, .delaiIncorporationFumier2, .delaiIncorporationFumier3]
+            ),
             typeDecode: DelaiIncorporationFumier.self
         )
         
@@ -196,15 +202,32 @@ extension CulturalPractice: Codable {
     }
     
     private func decodePeriodeApplicationFumiers(
-        container: KeyedDecodingContainer<CulturalPractice.CodingKeys>
+        container: KeyedDecodingContainer<CulturalPractice.CodingKeys>,
+        countDoseFumier: Int
     ) -> [PeriodeApplicationFumier]? {
+        
         let periodeApplicationFumierFromJson = decodeValues(
             container: container,
-            codingKeys: [.periodeApplicationFumier1, .periodeApplicationFumier2, .periodeApplicationFumier3],
+            codingKeys: getCondingKeyArrayByCountDoseFumier(
+                countDoseFumier,
+                [CodingKeys.periodeApplicationFumier1, .periodeApplicationFumier2, .periodeApplicationFumier3]
+            ),
             typeDecode: PeriodeApplicationFumier.self
         )
         
         return periodeApplicationFumierFromJson
+    }
+    
+    private func getCondingKeyArrayByCountDoseFumier(_ countDoseFumier: Int, _ condingKeysDefault: [CodingKeys]) -> [CodingKeys] {
+        var condingKeys = [CodingKeys]()
+        
+        (0..<countDoseFumier).forEach { index in
+            if Util.hasIndexInArray(condingKeysDefault, index: index) {
+                condingKeys.append(condingKeysDefault[index])
+            }
+        }
+        
+        return condingKeys
     }
     
     private func decodeValues<T: Codable>(

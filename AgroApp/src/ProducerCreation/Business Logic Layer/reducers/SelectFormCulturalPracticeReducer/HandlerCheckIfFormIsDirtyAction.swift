@@ -17,18 +17,29 @@ extension SelectFormCulturalPracticeHandlerReducer {
             let util = UtilHandlerCheckIfFormIsDirtyAction(state: state, indexSelected: action.indexSelected)
             
             return (
+                getRawValueByIndexSelected(util: ) >>>
                 isFormDirty(util: ) >>>
                     newState(util:)
             )(util) ?? state
         }
         
+        private func getRawValueByIndexSelected(util: UtilHandlerCheckIfFormIsDirtyAction?) -> UtilHandlerCheckIfFormIsDirtyAction? {
+            guard var newUtil = util,
+                let values = newUtil.state.selectElement?.values,
+                Util.hasIndexInArray(values, index: newUtil.indexSelected) else { return nil }
+            
+            newUtil.rawValueFind = values[newUtil.indexSelected].0
+            return newUtil
+        }
+        
         private func isFormDirty(util: UtilHandlerCheckIfFormIsDirtyAction?) -> UtilHandlerCheckIfFormIsDirtyAction? {
             guard var newUtil = util,
-                let selectElement = newUtil.state.selectElement else {
+                let selectElement = newUtil.state.selectElement,
+                let rawValueFind = newUtil.rawValueFind else {
                 return nil
             }
             
-            newUtil.isFormDirty = selectElement.rawValue != newUtil.indexSelected
+            newUtil.isFormDirty = selectElement.rawValue != rawValueFind
             return newUtil
         }
         
@@ -47,5 +58,6 @@ extension SelectFormCulturalPracticeHandlerReducer {
         let state: SelectFormCulturalPracticeState
         let indexSelected: Int
         var isFormDirty: Bool?
+        var rawValueFind: Int?
     }
 }

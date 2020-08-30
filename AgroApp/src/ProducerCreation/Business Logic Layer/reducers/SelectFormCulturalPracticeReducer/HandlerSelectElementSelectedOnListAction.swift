@@ -22,6 +22,7 @@ extension SelectFormCulturalPracticeHandlerReducer {
             
             return (
                 initSelectElement(util: ) >>>
+                    getCurrentIndexRow(util: ) >>>
                     newState(util:)
             )(util) ?? state
         }
@@ -39,9 +40,28 @@ extension SelectFormCulturalPracticeHandlerReducer {
             return newUtil
         }
         
+        private func getCurrentIndexRow(
+            util: UtilHandlerSelectElementSelectedOnListAction?
+        ) -> UtilHandlerSelectElementSelectedOnListAction? {
+            guard var newUtil = util,
+                let selectElement = newUtil.newSelectElement
+            else { return nil }
+            
+            newUtil.currentIndexRow = selectElement.values.firstIndex { tupleValue in
+                tupleValue.0 == selectElement.rawValue
+            }
+            
+            guard newUtil.currentIndexRow != nil else {
+                return nil
+            }
+            
+            return newUtil
+        }
+        
         private func newState(util: UtilHandlerSelectElementSelectedOnListAction?) -> SelectFormCulturalPracticeState? {
             guard let newUtil = util,
-                let newSelectElement = newUtil.newSelectElement
+                let newSelectElement = newUtil.newSelectElement,
+                let currentIndexRow = newUtil.currentIndexRow
             else {
                 return nil
             }
@@ -50,7 +70,7 @@ extension SelectFormCulturalPracticeHandlerReducer {
                 selectElement: newSelectElement,
                 section: newUtil.sectionSelected,
                 field: newUtil.fieldSelected,
-                actionResponse: .selectElementSelectedOnListActionResponse
+                actionResponse: .selectElementSelectedOnListActionResponse(currentIndexRow: currentIndexRow)
             )
         }
     }
@@ -60,5 +80,6 @@ extension SelectFormCulturalPracticeHandlerReducer {
         var sectionSelected: Section<ElementUIData>
         var fieldSelected: Field
         var newSelectElement: SelectElement?
+        var currentIndexRow: Int?
     }
 }

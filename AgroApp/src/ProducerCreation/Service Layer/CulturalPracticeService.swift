@@ -25,12 +25,12 @@ class CulturalPracticeServiceImpl: CulturalPracticeService {
         culturalPracticeRemoveFactory.makeCulturalPraticeByRemove(culturalPractice, section: section)
     }
     
-    func makeCulturalPracticeByUpdate(_ culturalPractice: CulturalPractice?, _ elementUIData: ElementUIData) -> CulturalPractice? {
-        culturalPracticeUpdateFactory.makeCulturalPracticeByUpdate(culturalPractice, elementUIData)
+    func makeCulturalPracticeByUpdate(_ culturalPractice: CulturalPractice, _ section: Section<ElementUIData>) -> CulturalPractice? {
+        culturalPracticeUpdateFactory.makeCulturalPracticeByUpdate(culturalPractice, section)
     }
 }
 
 protocol CulturalPracticeService {
-    func makeCulturalPracticeByUpdate(_ culturalPractice: CulturalPractice?, _ elementUIData: ElementUIData) -> CulturalPractice?
+    func makeCulturalPracticeByUpdate(_ culturalPractice: CulturalPractice, _ section: Section<ElementUIData>) -> CulturalPractice?
     func makeCulturalPraticeByRemove(_ culturalPractice: CulturalPractice, section: Section<ElementUIData>) -> CulturalPractice
 }

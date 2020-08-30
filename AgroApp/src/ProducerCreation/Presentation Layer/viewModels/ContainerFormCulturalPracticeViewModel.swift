@@ -51,7 +51,7 @@ class ContainerFormCulturalPracticeViewModelImpl: ContainerFormCulturalPracticeV
                 case .closeContainerFormWithSaveActionResponse:
                     self.handleCloseContainerFormWithSaveActionResponse()
                 case .closeContainerFormWithoutSaveActionResponse:
-                    self.HandleCloseContainerFormWithoutSaveActionResponse()
+                    self.handleCloseContainerFormWithoutSaveActionResponse()
                 }
         }
     }
@@ -74,6 +74,12 @@ class ContainerFormCulturalPracticeViewModelImpl: ContainerFormCulturalPracticeV
         self.settingViewController?.setIsModalInPresentation(true)
     }
     
+    private func setTitleForm() {
+        if let nameSection = self.state?.section?.sectionName, let indexSection = self.state?.section?.index {
+            viewState.titleForm = "\(nameSection) \(indexSection + 1)"
+        }
+    }
+    
     private func setViewStateValue() {
         if let elementUIDataObservableList = self.state?.elementUIDataObservableList {
             viewState.elementUIDataObservableList = elementUIDataObservableList
@@ -81,6 +87,10 @@ class ContainerFormCulturalPracticeViewModelImpl: ContainerFormCulturalPracticeV
             viewState.elementUIDataObservableList.forEach { elementUIDataObservable in
                 elementUIDataObservable.objectWillChange.send()
             }
+        }
+        
+        if let isFormValid = state?.isFormValid {
+            viewState.isFormValid = isFormValid
         }
         
         viewState.objectWillChange.send()
@@ -91,6 +101,12 @@ class ContainerFormCulturalPracticeViewModelImpl: ContainerFormCulturalPracticeV
         let inputElement = elementUIDataObservableList[indexElementUIData]
         self.viewState.elementUIDataObservableList[indexElementUIData] = inputElement
         self.viewState.elementUIDataObservableList[indexElementUIData].objectWillChange.send()
+        
+        if let isFormValid = state?.isFormValid {
+            viewState.isFormValid = isFormValid
+        }
+        
+        viewState.objectWillChange.send()
     }
     
     private func subscribeToChangeInputValue() {
@@ -169,8 +185,9 @@ extension ContainerFormCulturalPracticeViewModelImpl {
     }
     
     private func handleContainerElementSelectedOnListActionSuccess() {
-        self.setViewStateValue()
-        self.subscribeToChangeInputValue()
+        setTitleForm()
+        setViewStateValue()
+        subscribeToChangeInputValue()
     }
     
     private func handleCheckIfFormIsDirtyAndValidAction(_ isPrintAlert: Bool) {
@@ -182,14 +199,15 @@ extension ContainerFormCulturalPracticeViewModelImpl {
     }
     
     private func handleCheckIfInputValueIsValidActionResponse(_ indexElementUIData: Int) {
-        self.setElementUIDataByIndex(indexElementUIData)
+        // self.setElementUIDataByIndex(indexElementUIData)
+        setViewStateValue()
     }
     
     private func handleCloseContainerFormWithSaveActionResponse() {
         dismissContainerWithSave()
     }
     
-    private func HandleCloseContainerFormWithoutSaveActionResponse() {
+    private func handleCloseContainerFormWithoutSaveActionResponse() {
         self.dismissForm()
     }
 }

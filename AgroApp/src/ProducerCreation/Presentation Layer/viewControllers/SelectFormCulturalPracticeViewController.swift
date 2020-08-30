@@ -20,6 +20,8 @@ public class SelectFormCulturalPracticeViewController: UIViewController, UIPicke
     init(culturalPracticeFormViewModel: SelectFormCulturalPracticeViewModel) {
         self.selectFormCulturalPracticeViewModel = culturalPracticeFormViewModel
         super.init(nibName: nil, bundle: nil)
+        self.selectFormCulturalPracticeView.pickerView.dataSource = self
+        selectFormCulturalPracticeView.pickerView.delegate = self
     }
 
     public override func loadView() {
@@ -44,11 +46,11 @@ public class SelectFormCulturalPracticeViewController: UIViewController, UIPicke
         )
         
         selectFormCulturalPracticeViewModel.getSelectedRow = { [weak self] in
-            self?.selectFormCulturalPracticeView.pickerView.selectedRow(inComponent: 1) ?? 0
+            self?.selectFormCulturalPracticeView.pickerView.selectedRow(inComponent: 0) ?? 0
         }
         
         selectFormCulturalPracticeViewModel.setSelectedRow = { [weak self] row in
-            self?.selectFormCulturalPracticeView.pickerView.selectRow(row, inComponent: 1, animated: true)
+            self?.selectFormCulturalPracticeView.pickerView.selectRow(row, inComponent: 0, animated: true)
         }
         
         selectFormCulturalPracticeViewModel.reloadPickerView = { [weak self] in
@@ -104,6 +106,7 @@ public class SelectFormCulturalPracticeViewController: UIViewController, UIPicke
     }
 
     public func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        
         if let label = view as? UILabel {
             return selectFormCulturalPracticeView.reuseLabelPickerView(
                 label: label,

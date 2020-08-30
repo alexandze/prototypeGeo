@@ -61,7 +61,6 @@ enum CultureAnneeEnCoursAnterieure: String, SelectValue, Codable {
     case ptf = "PFT"
     case soy = "SOY"
     
-    
     static func listRawValue() -> [String] {
         [
             "AUC",

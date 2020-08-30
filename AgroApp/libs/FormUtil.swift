@@ -142,6 +142,19 @@ struct InputElement: InputElementData {
             subtitle: subtitle
         )
     }
+    
+    func isInputValid() -> Bool {
+        guard let regex = self.regex else {
+            return true
+        }
+
+        guard !self.value.isEmpty else {
+            return false
+        }
+
+        let valueTrim = self.value.trimmingCharacters(in: .whitespacesAndNewlines)
+        return regex.matches(in: valueTrim, range: NSRange(location: 0, length: valueTrim.count)).count == 1
+    }
 }
 
 class InputElementObservable: InputElementDataObservable {
@@ -296,6 +309,7 @@ struct SelectElement: ElementUIData {
     var values: [(Int,String)]
     var typeValue: String
     var rawValue: Int
+    var indexValue: Int?
     
     func toSelectElementObservable() -> SelectElementObservable {
         SelectElementObservable(
@@ -307,7 +321,8 @@ struct SelectElement: ElementUIData {
             isRequired: isRequired,
             values: values,
             typeValue: typeValue,
-            rawValue: rawValue
+            rawValue: rawValue,
+            indexValue: indexValue ?? 0
         )
     }
 }
@@ -320,6 +335,7 @@ class SelectElementObservable: ElementUIDataObservable {
     var values:  [(Int,String)]
     var typeValue: String
     @Published var rawValue: Int
+    @Published var indexValue: Int
     
     init(
         id: UUID? = nil,
@@ -330,7 +346,8 @@ class SelectElementObservable: ElementUIDataObservable {
         isRequired: Bool,
         values:  [(Int,String)],
         typeValue: String,
-        rawValue: Int
+        rawValue: Int,
+        indexValue: Int
     ) {
         self.value = value
         self.isValid = isValid
@@ -338,6 +355,7 @@ class SelectElementObservable: ElementUIDataObservable {
         self.values = values
         self.typeValue = typeValue
         self.rawValue = rawValue
+        self.indexValue = indexValue
         let type = type ?? SelectElementObservable.TYPE_ELEMENT
         super.init(id: id, type: type, title: title)
     }
@@ -352,7 +370,8 @@ class SelectElementObservable: ElementUIDataObservable {
             isRequired: isRequired,
             values: values,
             typeValue: typeValue,
-            rawValue: rawValue
+            rawValue: rawValue,
+            indexValue: indexValue
         )
     }
 }
@@ -383,7 +402,7 @@ enum KeyboardType: String {
 struct RowWithButton: ElementUIData {
     static let TYPE_ELEMENT = "ROW_WITH_BUTTON"
     var id: UUID = UUID()
-    var type: String = "ROW"
+    var type: String = RowWithButton.TYPE_ELEMENT
     var title: String
     var subTitle: String?
     var action: String

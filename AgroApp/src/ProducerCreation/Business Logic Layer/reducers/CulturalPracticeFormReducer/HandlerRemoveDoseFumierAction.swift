@@ -31,15 +31,6 @@ extension CulturalPracticeFormReducerHandler {
                 state: state
             )
             
-            // verifier si c est un elementUIDataList
-            // verifier si le container que l'ont veut supprimer a une value
-            // conserver les autres container qui non pas de valeur
-            // suprimmer la valeur dans la pratique culuralle
-            // recreer les sectionElementUIdata list en fonction des valeurs des prartiques culutrelle
-            // ajouter la section conserver
-            // cherche les index a supprimer
-            // cherche les index a recreer
-
             return (
                 checkIfElementUIDataList(util: ) >>>
                     checkIfRemoveContainerElementHasValue(util:) >>>
@@ -63,9 +54,8 @@ extension CulturalPracticeFormReducerHandler {
             var isSectionElementUIdataList = false
             
             if Util.hasIndexInArray(sectionList, index: indexPath.section) {
-                 isSectionElementUIdataList = sectionList[indexPath.section].typeSection == ElementUIListData.TYPE_ELEMENT
+                isSectionElementUIdataList = sectionList[indexPath.section].typeSection == ElementUIListData.TYPE_ELEMENT
             }
-            
             
             guard isSectionElementUIdataList else {
                 return nil
@@ -73,7 +63,7 @@ extension CulturalPracticeFormReducerHandler {
             
             return newUtil
         }
-
+        
         private func checkIfRemoveContainerElementHasValue(
             util: UtilRemoveDoseFumierAction?
         ) -> UtilRemoveDoseFumierAction? {
@@ -84,11 +74,11 @@ extension CulturalPracticeFormReducerHandler {
             var isContainerHasValue = false
             
             sectionElementUIListData.rowData.forEach { elementUIData in
-                if let selectElement = elementUIData as? SelectElement, let _ = selectElement.rawValue {
+                if let selectElement = elementUIData as? SelectElement, selectElement.value != nil {
                     isContainerHasValue = true
                 }
                 
-                if let inputElement = elementUIData as? InputElement, let _ = inputElement.value {
+                if let inputElement = elementUIData as? InputElement, inputElement.isValid {
                     isContainerHasValue = true
                 }
             }
@@ -106,7 +96,7 @@ extension CulturalPracticeFormReducerHandler {
             (0..<sectionList.count).forEach { index in
                 if index != newUtil.indexPathDoseFumierFromAction.section &&
                     sectionList[index].typeSection == ElementUIListData.TYPE_ELEMENT &&
-                       !allValueIsValidInSection(section: sectionList[index]) {
+                    !allValueIsValidInSection(section: sectionList[index]) {
                     newUtil.conserveEmptyELementUIListData?.append(sectionList[index])
                 }
             }
@@ -121,7 +111,7 @@ extension CulturalPracticeFormReducerHandler {
                 else { return nil }
             
             newUtil.newCulturalPractice = culturalPracticeFactory
-                    .makeCulturalPraticeByRemove(culuralPractice, section: sectionForRemove)
+                .makeCulturalPraticeByRemove(culuralPractice, section: sectionForRemove)
             
             return newUtil
         }
@@ -130,7 +120,7 @@ extension CulturalPracticeFormReducerHandler {
             guard var newUtil = util,
                 let sectionList = newUtil.state.sections,
                 let newCulturalPractice = newUtil.newCulturalPractice else {
-                return nil
+                    return nil
             }
             
             newUtil.newSectionList = fieldDetailsFactory
@@ -147,9 +137,7 @@ extension CulturalPracticeFormReducerHandler {
                     return nil
             }
             
-            guard !sectionEmptyElementUIData.isEmpty else {
-                return newUtil
-            }
+            guard !sectionEmptyElementUIData.isEmpty else { return newUtil }
             
             let countSection = newSectionList.count
             let lastSectiom = newSectionList[countSection - 1]
@@ -163,10 +151,20 @@ extension CulturalPracticeFormReducerHandler {
                 }
             }
             
+            if lastSectiom.index == nil {
+                var myIndex = 0
+                
+                sectionEmptyElementUIData.forEach { sectionEmpty in
+                    var copySectionEmpty = sectionEmpty
+                    copySectionEmpty.index = myIndex
+                    newSectionList.append(copySectionEmpty)
+                    myIndex += 1
+                }
+            }
+            
             newUtil.newSectionList = newSectionList
             return newUtil
         }
-        
         
         private func getRemoveIndexList(util: UtilRemoveDoseFumierAction?) -> UtilRemoveDoseFumierAction? {
             guard var newUtil = util,
@@ -222,7 +220,7 @@ extension CulturalPracticeFormReducerHandler {
                 let newSection = newUtil.newSectionList,
                 let newField = newUtil.newField,
                 let isContainerHasValue = newUtil.isContainerHasValue else {
-                return nil
+                    return nil
             }
             
             return newUtil.state.changeValues(
@@ -237,20 +235,20 @@ extension CulturalPracticeFormReducerHandler {
             var isAllValueValid = true
             
             section.rowData.forEach { elementUIData in
-                if let selectElement = elementUIData as? SelectElement, selectElement.rawValue == nil {
+                if let selectElement = elementUIData as? SelectElement, selectElement.value == nil {
                     isAllValueValid = false
                 }
                 
-                if let inputElement = elementUIData as? InputElement, inputElement.value == nil {
+                if let inputElement = elementUIData as? InputElement, !inputElement.isValid {
                     isAllValueValid = false
                 }
             }
             
             return isAllValueValid
         }
-
+        
     }
-
+    
     private struct UtilRemoveDoseFumierAction {
         var indexPathDoseFumierFromAction: IndexPath
         var state: CulturalPracticeFormState

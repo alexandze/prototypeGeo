@@ -81,7 +81,6 @@ extension CulturalPracticeFormReducerHandler {
             }
             
             newUtil.newCulturalPractice = culturalPracticeFactory.makeCulturalPracticeByUpdate(culturalPractice, newUtil.newSection)
-            
             guard newUtil.newCulturalPractice != nil else {
                 return nil
             }

@@ -74,19 +74,19 @@ extension ContainerFormCulturalPracticeHandler {
                 return false
             }
             
-            guard let _ = firstIndexInvalidValueOp else {
-                newUtil.IsFormValid = true
+            guard firstIndexInvalidValueOp != nil else {
+                newUtil.isFormValid = true
                 return newUtil
             }
             
-            newUtil.IsFormValid = false
+            newUtil.isFormValid = false
             return newUtil
         }
         
         private func newState(util: UtilHandlerContainerElementSelectedOnListAction?) -> ContainerFormCulturalPracticeState? {
             guard let newUtil = util,
                 let newElementUIDataListObservable = newUtil.newElementUIDataListObservable,
-                let isFormValid = newUtil.IsFormValid else {
+                let isFormValid = newUtil.isFormValid else {
                     return nil
             }
             
@@ -99,7 +99,6 @@ extension ContainerFormCulturalPracticeHandler {
             )
         }
         
-        
         private func mapElementUIDataToElementUIDataObservable(_ elementUIData: ElementUIData) -> ElementUIDataObservable? {
             switch elementUIData {
             case let inputElement as InputElement:
@@ -110,8 +109,6 @@ extension ContainerFormCulturalPracticeHandler {
                 return nil
             }
         }
-        
-        
     }
     
     private struct UtilHandlerContainerElementSelectedOnListAction {
@@ -119,6 +116,6 @@ extension ContainerFormCulturalPracticeHandler {
         let section: Section<ElementUIData>
         let field: Field
         var newElementUIDataListObservable: [ElementUIDataObservable]?
-        var IsFormValid: Bool?
+        var isFormValid: Bool?
     }
 }

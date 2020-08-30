@@ -9,7 +9,7 @@
 import Foundation
 
 enum BandeRiveraine: Int, SelectValue, Codable {
-    case pasApplique
+    case pasApplique = 1
     case inferieura1M
     case de1A3M
     case de4MEtPlus

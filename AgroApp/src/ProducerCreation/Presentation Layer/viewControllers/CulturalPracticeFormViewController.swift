@@ -44,23 +44,32 @@ public class CulturalPracticeFormViewController: UIViewController, UITableViewDe
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        culturalPraticeFormView.initFieldButton { [weak self] in
-            self?.culturalPraticeViewModel.handleFieldButton()
-        }
-        
-        culturalPraticeFormView.initCulturalPracticeButton { [weak self] in
-            self?.culturalPraticeViewModel.handleCulturalPracticeButton()
-        }
-        
+        culturalPraticeFormView.initFieldButton { [weak self] in self?.culturalPraticeViewModel.handleFieldButton() }
+        culturalPraticeFormView.initCulturalPracticeButton { [weak self] in self?.culturalPraticeViewModel.handleCulturalPracticeButton() }
         culturalPraticeViewModel.reloadTableView = {[weak self] in self?.tableView.reloadData() }
-        
-        culturalPraticeViewModel.insertSections = { [weak self] indexPaths in
-            self?.insertNewSections(indexPaths)
-        }
-        
+        culturalPraticeViewModel.insertSections = { [weak self] indexPaths in self?.insertNewSections(indexPaths) }
+        culturalPraticeViewModel.presentInputFormController = { [weak self] in self?.presentInputFormController()}
+        culturalPraticeViewModel.presentSelectFormController = { [weak self] in self?.presentSelectFormController() }
+        culturalPraticeViewModel.presentContainerElementController = { [weak self] in self?.presentContainerElementController() }
         culturalPraticeViewModel.reloadSections = { [weak self] indexPaths in self?.reloadSection(indexPaths) }
         
+        culturalPraticeViewModel.deletedAndAddSection = { [weak self] (indexPathRemoveList, indexPathAddList) in
+            self?.deletedAndAddSection(indexPathRemoveList, indexPathAddList)
+        }
+        
         culturalPraticeViewModel.subscribeToCulturalPracticeStateObs()
+    }
+    
+    private func deletedAndAddSection(_ indexPathRemoveList: [IndexPath], _ indexPathAddList: [IndexPath]) {
+        self.tableView.performBatchUpdates({
+            indexPathRemoveList.sorted().reversed().forEach { indexPathRemove in
+                self.tableView.deleteSections(IndexSet(integer: indexPathRemove.section), with: .right)
+            }
+            
+            indexPathAddList.sorted().reversed().forEach { indexPathAdd in
+                self.tableView.insertSections(IndexSet(integer: indexPathAdd.section), with: .right)
+            }
+        })
     }
     
     private func insertNewSections(_ indexPaths: [IndexPath]) {
@@ -83,6 +92,33 @@ public class CulturalPracticeFormViewController: UIViewController, UITableViewDe
                 self.tableView.reloadSections(IndexSet(integer: indexPath.section), with: .fade)
             }
         })
+    }
+    
+    private func presentInputFormController() {
+        guard let appDependency = Util.getAppDependency() else {
+            return
+        }
+        
+        let inputFormController = appDependency.processInitInputFormCulturalPracticeHostingController()
+        self.present(inputFormController, animated: true)
+    }
+    
+    private func presentSelectFormController() {
+        guard let appDependency = Util.getAppDependency() else {
+            return
+        }
+        
+        let selectFormController = appDependency.processInitSelectFormCulturalPracticeViewController()
+        self.present(selectFormController, animated: true)
+    }
+    
+    private func presentContainerElementController() {
+        guard let appDependency = Util.getAppDependency() else {
+            return
+        }
+        
+        let containerElement = appDependency.makeContainerFormCulturalPracticeHostingController()
+        self.present(containerElement, animated: true)
     }
     
     public override func viewWillDisappear(_ animated: Bool) {

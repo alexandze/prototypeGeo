@@ -23,7 +23,7 @@ class SelectFormCulturalPracticeViewModelImpl: SelectFormCulturalPracticeViewMod
     var dismissViewController: (() -> Void)?
     var printAlert: (() -> Void)?
     var state: SelectFormCulturalPracticeState?
-
+    
     init(
         culturalPracticeFormObs: Observable<SelectFormCulturalPracticeState>,
         selectFormCulturalPracticeInterraction: SelectFormCulturalPracticeInterraction
@@ -31,7 +31,7 @@ class SelectFormCulturalPracticeViewModelImpl: SelectFormCulturalPracticeViewMod
         self.culturalPracticeFormObs = culturalPracticeFormObs
         self.selectFormCulturalPracticeInterraction = selectFormCulturalPracticeInterraction
     }
-
+    
     public func subscribeToCulturalPracticeFormObs() {
         disposableCulturalPracticeFormObs = culturalPracticeFormObs
             .observeOn(Util.getSchedulerMain())
@@ -39,21 +39,23 @@ class SelectFormCulturalPracticeViewModelImpl: SelectFormCulturalPracticeViewMod
                 guard let self = self,
                     let state = event.element,
                     let actionResponse = state.actionResponse else { return }
-
-            switch actionResponse {
-            case .selectElementSelectedOnListActionResponse:
-                self.handleSelectElementSelectedOnListActionResponse()
-            case .closeSelectFormWithSaveActionResponse:
-                self.handleCloseSelectFormWithSaveActionResponse()
-            case .closeSelectFormWithoutSaveAction:
-                self.handleCloseSelectFormWithoutSaveAction()
-            case .checkIfFormIsDirtyActionResponse(isDirty: let isDirty):
-                self.handleCheckIfFormIsDirtyActionResponse(isDirty)
-            }
+                
+                self.setState(state)
+                
+                switch actionResponse {
+                case .selectElementSelectedOnListActionResponse(currentIndexRow: let currentIndexRow):
+                    self.handleSelectElementSelectedOnListActionResponse(currentIndexRow)
+                case .closeSelectFormWithSaveActionResponse:
+                    self.handleCloseSelectFormWithSaveActionResponse()
+                case .closeSelectFormWithoutSaveAction:
+                    self.handleCloseSelectFormWithoutSaveAction()
+                case .checkIfFormIsDirtyActionResponse(isDirty: let isDirty):
+                    self.handleCheckIfFormIsDirtyActionResponse(isDirty)
+                }
         }
     }
-
-    public func disposeToCulturalPracticeFormObs() {
+    
+    func disposeToCulturalPracticeFormObs() {
         _ = Util.runInSchedulerBackground {
             self.disposableCulturalPracticeFormObs?.dispose()
         }
@@ -66,22 +68,26 @@ class SelectFormCulturalPracticeViewModelImpl: SelectFormCulturalPracticeViewMod
     func getValueByRow(_ row: Int) -> String? {
         guard let valueList = state?.selectElement?.values,
             Util.hasIndexInArray(valueList, index: row) else {
-            return nil
+                return nil
         }
         
         return valueList[row].1
     }
     
+    private func setState(_ state: SelectFormCulturalPracticeState) {
+        self.state = state
+    }
+    
     private func setTextForm() {
         guard let selectElement = state?.selectElement,
             let field = state?.field else {
-            return
+                return
         }
         
         setTitleText?(selectElement.title)
         setDetailText?("Choisir une valeur pour la parcelle \(field.id)")
     }
-
+    
     deinit {
         print("*** deinit SelectFormCulturalPracticeViewModelImpl ****")
     }
@@ -106,7 +112,11 @@ extension SelectFormCulturalPracticeViewModelImpl {
     }
     
     func handleYesButtonAlert() {
-        self.selectFormCulturalPracticeInterraction.closeSelectFormWithoutSaveAction()
+        guard let indexSelected = getSelectedRow?() else {
+            return
+        }
+        
+        self.selectFormCulturalPracticeInterraction.closeSelectFormWithSaveAction(indexSelected: indexSelected)
     }
     
     func handleNoButtonAlert() {
@@ -122,9 +132,10 @@ extension SelectFormCulturalPracticeViewModelImpl {
         self.selectFormCulturalPracticeInterraction.closeSelectFormWithoutSaveAction()
     }
     
-    private func handleSelectElementSelectedOnListActionResponse() {
+    private func handleSelectElementSelectedOnListActionResponse(_ currentIndexRow: Int) {
         setTextForm()
         reloadPickerView?()
+        setSelectedRow?(currentIndexRow)
     }
     
     private func handleCloseSelectFormWithSaveActionResponse() {

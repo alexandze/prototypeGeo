@@ -32,7 +32,7 @@ extension CulturalPracticeFormReducerHandler {
                 section.typeSection == InputElement.TYPE_ELEMENT ||
                 section.typeSection == ElementUIListData.TYPE_ELEMENT)
             
-            guard isCanSelectSection == true else {
+            guard isCanSelectSection else {
                 return nil
             }
             

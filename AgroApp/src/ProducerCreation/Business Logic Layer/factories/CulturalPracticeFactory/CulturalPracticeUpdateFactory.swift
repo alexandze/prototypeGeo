@@ -48,9 +48,9 @@ class CulturalPracticeUpdateFactoryImpl: CulturalPracticeUpdateFactory {
         _ inputElement: InputElement,
         _ index: Int? = nil
     ) -> CulturalPractice? {
-        guard let value = inputElement.value else { return nil }
+        guard inputElement.isValid else { return nil }
         var copyCulturalPractice = culturalPractice
-        
+        let value = inputElement.value
         switch inputElement.typeValue {
         case AlMehlich3.getTypeValue():
             copyCulturalPractice.alMehlich3 = AlMehlich3.make(value: value) as? AlMehlich3
@@ -69,14 +69,12 @@ class CulturalPracticeUpdateFactoryImpl: CulturalPracticeUpdateFactory {
         return copyCulturalPractice
     }
     
-    
-    
     private func makeCulturalPractice(
         _ culturalPractice: CulturalPractice,
         _ selectElement: SelectElement,
         _ index: Int? = nil
     ) -> CulturalPractice? {
-        guard let rawValue = selectElement.rawValue else { return  nil }
+        let rawValue = selectElement.rawValue
         var copyCulturalPractice = culturalPractice
         
         switch selectElement.typeValue {
@@ -120,7 +118,7 @@ class CulturalPracticeUpdateFactoryImpl: CulturalPracticeUpdateFactory {
     private func makeSelectValueList(_ typeSelf: SelectValue.Type, _ selectValues: [SelectValue]?, _ rawValue: Int, _ index: Int?) -> [SelectValue]? {
         guard let index = index else { return nil }
         var selectValueList = selectValues ?? []
-        let selectValueOp = typeSelf.make(rawValue: index)
+        let selectValueOp = typeSelf.make(rawValue: rawValue)
         
         if Util.hasIndexInArray(selectValueList, index: index), let selectValue = selectValueOp {
             selectValueList[index] = selectValue

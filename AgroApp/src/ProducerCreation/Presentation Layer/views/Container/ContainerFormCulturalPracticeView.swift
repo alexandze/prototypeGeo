@@ -28,7 +28,7 @@ struct ContainerFormCulturalPracticeView: View {
                 HeaderView(
                     title: self.viewState.titleForm,
                     actionCloseButton: { self.viewModel.handleButtonClose() }
-                )
+                ).padding(.bottom, 20)
                 
                 Spacer()
                 
@@ -104,12 +104,12 @@ private struct CenterView: View {
                 ForEach(self.viewState.elementUIDataObservableList) { (elementUIData: ElementUIDataObservable) in
                     if elementUIData.type == InputElementObservable.TYPE_ELEMENT &&
                         self.canCastToInputElementObservable(elementUIData) {
-                        TextFieldWithStyle(inputElement: elementUIData.toInputElementObservable()!)
+                        TextFieldWithStyle(inputElement: elementUIData.toInputElementObservable()!).padding(.bottom, 35)
                     }
                     
                     if elementUIData.type == SelectElementObservable.TYPE_ELEMENT &&
                         self.canCastToSelectElementObservable(elementUIData) {
-                        PickerView(selectElementObservable: elementUIData.toSelectElementObservable()!)
+                        PickerView(selectElementObservable: elementUIData.toSelectElementObservable()!).padding(.bottom, 35)
                     }
                 }
             }
@@ -139,8 +139,7 @@ private struct PickerView: View {
                 .padding(.horizontal, 10)
                 .padding(.bottom, 5)
             
-            
-            Picker(selection: self.$selectElementObservable.rawValue, label: Text("")) {
+            Picker(selection: self.$selectElementObservable.indexValue, label: Text("")) {
                 ForEach((0..<self.selectElementObservable.values.count), id: \.self) { indexTupleValue in
                     Text(self.selectElementObservable.values[indexTupleValue].1)
                         .font(.system(size: 15))
@@ -151,7 +150,7 @@ private struct PickerView: View {
                 height: self.dimensionScreen.height * 0.1, alignment: .center
             ).pickerStyle(WheelPickerStyle())
             
-        }.padding(.bottom, 70)
+        }
     }
 }
 
@@ -179,8 +178,16 @@ private struct TextFieldWithStyle: View {
                     height: self.dimensionScreen.height * 0.1,
                     alignment: .center
             ).background(colorScheme == .dark ? Color.black : Color.white)
-                .cornerRadius(5)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 5)
+                        .stroke(lineWidth: 2)
+                        .foregroundColor(self.getForegroundColorOfRoundedRectangle())
+            )
         }
+    }
+    
+    private func getForegroundColorOfRoundedRectangle() -> Color {
+        self.inputElement.isValid ? .green : .red
     }
 }
 
@@ -206,7 +213,7 @@ private struct ButtonValidate: View {
             height: self.getHeightValidateButton(),
             alignment: .center
         ).foregroundColor(.white)
-            .background(Color(Util.getGreenColor()))
+            .background(self.getBackgroundColor())
             .cornerRadius(10)
             .disabled(!self.isButtonActivated)
     }
@@ -217,5 +224,9 @@ private struct ButtonValidate: View {
     
     func getHeightValidateButton() -> CGFloat {
         dimensionScreen.height * 0.09
+    }
+    
+    private func getBackgroundColor() -> Color {
+        self.isButtonActivated ? Color(Util.getGreenColor()) : .red
     }
 }
