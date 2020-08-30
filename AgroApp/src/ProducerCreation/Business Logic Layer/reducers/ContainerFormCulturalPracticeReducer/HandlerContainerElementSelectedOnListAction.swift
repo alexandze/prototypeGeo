@@ -19,7 +19,7 @@ extension ContainerFormCulturalPracticeHandler {
                 section: action.section,
                 field: action.field
             )
-            
+
             return (
                 makeElementUIDataObservableList(util: ) >>>
                     setInputElementIsValid(util:) >>>
@@ -27,69 +27,69 @@ extension ContainerFormCulturalPracticeHandler {
                     newState(util: )
             )(util) ?? state
         }
-        
+
         private func makeElementUIDataObservableList(
             util: UtilHandlerContainerElementSelectedOnListAction?
         ) -> UtilHandlerContainerElementSelectedOnListAction? {
             guard var newUtil = util else {
                 return nil
             }
-            
+
             newUtil.newElementUIDataListObservable = newUtil.section.rowData
                 .map(self.mapElementUIDataToElementUIDataObservable(_:))
                 .filter { $0 != nil }
                 .map { $0! }
-            
+
             return newUtil
         }
-        
+
         private func setInputElementIsValid(util: UtilHandlerContainerElementSelectedOnListAction?) -> UtilHandlerContainerElementSelectedOnListAction? {
             guard var newUtil = util,
                 var newElementUIDataObservableList = newUtil.newElementUIDataListObservable else {
                     return nil
             }
-            
+
             (0..<newElementUIDataObservableList.count).forEach { index in
                 if let inputElementObservable = newElementUIDataObservableList[index].toInputElementObservable() {
                     inputElementObservable.isValid = inputElementObservable.isInputValid()
                     newElementUIDataObservableList[index] = inputElementObservable
                 }
             }
-            
+
             newUtil.newElementUIDataListObservable = newElementUIDataObservableList
             return newUtil
         }
-        
+
         private func checkIfFormIsValid(util: UtilHandlerContainerElementSelectedOnListAction?) -> UtilHandlerContainerElementSelectedOnListAction? {
             guard var newUtil = util,
                 let newElementUIDataListObservable = newUtil.newElementUIDataListObservable else {
                     return nil
             }
-            
+
             let firstIndexInvalidValueOp = newElementUIDataListObservable.firstIndex { elementUIDataObservable in
                 if let inputElement = elementUIDataObservable.toInputElementObservable() {
                     return !inputElement.isValid
                 }
-                
+
                 return false
             }
-            
+
             guard firstIndexInvalidValueOp != nil else {
                 newUtil.isFormValid = true
                 return newUtil
             }
-            
+
             newUtil.isFormValid = false
             return newUtil
         }
-        
+
         private func newState(util: UtilHandlerContainerElementSelectedOnListAction?) -> ContainerFormCulturalPracticeState? {
             guard let newUtil = util,
                 let newElementUIDataListObservable = newUtil.newElementUIDataListObservable,
                 let isFormValid = newUtil.isFormValid else {
                     return nil
             }
-            
+
             return newUtil.state.changeValue(
                 field: newUtil.field,
                 section: newUtil.section,
@@ -98,7 +98,7 @@ extension ContainerFormCulturalPracticeHandler {
                 actionResponse: .containerElementSelectedOnListActionResponse
             )
         }
-        
+
         private func mapElementUIDataToElementUIDataObservable(_ elementUIData: ElementUIData) -> ElementUIDataObservable? {
             switch elementUIData {
             case let inputElement as InputElement:
@@ -110,7 +110,7 @@ extension ContainerFormCulturalPracticeHandler {
             }
         }
     }
-    
+
     private struct UtilHandlerContainerElementSelectedOnListAction {
         let state: ContainerFormCulturalPracticeState
         let section: Section<ElementUIData>

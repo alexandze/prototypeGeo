@@ -10,7 +10,7 @@ import Foundation
 
 struct DoseFumier: InputValue {
     var value: Int
-    
+
     func getValue() -> String {
         String(value)
     }
@@ -21,25 +21,25 @@ struct DoseFumier: InputValue {
             comment: "Dose du fumier (quantité)"
         )
     }
-    
+
     static func getUnitType() -> String {
         UnitType.quantity.convertToString()
     }
-    
+
     static func getRegexPattern() -> String {
         // TODO les doses fumiers doivent etre superieure a zero
         "^\\d*$"
     }
-    
+
     static func getTypeValue() -> String {
         "doseFumier"
     }
-    
+
     static func make(value: String) -> InputValue? {
         guard let value = Int(value) else {
             return nil
         }
-        
+
         return DoseFumier(value: value)
     }
 }

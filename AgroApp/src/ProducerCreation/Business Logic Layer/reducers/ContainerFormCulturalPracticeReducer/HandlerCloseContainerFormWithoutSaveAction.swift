@@ -17,16 +17,16 @@ extension ContainerFormCulturalPracticeHandler {
             let util = UtilHandlerCloseContainerFormWithoutSaveAction(state: state)
             return newState(util: util) ?? state
         }
-        
+
         private func newState(util: UtilHandlerCloseContainerFormWithoutSaveAction?) -> ContainerFormCulturalPracticeState? {
             guard let newUtil = util else {
                 return nil
             }
-            
+
             return newUtil.state.changeValue(actionResponse: .closeContainerFormWithoutSaveActionResponse)
         }
     }
-    
+
     private struct UtilHandlerCloseContainerFormWithoutSaveAction {
         let state: ContainerFormCulturalPracticeState
     }

@@ -145,7 +145,7 @@ class AddProducerFormViewModelImpl: AddProducerFormViewModel {
         viewState.elementUIDataObservableList[index] = elementUIData
         viewState.elementUIDataObservableList[index].objectWillChange.send()
     }
-    
+
     private func simulationFormForDev() {
         _ = Observable.just(true)
             .delay(.seconds(2), scheduler: Util.getSchedulerMain())
@@ -153,7 +153,7 @@ class AddProducerFormViewModelImpl: AddProducerFormViewModel {
                 guard event else {
                     return
                 }
-                
+
                 (self.viewState.elementUIDataObservableList[0] as? InputElementDataObservable)?.value = "Alexandre"
                 (self.viewState.elementUIDataObservableList[1] as? InputElementDataObservable)?.value = "Andze Kande"
                 (self.viewState.elementUIDataObservableList[3] as? InputElementDataObservable)?.value = "NIM1"
@@ -216,7 +216,7 @@ extension AddProducerFormViewModelImpl {
         sendObjectWillChangeOnAll()
         subscribeToFormObserver()
         self.interaction.checkIfAllInputElementIsValidAction()
-        
+
         // MARK: - simulation form
         simulationFormForDev()
         // MARK: - simulation form end

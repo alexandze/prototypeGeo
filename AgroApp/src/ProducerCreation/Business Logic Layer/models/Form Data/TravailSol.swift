@@ -13,7 +13,7 @@ enum TravailSol: Int, SelectValue, Codable {
     case chiselPulverisateurAutomneTravailSecondairePrintemps
     case dechaumageAuPrintempsTravailSecondairePrintemps
     case semiDirectOuBilons
-    
+
     func getValue() -> String {
         switch self {
         case .labourAutomneTravailSecondairePrintemps:
@@ -26,7 +26,7 @@ enum TravailSol: Int, SelectValue, Codable {
             return TravailSol.getValues()[3]
         }
     }
-    
+
     func getRawValue() -> Int {
         self.rawValue
     }
@@ -51,7 +51,7 @@ enum TravailSol: Int, SelectValue, Codable {
             )
         ]
     }
-    
+
     static func getValues() -> [String] {
         [
             NSLocalizedString(
@@ -76,11 +76,11 @@ enum TravailSol: Int, SelectValue, Codable {
     static func getTitle() -> String {
         NSLocalizedString("Travail du sol", comment: "Title travail du sol")
     }
-    
+
     static func getTypeValue() -> String {
         "travailSol"
     }
-    
+
     static func make(rawValue: Int) -> SelectValue? {
         self.init(rawValue: rawValue)
     }

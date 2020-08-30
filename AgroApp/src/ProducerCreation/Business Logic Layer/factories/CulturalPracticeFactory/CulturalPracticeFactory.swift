@@ -11,7 +11,7 @@ import Foundation
 class CulturalPracticeFactoryImpl: CulturalPracticeFactory {
     let culturalPracticeUpdateFactory: CulturalPracticeUpdateFactory
     let culturalPracticeRemoveFactory: CulturalPracticeRemoveFactory
-    
+
     init(
         culturalPracticeUpdateFactory: CulturalPracticeUpdateFactory = CulturalPracticeUpdateFactoryImpl(),
         culturalPracticeRemoveFactory: CulturalPracticeRemoveFactory = CulturalPracticeRemoveFactoryImpl()
@@ -19,15 +19,15 @@ class CulturalPracticeFactoryImpl: CulturalPracticeFactory {
         self.culturalPracticeUpdateFactory = culturalPracticeUpdateFactory
         self.culturalPracticeRemoveFactory = culturalPracticeRemoveFactory
     }
-    
+
     func makeCulturalPracticeByUpdate(_ culturalPractice: CulturalPractice, _ section: Section<ElementUIData>) -> CulturalPractice? {
         culturalPracticeUpdateFactory.makeCulturalPracticeByUpdate(culturalPractice, section)
     }
-    
+
     func makeCulturalPraticeByRemove(_ culturalPractice: CulturalPractice, section: Section<ElementUIData>) -> CulturalPractice {
         culturalPracticeRemoveFactory.makeCulturalPraticeByRemove(culturalPractice, section: section)
     }
-    
+
 }
 
 protocol CulturalPracticeFactory {

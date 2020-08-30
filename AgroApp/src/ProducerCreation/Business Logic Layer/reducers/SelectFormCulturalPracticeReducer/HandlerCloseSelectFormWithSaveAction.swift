@@ -15,7 +15,7 @@ extension SelectFormCulturalPracticeHandlerReducer {
             _ state: SelectFormCulturalPracticeState
         ) -> SelectFormCulturalPracticeState {
             let util = UtilHandlerCloseSelectFormWithSaveAction(state: state, indexSelected: action.indexSelected)
-            
+
             return (
                 getRawAndValueSelectedByIndex(util: ) >>>
                     setRawAndValueOfSelectElement(util: ) >>>
@@ -23,7 +23,7 @@ extension SelectFormCulturalPracticeHandlerReducer {
                     newState(util: )
                 )(util) ?? state
         }
-        
+
         private func getRawAndValueSelectedByIndex(util: UtilHandlerCloseSelectFormWithSaveAction?) -> UtilHandlerCloseSelectFormWithSaveAction? {
             guard var newUtil = util,
                 let selectElement = newUtil.state.selectElement,
@@ -31,12 +31,12 @@ extension SelectFormCulturalPracticeHandlerReducer {
                 else {
                     return nil
             }
-            
+
             newUtil.rawValueSelected = selectElement.values[newUtil.indexSelected].0
             newUtil.valueSelected = selectElement.values[newUtil.indexSelected].1
             return newUtil
         }
-        
+
         private func setRawAndValueOfSelectElement(util: UtilHandlerCloseSelectFormWithSaveAction?) -> UtilHandlerCloseSelectFormWithSaveAction? {
             guard var newUtil = util,
                 let rawSelected = newUtil.rawValueSelected,
@@ -44,13 +44,13 @@ extension SelectFormCulturalPracticeHandlerReducer {
                 var selectElement = newUtil.state.selectElement else {
                     return nil
             }
-            
+
             selectElement.rawValue = rawSelected
             selectElement.value = valueSelected
             newUtil.newSelectElement = selectElement
             return newUtil
         }
-        
+
         private func setSectionWithSelectElement(util: UtilHandlerCloseSelectFormWithSaveAction?) -> UtilHandlerCloseSelectFormWithSaveAction? {
             guard var newUtil = util,
                 let newSelectElement = newUtil.newSelectElement,
@@ -59,12 +59,12 @@ extension SelectFormCulturalPracticeHandlerReducer {
                 else {
                     return nil
             }
-            
+
             section.rowData[0] = newSelectElement
             newUtil.newSection = section
             return newUtil
         }
-        
+
         private func newState(util: UtilHandlerCloseSelectFormWithSaveAction?) -> SelectFormCulturalPracticeState? {
             guard let newUtil = util,
                 let newSection = newUtil.newSection,
@@ -72,7 +72,7 @@ extension SelectFormCulturalPracticeHandlerReducer {
                 else {
                     return nil
             }
-            
+
             return newUtil.state.changeValue(
                 selectElement: newSelectElement,
                 section: newSection,
@@ -80,7 +80,7 @@ extension SelectFormCulturalPracticeHandlerReducer {
             )
         }
     }
-    
+
     private struct UtilHandlerCloseSelectFormWithSaveAction {
         var state: SelectFormCulturalPracticeState
         var indexSelected: Int
@@ -90,4 +90,3 @@ extension SelectFormCulturalPracticeHandlerReducer {
         var newSection: Section<ElementUIData>?
     }
 }
-

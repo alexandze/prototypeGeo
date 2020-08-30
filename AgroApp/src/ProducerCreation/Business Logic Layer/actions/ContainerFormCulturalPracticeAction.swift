@@ -21,7 +21,7 @@ struct ContainerFormCulturalPracticeAction {
         var id: UUID
         var value: String
     }
-    
+
     struct CloseContainerFormWithSaveAction: Action { }
     struct CloseContainerFormWithoutSaveAction: Action { }
 }

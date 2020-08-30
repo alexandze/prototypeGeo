@@ -13,7 +13,7 @@ enum DelaiIncorporationFumier: Int, SelectValue, Codable {
     case incorporeEn48HA1Semaine
     case superieureA1Semaine
     case nonIncorpore
-    
+
     func getValue() -> String {
         switch self {
         case .incorporeEn48H:
@@ -26,7 +26,7 @@ enum DelaiIncorporationFumier: Int, SelectValue, Codable {
             return DelaiIncorporationFumier.getValues()[3]
         }
     }
-    
+
     func getRawValue() -> Int {
         self.rawValue
     }
@@ -51,7 +51,7 @@ enum DelaiIncorporationFumier: Int, SelectValue, Codable {
             )
         ]
     }
-    
+
     static func getValues() -> [String] {
         [
             NSLocalizedString(
@@ -72,18 +72,18 @@ enum DelaiIncorporationFumier: Int, SelectValue, Codable {
             )
         ]
     }
-    
+
     static func getTitle() -> String {
         NSLocalizedString(
             "Délai d'incorporation du fumier",
             comment: "Title délai d'incorporation du fumier"
         )
     }
-    
+
     static func getTypeValue() -> String {
         "delaiIncorporationFumier"
     }
-    
+
     static func make(rawValue: Int) -> SelectValue? {
         self.init(rawValue: rawValue)
     }

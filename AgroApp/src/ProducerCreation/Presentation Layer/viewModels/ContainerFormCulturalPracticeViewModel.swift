@@ -21,7 +21,7 @@ class ContainerFormCulturalPracticeViewModelImpl: ContainerFormCulturalPracticeV
     private var cancellableList: [AnyCancellable] = []
     var settingViewController: SettingViewController<ContainerFormCulturalPracticeView>?
     var interaction: ContainerFormCulturalPracticeInteraction
-    
+
     init(
         stateObserver: Observable<ContainerFormCulturalPracticeState>,
         viewState: ViewState,
@@ -31,16 +31,16 @@ class ContainerFormCulturalPracticeViewModelImpl: ContainerFormCulturalPracticeV
         self.viewState = viewState
         self.interaction = interaction
     }
-    
+
     func subscribeToStateObserver() {
         disposableStateObserver = stateObserver
             .observeOn(Util.getSchedulerMain())
             .subscribe { event in
                 guard let state = event.element,
                     let actionResponse = state.actionResponse else { return }
-                
+
                 self.setValue(state: state)
-                
+
                 switch actionResponse {
                 case .containerElementSelectedOnListActionResponse:
                     self.handleContainerElementSelectedOnListActionSuccess()
@@ -55,60 +55,60 @@ class ContainerFormCulturalPracticeViewModelImpl: ContainerFormCulturalPracticeV
                 }
         }
     }
-    
+
     func disposeObserver() {
         settingViewController = nil
-        
+
         _ = Util.runInSchedulerBackground {
             self.disposableStateObserver?.dispose()
         }
-        
+
         while !cancellableList.isEmpty {
             cancellableList.popLast()?.cancel()
         }
     }
-    
+
     func configView() {
         self.settingViewController?.setBackgroundColor(Util.getBackgroundColor())
         self.settingViewController?.setAlpha(Util.getAlphaValue())
         self.settingViewController?.setIsModalInPresentation(true)
     }
-    
+
     private func setTitleForm() {
         if let nameSection = self.state?.section?.sectionName, let indexSection = self.state?.section?.index {
             viewState.titleForm = "\(nameSection) \(indexSection + 1)"
         }
     }
-    
+
     private func setViewStateValue() {
         if let elementUIDataObservableList = self.state?.elementUIDataObservableList {
             viewState.elementUIDataObservableList = elementUIDataObservableList
-            
+
             viewState.elementUIDataObservableList.forEach { elementUIDataObservable in
                 elementUIDataObservable.objectWillChange.send()
             }
         }
-        
+
         if let isFormValid = state?.isFormValid {
             viewState.isFormValid = isFormValid
         }
-        
+
         viewState.objectWillChange.send()
     }
-    
+
     private func setElementUIDataByIndex(_ indexElementUIData: Int) {
         guard let elementUIDataObservableList = state?.elementUIDataObservableList else { return }
         let inputElement = elementUIDataObservableList[indexElementUIData]
         self.viewState.elementUIDataObservableList[indexElementUIData] = inputElement
         self.viewState.elementUIDataObservableList[indexElementUIData].objectWillChange.send()
-        
+
         if let isFormValid = state?.isFormValid {
             viewState.isFormValid = isFormValid
         }
-        
+
         viewState.objectWillChange.send()
     }
-    
+
     private func subscribeToChangeInputValue() {
         viewState.elementUIDataObservableList.forEach { elementUIDataObservable in
             if let inputElementObservable = elementUIDataObservable.toInputElementObservable() {
@@ -124,31 +124,31 @@ class ContainerFormCulturalPracticeViewModelImpl: ContainerFormCulturalPracticeV
             }
         }
     }
-    
+
     private func dismissContainerWithSave() {
         guard let newSection = state?.section, let field = state?.field else {
             return
         }
-        
+
         interaction.updateCulturalPracticeElementAction(section: newSection, field: field)
         dismissForm()
     }
-    
+
     private func setValue(
         state: ContainerFormCulturalPracticeState
     ) {
         self.state = state
     }
-    
+
     private func printAlert() {
         viewState.presentAlert = true
     }
-    
+
     private func dismissForm() {
         // viewState.isDismissForm = true
         settingViewController?.dismissVC(completion: nil)
     }
-    
+
     class ViewState: ObservableObject {
         var elementUIDataObservableList: [ElementUIDataObservable] = []
         var titleForm: String = ""
@@ -159,7 +159,7 @@ class ContainerFormCulturalPracticeViewModelImpl: ContainerFormCulturalPracticeV
         var textErrorMessage: String = "Veuillez saisir une valeur valide"
         var isDismissForm: Bool = false
     }
-    
+
     deinit {
         print("***** dinit ContainerFormCulturalPracticeViewModelImpl *******")
     }
@@ -167,46 +167,46 @@ class ContainerFormCulturalPracticeViewModelImpl: ContainerFormCulturalPracticeV
 
 // handler
 extension ContainerFormCulturalPracticeViewModelImpl {
-    
+
     func handleButtonValidate() {
         interaction.closeContainerFormWithSaveAction()
     }
-    
+
     func handleButtonClose() {
         interaction.checkIfFormIsDirtyAndValidAction()
     }
-    
+
     func handleAlertYesButton() {
         interaction.closeContainerFormWithSaveAction()
     }
-    
+
     func handleAlertNoButton() {
         interaction.closeContainerFormWithoutSaveAction()
     }
-    
+
     private func handleContainerElementSelectedOnListActionSuccess() {
         setTitleForm()
         setViewStateValue()
         subscribeToChangeInputValue()
     }
-    
+
     private func handleCheckIfFormIsDirtyAndValidAction(_ isPrintAlert: Bool) {
         if isPrintAlert {
             return printAlert()
         }
-        
+
         interaction.closeContainerFormWithoutSaveAction()
     }
-    
+
     private func handleCheckIfInputValueIsValidActionResponse(_ indexElementUIData: Int) {
         // self.setElementUIDataByIndex(indexElementUIData)
         setViewStateValue()
     }
-    
+
     private func handleCloseContainerFormWithSaveActionResponse() {
         dismissContainerWithSave()
     }
-    
+
     private func handleCloseContainerFormWithoutSaveActionResponse() {
         self.dismissForm()
     }

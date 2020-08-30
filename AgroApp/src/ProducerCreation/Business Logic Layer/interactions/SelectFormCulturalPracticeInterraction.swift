@@ -10,11 +10,11 @@ import Foundation
 
 class SelectFormCulturalPracticeInterractionImpl: SelectFormCulturalPracticeInterraction {
     let actionDispatcher: ActionDispatcher
-    
+
     init(actionDispatcher: ActionDispatcher) {
         self.actionDispatcher = actionDispatcher
     }
-    
+
     func closeSelectFormWithSaveAction(indexSelected: Int) {
         _ = Util.runInSchedulerBackground { [weak self] in
             self?.actionDispatcher.dispatch(
@@ -22,7 +22,7 @@ class SelectFormCulturalPracticeInterractionImpl: SelectFormCulturalPracticeInte
             )
         }
     }
-    
+
     func updateCulturalPracticeElementAction(_ section: Section<ElementUIData>,_ field: Field) {
         _ = Util.runInSchedulerBackground { [weak self] in
             self?.actionDispatcher.dispatch(
@@ -30,7 +30,7 @@ class SelectFormCulturalPracticeInterractionImpl: SelectFormCulturalPracticeInte
             )
         }
     }
-    
+
     func closeSelectFormWithoutSaveAction() {
         _ = Util.runInSchedulerBackground { [weak self] in
             self?.actionDispatcher.dispatch(
@@ -38,7 +38,7 @@ class SelectFormCulturalPracticeInterractionImpl: SelectFormCulturalPracticeInte
             )
         }
     }
-    
+
     func checkIfFormIsDirtyAction(_ indexSelected: Int) {
         _ = Util.runInSchedulerBackground { [weak self] in
             self?.actionDispatcher.dispatch(
@@ -53,5 +53,5 @@ protocol SelectFormCulturalPracticeInterraction {
     func updateCulturalPracticeElementAction(_ section: Section<ElementUIData>,_ field: Field)
     func closeSelectFormWithoutSaveAction()
     func checkIfFormIsDirtyAction(_ indexSelected: Int)
-    
+
 }

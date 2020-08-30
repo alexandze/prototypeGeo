@@ -27,11 +27,11 @@ class ElementUIDataObservable: ObservableObject, Identifiable {
         self.title = title
         id.map { self.id = $0 }
     }
-    
+
     func toInputElementObservable() -> InputElementObservable? {
         self as? InputElementObservable
     }
-    
+
     func toSelectElementObservable() -> SelectElementObservable? {
         self as? SelectElementObservable
     }
@@ -86,12 +86,12 @@ class InputElementDataObservable: ElementUIDataObservable {
         self.unitType = unitType
         self.typeValue = typeValue
         self.subtitle = subtitle
-        
+
         if let id = id {
             super.init(id: id, type: type, title: title)
             return
         }
-        
+
         super.init(type: type, title: title)
     }
 
@@ -125,7 +125,7 @@ struct InputElement: InputElementData {
     var typeValue: String?
     var regex: NSRegularExpression?
     var subtitle: String?
-    
+
     func toInputElementObservable() -> InputElementObservable {
         InputElementObservable(
             id: id,
@@ -142,7 +142,7 @@ struct InputElement: InputElementData {
             subtitle: subtitle
         )
     }
-    
+
     func isInputValid() -> Bool {
         guard let regex = self.regex else {
             return true
@@ -191,7 +191,7 @@ class InputElementObservable: InputElementDataObservable {
             subtitle: subtitle
         )
     }
-    
+
     func toInputElement() -> InputElement {
         InputElement(
             id: id,
@@ -310,7 +310,7 @@ struct SelectElement: ElementUIData {
     var typeValue: String
     var rawValue: Int
     var indexValue: Int?
-    
+
     func toSelectElementObservable() -> SelectElementObservable {
         SelectElementObservable(
             id: id,
@@ -336,7 +336,7 @@ class SelectElementObservable: ElementUIDataObservable {
     var typeValue: String
     @Published var rawValue: Int
     @Published var indexValue: Int
-    
+
     init(
         id: UUID? = nil,
         type: String? = nil,
@@ -359,7 +359,7 @@ class SelectElementObservable: ElementUIDataObservable {
         let type = type ?? SelectElementObservable.TYPE_ELEMENT
         super.init(id: id, type: type, title: title)
     }
-    
+
     func toSelectElement() -> SelectElement {
         SelectElement(
             id: id,

@@ -9,10 +9,10 @@
 import Foundation
 
 class CulturalPracticeUpdateFactoryImpl: CulturalPracticeUpdateFactory {
-    
+
     func makeCulturalPracticeByUpdate(_ culturalPractice: CulturalPractice, _ section: Section<ElementUIData>) -> CulturalPractice? {
         var copyCuturalPractice = culturalPractice
-        
+
         if let index = section.index, section.typeSection == ElementUIListData.TYPE_ELEMENT {
             section.rowData.forEach { elementUIData in
                 makeCulturalPractice(copyCuturalPractice, elementUIData, index).map {
@@ -20,7 +20,7 @@ class CulturalPracticeUpdateFactoryImpl: CulturalPracticeUpdateFactory {
                 }
             }
         }
-        
+
         if (section.typeSection == InputElement.TYPE_ELEMENT || section.typeSection == SelectElement.TYPE_ELEMENT) {
             section.rowData.forEach { elementUIData in
                 makeCulturalPractice(copyCuturalPractice, elementUIData).map {
@@ -28,10 +28,10 @@ class CulturalPracticeUpdateFactoryImpl: CulturalPracticeUpdateFactory {
                 }
             }
         }
-        
+
         return copyCuturalPractice
     }
-    
+
     private func makeCulturalPractice(_ culturalPractice: CulturalPractice, _ elemenetUIData: ElementUIData, _ index: Int? = nil) -> CulturalPractice? {
         switch elemenetUIData {
         case let selectElement as SelectElement:
@@ -42,7 +42,7 @@ class CulturalPracticeUpdateFactoryImpl: CulturalPracticeUpdateFactory {
             return nil
         }
     }
-    
+
     private func makeCulturalPractice(
         _ culturalPractice: CulturalPractice,
         _ inputElement: InputElement,
@@ -65,10 +65,10 @@ class CulturalPracticeUpdateFactoryImpl: CulturalPracticeUpdateFactory {
         default:
             return nil
         }
-        
+
         return copyCulturalPractice
     }
-    
+
     private func makeCulturalPractice(
         _ culturalPractice: CulturalPractice,
         _ selectElement: SelectElement,
@@ -76,7 +76,7 @@ class CulturalPracticeUpdateFactoryImpl: CulturalPracticeUpdateFactory {
     ) -> CulturalPractice? {
         let rawValue = selectElement.rawValue
         var copyCulturalPractice = culturalPractice
-        
+
         switch selectElement.typeValue {
         case Avaloir.getTypeValue():
             copyCulturalPractice.avaloir = Avaloir(rawValue: rawValue)
@@ -111,48 +111,47 @@ class CulturalPracticeUpdateFactoryImpl: CulturalPracticeUpdateFactory {
         default:
             return nil
         }
-        
+
         return copyCulturalPractice
     }
-    
+
     private func makeSelectValueList(_ typeSelf: SelectValue.Type, _ selectValues: [SelectValue]?, _ rawValue: Int, _ index: Int?) -> [SelectValue]? {
         guard let index = index else { return nil }
         var selectValueList = selectValues ?? []
         let selectValueOp = typeSelf.make(rawValue: rawValue)
-        
+
         if Util.hasIndexInArray(selectValueList, index: index), let selectValue = selectValueOp {
             selectValueList[index] = selectValue
             return selectValueList
         }
-        
+
         if let selectValue = selectValueOp {
             selectValueList.append(selectValue)
             return selectValueList
         }
-        
+
         return nil
     }
-    
-    
+
     private func makeInputValueList(_ typeSelf: InputValue.Type, _ inputValues: [InputValue]?, _ value: String, _ index: Int?) -> [InputValue]? {
         guard let index = index else { return nil }
         var inputValueList = inputValues ?? []
         let inputValueOps = typeSelf.make(value: value)
-        
+
         if Util.hasIndexInArray(inputValueList, index: index),
             let inputValue = inputValueOps {
             inputValueList[index] = inputValue
             return inputValueList
         }
-        
+
         if let inputValue = inputValueOps {
             inputValueList.append(inputValue)
             return inputValueList
         }
-        
+
         return nil
     }
-    
+
 }
 
 protocol CulturalPracticeUpdateFactory {

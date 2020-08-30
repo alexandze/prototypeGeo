@@ -13,7 +13,7 @@ enum BandeRiveraine: Int, SelectValue, Codable {
     case inferieura1M
     case de1A3M
     case de4MEtPlus
-    
+
     func getValue() -> String {
         switch self {
         case .pasApplique:
@@ -26,11 +26,11 @@ enum BandeRiveraine: Int, SelectValue, Codable {
             return BandeRiveraine.getValues()[3]
         }
     }
-    
+
     func getRawValue() -> Int {
         self.rawValue
     }
-    
+
     static func getTupleValues() -> [(Int, String)] {
         [
             (
@@ -51,7 +51,7 @@ enum BandeRiveraine: Int, SelectValue, Codable {
             )
         ]
     }
-    
+
     static func getValues() -> [String] {
         [
             NSLocalizedString("Ne s'applique pas", comment: "Bande riveraine ne s'applique pas"),
@@ -64,11 +64,11 @@ enum BandeRiveraine: Int, SelectValue, Codable {
     static func getTitle() -> String {
         NSLocalizedString("Bande riveraine", comment: "Titre bande riveraine")
     }
-    
+
     static func getTypeValue() -> String {
         "bandeRiveraine"
     }
-    
+
     static func make(rawValue: Int) -> SelectValue? {
         self.init(rawValue: rawValue)
     }

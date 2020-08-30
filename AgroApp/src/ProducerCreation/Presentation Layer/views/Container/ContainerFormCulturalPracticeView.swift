@@ -12,7 +12,7 @@ struct ContainerFormCulturalPracticeView: View {
     let viewModel: ContainerFormCulturalPracticeViewModel
     @ObservedObject var viewState: ContainerFormCulturalPracticeViewModelImpl.ViewState
     @ObservedObject var keyboardFollower: KeyboardFollower
-    
+
     init(
         viewModel: ContainerFormCulturalPracticeViewModel,
         keyboardFollower: KeyboardFollower
@@ -21,7 +21,7 @@ struct ContainerFormCulturalPracticeView: View {
         self.viewState = viewModel.viewState
         self.keyboardFollower = keyboardFollower
     }
-    
+
     var body: some View {
         GeometryReader { (geometry: GeometryProxy) in
             VStack {
@@ -29,18 +29,18 @@ struct ContainerFormCulturalPracticeView: View {
                     title: self.viewState.titleForm,
                     actionCloseButton: { self.viewModel.handleButtonClose() }
                 ).padding(.bottom, 20)
-                
+
                 Spacer()
-                
+
                 CenterView(viewState: self.viewState)
-                
+
                 Spacer()
-                
+
                 ButtonValidate(
                     isButtonActivated: self.viewState.isFormValid,
                     handleButton: { self.viewModel.handleButtonValidate() }
                 ).padding(.bottom, 10)
-                
+
             }.onAppear {
                 self.viewModel.configView()
                 self.viewModel.subscribeToStateObserver()
@@ -51,7 +51,7 @@ struct ContainerFormCulturalPracticeView: View {
             ).alert(isPresented: self.$viewState.presentAlert, content: self.createAlert)
         }
     }
-    
+
     private func createAlert() -> Alert {
         Alert(
             title: Text(self.viewState.textAlert),
@@ -72,15 +72,15 @@ private struct HeaderView: View {
     var title: String
     var actionCloseButton: () -> Void
     @EnvironmentObject var dimensionScreen: DimensionScreen
-    
+
     var body: some View {
         HStack(alignment: .top) {
             UIButtonRepresentable { self.actionCloseButton() }
                 .fixedSize()
                 .offset(x: 5, y: 5)
-            
+
             Spacer()
-            
+
             Text(title)
                 .font(.system(size: 25))
                 .bold()
@@ -88,7 +88,7 @@ private struct HeaderView: View {
                 .lineLimit(3)
                 .multilineTextAlignment(.center)
                 .offset(x: -15, y: 10)
-            
+
             Spacer()
         }
     }
@@ -97,7 +97,7 @@ private struct HeaderView: View {
 private struct CenterView: View {
     @ObservedObject var viewState: ContainerFormCulturalPracticeViewModelImpl.ViewState
     @EnvironmentObject var dimensionScreen: DimensionScreen
-    
+
     var body: some View {
         ScrollView {
             VStack {
@@ -106,7 +106,7 @@ private struct CenterView: View {
                         self.canCastToInputElementObservable(elementUIData) {
                         TextFieldWithStyle(inputElement: elementUIData.toInputElementObservable()!).padding(.bottom, 35)
                     }
-                    
+
                     if elementUIData.type == SelectElementObservable.TYPE_ELEMENT &&
                         self.canCastToSelectElementObservable(elementUIData) {
                         PickerView(selectElementObservable: elementUIData.toSelectElementObservable()!).padding(.bottom, 35)
@@ -115,11 +115,11 @@ private struct CenterView: View {
             }
         }
     }
-    
+
     func canCastToInputElementObservable(_ elementUIData: ElementUIDataObservable) -> Bool {
         elementUIData.toInputElementObservable() != nil
     }
-    
+
     func canCastToSelectElementObservable(_ elementUIData: ElementUIDataObservable) -> Bool {
         elementUIData.toSelectElementObservable() != nil
     }
@@ -128,7 +128,7 @@ private struct CenterView: View {
 private struct PickerView: View {
     @ObservedObject var selectElementObservable: SelectElementObservable
     @EnvironmentObject var dimensionScreen: DimensionScreen
-    
+
     var body: some View {
         VStack {
             Text(self.selectElementObservable.title)
@@ -138,7 +138,7 @@ private struct PickerView: View {
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 10)
                 .padding(.bottom, 5)
-            
+
             Picker(selection: self.$selectElementObservable.indexValue, label: Text("")) {
                 ForEach((0..<self.selectElementObservable.values.count), id: \.self) { indexTupleValue in
                     Text(self.selectElementObservable.values[indexTupleValue].1)
@@ -149,7 +149,7 @@ private struct PickerView: View {
                 width: self.dimensionScreen.width * 0.1,
                 height: self.dimensionScreen.height * 0.1, alignment: .center
             ).pickerStyle(WheelPickerStyle())
-            
+
         }
     }
 }
@@ -158,7 +158,7 @@ private struct TextFieldWithStyle: View {
     @ObservedObject var inputElement: InputElementObservable
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var dimensionScreen: DimensionScreen
-    
+
     var body: some View {
         VStack {
             Text(self.inputElement.title)
@@ -168,7 +168,7 @@ private struct TextFieldWithStyle: View {
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 10)
                 .padding(.bottom, 5)
-            
+
             TextField(self.inputElement.title, text: self.$inputElement.value)
                 .keyboardType(.numbersAndPunctuation)
                 .font(.system(size: 25))
@@ -185,7 +185,7 @@ private struct TextFieldWithStyle: View {
             )
         }
     }
-    
+
     private func getForegroundColorOfRoundedRectangle() -> Color {
         self.inputElement.isValid ? .green : .red
     }
@@ -195,7 +195,7 @@ private struct ButtonValidate: View {
     var isButtonActivated: Bool
     var handleButton: () -> Void
     @EnvironmentObject var dimensionScreen: DimensionScreen
-    
+
     var body: some View {
         Button(action: { self.handleButton() }) {
             Text("Valider")
@@ -217,15 +217,15 @@ private struct ButtonValidate: View {
             .cornerRadius(10)
             .disabled(!self.isButtonActivated)
     }
-    
+
     func getWidthValidateButton() -> CGFloat {
         dimensionScreen.width * 0.6
     }
-    
+
     func getHeightValidateButton() -> CGFloat {
         dimensionScreen.height * 0.09
     }
-    
+
     private func getBackgroundColor() -> Color {
         self.isButtonActivated ? Color(Util.getGreenColor()) : .red
     }

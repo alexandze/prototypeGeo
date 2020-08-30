@@ -29,7 +29,7 @@ enum DrainageSouterrain: Int, SelectValue, Codable {
             )
         ]
     }
-    
+
     func getRawValue() -> Int {
         self.rawValue
     }
@@ -44,7 +44,7 @@ enum DrainageSouterrain: Int, SelectValue, Codable {
             return DrainageSouterrain.getValues()[2]
         }
     }
-    
+
     static func getValues() -> [String] {
         [
             NSLocalizedString("Systématique", comment: "Drainage souterrain Systématique"),
@@ -59,11 +59,11 @@ enum DrainageSouterrain: Int, SelectValue, Codable {
             comment: "Title Drainage souterrain"
         )
     }
-    
+
     static func getTypeValue() -> String {
         "drainageSouterrain"
     }
-    
+
     static func make(rawValue: Int) -> SelectValue? {
         self.init(rawValue: rawValue)
     }

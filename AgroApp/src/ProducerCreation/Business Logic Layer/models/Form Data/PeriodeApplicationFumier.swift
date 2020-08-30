@@ -13,7 +13,7 @@ enum PeriodeApplicationFumier: Int, SelectValue, Codable {
     case postLevee
     case automneHatif
     case automneTardif
-    
+
     func getValue() -> String {
         switch self {
         case .preSemi:
@@ -26,7 +26,7 @@ enum PeriodeApplicationFumier: Int, SelectValue, Codable {
             return PeriodeApplicationFumier.getValues()[3]
         }
     }
-    
+
     func getRawValue() -> Int {
         self.rawValue
     }
@@ -51,7 +51,7 @@ enum PeriodeApplicationFumier: Int, SelectValue, Codable {
             )
         ]
     }
-    
+
     static func getValues() -> [String] {
         [
             NSLocalizedString(
@@ -72,18 +72,18 @@ enum PeriodeApplicationFumier: Int, SelectValue, Codable {
             )
         ]
     }
-    
+
     static func getTitle() -> String {
         NSLocalizedString(
             "Période d'application du fumier",
             comment: "Titre Période d'application du fumier"
         )
     }
-    
+
     static func getTypeValue() -> String {
         "periodeApplicationFumier"
     }
-    
+
     static func make(rawValue: Int) -> SelectValue? {
         self.init(rawValue: rawValue)
     }

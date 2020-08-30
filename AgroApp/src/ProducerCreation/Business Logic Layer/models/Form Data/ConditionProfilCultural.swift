@@ -12,7 +12,7 @@ enum ConditionProfilCultural: Int, SelectValue, Codable {
     case bonne = 1
     case presenceZoneRisques
     case dominanceZoneRisque
-    
+
     func getValue() -> String {
         switch self {
         case .bonne:
@@ -23,11 +23,11 @@ enum ConditionProfilCultural: Int, SelectValue, Codable {
             return ConditionProfilCultural.getValues()[2]
         }
     }
-    
+
     func getRawValue() -> Int {
         self.rawValue
     }
-    
+
     static func getTupleValues() -> [(Int, String)] {
         [
             (
@@ -44,7 +44,7 @@ enum ConditionProfilCultural: Int, SelectValue, Codable {
             )
         ]
     }
-    
+
     static func getValues() -> [String] {
         [
             NSLocalizedString(
@@ -68,11 +68,11 @@ enum ConditionProfilCultural: Int, SelectValue, Codable {
             comment: "Condition du profil cultural"
         )
     }
-    
+
     static func getTypeValue() -> String {
         "conditionProfilCultural"
     }
-    
+
     static func make(rawValue: Int) -> SelectValue? {
         self.init(rawValue: rawValue)
     }

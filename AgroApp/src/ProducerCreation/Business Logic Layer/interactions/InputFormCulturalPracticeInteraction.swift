@@ -10,11 +10,11 @@ import Foundation
 
 class InputFormCulturalPracticeInteractionImpl: InputFormCulturalPracticeInteraction {
     let actionDispatcher: ActionDispatcher
-    
+
     init(actionDispatcher: ActionDispatcher) {
         self.actionDispatcher = actionDispatcher
     }
-    
+
     func closeInputFormWithSaveAction(inputValue: String) {
         _ = Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(
@@ -22,7 +22,7 @@ class InputFormCulturalPracticeInteractionImpl: InputFormCulturalPracticeInterac
             )
         }
     }
-    
+
     func updateCulturalPracticeElementAction(_ sectionUpdate: Section<ElementUIData>, _ field: Field) {
         _ = Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(
@@ -30,7 +30,7 @@ class InputFormCulturalPracticeInteractionImpl: InputFormCulturalPracticeInterac
             )
         }
     }
-    
+
     func closeInputFormWithoutSaveAction() {
         _ = Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(
@@ -38,7 +38,7 @@ class InputFormCulturalPracticeInteractionImpl: InputFormCulturalPracticeInterac
             )
         }
     }
-    
+
     func checkIfInputValueIsValidAction(_ inputValue: String) {
         _ = Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(
@@ -46,7 +46,7 @@ class InputFormCulturalPracticeInteractionImpl: InputFormCulturalPracticeInterac
             )
         }
     }
-    
+
     func checkIfFormIsValidAndDirtyForPrintAlertAction() {
         _ = Util.runInSchedulerBackground {
             self.actionDispatcher.dispatch(
@@ -55,7 +55,6 @@ class InputFormCulturalPracticeInteractionImpl: InputFormCulturalPracticeInterac
         }
     }
 }
-
 
 protocol InputFormCulturalPracticeInteraction {
     func closeInputFormWithSaveAction(inputValue: String)

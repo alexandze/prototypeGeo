@@ -9,7 +9,7 @@
 import Foundation
 
 class CulturalPracticeServiceImpl: CulturalPracticeService {
-    
+
     let culturalPracticeRemoveFactory: CulturalPracticeRemoveFactory
     let culturalPracticeUpdateFactory: CulturalPracticeUpdateFactory
     init(
@@ -19,12 +19,11 @@ class CulturalPracticeServiceImpl: CulturalPracticeService {
         self.culturalPracticeRemoveFactory = culturalPracticeRemoveFactory
         self.culturalPracticeUpdateFactory = culturalPracticeUpdateFactory
     }
-    
-    
+
     func makeCulturalPraticeByRemove(_ culturalPractice: CulturalPractice, section: Section<ElementUIData>) -> CulturalPractice {
         culturalPracticeRemoveFactory.makeCulturalPraticeByRemove(culturalPractice, section: section)
     }
-    
+
     func makeCulturalPracticeByUpdate(_ culturalPractice: CulturalPractice, _ section: Section<ElementUIData>) -> CulturalPractice? {
         culturalPracticeUpdateFactory.makeCulturalPracticeByUpdate(culturalPractice, section)
     }

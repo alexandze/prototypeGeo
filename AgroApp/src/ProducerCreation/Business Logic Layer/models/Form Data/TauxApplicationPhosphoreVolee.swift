@@ -10,7 +10,7 @@ import Foundation
 
 struct TauxApplicationPhosphoreVolee: InputValue {
     var value: KilogramPerHectare
-    
+
     func getValue() -> String {
         String(value)
     }
@@ -21,7 +21,7 @@ struct TauxApplicationPhosphoreVolee: InputValue {
             comment: "Titre Taux d'application de phosphore (engrais minéraux à la volée)"
         )
     }
-    
+
     static func getUnitType() -> String {
         UnitType.kgHa.convertToString()
     }
@@ -29,16 +29,16 @@ struct TauxApplicationPhosphoreVolee: InputValue {
     static func getRegexPattern() -> String {
         "^\\d*\\.?\\d*$"
     }
-    
+
     static func getTypeValue() -> String {
         "tauxApplicationPhosphoreVolee"
     }
-    
+
     static func make(value: String) -> InputValue? {
         guard let value = Double(value) else {
             return nil
         }
-        
+
         return TauxApplicationPhosphoreVolee(value: value)
     }
 }

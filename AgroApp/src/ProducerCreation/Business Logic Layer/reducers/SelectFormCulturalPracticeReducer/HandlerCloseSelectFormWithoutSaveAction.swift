@@ -14,18 +14,17 @@ extension SelectFormCulturalPracticeHandlerReducer {
             let util = UtilHandlerCloseSelectFormWithoutSaveAction(state: state)
             return newState(util: util) ?? state
         }
-        
+
         private func newState(util: UtilHandlerCloseSelectFormWithoutSaveAction?) -> SelectFormCulturalPracticeState? {
             guard let newUtil = util else {
                 return nil
             }
-            
+
             return newUtil.state.changeValue(actionResponse: .closeSelectFormWithoutSaveAction)
         }
     }
-    
+
     private struct UtilHandlerCloseSelectFormWithoutSaveAction {
         let state: SelectFormCulturalPracticeState
     }
 }
-

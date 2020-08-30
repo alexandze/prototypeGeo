@@ -10,7 +10,7 @@ import Foundation
 
 struct AlMehlich3: InputValue {
     var value: Percentage
-    
+
     func getValue() -> String {
         String(value)
     }
@@ -21,7 +21,7 @@ struct AlMehlich3: InputValue {
             comment: "AL Mehlich-3"
         )
     }
-    
+
     static func getUnitType() -> String {
         UnitType.percentage.convertToString()
     }
@@ -29,16 +29,16 @@ struct AlMehlich3: InputValue {
     static func getRegexPattern() -> String {
         "^\\d*\\.?\\d*$"
     }
-    
+
     static func getTypeValue() -> String {
         "alMehlich3"
     }
-    
+
     static func make(value: String) -> InputValue? {
         guard let value = Percentage(value) else {
             return nil
         }
-        
+
         return AlMehlich3(value: value)
     }
 }

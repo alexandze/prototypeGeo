@@ -9,17 +9,17 @@
 import UIKit
 
 public class CulturalPracticeFormViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
+
     var culturalPraticeViewModel: CulturalPraticeFormViewModel
     let culturalPraticeFormView: CulturalPracticeFormView
     let tableView: UITableView
     var cellId: String = UUID().uuidString
     var headerFooterSectionViewId: String = UUID().uuidString
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     init(
         culturalPraticeViewModel: CulturalPraticeFormViewModel
     ) {
@@ -30,20 +30,20 @@ public class CulturalPracticeFormViewController: UIViewController, UITableViewDe
         self.tableView.delegate = self
         self.tableView.dataSource = self
     }
-    
+
     public override func loadView() {
         self.view = self.culturalPraticeFormView
     }
-    
+
     public override func viewDidLoad() {
         super.viewDidLoad()
         registerCell()
         registerHeaderFooterViewSection()
     }
-    
+
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         culturalPraticeFormView.initFieldButton { [weak self] in self?.culturalPraticeViewModel.handleFieldButton() }
         culturalPraticeFormView.initCulturalPracticeButton { [weak self] in self?.culturalPraticeViewModel.handleCulturalPracticeButton() }
         culturalPraticeViewModel.reloadTableView = {[weak self] in self?.tableView.reloadData() }
@@ -52,40 +52,40 @@ public class CulturalPracticeFormViewController: UIViewController, UITableViewDe
         culturalPraticeViewModel.presentSelectFormController = { [weak self] in self?.presentSelectFormController() }
         culturalPraticeViewModel.presentContainerElementController = { [weak self] in self?.presentContainerElementController() }
         culturalPraticeViewModel.reloadSections = { [weak self] indexPaths in self?.reloadSection(indexPaths) }
-        
+
         culturalPraticeViewModel.deletedAndAddSection = { [weak self] (indexPathRemoveList, indexPathAddList) in
             self?.deletedAndAddSection(indexPathRemoveList, indexPathAddList)
         }
-        
+
         culturalPraticeViewModel.subscribeToCulturalPracticeStateObs()
     }
-    
+
     private func deletedAndAddSection(_ indexPathRemoveList: [IndexPath], _ indexPathAddList: [IndexPath]) {
         self.tableView.performBatchUpdates({
             indexPathRemoveList.sorted().reversed().forEach { indexPathRemove in
                 self.tableView.deleteSections(IndexSet(integer: indexPathRemove.section), with: .right)
             }
-            
+
             indexPathAddList.sorted().reversed().forEach { indexPathAdd in
                 self.tableView.insertSections(IndexSet(integer: indexPathAdd.section), with: .right)
             }
         })
     }
-    
+
     private func insertNewSections(_ indexPaths: [IndexPath]) {
         let reverseIndexPath = indexPaths.sorted().reversed()
-        
+
         self.tableView.performBatchUpdates({
             reverseIndexPath.forEach { indexPath in
                 self.tableView.insertSections(IndexSet(integer: indexPath.section), with: .left)
             }
-        }) { isFinish in
+        }) { _ in
             if let indexPath = reverseIndexPath.first {
                 self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
             }
         }
     }
-    
+
     private func reloadSection(_ indexPaths: [IndexPath]) {
         self.tableView.performBatchUpdates({
             indexPaths.forEach { indexPath in
@@ -93,79 +93,79 @@ public class CulturalPracticeFormViewController: UIViewController, UITableViewDe
             }
         })
     }
-    
+
     private func presentInputFormController() {
         guard let appDependency = Util.getAppDependency() else {
             return
         }
-        
+
         let inputFormController = appDependency.processInitInputFormCulturalPracticeHostingController()
         self.present(inputFormController, animated: true)
     }
-    
+
     private func presentSelectFormController() {
         guard let appDependency = Util.getAppDependency() else {
             return
         }
-        
+
         let selectFormController = appDependency.processInitSelectFormCulturalPracticeViewController()
         self.present(selectFormController, animated: true)
     }
-    
+
     private func presentContainerElementController() {
         guard let appDependency = Util.getAppDependency() else {
             return
         }
-        
+
         let containerElement = appDependency.makeContainerFormCulturalPracticeHostingController()
         self.present(containerElement, animated: true)
     }
-    
+
     public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         culturalPraticeViewModel.disposeToCulturalPracticeStateObs()
     }
-    
+
     func registerCell() {
         self.tableView.register(SubtitleTableViewCell.self, forCellReuseIdentifier: self.cellId)
     }
-    
+
     func registerHeaderFooterViewSection() {
         self.tableView.register(UITableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: headerFooterSectionViewId)
     }
-    
+
     public func numberOfSections(in tableView: UITableView) -> Int {
         culturalPraticeViewModel.getNumberOfSection()
     }
-    
+
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         1
     }
-    
+
     public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         ""
     }
-    
+
     public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerFooterSectionViewId)
         return headerView
     }
-    
+
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let typeSection = culturalPraticeViewModel.getTypeSectionByIndexPath(indexPath)
-        
+
         if  typeSection == ElementUIListData.TYPE_ELEMENT {
             return 300
         }
-        
+
         return 100
     }
-    
+
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellOp = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as? SubtitleTableViewCell
         let elementUIDataOp = culturalPraticeViewModel.getElementUIDataByIndexPath(indexPath)
         guard let elementUIData = elementUIDataOp, let cell = cellOp else { return UITableViewCell() }
-        
+
         switch elementUIData {
         case let inputElement as InputElement:
             return culturalPraticeFormView.initCell(cell, inputElement: inputElement)
@@ -179,19 +179,19 @@ public class CulturalPracticeFormViewController: UIViewController, UITableViewDe
             return cell
         }
     }
-    
+
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         culturalPraticeViewModel.handleSelectRow(indexPath)
     }
-    
+
     public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         culturalPraticeViewModel.handleRemoveDoseFumierButtonByIndexPath(indexPath, editingStyle: editingStyle)
     }
-    
+
     public func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         culturalPraticeViewModel.handleCanEditRowByIndexPath(indexPath)
     }
-    
+
     deinit {
         print("***** denit CulturalPraticeViewController *******")
     }

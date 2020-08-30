@@ -52,7 +52,7 @@ class SelectFormCulturalPracticeView: UIView {
             preferredStyle: .alert
         )
     }()
-    
+
     let pickerView: UIPickerView = {
         let picker = UIPickerView()
         picker.translatesAutoresizingMaskIntoConstraints = false
@@ -87,7 +87,7 @@ class SelectFormCulturalPracticeView: UIView {
         initPickerView()
         initLabelDetail()
     }
-    
+
     func initHandleCloseButton(_ handleCloseFunc: @escaping () -> Void) {
         self.headerPresentedView.handleCloseButtonWith(handleCloseFunc)
     }
@@ -95,7 +95,7 @@ class SelectFormCulturalPracticeView: UIView {
     func initHandleValidateButton(_ handleValidateFunc: @escaping () -> Void) {
         self.handleButtonValidateFunc = handleValidateFunc
     }
-    
+
     func initAlertAction(_ handleYesAction: @escaping () -> Void, _ handleNoAction: @escaping () -> Void) {
         let alertActionYes = createAlertActionYes {
             handleYesAction()
@@ -125,7 +125,7 @@ class SelectFormCulturalPracticeView: UIView {
         label.sizeToFit()
         return label
     }
-    
+
     private func createAlertActionYes(handleFunc: @escaping () -> Void) -> UIAlertAction {
         let alertAction = UIAlertAction(
             title: NSLocalizedString("Oui", comment: "Oui"),

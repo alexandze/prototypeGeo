@@ -12,7 +12,7 @@ import ReSwift
 extension Reducers {
     public static func culturalPracticeFormReducer(action: Action, state: CulturalPracticeFormState?) -> CulturalPracticeFormState {
         let state = state ?? CulturalPracticeFormState(uuidState: UUID().uuidString)
-        
+
         switch action {
         case let selectedFieldOnList as FieldListAction.SelectFieldOnListAction:
             return CulturalPracticeFormReducerHandler
@@ -32,7 +32,7 @@ extension Reducers {
         default:
             break
         }
-        
+
         return state
     }
 }

@@ -110,7 +110,3 @@ protocol CulturalPracticeElementProtocol {
     var value: CulturalPracticeValueProtocol? {get}
     func getIndex() -> Int?
 }
-
-
-
-

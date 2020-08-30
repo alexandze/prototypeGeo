@@ -24,11 +24,11 @@ enum CouvertureDerobee: Int, SelectValue, Codable {
             )
         ]
     }
-    
+
     func getRawValue() -> Int {
         self.rawValue
     }
-    
+
     static func getValues() -> [String] {
         [
             NSLocalizedString("Vrai", comment: "Couverture dérobée vrai"),
@@ -51,11 +51,11 @@ enum CouvertureDerobee: Int, SelectValue, Codable {
             comment: "Title Couverture dérobée"
         )
     }
-    
+
     static func getTypeValue() -> String {
         "couvertureDerobee"
     }
-    
+
     static func make(rawValue: Int) -> SelectValue? {
         self.init(rawValue: rawValue)
     }

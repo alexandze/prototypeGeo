@@ -11,7 +11,7 @@ import Foundation
 enum CouvertureAssociee: Int, SelectValue, Codable {
     case vrai = 1
     case faux = 0
-    
+
     static func getTupleValues() -> [(Int, String)] {
         [
             (
@@ -24,7 +24,7 @@ enum CouvertureAssociee: Int, SelectValue, Codable {
             )
         ]
     }
-    
+
     func getValue() -> String {
         switch self {
         case .vrai:
@@ -33,29 +33,29 @@ enum CouvertureAssociee: Int, SelectValue, Codable {
             return CouvertureAssociee.getValues()[1]
         }
     }
-    
+
     func getRawValue() -> Int {
         self.rawValue
     }
-    
+
     static func getValues() -> [String] {
         [
             NSLocalizedString("Vrai", comment: "Couverture associée vrai"),
             NSLocalizedString("Faux", comment: "Couverture associée faux")
         ]
     }
-    
+
     static func getTitle() -> String {
         NSLocalizedString(
             "Couverture associée",
             comment: "Title couverture associée"
         )
     }
-    
+
     static func getTypeValue() -> String {
         "couvertureAssociee"
     }
-    
+
     static func make(rawValue: Int) -> SelectValue? {
         self.init(rawValue: rawValue)
     }

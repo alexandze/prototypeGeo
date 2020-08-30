@@ -91,9 +91,9 @@ class Util {
         }.subscribeOn(Util.getSchedulerBackgroundForReSwift())
         .subscribe()
     }
-    
+
     static public func dispatchActionInSchedulerReSwift(_ action: Action, actionDispatcher: ActionDispatcher) {
-        let _  = runInSchedulerBackground {
+        _  = runInSchedulerBackground {
             actionDispatcher.dispatch(action)
         }
     }

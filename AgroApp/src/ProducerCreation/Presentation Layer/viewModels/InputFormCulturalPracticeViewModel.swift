@@ -12,7 +12,7 @@ import SwiftUI
 import Combine
 
 final class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeViewModel {
-    
+
     private let stateObserver: Observable<InputFormCulturalPracticeState>
     let viewState: ViewState
     var state: InputFormCulturalPracticeState?
@@ -37,7 +37,7 @@ final class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeVie
         self.disposableInputFormCulturalViewState = stateObserver
             .observeOn(Util.getSchedulerMain())
             .subscribe {[weak self] event in
-                
+
                 guard let self = self,
                     let state = event.element,
                     let actionResponse = state.actionResponse
@@ -87,18 +87,18 @@ final class InputFormCulturalPracticeViewModelImpl: InputFormCulturalPracticeVie
         guard let inputElementObservable = state?.inputElementObservable else {
             return
         }
-        
+
         self.viewState.inputElementObservale = inputElementObservable
     }
-    
+
     private func refreshAllView() {
         self.viewState.objectWillChange.send()
-        
+
         if let inputElementObservalble = self.viewState.inputElementObservale {
             inputElementObservalble.objectWillChange.send()
         }
     }
-    
+
     private func subscribeToInputValueChange() {
         if let inputElementObservable = viewState.inputElementObservale {
             self.cancellableInputValue = inputElementObservable.$value
@@ -161,7 +161,7 @@ extension InputFormCulturalPracticeViewModelImpl {
         subscribeToInputValueChange()
         activatedAnimationOfView()
     }
-    
+
     private func handleCheckIfInputValueIsValidActionResponse() {
         setValuesViewState()
         refreshAllView()
@@ -171,16 +171,16 @@ extension InputFormCulturalPracticeViewModelImpl {
         guard let section = state?.sectionInputElement, let field = state?.field else {
             return
         }
-        
+
         interraction.updateCulturalPracticeElementAction(section, field)
         dismissForm()
     }
-    
+
     private func handleCheckIfFormIsValidAndDirtyForPrintAlertActionResponse(isPrintAlert: Bool) {
         if isPrintAlert {
             return self.printAlert()
         }
-        
+
         interraction.closeInputFormWithoutSaveAction()
     }
 
@@ -188,7 +188,7 @@ extension InputFormCulturalPracticeViewModelImpl {
         guard let inputElementObservable = viewState.inputElementObservale else {
             return
         }
-        
+
         interraction.closeInputFormWithSaveAction(inputValue: inputElementObservable.value)
     }
 
@@ -204,7 +204,7 @@ extension InputFormCulturalPracticeViewModelImpl {
         guard let inputElementObservable = viewState.inputElementObservale else {
             return
         }
-        
+
         interraction.closeInputFormWithSaveAction(inputValue: inputElementObservable.value)
     }
 

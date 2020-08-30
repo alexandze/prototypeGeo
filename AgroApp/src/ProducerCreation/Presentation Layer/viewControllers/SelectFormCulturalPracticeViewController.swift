@@ -31,52 +31,52 @@ public class SelectFormCulturalPracticeViewController: UIViewController, UIPicke
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         isModalInPresentation = true
-        
+
         selectFormCulturalPracticeView.initHandleCloseButton { [weak self] in
             self?.selectFormCulturalPracticeViewModel.handleCloseButton()
         }
-        
+
         selectFormCulturalPracticeView.initHandleValidateButton { [weak self] in
             self?.selectFormCulturalPracticeViewModel.handleValidateButton()
         }
-        
+
         selectFormCulturalPracticeView.initAlertAction(
             selectFormCulturalPracticeViewModel.handleYesButtonAlert,
             selectFormCulturalPracticeViewModel.handleNoButtonAlert
         )
-        
+
         selectFormCulturalPracticeViewModel.getSelectedRow = { [weak self] in
             self?.selectFormCulturalPracticeView.pickerView.selectedRow(inComponent: 0) ?? 0
         }
-        
+
         selectFormCulturalPracticeViewModel.setSelectedRow = { [weak self] row in
             self?.selectFormCulturalPracticeView.pickerView.selectRow(row, inComponent: 0, animated: true)
         }
-        
+
         selectFormCulturalPracticeViewModel.reloadPickerView = { [weak self] in
             self?.selectFormCulturalPracticeView.pickerView.reloadAllComponents()
         }
-        
+
         selectFormCulturalPracticeViewModel.setTitleText = { [weak self] title in
             self?.selectFormCulturalPracticeView.textTitle = title
         }
-        
+
         selectFormCulturalPracticeViewModel.setDetailText = { [weak self] detailText in
             self?.selectFormCulturalPracticeView.textDetail = detailText
         }
-        
+
         selectFormCulturalPracticeViewModel.dismissViewController = {[weak self] in
             self?.dismiss(animated: true)
         }
-        
+
         self.selectFormCulturalPracticeViewModel.printAlert = {[weak self] in
             guard let self = self else {
                 return
             }
-            
+
             self.present(self.selectFormCulturalPracticeView.alert, animated: true)
         }
-        
+
         selectFormCulturalPracticeViewModel.subscribeToCulturalPracticeFormObs()
     }
 
@@ -106,14 +106,14 @@ public class SelectFormCulturalPracticeViewController: UIViewController, UIPicke
     }
 
     public func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-        
+
         if let label = view as? UILabel {
             return selectFormCulturalPracticeView.reuseLabelPickerView(
                 label: label,
                 text: selectFormCulturalPracticeViewModel.getValueByRow(row) ?? ""
             )
         }
-        
+
         return selectFormCulturalPracticeView.getLabelForPickerView(
             text: selectFormCulturalPracticeViewModel.getValueByRow(row) ?? "",
             widthPickerView: selectFormCulturalPracticeView.pickerView.frame.width

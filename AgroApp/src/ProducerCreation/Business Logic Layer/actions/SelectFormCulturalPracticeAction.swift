@@ -20,7 +20,7 @@ struct SelectFormCulturalPracticeAction {
     }
 
     struct CloseSelectFormWithoutSaveAction: Action { }
-    
+
     struct CheckIfFormIsDirtyAction: Action {
         let indexSelected: Int
     }

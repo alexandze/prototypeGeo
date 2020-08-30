@@ -33,7 +33,7 @@ struct SelectFormCulturalPracticeState: Equatable {
             actionResponse: actionResponse ?? self.actionResponse
         )
     }
-    
+
     enum SelectFormCulturalPracticeActionResponse {
         case selectElementSelectedOnListActionResponse(currentIndexRow: Int)
         case closeSelectFormWithSaveActionResponse

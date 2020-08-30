@@ -19,7 +19,7 @@ struct InputFormCulturalPracticeState: Equatable {
     var field: Field?
     var isDirty: Bool?
     var actionResponse: InputFormCulturalPracticeActionResponse?
-    
+
     enum InputFormCulturalPracticeActionResponse {
         case inputElementSelectedOnListActionResponse
         case closeInputFormWithSaveActionResponse
@@ -46,5 +46,3 @@ struct InputFormCulturalPracticeState: Equatable {
         )
     }
 }
-
-

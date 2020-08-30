@@ -27,18 +27,18 @@ struct CulturalPracticeFormState: Equatable {
             isMaxDoseFumier: Bool,
             isFinishCompletedLastDoseFumier: Bool
         )
-        
+
         case updateElementResponse(indexPaths: [IndexPath])
-        
+
         case selectElementOnListResponse(
             section: Section<ElementUIData>
         )
-        
+
         case removeDoseFumierResponse(
             indexPathsRemove: [IndexPath],
             indexPathsAdd: [IndexPath]
         )
-        
+
         case notResponse
     }
 

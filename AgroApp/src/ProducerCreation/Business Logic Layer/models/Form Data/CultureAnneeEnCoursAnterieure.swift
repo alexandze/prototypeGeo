@@ -9,15 +9,15 @@
 import Foundation
 
 enum CultureAnneeEnCoursAnterieure: String, SelectValue, Codable {
-    
+
     init?(rawValueIndex: Int) {
         let listRawValue = CultureAnneeEnCoursAnterieure.listRawValue()
-        
+
         guard Util.hasIndexInArray(listRawValue, index: rawValueIndex) else {
             return nil
         }
-        
-        switch listRawValue[rawValueIndex]  {
+
+        switch listRawValue[rawValueIndex] {
         case CultureAnneeEnCoursAnterieure.auc.rawValue:
             self = .auc
         case CultureAnneeEnCoursAnterieure.avo.rawValue:
@@ -44,11 +44,11 @@ enum CultureAnneeEnCoursAnterieure: String, SelectValue, Codable {
             return nil
         }
     }
-    
+
     func getRawValue() -> Int {
         CultureAnneeEnCoursAnterieure.listRawValue().firstIndex { $0 == self.rawValue } ?? -1
     }
-    
+
     case auc = "AUC"
     case avo = "AVO"
     case ble = "BLE"
@@ -60,7 +60,7 @@ enum CultureAnneeEnCoursAnterieure: String, SelectValue, Codable {
     case org = "ORG"
     case ptf = "PFT"
     case soy = "SOY"
-    
+
     static func listRawValue() -> [String] {
         [
             "AUC",
@@ -76,7 +76,7 @@ enum CultureAnneeEnCoursAnterieure: String, SelectValue, Codable {
             "SOY"
         ]
     }
-    
+
     static func getTupleValues() -> [(Int, String)] {
         [
             (
@@ -125,7 +125,7 @@ enum CultureAnneeEnCoursAnterieure: String, SelectValue, Codable {
             )
         ]
     }
-    
+
     static func getValues() -> [String] {
         [
             NSLocalizedString("Autres céréales", comment: "Autres céréales"),
@@ -144,8 +144,7 @@ enum CultureAnneeEnCoursAnterieure: String, SelectValue, Codable {
             NSLocalizedString("Soya", comment: "Soya")
         ]
     }
-    
-    
+
     // swiftlint:disable all
     func getValue() -> String {
         switch self {

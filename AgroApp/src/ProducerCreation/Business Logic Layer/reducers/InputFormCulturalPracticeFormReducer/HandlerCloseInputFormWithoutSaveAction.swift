@@ -17,20 +17,20 @@ extension InputFormCulturalPracticeReducerHandler {
             let util = UtilHandlerCloseInputFormWithoutSaveAction(state: state)
             return newState(util: util) ?? state
         }
-        
+
         private func newState(util: UtilHandlerCloseInputFormWithoutSaveAction?) -> InputFormCulturalPracticeState? {
             guard let newUtil = util else {
                 return nil
             }
-            
+
             return newUtil.state.changeValue(
                 actionResponse: .closeInputFormWithoutSaveActionResponse
             )
         }
     }
-    
+
     private struct UtilHandlerCloseInputFormWithoutSaveAction {
         var state: InputFormCulturalPracticeState
     }
-    
+
 }

@@ -12,7 +12,7 @@ enum DrainageSurface: Int, SelectValue, Codable {
     case bon = 1
     case moyen
     case mauvais
-    
+
     func getValue() -> String {
         switch self {
         case .bon:
@@ -23,7 +23,7 @@ enum DrainageSurface: Int, SelectValue, Codable {
             return DrainageSurface.getValues()[2]
         }
     }
-    
+
     func getRawValue() -> Int {
         self.rawValue
     }
@@ -44,7 +44,7 @@ enum DrainageSurface: Int, SelectValue, Codable {
             )
         ]
     }
-    
+
     static func getValues() -> [String] {
         [
             NSLocalizedString("Bon", comment: "Drainage de surface Bon"),
@@ -56,11 +56,11 @@ enum DrainageSurface: Int, SelectValue, Codable {
     static func getTitle() -> String {
         NSLocalizedString("Drainage de surface", comment: "Titre Drainage de surface")
     }
-    
+
     static func getTypeValue() -> String {
         "drainageSurface"
     }
-    
+
     static func make(rawValue: Int) -> SelectValue? {
         self.init(rawValue: rawValue)
     }

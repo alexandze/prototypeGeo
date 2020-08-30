@@ -19,27 +19,27 @@ extension ContainerFormCulturalPracticeHandler {
                 idElementUIData: action.id,
                 valueElementUIData: action.value
             )
-            
+
             return (
                 findIndexElementUIData(util: ) >>>
                     checkIfValueIsValid(util:) >>>
                     newState(util:)
                 )(util) ?? state
-            
+
         }
-        
+
         private func findIndexElementUIData(util: UtilHandlerCheckIfInputValueIsValidAction?) -> UtilHandlerCheckIfInputValueIsValidAction? {
             guard var newUtil = util,
                 let elementUIDataObservableList = newUtil.state.elementUIDataObservableList else {
                     return nil
             }
-            
+
             let indexElementUIDataOp = elementUIDataObservableList.firstIndex { $0.id == newUtil.idElementUIData }
             guard let indexElementUIData = indexElementUIDataOp else { return nil }
             newUtil.indexElementUIData = indexElementUIData
             return newUtil
         }
-        
+
         private func checkIfValueIsValid(util: UtilHandlerCheckIfInputValueIsValidAction?) -> UtilHandlerCheckIfInputValueIsValidAction? {
             guard var newUtil = util,
                 var newElementUIDataObservableList = newUtil.state.elementUIDataObservableList,
@@ -47,14 +47,14 @@ extension ContainerFormCulturalPracticeHandler {
                 let inputElementObservable = newElementUIDataObservableList[indexElementUIData].toInputElementObservable() else {
                     return nil
             }
-            
+
             inputElementObservable.isValid = inputElementObservable.isInputValid()
             newElementUIDataObservableList[indexElementUIData] = inputElementObservable
             newUtil.newElementUIDataObservableList = newElementUIDataObservableList
             newUtil.isFormValid = inputElementObservable.isValid
             return newUtil
         }
-        
+
         private func newState(util: UtilHandlerCheckIfInputValueIsValidAction?) -> ContainerFormCulturalPracticeState? {
             guard let newUtil = util,
                 let isFormIsValid = newUtil.isFormValid,
@@ -62,7 +62,7 @@ extension ContainerFormCulturalPracticeHandler {
                 let indexElementUIData = newUtil.indexElementUIData else {
                     return nil
             }
-            
+
             return newUtil.state.changeValue(
                 elementUIDataObservableList: newElementUIDataObservableList,
                 isFormValid: isFormIsValid,
@@ -70,7 +70,7 @@ extension ContainerFormCulturalPracticeHandler {
             )
         }
     }
-    
+
     private struct UtilHandlerCheckIfInputValueIsValidAction {
         let state: ContainerFormCulturalPracticeState
         let idElementUIData: UUID

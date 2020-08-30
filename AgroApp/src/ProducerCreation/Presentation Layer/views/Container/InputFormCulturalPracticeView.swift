@@ -14,7 +14,7 @@ struct InputFormCulturalPracticeView: View {
     @ObservedObject var viewState: InputFormCulturalPracticeViewModelImpl.ViewState
     @ObservedObject var keyboardFollower: KeyboardFollower
     var disposableDismissForm: Disposable?
-    
+
     init(
         viewModel: InputFormCulturalPracticeViewModel,
         keyboardFollower: KeyboardFollower
@@ -23,15 +23,15 @@ struct InputFormCulturalPracticeView: View {
         self.viewState = viewModel.viewState
         self.keyboardFollower = keyboardFollower
     }
-    
+
     var body: some View {
         GeometryReader { (geometry: GeometryProxy) in
-            
+
             VStack {
                 if self.viewState.inputElementObservale != nil {
                     HeaderView(title: self.viewState.inputElementObservale.title) { self.viewModel.handleCloseButton() }
                     Spacer()
-                    
+
                     CenterView(
                         inputValue: self.$viewState.inputElementObservale.value,
                         inputTitle: self.viewState.inputElementObservale.title,
@@ -43,11 +43,11 @@ struct InputFormCulturalPracticeView: View {
                     ) {
                         self.viewModel.handleButtonValidate()
                     }.padding()
-                    
+
                     if self.keyboardFollower.keyboardHeight == 0 {
                         Spacer()
                     }
-                    
+
                     ButtonValidate(
                         textButtonValidate: self.viewState.textButtonValidate,
                         actionValidateButton: {self.viewModel.handleButtonValidate()},
@@ -55,7 +55,7 @@ struct InputFormCulturalPracticeView: View {
                     ).padding(.bottom, 5)
                         .padding(.bottom, self.keyboardFollower.keyboardHeight)
                 }
-                
+
             }
             .environmentObject(DimensionScreen(width: geometry.size.width, height: geometry.size.height))
             .onAppear {
@@ -87,15 +87,15 @@ private struct HeaderView: View {
     var title: String
     var actionCloseButton: () -> Void
     @EnvironmentObject var dimensionScreen: DimensionScreen
-    
+
     var body: some View {
         HStack(alignment: .top) {
             UIButtonRepresentable { self.actionCloseButton() }
                 .fixedSize()
                 .offset(x: 5, y: 5)
-            
+
             Spacer()
-            
+
             Text(title)
                 .font(.system(size: 25))
                 .bold()
@@ -103,7 +103,7 @@ private struct HeaderView: View {
                 .lineLimit(3)
                 .multilineTextAlignment(.center)
                 .offset(x: -15, y: 10)
-            
+
             Spacer()
         }
     }
@@ -119,7 +119,7 @@ private struct CenterView: View {
     let textErrorMessage: String
     let actionValidateButton: () -> Void
     @EnvironmentObject var dimensionScreen: DimensionScreen
-    
+
     var body: some View {
         VStack {
             Text(subtitle)
@@ -128,15 +128,15 @@ private struct CenterView: View {
                 .lineLimit(3)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 10)
-            
+
             TextFieldWithStyle(inputValue: $inputValue, inputTitle: inputTitle, isValid: isInputValueValid)
         }
     }
-    
+
     func getWidthValidateButton() -> CGFloat {
         dimensionScreen.width * 0.6
     }
-    
+
     func getHeightValidateButton() -> CGFloat {
         dimensionScreen.height * 0.09
     }
@@ -148,7 +148,7 @@ private struct TextFieldWithStyle: View {
     var isValid: Bool
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var dimensionScreen: DimensionScreen
-    
+
     var body: some View {
         TextField(inputTitle, text: $inputValue)
             .keyboardType(.numbersAndPunctuation)
@@ -166,7 +166,7 @@ private struct TextFieldWithStyle: View {
                     .foregroundColor(self.getForegroundColorOfRoundedRectangle())
         )
     }
-    
+
     private func getForegroundColorOfRoundedRectangle() -> Color {
         self.isValid ? .green : .red
     }
@@ -177,7 +177,7 @@ private struct ButtonValidate: View {
     let actionValidateButton: () -> Void
     let isInputValueValid: Bool
     @EnvironmentObject var dimensionScreen: DimensionScreen
-    
+
     var body: some View {
         Button(action: { self.actionValidateButton()  }) {
             Text(textButtonValidate)
@@ -201,16 +201,16 @@ private struct ButtonValidate: View {
             .cornerRadius(10)
             .disabled(!self.isInputValueValid)
     }
-    
+
     func getWidthValidateButton() -> CGFloat {
         dimensionScreen.width * 0.6
-        
+
     }
-    
+
     func getHeightValidateButton() -> CGFloat {
         dimensionScreen.height * 0.09
     }
-    
+
     private func getBackgroundColor() -> Color {
         self.isInputValueValid ? Color(Util.getGreenColor()) : .red
     }

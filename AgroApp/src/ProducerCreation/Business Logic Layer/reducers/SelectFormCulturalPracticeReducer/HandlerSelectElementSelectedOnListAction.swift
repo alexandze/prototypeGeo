@@ -19,14 +19,14 @@ extension SelectFormCulturalPracticeHandlerReducer {
                 sectionSelected: action.section,
                 fieldSelected: action.field
             )
-            
+
             return (
                 initSelectElement(util: ) >>>
                     getCurrentIndexRow(util: ) >>>
                     newState(util:)
             )(util) ?? state
         }
-        
+
         private func initSelectElement(
             util: UtilHandlerSelectElementSelectedOnListAction?
         ) -> UtilHandlerSelectElementSelectedOnListAction? {
@@ -35,29 +35,29 @@ extension SelectFormCulturalPracticeHandlerReducer {
                 let selectElement = newUtil.sectionSelected.rowData[0] as? SelectElement else {
                 return nil
             }
-            
+
             newUtil.newSelectElement = selectElement
             return newUtil
         }
-        
+
         private func getCurrentIndexRow(
             util: UtilHandlerSelectElementSelectedOnListAction?
         ) -> UtilHandlerSelectElementSelectedOnListAction? {
             guard var newUtil = util,
                 let selectElement = newUtil.newSelectElement
             else { return nil }
-            
+
             newUtil.currentIndexRow = selectElement.values.firstIndex { tupleValue in
                 tupleValue.0 == selectElement.rawValue
             }
-            
+
             guard newUtil.currentIndexRow != nil else {
                 return nil
             }
-            
+
             return newUtil
         }
-        
+
         private func newState(util: UtilHandlerSelectElementSelectedOnListAction?) -> SelectFormCulturalPracticeState? {
             guard let newUtil = util,
                 let newSelectElement = newUtil.newSelectElement,
@@ -65,7 +65,7 @@ extension SelectFormCulturalPracticeHandlerReducer {
             else {
                 return nil
             }
-            
+
             return newUtil.state.changeValue(
                 selectElement: newSelectElement,
                 section: newUtil.sectionSelected,
@@ -74,7 +74,7 @@ extension SelectFormCulturalPracticeHandlerReducer {
             )
         }
     }
-    
+
     private struct UtilHandlerSelectElementSelectedOnListAction {
         var state: SelectFormCulturalPracticeState
         var sectionSelected: Section<ElementUIData>
