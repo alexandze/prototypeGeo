@@ -63,7 +63,7 @@ extension ContainerFormCulturalPracticeHandler {
 
                 if let selectElementObservable = elementUIDataObservable.toSelectElementObservable(),
                     let selectElement = self.findElementUIDataById(selectElementObservable.id, elementUIDataList: elementUIDataList) as? SelectElement {
-                    return selectElementObservable.rawValue != selectElement.rawValue
+                    return selectElementObservable.indexValue != selectElement.indexValue
                 }
 
                 return false

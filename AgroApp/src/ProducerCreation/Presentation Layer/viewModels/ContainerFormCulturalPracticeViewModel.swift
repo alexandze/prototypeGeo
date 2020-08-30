@@ -142,6 +142,7 @@ class ContainerFormCulturalPracticeViewModelImpl: ContainerFormCulturalPracticeV
 
     private func printAlert() {
         viewState.presentAlert = true
+        setViewStateValue()
     }
 
     private func dismissForm() {

@@ -47,6 +47,7 @@ extension SelectFormCulturalPracticeHandlerReducer {
 
             selectElement.rawValue = rawSelected
             selectElement.value = valueSelected
+            selectElement.indexValue = newUtil.indexSelected
             newUtil.newSelectElement = selectElement
             return newUtil
         }
