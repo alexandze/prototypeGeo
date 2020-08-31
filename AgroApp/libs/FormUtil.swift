@@ -111,6 +111,9 @@ class InputElementDataObservable: ElementUIDataObservable {
 
 // MARK: - ImputElement
 
+
+/// InputElement For form
+/// If input value is empty or value is incorrect (check regex), the propertie isValid is false
 struct InputElement: InputElementData {
     static let TYPE_ELEMENT = "INPUT_ELEMENT"
     var id: UUID = UUID()

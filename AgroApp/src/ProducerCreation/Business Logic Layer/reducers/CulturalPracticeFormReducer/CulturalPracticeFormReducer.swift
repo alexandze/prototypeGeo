@@ -29,6 +29,12 @@ extension Reducers {
         case let removeDoseFumierAction as CulturalPracticeFormAction.RemoveDoseFumierAction:
             return CulturalPracticeFormReducerHandler
                 .HandlerRemoveDoseFumierAction().handle(action: removeDoseFumierAction, state)
+        case let showFieldDataSectionListAction as CulturalPracticeFormAction.ShowFieldDataSectionListAction:
+            return CulturalPracticeFormReducerHandler
+                .HandlerShowFieldDataSectionListAction().handle(action: showFieldDataSectionListAction, state)
+        case let showCulturalPracticeDataSectionListAction as CulturalPracticeFormAction.ShowCulturalPracticeDataSectionListAction:
+            return CulturalPracticeFormReducerHandler
+                .HandlerShowCulturalPracticeDataSectionListAction().handle(action: showCulturalPracticeDataSectionListAction, state)
         default:
             break
         }

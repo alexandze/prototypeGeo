@@ -12,9 +12,13 @@ extension CulturalPracticeFormReducerHandler {
 
     class HandlerSelectFieldOnListAction: HandlerReducer {
         let fieldDetailsFactory: FieldDetailsFactory
-
-        init(fieldDetailsFactory: FieldDetailsFactory = FieldDetailsFactoryImpl()) {
+        let fieldService: FieldService
+        init(
+            fieldDetailsFactory: FieldDetailsFactory = FieldDetailsFactoryImpl(),
+            fieldService: FieldService = FieldServiceImpl()
+        ) {
             self.fieldDetailsFactory = fieldDetailsFactory
+            self.fieldService = fieldService
         }
 
         func handle(action: FieldListAction.SelectFieldOnListAction, _ state: CulturalPracticeFormState) -> CulturalPracticeFormState {
@@ -25,34 +29,47 @@ extension CulturalPracticeFormReducerHandler {
             )
 
             return (
-                makeSection(_:) >>>
+                makeSectionCulturalPractice(util:) >>>
+                    makeSectionField(util: ) >>>
                     newState(_:)
                 )(util) ?? state
         }
 
-        private func makeSection(_ util: UtilHandlerSelectFieldOnListAction?) -> UtilHandlerSelectFieldOnListAction? {
+        private func makeSectionCulturalPractice(util: UtilHandlerSelectFieldOnListAction?) -> UtilHandlerSelectFieldOnListAction? {
             guard var newUtil = util else { return nil }
 
             if newUtil.fieldSelected.culturalPratice == nil {
                 newUtil.fieldSelected.culturalPratice = CulturalPractice(id: newUtil.fieldSelected.id)
             }
 
-            newUtil.newSectionElementUIData = newUtil
+            newUtil.newSectionElementCulturalPracrice = newUtil
                 .fieldDetailsFactory
                 .makeSectionListElementUIData(newUtil.fieldSelected.culturalPratice)
 
             return newUtil
         }
+        
+        private func makeSectionField(util: UtilHandlerSelectFieldOnListAction?) -> UtilHandlerSelectFieldOnListAction? {
+            guard var newUtil = util else {
+                return nil
+            }
+            
+            newUtil.newSectionElementField = fieldService.makeSectionByField(newUtil.fieldSelected)
+            return newUtil
+        }
 
         private func newState(_ util: UtilHandlerSelectFieldOnListAction?) -> CulturalPracticeFormState? {
             guard let newUtil = util,
-                let newSectionElementUIData = newUtil.newSectionElementUIData else {
+                let newSectionCuluralPractice = newUtil.newSectionElementCulturalPracrice,
+                let newSectionField = newUtil.newSectionElementField else {
                     return nil
             }
 
             return newUtil.state.changeValues(
                 currentField: newUtil.fieldSelected,
-                sections: newSectionElementUIData,
+                sections: newSectionField,
+                culturalPracticeElementSectionList: newSectionCuluralPractice,
+                fieldElementSectionList: newSectionField,
                 title: "Pratiques culturelles parcelle \(newUtil.fieldSelected.id)",
                 isFinishCompletedCurrentContainer: true,
                 responseAction: .selectFieldOnListActionResponse
@@ -64,6 +81,7 @@ extension CulturalPracticeFormReducerHandler {
         var state: CulturalPracticeFormState
         var fieldSelected: Field
         var fieldDetailsFactory: FieldDetailsFactory
-        var newSectionElementUIData: [Section<ElementUIData>]?
+        var newSectionElementCulturalPracrice: [Section<ElementUIData>]?
+        var newSectionElementField: [Section<ElementUIData>]?
     }
 }

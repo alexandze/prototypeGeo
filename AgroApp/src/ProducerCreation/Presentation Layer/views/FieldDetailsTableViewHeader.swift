@@ -12,20 +12,20 @@ class FieldDetailsTableViewHeader: UIView {
 
     var titleFieldButton: String? {
         get {
-            buttonField.title(for: .normal)
+            segmentedController.titleForSegment(at: 0)
         }
         set(title) {
-            buttonField.setTitle(title, for: .normal)
+            segmentedController.setTitle(title, forSegmentAt: 0)
         }
     }
 
     var titleCulturalPracticeButton: String? {
         get {
-            buttonCulturalPractice.title(for: .normal)
+            segmentedController.titleForSegment(at: 1)
         }
 
         set(title) {
-            buttonCulturalPractice.setTitle(title, for: .normal)
+            segmentedController.setTitle(title, forSegmentAt: 1)
         }
     }
 
@@ -33,44 +33,11 @@ class FieldDetailsTableViewHeader: UIView {
     private let tagFieldButton = 51
     private var actionFieldButton: (() -> Void)?
     private var actionCulturalPracticeButton: (() -> Void)?
-
-    private let buttonCulturalPractice: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        //button.layer.borderWidth = 1
-        // button.layer.borderColor = UIColor.black.cgColor
-        button.setTitleColor(Util.getOppositeColorBlackOrWhite(), for: .normal)
-        button.layer.cornerRadius = 15
-        button.titleLabel?.numberOfLines = 0
-        button.titleLabel?.textAlignment = .center
-        button.titleLabel?.lineBreakMode = .byWordWrapping
-
-        button.backgroundColor = .systemGray2
-        button.layer.shadowColor = UIColor.systemGray2.cgColor
-        button.layer.shadowOpacity = 10
-        button.layer.shadowOffset = .zero
-        button.layer.shadowRadius = 5
-        return button
-    }()
-
-    private let buttonField: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        //button.layer.borderWidth = 1
-        // button.layer.borderColor = UIColor.white.cgColor
-
-        button.setTitleColor(Util.getOppositeColorBlackOrWhite(), for: .normal)
-        button.layer.cornerRadius = 15
-        button.titleLabel?.numberOfLines = 0
-        button.titleLabel?.textAlignment = .center
-        button.titleLabel?.lineBreakMode = .byWordWrapping
-
-        button.backgroundColor = .systemGray2
-        button.layer.shadowColor = UIColor.systemGray2.cgColor
-        button.layer.shadowOpacity = 5
-        button.layer.shadowOffset = .zero
-        button.layer.shadowRadius = 5
-        return button
+    
+    private let segmentedController: UISegmentedControl =  {
+        let segmentedController = UISegmentedControl(items: ["Parcelle", "Pratique Culturelle"])
+        segmentedController.translatesAutoresizingMaskIntoConstraints = false
+        return segmentedController
     }()
 
     required init?(coder: NSCoder) {
@@ -79,65 +46,46 @@ class FieldDetailsTableViewHeader: UIView {
 
     init() {
         super.init(frame: .zero)
-        self.positionFieldAndCulturalPracticeButton()
+        self.positionSegmentedController()
+        self.initTargetSegmentedController()
+        self.initSelectedSegmentIndex()
     }
 
     func initHandleFieldButton(handleFunc: @escaping () -> Void) {
         actionFieldButton = handleFunc
-        buttonField.addTarget(self, action: #selector(handleFieldButton(button:)), for: .touchUpInside)
     }
 
     func initHandleCulturalPracticeButton(handleFunc: @escaping () -> Void) {
         actionCulturalPracticeButton = handleFunc
-        buttonCulturalPractice.addTarget(self, action: #selector(handleCulturalPracticeButton(button:)), for: .touchUpInside)
     }
-
-    @objc private func handleFieldButton(button: UIButton) {
-        setColorSelectedButton(button: button)
-        actionFieldButton?()
-    }
-
-    @objc private func handleCulturalPracticeButton(button: UIButton) {
-        setColorSelectedButton(button: button)
-        actionCulturalPracticeButton?()
-    }
-
-    private func setColorSelectedButton(button: UIButton) {
-        switch button.tag {
-        case tagFieldButton:
-            buttonField.backgroundColor = .systemGray2
-            buttonCulturalPractice.backgroundColor = .systemGray4
-        case tagCulturalPracticeButton:
-            buttonCulturalPractice.backgroundColor = .systemGray2
-            buttonField.backgroundColor = .systemGray4
+    
+    @objc private func handleValueChangeSengmentedController(_ segmentedController: UISegmentedControl) {
+        switch segmentedController.selectedSegmentIndex {
+        case 0:
+            actionFieldButton?()
+        case 1:
+            actionCulturalPracticeButton?()
         default:
             break
         }
     }
-
-    private func positionFieldAndCulturalPracticeButton() {
-        let viewButton = UIView(frame: .zero)
-        viewButton.translatesAutoresizingMaskIntoConstraints = false
-        buttonField.tag = tagFieldButton
-        buttonCulturalPractice.tag = tagCulturalPracticeButton
-        viewButton.addSubview(buttonField)
-        viewButton.addSubview(buttonCulturalPractice)
-        addSubview(viewButton)
-
+    
+    private func positionSegmentedController() {
+        addSubview(segmentedController)
+        
         NSLayoutConstraint.activate([
-            buttonField.centerYAnchor.constraint(equalTo: viewButton.centerYAnchor),
-            buttonField.leadingAnchor.constraint(equalTo: viewButton.leadingAnchor),
-            buttonField.heightAnchor.constraint(equalTo: viewButton.heightAnchor, multiplier: 0.8),
-            buttonCulturalPractice.centerYAnchor.constraint(equalTo: viewButton.centerYAnchor),
-            buttonCulturalPractice.trailingAnchor.constraint(equalTo: viewButton.trailingAnchor),
-            buttonCulturalPractice.heightAnchor.constraint(equalTo: viewButton.heightAnchor, multiplier: 0.8),
-            viewButton.centerYAnchor.constraint(equalTo: centerYAnchor),
-            viewButton.centerXAnchor.constraint(equalTo: centerXAnchor),
-            viewButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.8),
-            viewButton.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 1),
-            buttonField.widthAnchor.constraint(equalTo: viewButton.widthAnchor, multiplier: 0.4),
-            buttonCulturalPractice.widthAnchor.constraint(equalTo: viewButton.widthAnchor, multiplier: 0.4)
-
+            segmentedController.topAnchor.constraint(equalTo: topAnchor),
+            segmentedController.leadingAnchor.constraint(equalTo: leadingAnchor),
+            segmentedController.trailingAnchor.constraint(equalTo: trailingAnchor),
+            segmentedController.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
+    }
+    
+    private func initTargetSegmentedController() {
+        segmentedController.addTarget(self, action: #selector(handleValueChangeSengmentedController(_:)), for: .valueChanged)
+    }
+    
+    private func initSelectedSegmentIndex() {
+        segmentedController.selectedSegmentIndex = 0
     }
 }

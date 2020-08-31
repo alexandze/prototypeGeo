@@ -28,6 +28,7 @@ extension CulturalPracticeFormReducerHandler {
                 checkIfFinishCompletedLastDoseFumier(util: ) >>>
                     checkIfMaxDoseFumier(util: ) >>>
                     makeNewDoseFumier(util: ) >>>
+                    checkIfCurrentSectionIsCulturalPractice(util: ) >>>
                     newState(util: )
             )(util) ?? state
         }
@@ -40,12 +41,12 @@ extension CulturalPracticeFormReducerHandler {
 
         private func checkIfMaxDoseFumier(util: UtilHandleAddDoseFumierAction?) -> UtilHandleAddDoseFumierAction? {
             guard var newUtil = util,
-            let sectionList = newUtil.state.sections else { return nil }
+            let culturalPracticeSectionList = newUtil.state.culturalPracticeElementSectionList else { return nil }
             let maxDoseFumier = CulturalPractice.MAX_DOSE_FUMIER
             var countDoseFumier = 0
 
-            (0..<sectionList.count).forEach { index in
-                if sectionList[index].typeSection == ElementUIListData.TYPE_ELEMENT {
+            (0..<culturalPracticeSectionList.count).forEach { index in
+                if culturalPracticeSectionList[index].typeSection == ElementUIListData.TYPE_ELEMENT {
                     countDoseFumier += 1
                 }
             }
@@ -58,29 +59,53 @@ extension CulturalPracticeFormReducerHandler {
             guard var newUtil = util,
                 let isFinishCompletedLastDoseFumier = newUtil.isFinishCompletedLastDoseFumier,
                 let isMaxDoseFumier = newUtil.isMaxDoseFumier,
-                let sectionList = newUtil.state.sections
+                let culturalPracticeElementSectionList = newUtil.state.culturalPracticeElementSectionList
                 else { return nil }
 
             guard isFinishCompletedLastDoseFumier && !isMaxDoseFumier else {
                 return newUtil
             }
 
-            newUtil.newSectionListWithAddDoseFumier = fieldDetailsFactory.makeSectionWitNewDoseFumier(sectionList)
+            newUtil.newSectionListWithAddDoseFumier = fieldDetailsFactory.makeSectionWitNewDoseFumier(culturalPracticeElementSectionList)
+            return newUtil
+        }
+        
+        private func checkIfCurrentSectionIsCulturalPractice(util: UtilHandleAddDoseFumierAction?) -> UtilHandleAddDoseFumierAction? {
+            guard var newUtil = util,
+                let currentSectionList = newUtil.state.sections,
+                let newSectionCulturalPracticeList = newUtil.newSectionListWithAddDoseFumier
+                else {
+                return nil
+            }
+            
+            newUtil.isCurrrentSectionIsCulturalPractice = (currentSectionList
+                .flatMap { $0.rowData }
+                .map { $0.title }
+                .first { hasTitle($0, inThisSectionList: newSectionCulturalPracticeList) } != nil)
+            
             return newUtil
         }
 
         private func newState(util: UtilHandleAddDoseFumierAction?) -> CulturalPracticeFormState? {
             guard let newUtil = util,
                 let isFinishCompletedLastDoseFumier = newUtil.isFinishCompletedLastDoseFumier,
-                let isMaxDoseFumier = newUtil.isMaxDoseFumier
+                let isMaxDoseFumier = newUtil.isMaxDoseFumier,
+                let isCurrrentSectionIsCulturalPractice = newUtil.isCurrrentSectionIsCulturalPractice
             else { return nil }
-
-            if let newSectionList = newUtil.newSectionListWithAddDoseFumier {
-                let indexPath = IndexPath(row: 0, section: (newSectionList.count - 1))
+            
+            if let newSectionListWithAddDoseFumier = newUtil.newSectionListWithAddDoseFumier {
+                let indexPath = IndexPath(row: 0, section: (newSectionListWithAddDoseFumier.count - 1))
+                
                 return newUtil.state.changeValues(
-                    sections: newSectionList,
-                    isFinishCompletedCurrentContainer: false ,
-                    responseAction: .addDoseFumierActionResponse(indexPaths: [indexPath], isMaxDoseFumier: false, isFinishCompletedLastDoseFumier: true)
+                    sections: isCurrrentSectionIsCulturalPractice ? newSectionListWithAddDoseFumier : newUtil.state.sections,
+                    culturalPracticeElementSectionList: newSectionListWithAddDoseFumier,
+                    isFinishCompletedCurrentContainer: false,
+                    responseAction: .addDoseFumierActionResponse(
+                        indexPaths: [indexPath],
+                        isMaxDoseFumier: false,
+                        isFinishCompletedLastDoseFumier: true,
+                        isCurrrentSectionIsCulturalPractice: isCurrrentSectionIsCulturalPractice
+                    )
                 )
             }
 
@@ -88,10 +113,19 @@ extension CulturalPracticeFormReducerHandler {
                 responseAction: .addDoseFumierActionResponse(
                     indexPaths: [],
                     isMaxDoseFumier: isMaxDoseFumier,
-                    isFinishCompletedLastDoseFumier: isFinishCompletedLastDoseFumier
+                    isFinishCompletedLastDoseFumier: isFinishCompletedLastDoseFumier,
+                    isCurrrentSectionIsCulturalPractice: isCurrrentSectionIsCulturalPractice
                 )
             )
 
+        }
+        
+        private func hasTitle(_ title: String, inThisSectionList sectionList: [Section<ElementUIData>]) -> Bool {
+            sectionList
+                .flatMap { $0.rowData }
+                .first { elementUIData in
+                    elementUIData.title == title
+            } != nil
         }
     }
 
@@ -100,5 +134,6 @@ extension CulturalPracticeFormReducerHandler {
         var isFinishCompletedLastDoseFumier: Bool?
         var isMaxDoseFumier: Bool?
         var newSectionListWithAddDoseFumier:  [Section<ElementUIData>]?
+        var isCurrrentSectionIsCulturalPractice: Bool?
     }
 }

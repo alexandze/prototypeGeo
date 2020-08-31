@@ -63,7 +63,7 @@ public class CulturalPracticeFormViewController: UIViewController, UITableViewDe
     private func deletedAndAddSection(_ indexPathRemoveList: [IndexPath], _ indexPathAddList: [IndexPath]) {
         self.tableView.performBatchUpdates({
             indexPathRemoveList.sorted().reversed().forEach { indexPathRemove in
-                self.tableView.deleteSections(IndexSet(integer: indexPathRemove.section), with: .right)
+                self.tableView.deleteSections(IndexSet(integer: indexPathRemove.section), with: .left)
             }
 
             indexPathAddList.sorted().reversed().forEach { indexPathAdd in

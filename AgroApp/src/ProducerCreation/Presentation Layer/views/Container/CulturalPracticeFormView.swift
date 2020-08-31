@@ -47,11 +47,19 @@ class CulturalPracticeFormView: UIView {
         fieldDetailsTableViewHeader.initHandleFieldButton {
             actionButton()
         }
+        
+        if let buttonElement = buttonElement {
+            fieldDetailsTableViewHeader.titleFieldButton = buttonElement.title
+        }
     }
 
     func initCulturalPracticeButton(_ buttonElement: ButtonElement? = nil, withAction actionButton: @escaping () -> Void) {
         fieldDetailsTableViewHeader.initHandleCulturalPracticeButton {
             actionButton()
+        }
+        
+        if let buttonElement = buttonElement {
+            fieldDetailsTableViewHeader.titleCulturalPracticeButton = buttonElement.title
         }
     }
 
@@ -169,7 +177,8 @@ class CulturalPracticeFormView: UIView {
         labelTitle?.numberOfLines = 2
         labelTitle?.text = elementUIData.title
     }
-
+    
+    // TOODO gerer la rotation
     private func initConstraintTableView() {
         addSubview(tableView)
         addSubview(fieldDetailsTableViewHeader)
@@ -178,12 +187,12 @@ class CulturalPracticeFormView: UIView {
             fieldDetailsTableViewHeader.topAnchor.constraint(equalTo: topAnchor),
             fieldDetailsTableViewHeader.leadingAnchor.constraint(equalTo: leadingAnchor),
             fieldDetailsTableViewHeader.trailingAnchor.constraint(equalTo: trailingAnchor),
-            fieldDetailsTableViewHeader.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.1),
+            fieldDetailsTableViewHeader.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.07),
             tableView.topAnchor.constraint(equalTo: fieldDetailsTableViewHeader.bottomAnchor),
             tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            tableView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.9)
+            tableView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.93)
         ])
     }
 

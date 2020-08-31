@@ -77,12 +77,22 @@ class CulturalPraticeFormInteractionImpl: CulturalPraticeFormInteraction {
         let action = FieldListAction.UpdateFieldAction(field: field)
         Util.dispatchActionInSchedulerReSwift(action, actionDispatcher: actionDispatcher)
     }
-
+    
     func selectedContainerElementObs(section: Section<ElementUIData>, field: Field) -> Completable {
         Util.createRunCompletable {
             let action = ContainerFormCulturalPracticeAction.ContainerElementSelectedOnListAction(section: section, field: field)
             self.actionDispatcher.dispatch(action)
         }
+    }
+    
+    func showFieldDataSectionListAction() {
+        let action = CulturalPracticeFormAction.ShowFieldDataSectionListAction()
+        Util.dispatchActionInSchedulerReSwift(action, actionDispatcher: actionDispatcher)
+    }
+    
+    func showCulturalPracticeDataSectionListAction() {
+        let action = CulturalPracticeFormAction.ShowCulturalPracticeDataSectionListAction()
+        Util.dispatchActionInSchedulerReSwift(action, actionDispatcher: actionDispatcher)
     }
 }
 
@@ -109,4 +119,7 @@ protocol CulturalPraticeFormInteraction {
     func setTitleAction(title: String)
     func removeDoseFumierAction(indexPath: IndexPath)
     func updateFieldAction(field: Field)
+    func showFieldDataSectionListAction()
+    func showCulturalPracticeDataSectionListAction()
+    
 }

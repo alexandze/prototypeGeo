@@ -11,9 +11,14 @@ import ReSwift
 extension CulturalPracticeFormReducerHandler {
     class HandlerUpdateCulturalPracticeElementAction: HandlerReducer {
         let culturalPracticeFactory: CulturalPracticeFactory
+        let fieldService: FieldService
 
-        init(culturalPracticeFactory: CulturalPracticeFactory = CulturalPracticeFactoryImpl()) {
+        init(
+            culturalPracticeFactory: CulturalPracticeFactory = CulturalPracticeFactoryImpl(),
+            fieldService: FieldService = FieldServiceImpl()
+        ) {
             self.culturalPracticeFactory = culturalPracticeFactory
+            self.fieldService = fieldService
         }
 
         func handle(
@@ -43,33 +48,56 @@ extension CulturalPracticeFormReducerHandler {
 
         private func findIndexSectionForUpdate(util: UtilUpdateCulturalPracticeElementAction?) -> UtilUpdateCulturalPracticeElementAction? {
             guard var newUtil = util,
-                let sectionList = newUtil.state.sections else {
+                let currentSectionList = newUtil.state.sections,
+                let culturalPracticeSectionList = newUtil.state.culturalPracticeElementSectionList,
+                let fieldSectionList = newUtil.state.fieldElementSectionList
+            else {
                 return nil
             }
 
-            let indexSectionFindOp = (0..<sectionList.count).firstIndex { index in
-                sectionList[index].id == newUtil.newSection.id
-            }
+            let indexCurrentSectionFindOp = findIndexSection(currentSectionList, byId: newUtil.newSection.id)
+            let indexCulturalPracticeSectionOp = findIndexSection(culturalPracticeSectionList, byId: newUtil.newSection.id)
+            let indexFieldSectionOp = findIndexSection(fieldSectionList, byId: newUtil.newSection.id)
 
-            guard let indexSectionFind = indexSectionFindOp else {
-                return nil
+            if let indexCurrentSectionFind = indexCurrentSectionFindOp {
+                newUtil.indexCurrentSectionPathFind = IndexPath(row: 0, section: indexCurrentSectionFind)
             }
-
-            newUtil.indexSectionPathFind = IndexPath(row: 0, section: indexSectionFind)
+            
+            if let indexCulturalPracticeSection = indexCulturalPracticeSectionOp {
+                newUtil.indexCulturalPracticeSection = IndexPath(row: 0, section: indexCulturalPracticeSection)
+            }
+            
+            if let indexFieldSection = indexFieldSectionOp {
+                newUtil.indexFieldSection = IndexPath(row: 0, section: indexFieldSection)
+            }
+            
             return newUtil
         }
-
+        
         private func updataSectionList(util: UtilUpdateCulturalPracticeElementAction?) -> UtilUpdateCulturalPracticeElementAction? {
             guard var newUtil = util,
-                let sectionList = newUtil.state.sections,
-                let indexPathSectionFind = newUtil.indexSectionPathFind
+                var currentSectionList = newUtil.state.sections,
+                var culturalPracticeSectionList = newUtil.state.culturalPracticeElementSectionList,
+                var fieldSectionList = newUtil.state.fieldElementSectionList
                 else {
                 return nil
             }
-
-            var newSectionList = sectionList
-            newSectionList[indexPathSectionFind.section] = newUtil.newSection
-            newUtil.newSectionList = newSectionList
+            
+            if let indexPathSectionFind = newUtil.indexCurrentSectionPathFind {
+                currentSectionList[indexPathSectionFind.section] = newUtil.newSection
+                newUtil.newSectionList = currentSectionList
+            }
+            
+            if let indexCulturalPracticeSection = newUtil.indexCulturalPracticeSection {
+                culturalPracticeSectionList[indexCulturalPracticeSection.section] = newUtil.newSection
+                newUtil.newCulturalPracticeSectionList = culturalPracticeSectionList
+            }
+            
+            if let indexFieldSection = newUtil.indexFieldSection {
+                fieldSectionList[indexFieldSection.section] = newUtil.newSection
+                newUtil.newFieldSectionList = fieldSectionList
+            }
+            
             return newUtil
         }
 
@@ -90,28 +118,36 @@ extension CulturalPracticeFormReducerHandler {
 
         private func updateField(util: UtilUpdateCulturalPracticeElementAction?) -> UtilUpdateCulturalPracticeElementAction? {
             guard var newUtil = util else { return nil }
+            newUtil.newField = fieldService.makeFieldUpdateBySection(newUtil.newSection, newUtil.newField)
             newUtil.newField.culturalPratice = newUtil.newCulturalPractice
             return newUtil
         }
 
         private func newState(util: UtilUpdateCulturalPracticeElementAction?) -> CulturalPracticeFormState? {
-            guard let newUtil = util,
-                let newSectionList = newUtil.newSectionList,
-                let indexFind = newUtil.indexSectionPathFind
-                else {
-                    return nil
+            guard let newUtil = util else {
+                return nil
             }
 
             let isFinishCompletedCurrentContainer = newUtil.newSection.typeSection == ElementUIListData.TYPE_ELEMENT
                 ? true
                 : newUtil.state.isFinishCompletedLastDoseFumier
+            
+            let indexPathList = newUtil.indexCurrentSectionPathFind != nil ? [newUtil.indexCurrentSectionPathFind!] : []
 
             return newUtil.state.changeValues(
                 currentField: newUtil.newField,
-                sections: newSectionList,
+                sections: newUtil.newSectionList ?? newUtil.state.sections,
+                culturalPracticeElementSectionList: newUtil.newCulturalPracticeSectionList ?? newUtil.state.culturalPracticeElementSectionList,
+                fieldElementSectionList: newUtil.newFieldSectionList ?? newUtil.state.fieldElementSectionList,
                 isFinishCompletedCurrentContainer: isFinishCompletedCurrentContainer,
-                responseAction: .updateElementResponse(indexPaths: [indexFind])
+                responseAction: .updateElementResponse(indexPaths: indexPathList)
             )
+        }
+        
+        private func findIndexSection(_ sectionList: [Section<ElementUIData>], byId idSectionFind: UUID) -> Int? {
+            (0..<sectionList.count).firstIndex { index in
+                sectionList[index].id == idSectionFind
+            }
         }
 
         deinit {
@@ -123,9 +159,12 @@ extension CulturalPracticeFormReducerHandler {
         var state: CulturalPracticeFormState
         var newSection: Section<ElementUIData>
         var newField: Field
-        var indexSectionPathFind: IndexPath?
+        var indexCurrentSectionPathFind: IndexPath?
+        var indexCulturalPracticeSection: IndexPath?
+        var indexFieldSection: IndexPath?
         var newSectionList: [Section<ElementUIData>]?
         var newCulturalPractice: CulturalPractice?
-
+        var newCulturalPracticeSectionList: [Section<ElementUIData>]?
+        var newFieldSectionList: [Section<ElementUIData>]?
     }
 }

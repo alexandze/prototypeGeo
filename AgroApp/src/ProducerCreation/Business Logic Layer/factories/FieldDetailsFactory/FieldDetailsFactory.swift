@@ -124,7 +124,8 @@ class FieldDetailsFactoryImpl: FieldDetailsFactory {
 
         return copySectionList
     }
-
+    
+    // TODO creer une class elementUIData Factory qui permet de creer une section a partir d'un tableau
     private func makeSectionListByElementUIDataList(elementUIDataList: [ElementUIData]) -> [Section<ElementUIData>] {
         elementUIDataList.map { elementUIData in
             if let elementUIDataList = elementUIData as? ElementUIListData {
@@ -218,7 +219,8 @@ class FieldDetailsFactoryImpl: FieldDetailsFactory {
         return self.initElementUIDataForDoseFumier(label, culturalPractice)
         }
     }
-
+    
+    // TODO creer une class elementUIData Factory qui permet de creer un boutton
     private func addRowWithButtonAddDoseFumier(_ elementUIDataList: [ElementUIData]) -> [ElementUIData] {
         let rowWithButtonAddDoseFunier = RowWithButton(
             title: titleAddDoseFumier,
@@ -296,7 +298,8 @@ class FieldDetailsFactoryImpl: FieldDetailsFactory {
             self.makeElementUIData(inputValueType, inputValue)
         }
     }
-
+    
+    // TODO creer une class elementUIData Factory
     private func makeElementUIData(_ selectValueType: SelectValue.Type, _ selectValue: SelectValue? = nil) -> ElementUIData {
         let rawValue = selectValue?.getRawValue() ??
             (Util.hasIndexInArray(selectValueType.getTupleValues(), index: 0)
@@ -314,7 +317,8 @@ class FieldDetailsFactoryImpl: FieldDetailsFactory {
             indexValue: findIndexValueByRawValue(rawValue, values: selectValueType.getTupleValues())
         )
     }
-
+    
+    // TODO creer une class elementUIData Factory
     private func makeElementUIData(_ inputValueType: InputValue.Type, _ inputValue: InputValue? = nil) -> ElementUIData {
         var inputElement = InputElement(
             title: inputValueType.getTitle(),

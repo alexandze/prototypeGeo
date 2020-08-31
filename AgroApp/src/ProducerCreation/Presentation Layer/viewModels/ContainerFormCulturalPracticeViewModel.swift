@@ -112,17 +112,36 @@ class ContainerFormCulturalPracticeViewModelImpl: ContainerFormCulturalPracticeV
     private func subscribeToChangeInputValue() {
         viewState.elementUIDataObservableList.forEach { elementUIDataObservable in
             if let inputElementObservable = elementUIDataObservable.toInputElementObservable() {
-                cancellableList.append(
-                    inputElementObservable.$value
-                        .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
-                        .removeDuplicates()
-                        .sink { [weak self] value in
-                            self?.interaction.checkIfInputValueIsValidAction(inputElementObservable.id, value: value)
-                            // check if all inputValue is Valid
-                    }
-                )
+                onChangeInputElement(inputElementObservable)
+            }
+            
+            if let selectElementObservable = elementUIDataObservable.toSelectElementObservable() {
+                onChangeSelectElement(selectElementObservable)
             }
         }
+    }
+    
+    private func onChangeSelectElement(_ selectElementObservable: SelectElementObservable) {
+        cancellableList.append(
+            selectElementObservable
+                .$indexValue.sink { _ in
+                    self.viewState.elementUIDataObservableList.forEach { element in
+                        element.objectWillChange.send()
+                    }
+            }
+        )
+    }
+    
+    private func onChangeInputElement(_ inputElementObservable: InputElementObservable) {
+        cancellableList.append(
+            inputElementObservable.$value
+                .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
+                .removeDuplicates()
+                .sink { [weak self] value in
+                    self?.interaction.checkIfInputValueIsValidAction(inputElementObservable.id, value: value)
+                    // check if all inputValue is Valid
+            }
+        )
     }
 
     private func dismissContainerWithSave() {
