@@ -21,7 +21,8 @@ struct FieldListState: Equatable {
     var title: String = "Liste des parcelles choisies"
     var isAppear: Bool?
     var indexForUpdate: Int?
-
+    var nimSelectValue: NimSelectValue?
+    
     // TODO renomer en response
     enum SubAction {
         case selectedFieldOnMapActionSuccess
@@ -31,6 +32,7 @@ struct FieldListState: Equatable {
         case isAppearActionSuccess
         case updateFieldSuccess
         case removeFieldResponse(indexPathFieldRemoved: IndexPath, fieldRemoved: Field)
+        case initNimSelectValueActionResponse
         case notResponse
     }
 
@@ -41,7 +43,8 @@ struct FieldListState: Equatable {
         subAction: SubAction? = nil,
         title: String? = nil,
         isAppear: Bool? = nil,
-        indexForUpdate: Int? = nil
+        indexForUpdate: Int? = nil,
+        nimSelectValue: NimSelectValue? = nil
     ) -> FieldListState {
         FieldListState(
             uuidState: UUID().uuidString,
@@ -51,7 +54,8 @@ struct FieldListState: Equatable {
             subAction: subAction ?? self.subAction,
             title: title ?? self.title,
             isAppear: isAppear ?? self.isAppear,
-            indexForUpdate: indexForUpdate ?? self.indexForUpdate
+            indexForUpdate: indexForUpdate ?? self.indexForUpdate,
+            nimSelectValue: nimSelectValue ?? self.nimSelectValue
         )
     }
 }

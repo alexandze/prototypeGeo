@@ -8,14 +8,14 @@
 
 import Foundation
 
-class ElementUIDataFactoryImpl: ElementUIDataFactory {
+class ProducerElementUIDataFactoryImpl: ProducerElementUIDataFactory {
 
     let nimTitle = "NIM"
     private let firstNameTitle = "Prénom"
     private let lastNameTitle = "Nom"
     private let emailTitle = "Email"
     private let addButtonTitle = "NIM"
-    private let firstNamePattern = "[A-Za-z àáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]{2,50}"
+    private let firstNamePattern = "^[A-Za-z àáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]{2,50}$"
     private let lastNamePattern = "[A-Za-z àáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]{2,50}"
     private let emailPattern = "^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}$"
     private let nimPattern = "^[A-Z0-9]{2,}$"
@@ -148,7 +148,7 @@ class ElementUIDataFactoryImpl: ElementUIDataFactory {
 
 }
 
-protocol ElementUIDataFactory {
+protocol ProducerElementUIDataFactory {
     func getNimTitle() -> String
     func makeElementUIDataObservableList() -> [ElementUIDataObservable]
     func makeAddNimButtonElementObservable(isEnabled: Bool?) -> ButtonElementObservable

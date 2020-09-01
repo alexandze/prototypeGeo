@@ -52,6 +52,8 @@ class FieldListViewModelImpl: FieldListViewModel {
                     self?.handleUpdateFieldSuccess()
                 case .removeFieldResponse(indexPathFieldRemoved: let indexPathRemoveField, fieldRemoved: let fieldRemoved):
                     self?.handleRemoveFieldResponse(indexPathFieldRemoved: indexPathRemoveField, fieldRemoved: fieldRemoved)
+                case .initNimSelectValueActionResponse:
+                    print("initNimSelectValueActionResponse")
                 case .notResponse:
                     break
                 }

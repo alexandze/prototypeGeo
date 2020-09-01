@@ -59,8 +59,10 @@ class AddProducerFormViewModelImpl: AddProducerFormViewModel {
                         indexInputElementRemoved: indexInputElementRemoved,
                         indexInputElementUpdateList: indexInputElementUpdateList
                     )
-                case .validateFormActionResponse(isAllInputElementRequiredIsValid: let isAllInputElementRequiredIsValid):
-                    self?.handleValidateFormActionResponse(isAllInputElementRequiredIsValid: isAllInputElementRequiredIsValid)
+                case .validateFormActionResponse(
+                    isAllInputElementRequiredIsValid: let isAllInputElementRequiredIsValid,
+                    nimSelectValue: let nimSelectValue):
+                    self?.handleValidateFormActionResponse(isAllInputElementRequiredIsValid, nimSelectValue)
                 case .notResponse:
                     break
                 }
@@ -184,12 +186,14 @@ extension AddProducerFormViewModelImpl {
         interaction.removeNimInputElementAction(id: id)
     }
 
-    private func handleValidateFormActionResponse(isAllInputElementRequiredIsValid: Bool) {
-        guard isAllInputElementRequiredIsValid else {
+    private func handleValidateFormActionResponse(_ isAllInputElementRequiredIsValid: Bool, _ nimSelectValue: NimSelectValue?) {
+        guard isAllInputElementRequiredIsValid,
+            let nimSelectValue = nimSelectValue else {
             return
         }
 
         interaction.notResponseAction()
+        interaction.initNimSelectValueAction(nimSelectValue)
         guard let appDependency = Util.getAppDependency() else { return }
         self.viewController?.navigationController?.pushViewController(appDependency.makeFieldListViewController(), animated: true)
     }
@@ -218,7 +222,7 @@ extension AddProducerFormViewModelImpl {
         self.interaction.checkIfAllInputElementIsValidAction()
 
         // MARK: - simulation form
-        simulationFormForDev()
+        //simulationFormForDev()
         // MARK: - simulation form end
     }
 

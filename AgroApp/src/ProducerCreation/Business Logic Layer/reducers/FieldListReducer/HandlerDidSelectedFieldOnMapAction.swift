@@ -18,6 +18,7 @@ extension FieldListReducerHandler {
 
             return (
                 isFieldExist(util:) >>>
+                    setNimSelectValueOfFieldSelectedWrapper(util: ) >>>
                     addFieldIfFieldNotExist(util:) >>>
                     newState(util:)
                 )(util) ?? state
@@ -46,6 +47,27 @@ extension FieldListReducerHandler {
             newUtil.indexFieldFind = indexField
             return newUtil
         }
+        
+        private func setNimSelectValueOfFieldSelectedWrapper(
+            util: UtilHandlerDidSelectedFieldOnMapAction?
+        ) -> UtilHandlerDidSelectedFieldOnMapAction? {
+            guard var newUtil = util else {
+                return nil
+            }
+            
+            guard let nimSelectValue = newUtil.state.nimSelectValue else {
+                return newUtil
+            }
+            
+            newUtil.fieldFromAction = setNimSelectValueOfFieldSelected(newUtil.fieldFromAction, nimSelectValue)
+            return newUtil
+        }
+        
+        private func setNimSelectValueOfFieldSelected(_ fieldSelected: Field, _ nimSelectValue: NimSelectValue) -> Field {
+            var copyField = fieldSelected
+            copyField.nim = nimSelectValue
+            return copyField
+        }
 
         private func addFieldIfFieldNotExist(util: UtilHandlerDidSelectedFieldOnMapAction?) -> UtilHandlerDidSelectedFieldOnMapAction? {
             guard var newUtil = util,
@@ -61,7 +83,7 @@ extension FieldListReducerHandler {
 
         private func newState(util: UtilHandlerDidSelectedFieldOnMapAction?) -> FieldListState? {
             guard let newUtil = util else { return nil }
-
+            
             return newUtil
                 .state
                 .changeValue(

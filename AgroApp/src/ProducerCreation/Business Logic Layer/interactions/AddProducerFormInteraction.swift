@@ -90,6 +90,11 @@ class AddProducerFormInteractionImpl: AddProducerFormInteraction {
             )
         }
     }
+    
+    func initNimSelectValueAction(_ nimSelectValue: NimSelectValue) {
+        let action = FieldListAction.InitNimSelectValueAction(nimSelectValue: nimSelectValue)
+        Util.dispatchActionInSchedulerReSwift(action, actionDispatcher: actionDispatcher)
+    }
 }
 
 protocol AddProducerFormInteraction {
@@ -102,4 +107,5 @@ protocol AddProducerFormInteraction {
     func removeNimInputElementAction(id: UUID)
     func validateFormAction()
     func notResponseAction()
+    func initNimSelectValueAction(_ nimSelectValue: NimSelectValue)
 }

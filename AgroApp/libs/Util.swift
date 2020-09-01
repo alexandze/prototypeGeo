@@ -124,6 +124,18 @@ class Util {
     static func hasIndexInArray<T>(_ array: [T], index: Int) -> Bool {
         return array.count > index
     }
+    
+    static func filterTValueNotNil<T>(_ tType: T.Type) -> (_ tValue: T?) -> Bool {
+    { $0 != nil }
+    }
+    
+    static func mapUnwrapTValue<T>(_ tType: T.Type) -> (_ tValue: T?) -> T {
+    { $0! }
+    }
+    
+    static func getMirrorChildrenOfTValue<T>(_ tValue: T) -> Mirror.Children {
+        Mirror(reflecting: tValue).children
+    }
 }
 
 precedencegroup CompositionPrecedence {

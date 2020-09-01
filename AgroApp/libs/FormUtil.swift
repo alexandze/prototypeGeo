@@ -47,6 +47,7 @@ protocol InputElementData: ElementUIData {
     var isRequired: Bool {get set}
     var regexPattern: String {get set}
     var keyboardType: KeyboardType { get set}
+    var typeValue: String? { get set }
 }
 
 class InputElementDataObservable: ElementUIDataObservable {
@@ -128,6 +129,7 @@ struct InputElement: InputElementData {
     var typeValue: String?
     var regex: NSRegularExpression?
     var subtitle: String?
+    var number: Int? = nil
 
     func toInputElementObservable() -> InputElementObservable {
         InputElementObservable(
@@ -140,6 +142,7 @@ struct InputElement: InputElementData {
             regexPattern: regexPattern,
             keyboardType: keyboardType,
             regex: regex,
+            number: number,
             unitType: unitType,
             typeValue: typeValue,
             subtitle: subtitle
@@ -207,7 +210,8 @@ class InputElementObservable: InputElementDataObservable {
             keyboardType: keyboardType,
             unitType: unitType,
             typeValue: typeValue,
-            regex: regex
+            regex: regex,
+            number: number
         )
     }
 
@@ -229,6 +233,39 @@ struct InputElementWithRemoveButton: InputElementData {
     var action: String
     var regexPattern: String
     var keyboardType: KeyboardType = .normal
+    var number: Int?
+    var regex: NSRegularExpression? = nil
+    var typeValue: String?
+    
+    func toInputElementWithRemoveButtonObservable() -> InputElementWithRemoveButtonObservable {
+        InputElementWithRemoveButtonObservable(
+            id: id,
+            type: type,
+            title: title,
+            value: value,
+            isValid: isValid,
+            isRequired: isRequired,
+            action: action,
+            regexPattern: regexPattern,
+            keyboardType: keyboardType,
+            regex: regex,
+            number: number,
+            typeValue: typeValue
+        )
+    }
+    
+    func isInputValid() -> Bool {
+        guard let regex = self.regex else {
+            return true
+        }
+
+        guard !self.value.isEmpty else {
+            return false
+        }
+
+        let valueTrim = self.value.trimmingCharacters(in: .whitespacesAndNewlines)
+        return regex.matches(in: valueTrim, range: NSRange(location: 0, length: valueTrim.count)).count == 1
+    }
 }
 
 class InputElementWithRemoveButtonObservable: InputElementDataObservable {
@@ -236,6 +273,8 @@ class InputElementWithRemoveButtonObservable: InputElementDataObservable {
     var action: String
 
     init(
+        id: UUID? = nil,
+        type: String? = nil,
         title: String,
         value: String,
         isValid: Bool,
@@ -244,12 +283,14 @@ class InputElementWithRemoveButtonObservable: InputElementDataObservable {
         regexPattern: String,
         keyboardType: KeyboardType = .normal,
         regex: NSRegularExpression? = nil,
-        number: Int? = nil
+        number: Int? = nil,
+        typeValue: String? = nil
     ) {
         self.action = action
 
         super.init(
-            type: InputElementWithRemoveButtonObservable.TYPE_ELEMENT,
+            id: id,
+            type: type ?? InputElementWithRemoveButtonObservable.TYPE_ELEMENT,
             title: title,
             value: value,
             isValid: isValid,
@@ -257,7 +298,23 @@ class InputElementWithRemoveButtonObservable: InputElementDataObservable {
             regexPattern: regexPattern,
             keyboardType: keyboardType,
             regex: regex,
-            number: number
+            number: number,
+            typeValue: typeValue
+        )
+    }
+    
+    func toInputElementWithRemoveButton() -> InputElementWithRemoveButton {
+        InputElementWithRemoveButton(
+            id: id,
+            type: type,
+            title: title,
+            value: value, isValid: isValid,
+            isRequired: isRequired,
+            action: action,
+            regexPattern: regexPattern,
+            keyboardType: keyboardType,
+            number: number, regex: regex,
+            typeValue: typeValue
         )
     }
 
@@ -313,6 +370,7 @@ struct SelectElement: ElementUIData {
     var typeValue: String
     var rawValue: Int
     var indexValue: Int?
+    var canEdit: Bool?
 
     func toSelectElementObservable() -> SelectElementObservable {
         SelectElementObservable(
@@ -325,7 +383,8 @@ struct SelectElement: ElementUIData {
             values: values,
             typeValue: typeValue,
             rawValue: rawValue,
-            indexValue: indexValue ?? 0
+            indexValue: indexValue ?? 0,
+            canEdit: canEdit
         )
     }
 }
@@ -339,6 +398,7 @@ class SelectElementObservable: ElementUIDataObservable {
     var typeValue: String
     @Published var rawValue: Int
     @Published var indexValue: Int
+    var canEdit: Bool? = nil
 
     init(
         id: UUID? = nil,
@@ -350,7 +410,8 @@ class SelectElementObservable: ElementUIDataObservable {
         values:  [(Int,String)],
         typeValue: String,
         rawValue: Int,
-        indexValue: Int
+        indexValue: Int,
+        canEdit: Bool? = nil
     ) {
         self.value = value
         self.isValid = isValid
@@ -359,6 +420,7 @@ class SelectElementObservable: ElementUIDataObservable {
         self.typeValue = typeValue
         self.rawValue = rawValue
         self.indexValue = indexValue
+        self.canEdit = canEdit
         let type = type ?? SelectElementObservable.TYPE_ELEMENT
         super.init(id: id, type: type, title: title)
     }

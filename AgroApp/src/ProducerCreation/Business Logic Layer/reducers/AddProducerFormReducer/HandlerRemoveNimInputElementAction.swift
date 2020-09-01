@@ -67,7 +67,7 @@ extension AddProducerFormReducerHandler {
                     return nil
             }
 
-            var numberInit = 1
+            var numberInit = 0
             newUtil.updateIndexInputElement = newUtil.updateIndexInputElement ?? []
 
             (0..<newElementUIDataList.count).forEach { index in

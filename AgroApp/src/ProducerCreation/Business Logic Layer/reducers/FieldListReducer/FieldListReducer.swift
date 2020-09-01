@@ -29,6 +29,9 @@ extension Reducers {
         case let removeFieldAction as FieldListAction.RemoveFieldAction:
             return FieldListReducerHandler
                 .HandlerRemoveFieldAction().handle(action: removeFieldAction, state)
+        case let initNimSelectValueAction as FieldListAction.InitNimSelectValueAction:
+            return FieldListReducerHandler.HandlerInitNimSelectValueAction()
+                .handle(action: initNimSelectValueAction, state)
         default:
             return state
         }

@@ -10,9 +10,9 @@ import SwiftUI
 
 class AddProducerFormFactoryImpl: AddProducerFormFactory {
 
-    let elementUIDataFactory: ElementUIDataFactory
+    let elementUIDataFactory: ProducerElementUIDataFactory
 
-    init(elementUIDataFactory: ElementUIDataFactory = ElementUIDataFactoryImpl()) {
+    init(elementUIDataFactory: ProducerElementUIDataFactory = ProducerElementUIDataFactoryImpl()) {
         self.elementUIDataFactory = elementUIDataFactory
     }
 

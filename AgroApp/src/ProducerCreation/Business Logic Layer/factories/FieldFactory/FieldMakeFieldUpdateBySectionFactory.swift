@@ -12,12 +12,15 @@ class FieldMakeFieldUpdateBySectionFactoryImpl: FieldMakeFieldUpdateBySectionFac
     func makeFieldUpdateBySection(_ section: Section<ElementUIData>, _ field: Field) -> Field {
         var copyField = field
         
-        section.rowData
-            .map(mapCastElementUIDataToInputElement(_:))
-            .filter(filterInputElementNotNil(_:))
-            .map(mapUnwrapInputElement(_:))
-            .forEach { inputElement in
+        section.rowData.forEach { elementUIData in
+            switch elementUIData {
+            case let inputElement as InputElement:
                 copyField = updateFieldByInputElement(copyField, inputElement)
+            case let selectElement as SelectElement:
+                copyField = updateFieldBySelectElement(copyField, selectElement)
+            default:
+                break
+            }
         }
         
         return copyField
@@ -33,6 +36,22 @@ class FieldMakeFieldUpdateBySectionFactoryImpl: FieldMakeFieldUpdateBySectionFac
         switch typeValue {
         case IdPleineTerre.getTypeValue():
             copyField.idPleinTerre = self.makeInputValue(IdPleineTerre.self, inputElement.value) as? IdPleineTerre
+        default:
+            return copyField
+        }
+        
+        return copyField
+    }
+    
+    func updateFieldBySelectElement(_ field: Field, _ selectElement: SelectElement) -> Field {
+        let typeValue = selectElement.typeValue
+        var copyField = field
+        
+        switch typeValue {
+        case NimSelectValue.getTypeValue():
+            if let nimSelectValue = copyField.nim {
+                copyField.nim = NimSelectValue.setIndexValueSelected(selectElement.rawValue, selectValueInit: nimSelectValue) as? NimSelectValue
+            }
         default:
             return copyField
         }

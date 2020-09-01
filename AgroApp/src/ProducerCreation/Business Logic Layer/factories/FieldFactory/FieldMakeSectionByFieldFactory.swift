@@ -9,6 +9,11 @@
 import Foundation
 
 class FieldMakeSectionByFieldFactoryImpl: FieldMakeSectionByFieldFactory {
+    let elementUIDataFactory: ElementUIDataFactory
+    
+    init(elementUIDataFactory: ElementUIDataFactory = ElementUIDataFactoryImpl()) {
+        self.elementUIDataFactory = elementUIDataFactory
+    }
     
     func makeSectionByField(_ field: Field) -> [Section<ElementUIData>] {
         getMirrorChildrenOfField(field)
@@ -28,33 +33,19 @@ class FieldMakeSectionByFieldFactoryImpl: FieldMakeSectionByFieldFactory {
             return nil
         }
         
-        switch label  {
+        switch label {
         case IdPleineTerre.getTypeValue():
-            return self.makeElementUIData(IdPleineTerre.self, field.idPleinTerre)
+            return self.elementUIDataFactory.makeElementUIData(IdPleineTerre.self, field.idPleinTerre)
+        case NimSelectValue.getTypeValue():
+            if let nimSelectValueInit = field.nim {
+                return self.elementUIDataFactory.makeElementUIData(nimSelectValueInit)
+            }
         default:
             break
         }
         
         return nil
         }
-    }
-    
-    // TODO creer une class elementUIData Factory
-    func makeElementUIData(_ inputValueType: InputValue.Type ,_ inputValue: InputValue? = nil) -> ElementUIData {
-        var inputElement = InputElement(
-            title: inputValueType.getTitle(),
-            value: inputValue?.getValue() ?? "",
-            isValid: false,
-            isRequired: true,
-            regexPattern: inputValueType.getRegexPattern(),
-            keyboardType: .normal,
-            unitType: inputValueType.getUnitType(),
-            typeValue: inputValueType.getTypeValue(),
-            regex: makeRegularExpression(inputValueType.getRegexPattern())
-        )
-        
-        inputElement.isValid = inputElement.isInputValid()
-        return inputElement
     }
     
     private func makeRegularExpression(_ regexPattern: String) -> NSRegularExpression? {

@@ -15,6 +15,7 @@ struct Field {
     var polygon: [PolygonWithData<PayloadFieldAnnotation>]
     var annotation: [AnnotationWithData<PayloadFieldAnnotation>]
     var idPleinTerre: IdPleineTerre?
+    var nim: NimSelectValue?
 
     func set(culturalPractice: CulturalPractice, of field: Field) -> Field {
         var copyField = field

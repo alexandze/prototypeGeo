@@ -25,4 +25,8 @@ struct FieldListAction {
     struct RemoveFieldAction: Action {
         let indexPath: IndexPath
     }
+    
+    struct InitNimSelectValueAction: Action {
+        let nimSelectValue: NimSelectValue
+    }
 }

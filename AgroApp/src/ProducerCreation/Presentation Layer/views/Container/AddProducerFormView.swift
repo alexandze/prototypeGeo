@@ -186,8 +186,11 @@ private struct InputWithTitleElement: View {
     }
 
     private func getNumber() -> String {
-        let number = self.inputElement.number ?? 0
-        return number > 0 ? String(number) : ""
+        if let number = self.inputElement.number {
+            return String(number + 1)
+        }
+        
+        return ""
     }
 
     private func getForegroundColorOfRoundedRectangle() -> Color {
