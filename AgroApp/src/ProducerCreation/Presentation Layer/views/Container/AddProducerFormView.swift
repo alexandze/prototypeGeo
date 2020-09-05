@@ -17,7 +17,7 @@ struct AddProducerFormView: View {
 
     init(
         addProducerFormViewModel: AddProducerFormViewModel,
-        keyboardFollower: KeyboardFollower
+        keyboardFollower: KeyboardFollower = KeyboardFollower()
     ) {
         self.viewModel = addProducerFormViewModel
         self.keyboardFollower = keyboardFollower

@@ -112,6 +112,13 @@ class Util {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
         return appDelegate.appDependencyContainer
     }
+    
+    static func setRootViewController(_ rootViewController: UIViewController) {
+        let sceneDelegate = UIApplication.shared.connectedScenes
+            .first?.delegate as? SceneDelegate
+        
+        sceneDelegate?.window?.rootViewController = rootViewController
+    }
 
     static func getGreenColor() -> UIColor {
         UIColor(red: 34/255, green: 139/255, blue: 34/255, alpha: 1)

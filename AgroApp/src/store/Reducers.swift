@@ -20,7 +20,8 @@ struct Reducers {
             inputFormCulturalPracticeState: Reducers.inputFormCulturalPracticeReducer(action: action, state: state?.inputFormCulturalPracticeState),
             containerFormCulturalPracticeState: Reducers.containerFormCulturalPracticeReducer(action: action, state: state?.containerFormCulturalPracticeState),
             containerTitleNavigationState: Reducers.containerTitleNavigationReducer(action: action, state: state?.containerTitleNavigationState),
-            addProducerFormState: Reducers.addProducerFormReducer(action: action, state: state?.addProducerFormState)
+            addProducerFormState: Reducers.addProducerFormReducer(action: action, state: state?.addProducerFormState),
+            loginState: Reducers.loginReducer(action: action, state: state?.loginState)
         )
     }
 }

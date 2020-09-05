@@ -27,6 +27,7 @@ class FarmerTableViewController: UITableViewController, Identifier {
     ) {
         self.farmerTableViewModel = farmerViewModel
         super.init(style: .plain)
+        
     }
 
     override func viewDidLoad() {

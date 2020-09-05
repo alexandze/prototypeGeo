@@ -24,7 +24,8 @@ class AppDependencyContainerImpl: AppDependencyContainer {
                 inputFormCulturalPracticeState: InputFormCulturalPracticeState(uuidState: UUID().uuidString),
                 containerFormCulturalPracticeState: ContainerFormCulturalPracticeState(uuidState: UUID().uuidString),
                 containerTitleNavigationState: ContainerTitleNavigationState(uuidState: UUID().uuidString),
-                addProducerFormState: AddProducerFormState(uuidState: UUID().uuidString)
+                addProducerFormState: AddProducerFormState(uuidState: UUID().uuidString),
+                loginState: LoginState(uuidState: UUID().uuidString)
             ),
             middleware: [
                 FarmerMiddleware.shared.makeGetFarmersMiddleware()
@@ -34,9 +35,13 @@ class AppDependencyContainerImpl: AppDependencyContainer {
     }()
 
     let producerCreationDependencyContainer: ProducerCreationDependencyContainer
+    
+    let authenticationDependencyContainer: AuthenticationDependencyContainer
 
     init() {
         self.producerCreationDependencyContainer = ProducerCreationDependencyContainerImpl(stateStore: self.stateStore)
+        
+        self.authenticationDependencyContainer = AuthenticationDependencyContainerImpl(stateStore: self.stateStore)
     }
 
     func makeFarmerTableViewController(
@@ -92,6 +97,7 @@ class AppDependencyContainerImpl: AppDependencyContainer {
             title: "Agriculteur",
             image: UIImage(named: "contact"),
             tag: 1)
+        
         return farmerNavigationController
     }
 
@@ -102,8 +108,7 @@ class AppDependencyContainerImpl: AppDependencyContainer {
 
         let tabBarController = UITabBarController()
 
-        tabBarController.viewControllers = [farmerNavigationController, mapFieldNavigationController]
-        tabBarController.selectedIndex = 1
+        tabBarController.viewControllers = [farmerNavigationController]
 
         tabBarController.tabBar.tintColor = Util.getOppositeColorBlackOrWhite()
 
@@ -143,6 +148,7 @@ class AppDependencyContainerImpl: AppDependencyContainer {
 
 protocol AppDependencyContainer {
     var producerCreationDependencyContainer: ProducerCreationDependencyContainer { get }
+    var authenticationDependencyContainer: AuthenticationDependencyContainer { get }
     func proccessInitTabBarController() -> UITabBarController
 
     func processInitContainerMapAndTitleNavigationController() -> ContainerMapAndTitleNavigationController

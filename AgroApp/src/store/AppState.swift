@@ -19,4 +19,5 @@ struct AppState: StateType {
     var containerFormCulturalPracticeState: ContainerFormCulturalPracticeState
     var containerTitleNavigationState: ContainerTitleNavigationState
     var addProducerFormState: AddProducerFormState
+    var loginState: LoginState
 }

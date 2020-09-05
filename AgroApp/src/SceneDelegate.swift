@@ -21,8 +21,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
             //self.window!.rootViewController = appDependencyContainer.proccessInitTabBarController()
 
-            self.window!.rootViewController =
-                getAppDelegate().appDependencyContainer.processInitContainerMapAndTitleNavigationController()
+            self.window!.rootViewController = getAppDelegate().appDependencyContainer.authenticationDependencyContainer.makeLoginHostingControllerInNavigation()
+                // getAppDelegate().appDependencyContainer.processInitContainerMapAndTitleNavigationController()
 
             /*
             self.window!.rootViewController = UINavigationController(

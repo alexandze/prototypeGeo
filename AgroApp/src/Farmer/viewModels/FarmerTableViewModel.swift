@@ -24,7 +24,8 @@ public class FarmerTableViewModel {
     }
 
     func initTitleNavigation(viewController: UIViewController) {
-        viewController.navigationItem.title = "Agriculteur"
+        viewController.title = "Producteur"
+        // viewController.tabBarController?.navigationController?.popToViewController(viewController, animated: true)
     }
 
     func initAddBarButton(viewController: UIViewController) {
@@ -35,7 +36,7 @@ public class FarmerTableViewModel {
         )
         barButton.tintColor = Util.getOppositeColorBlackOrWhite()
         viewController.navigationItem.rightBarButtonItems = [barButton]
-
+        viewController.tabBarController?.navigationItem.rightBarButtonItems = [barButton]
     }
 
     @objc func addFarmer(_ barButtonItem: UIBarButtonItem) {
@@ -58,7 +59,9 @@ public class FarmerTableViewModel {
     }
 
     func susbcribeToTableViewControllerState(farmerTableViewController: FarmerTableViewController) {
-        self.disposableTableViewControllerState = farmerTableViewControllerStateObs.subscribe(onNext: {
+        self.disposableTableViewControllerState = farmerTableViewControllerStateObs
+            .observeOn(Util.getSchedulerMain())
+            .subscribe(onNext: {
             self.setDataTableView(
                 farmers: $0.farmers,
                 sectionsFarmers: $0.sectionsFarmersFormated,

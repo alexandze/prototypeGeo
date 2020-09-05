@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		1D9906770E6E2074C3379909 /* Pods_AgroApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AC948D72A5D5DE7D8A1FDB4 /* Pods_AgroApp.framework */; };
+		7F0200F225034E09006EC562 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0200F125034E09006EC562 /* LoginViewModel.swift */; };
+		7F0200F425034F16006EC562 /* LoginState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0200F325034F16006EC562 /* LoginState.swift */; };
+		7F0200F625034F64006EC562 /* LoginReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0200F525034F64006EC562 /* LoginReducer.swift */; };
 		7F1D50DE24E3509100486C81 /* AddProducerFormFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1D50DD24E3509100486C81 /* AddProducerFormFactory.swift */; };
 		7F1D50E124E35F5A00486C81 /* AddProducerFormFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1D50E024E35F5900486C81 /* AddProducerFormFactoryTests.swift */; };
 		7F1E49FC24FDBD6F0041A1F2 /* ProducerMakeElementUIDataListFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1E49FB24FDBD6F0041A1F2 /* ProducerMakeElementUIDataListFactory.swift */; };
@@ -53,10 +56,14 @@
 		7FBEF40124F8B21300716014 /* HandlerCloseContainerFormWithSaveAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBEF40024F8B21300716014 /* HandlerCloseContainerFormWithSaveAction.swift */; };
 		7FBEF40324F8C5C600716014 /* HandlerCheckIfFormIsDirtyAndValidAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBEF40224F8C5C600716014 /* HandlerCheckIfFormIsDirtyAndValidAction.swift */; };
 		7FBEF40524F8D82900716014 /* HandlerCloseContainerFormWithoutSaveAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBEF40424F8D82900716014 /* HandlerCloseContainerFormWithoutSaveAction.swift */; };
+		7FCE8C8E2503502F00EEF463 /* LoginAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE8C8D2503502F00EEF463 /* LoginAction.swift */; };
+		7FCE8C90250350CC00EEF463 /* LoginInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE8C8F250350CC00EEF463 /* LoginInteraction.swift */; };
 		7FD0BD5024E87A2E00EB86A3 /* Producer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD0BD4F24E87A2E00EB86A3 /* Producer.swift */; };
 		7FD0BD5224E87C6800EB86A3 /* Enterprise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD0BD5124E87C6800EB86A3 /* Enterprise.swift */; };
 		7FD0BD5424E8856800EB86A3 /* HandlerAddNimInputElementAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD0BD5324E8856800EB86A3 /* HandlerAddNimInputElementAction.swift */; };
 		7FD4636F24EB5BC800E6824B /* HelperAddProducerFormReducerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD4636E24EB5BC800E6824B /* HelperAddProducerFormReducerHandler.swift */; };
+		7FEC75B125034C9000357CF1 /* AuthenticationDependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEC75B025034C9000357CF1 /* AuthenticationDependencyContainer.swift */; };
+		7FEC75B325034D2E00357CF1 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEC75B225034D2E00357CF1 /* LoginView.swift */; };
 		7FED3A5D24E4B53E0071A20B /* HandlerCheckIfInputElemenIsValidAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FED3A5C24E4B53E0071A20B /* HandlerCheckIfInputElemenIsValidAction.swift */; };
 		7FEF13C524F706090034B96C /* HandlerCloseSelectFormWithSaveAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEF13C424F706090034B96C /* HandlerCloseSelectFormWithSaveAction.swift */; };
 		7FEF13C724F72C460034B96C /* HandlerCloseSelectFormWithoutSaveAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEF13C624F72C460034B96C /* HandlerCloseSelectFormWithoutSaveAction.swift */; };
@@ -222,6 +229,9 @@
 		22307C639693296A2B2997D2 /* Pods-ProducerCreation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProducerCreation.release.xcconfig"; path = "Target Support Files/Pods-ProducerCreation/Pods-ProducerCreation.release.xcconfig"; sourceTree = "<group>"; };
 		227DC3BCCF3B23197DD34872 /* Pods-prototypeGeo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-prototypeGeo.release.xcconfig"; path = "Target Support Files/Pods-prototypeGeo/Pods-prototypeGeo.release.xcconfig"; sourceTree = "<group>"; };
 		7AC948D72A5D5DE7D8A1FDB4 /* Pods_AgroApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AgroApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F0200F125034E09006EC562 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		7F0200F325034F16006EC562 /* LoginState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginState.swift; sourceTree = "<group>"; };
+		7F0200F525034F64006EC562 /* LoginReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginReducer.swift; sourceTree = "<group>"; };
 		7F1D50DD24E3509100486C81 /* AddProducerFormFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProducerFormFactory.swift; sourceTree = "<group>"; };
 		7F1D50E024E35F5900486C81 /* AddProducerFormFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProducerFormFactoryTests.swift; sourceTree = "<group>"; };
 		7F1E49FB24FDBD6F0041A1F2 /* ProducerMakeElementUIDataListFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProducerMakeElementUIDataListFactory.swift; sourceTree = "<group>"; };
@@ -267,10 +277,14 @@
 		7FBEF40024F8B21300716014 /* HandlerCloseContainerFormWithSaveAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerCloseContainerFormWithSaveAction.swift; sourceTree = "<group>"; };
 		7FBEF40224F8C5C600716014 /* HandlerCheckIfFormIsDirtyAndValidAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerCheckIfFormIsDirtyAndValidAction.swift; sourceTree = "<group>"; };
 		7FBEF40424F8D82900716014 /* HandlerCloseContainerFormWithoutSaveAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerCloseContainerFormWithoutSaveAction.swift; sourceTree = "<group>"; };
+		7FCE8C8D2503502F00EEF463 /* LoginAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAction.swift; sourceTree = "<group>"; };
+		7FCE8C8F250350CC00EEF463 /* LoginInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInteraction.swift; sourceTree = "<group>"; };
 		7FD0BD4F24E87A2E00EB86A3 /* Producer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Producer.swift; sourceTree = "<group>"; };
 		7FD0BD5124E87C6800EB86A3 /* Enterprise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enterprise.swift; sourceTree = "<group>"; };
 		7FD0BD5324E8856800EB86A3 /* HandlerAddNimInputElementAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerAddNimInputElementAction.swift; sourceTree = "<group>"; };
 		7FD4636E24EB5BC800E6824B /* HelperAddProducerFormReducerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperAddProducerFormReducerHandler.swift; sourceTree = "<group>"; };
+		7FEC75B025034C9000357CF1 /* AuthenticationDependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationDependencyContainer.swift; sourceTree = "<group>"; };
+		7FEC75B225034D2E00357CF1 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		7FED3A5C24E4B53E0071A20B /* HandlerCheckIfInputElemenIsValidAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerCheckIfInputElemenIsValidAction.swift; sourceTree = "<group>"; };
 		7FEF13C424F706090034B96C /* HandlerCloseSelectFormWithSaveAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerCloseSelectFormWithSaveAction.swift; sourceTree = "<group>"; };
 		7FEF13C624F72C460034B96C /* HandlerCloseSelectFormWithoutSaveAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerCloseSelectFormWithoutSaveAction.swift; sourceTree = "<group>"; };
@@ -476,6 +490,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		7F0200F725034F84006EC562 /* LoginReducer */ = {
+			isa = PBXGroup;
+			children = (
+				7F0200F525034F64006EC562 /* LoginReducer.swift */,
+			);
+			path = LoginReducer;
+			sourceTree = "<group>";
+		};
 		7F1D50DC24E34FEA00486C81 /* factories */ = {
 			isa = PBXGroup;
 			children = (
@@ -598,6 +620,140 @@
 			path = FieldData;
 			sourceTree = "<group>";
 		};
+		7FEC759F2502FF5600357CF1 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				7FEC75AF2503051200357CF1 /* Data Layer */,
+				7FEC75AE2503050200357CF1 /* Service Layer */,
+				7FEC75A6250304A000357CF1 /* Business Logic Layer */,
+				7FEC75A22503041100357CF1 /* Presentation Layer */,
+				7FEC75B025034C9000357CF1 /* AuthenticationDependencyContainer.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		7FEC75A22503041100357CF1 /* Presentation Layer */ = {
+			isa = PBXGroup;
+			children = (
+				7FEC75A52503043600357CF1 /* viewControllers */,
+				7FEC75A42503042B00357CF1 /* viewModels */,
+				7FEC75A32503042200357CF1 /* views */,
+			);
+			path = "Presentation Layer";
+			sourceTree = "<group>";
+		};
+		7FEC75A32503042200357CF1 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				7FEC75B425034D4100357CF1 /* Containers */,
+			);
+			path = views;
+			sourceTree = "<group>";
+		};
+		7FEC75A42503042B00357CF1 /* viewModels */ = {
+			isa = PBXGroup;
+			children = (
+				7F0200F125034E09006EC562 /* LoginViewModel.swift */,
+			);
+			path = viewModels;
+			sourceTree = "<group>";
+		};
+		7FEC75A52503043600357CF1 /* viewControllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = viewControllers;
+			sourceTree = "<group>";
+		};
+		7FEC75A6250304A000357CF1 /* Business Logic Layer */ = {
+			isa = PBXGroup;
+			children = (
+				7FEC75AD250304F200357CF1 /* factories */,
+				7FEC75AC250304E500357CF1 /* interactions */,
+				7FEC75AB250304D600357CF1 /* middlewares */,
+				7FEC75AA250304CE00357CF1 /* actions */,
+				7FEC75A9250304C700357CF1 /* reducers */,
+				7FEC75A8250304BE00357CF1 /* states */,
+				7FEC75A7250304B600357CF1 /* models */,
+			);
+			path = "Business Logic Layer";
+			sourceTree = "<group>";
+		};
+		7FEC75A7250304B600357CF1 /* models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = models;
+			sourceTree = "<group>";
+		};
+		7FEC75A8250304BE00357CF1 /* states */ = {
+			isa = PBXGroup;
+			children = (
+				7F0200F325034F16006EC562 /* LoginState.swift */,
+			);
+			path = states;
+			sourceTree = "<group>";
+		};
+		7FEC75A9250304C700357CF1 /* reducers */ = {
+			isa = PBXGroup;
+			children = (
+				7F0200F725034F84006EC562 /* LoginReducer */,
+			);
+			path = reducers;
+			sourceTree = "<group>";
+		};
+		7FEC75AA250304CE00357CF1 /* actions */ = {
+			isa = PBXGroup;
+			children = (
+				7FCE8C8D2503502F00EEF463 /* LoginAction.swift */,
+			);
+			path = actions;
+			sourceTree = "<group>";
+		};
+		7FEC75AB250304D600357CF1 /* middlewares */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = middlewares;
+			sourceTree = "<group>";
+		};
+		7FEC75AC250304E500357CF1 /* interactions */ = {
+			isa = PBXGroup;
+			children = (
+				7FCE8C8F250350CC00EEF463 /* LoginInteraction.swift */,
+			);
+			path = interactions;
+			sourceTree = "<group>";
+		};
+		7FEC75AD250304F200357CF1 /* factories */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = factories;
+			sourceTree = "<group>";
+		};
+		7FEC75AE2503050200357CF1 /* Service Layer */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Service Layer";
+			sourceTree = "<group>";
+		};
+		7FEC75AF2503051200357CF1 /* Data Layer */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Data Layer";
+			sourceTree = "<group>";
+		};
+		7FEC75B425034D4100357CF1 /* Containers */ = {
+			isa = PBXGroup;
+			children = (
+				7FEC75B225034D2E00357CF1 /* LoginView.swift */,
+			);
+			path = Containers;
+			sourceTree = "<group>";
+		};
 		981440E324AC359E00F0879F /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -631,7 +787,14 @@
 		9830049124AC2E9100CDF624 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				98B9990723B5076000CA7EF9 /* SceneDelegate.swift */,
+				98B9990523B5076000CA7EF9 /* AppDelegate.swift */,
+				98D1929123C012E300BF9A7A /* AppDependencyContainer.swift */,
+				98603FFE23BD854400D5B538 /* store */,
+				98B9992523B50E2C00CA7EF9 /* libs */,
+				98304AD223EE185900510FFE /* Calcul */,
 				98B9991E23B50AF100CA7EF9 /* Farmer */,
+				7FEC759F2502FF5600357CF1 /* Authentication */,
 				9830047524AC291E00CDF624 /* ProducerCreation */,
 			);
 			path = src;
@@ -968,17 +1131,11 @@
 			isa = PBXGroup;
 			children = (
 				9830049124AC2E9100CDF624 /* src */,
-				98304AD223EE185900510FFE /* Calcul */,
-				98603FFE23BD854400D5B538 /* store */,
-				98B9992523B50E2C00CA7EF9 /* libs */,
-				98B9990523B5076000CA7EF9 /* AppDelegate.swift */,
-				98B9990723B5076000CA7EF9 /* SceneDelegate.swift */,
 				98B9990B23B5076000CA7EF9 /* Main.storyboard */,
 				98B9991123B5076400CA7EF9 /* Assets.xcassets */,
 				98B9991323B5076400CA7EF9 /* LaunchScreen.storyboard */,
 				98B9991623B5076400CA7EF9 /* Info.plist */,
 				98B9990E23B5076000CA7EF9 /* prototypeGeo.xcdatamodeld */,
-				98D1929123C012E300BF9A7A /* AppDependencyContainer.swift */,
 				9854BFEE240A2B9900E5AB8A /* Localizable.strings */,
 			);
 			path = AgroApp;
@@ -1348,6 +1505,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7FCE8C90250350CC00EEF463 /* LoginInteraction.swift in Sources */,
 				988F035D242B0A1B00545D59 /* ContainerElementView.swift in Sources */,
 				98F126B624C8F023001853D5 /* TauxApplicationPhosphoreVolee.swift in Sources */,
 				7F95178C24F354A300BAE845 /* HandleAddDoseFumierAction.swift in Sources */,
@@ -1361,21 +1519,25 @@
 				7F1E4A0F24FE619A0041A1F2 /* HandlerInitNimSelectValueAction.swift in Sources */,
 				98BA0D7F240CE41F00948A26 /* ContainerMapAndTitleNavigationView.swift in Sources */,
 				98F126B024C71F2C001853D5 /* ConditionProfilCultural.swift in Sources */,
+				7FEC75B325034D2E00357CF1 /* LoginView.swift in Sources */,
 				98B9991D23B50ACC00CA7EF9 /* FarmerTableViewController.swift in Sources */,
 				7F5E1F5024F5BB4B00B3762D /* HandlerCheckIfFormIsValidAndDirtyForPrintAlertAction.swift in Sources */,
 				7FED3A5D24E4B53E0071A20B /* HandlerCheckIfInputElemenIsValidAction.swift in Sources */,
 				98304AD423EE19A400510FFE /* UtilAreaPolygon.swift in Sources */,
 				98CB79CF24B817EA00EFFF19 /* ContainerFormCulturalPracticeAction.swift in Sources */,
 				7F1E4A0924FE11240041A1F2 /* EnterpriseMakeNimSelectValue.swift in Sources */,
+				7FCE8C8E2503502F00EEF463 /* LoginAction.swift in Sources */,
 				98457B682423E64F00AF4C90 /* CulturalPracticeFormView.swift in Sources */,
 				9810DA4E242F1F9A00545A23 /* SelectFormCulturalPracticeAction.swift in Sources */,
 				98304AD623EE21E200510FFE /* ErrorValueEnum.swift in Sources */,
 				98F126BE24C8F1C7001853D5 /* CulturalPractiqueUtil.swift in Sources */,
 				989090A824C1517400AFC080 /* ContainerTitleNavigationReducer.swift in Sources */,
+				7F0200F425034F16006EC562 /* LoginState.swift in Sources */,
 				9854BFF5240B7A9F00E5AB8A /* FieldListInteraction.swift in Sources */,
 				98B9990623B5076000CA7EF9 /* AppDelegate.swift in Sources */,
 				9854BFE5240A1FA500E5AB8A /* FieldListState.swift in Sources */,
 				9847564324AEC6710048A503 /* SettingViewController.swift in Sources */,
+				7FEC75B125034C9000357CF1 /* AuthenticationDependencyContainer.swift in Sources */,
 				98DC7B5624DF623800A898B6 /* FormUtil.swift in Sources */,
 				98A8D9C824D48B6200041391 /* HandlerRemoveDoseFumierAction.swift in Sources */,
 				98BA0D7B240CDC2800948A26 /* ContainerTitleNavigationViewController.swift in Sources */,
@@ -1397,6 +1559,7 @@
 				9860400F23BD976800D5B538 /* StoreSubcriberProxy.swift in Sources */,
 				9894340A2410C76D003C0110 /* PolygonWithData.swift in Sources */,
 				7FD0BD5424E8856800EB86A3 /* HandlerAddNimInputElementAction.swift in Sources */,
+				7F0200F625034F64006EC562 /* LoginReducer.swift in Sources */,
 				7F1E49FE24FDC0940041A1F2 /* ElementUIDataFactory.swift in Sources */,
 				7F5E1F4E24F5ABAB00B3762D /* HandlerCheckIfInputValueIsValidAction.swift in Sources */,
 				989090AA24C1530800AFC080 /* ContainerTitleNavigationAction.swift in Sources */,
@@ -1456,6 +1619,7 @@
 				98943408240F901D003C0110 /* SelectedFieldRightCalloutView.swift in Sources */,
 				9854BFFB240B956400E5AB8A /* CulturalPracticeFormState.swift in Sources */,
 				9854BFDD2409000E00E5AB8A /* ContainerTitleNavigationView.swift in Sources */,
+				7F0200F225034E09006EC562 /* LoginViewModel.swift in Sources */,
 				7F40B77124EB585900FE55EF /* HandlerValidateFormAction.swift in Sources */,
 				98BA0D81240CF43600948A26 /* UIViewExtention.swift in Sources */,
 				7F3091F224EF2CC400FA2269 /* FieldDetailsFactory.swift in Sources */,
