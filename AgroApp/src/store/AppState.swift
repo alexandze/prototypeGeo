@@ -10,7 +10,7 @@ import Foundation
 import ReSwift
 
 struct AppState: StateType {
-    var farmerState: FarmerState
+    var producerListState: ProducerListState
     var mapFieldState: MapFieldState
     var fieldListState: FieldListState
     var culturalPracticeState: CulturalPracticeFormState

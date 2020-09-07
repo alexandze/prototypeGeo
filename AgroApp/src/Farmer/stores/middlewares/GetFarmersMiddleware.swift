@@ -16,22 +16,8 @@ extension FarmerMiddleware {
             return { next in
                 return { action in
                     switch action {
-                    case _ as GetFamersAction:
-                        self.getFamers().subscribe(onSuccess: {farmers in
-                            let sectionFarmerFormated = self.getSectionFromFarmers(farmers: farmers)
-                            let farmerTableViewControllerState = FarmerTableViewControllerState(
-                                uuidState: NSUUID().uuidString,
-                                farmers: farmers,
-                                sectionsFarmersFormated: sectionFarmerFormated,
-                                isEmptyFarmers: farmers.isEmpty
-                            )
-
-                            dispatch(SuccessGetFamersAction(
-                                farmerTableViewControllerState: farmerTableViewControllerState)
-                            )
-                        }, onError: {error in
-                            print(error)
-                        }).disposed(by: self.disposeBag)
+                    case _ as ProducerListAction:
+                        break
                     default:
                         break
                     }

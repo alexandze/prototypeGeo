@@ -16,7 +16,7 @@ class AppDependencyContainerImpl: AppDependencyContainer {
         return Store(
             reducer: Reducers.appReducer,
             state: AppState(
-                farmerState: FarmerState(),
+                producerListState: ProducerListState(uuidState: UUID().uuidString),
                 mapFieldState: MapFieldState(uuidState: UUID().uuidString),
                 fieldListState: FieldListState(uuidState: UUID().uuidString),
                 culturalPracticeState: CulturalPracticeFormState(uuidState: UUID().uuidString),
@@ -43,75 +43,12 @@ class AppDependencyContainerImpl: AppDependencyContainer {
         
         self.authenticationDependencyContainer = AuthenticationDependencyContainerImpl(stateStore: self.stateStore)
     }
-
-    func makeFarmerTableViewController(
-        farmerTableViewModel: FarmerTableViewModel
-    ) -> FarmerTableViewController {
-        return FarmerTableViewController(farmerViewModel: farmerTableViewModel)
-    }
-
-    func makeFarmerTableViewStateObservable() -> Observable<FarmerTableViewControllerState> {
-        stateStore.makeObservable(
-            transform: {(subscription: Subscription<AppState>)
-                -> Subscription<FarmerTableViewControllerState> in
-            subscription.select { appState in
-                appState.farmerState.farmerTableViewControllerState
-            }
-        })
-    }
-
-    func makeFarmerTableViewInteractions(stateStore: Store<AppState>) -> FarmerTableViewInteractions {
-        return FarmerTableViewInteractionsImpl(actionDispatcher: stateStore)
-    }
-
-    func makeFarmerTableViewModel(
-        farmerTableViewInteractions: FarmerTableViewInteractions,
-        makeFarmerTableViewStateObservable: Observable<FarmerTableViewControllerState>
-    ) -> FarmerTableViewModel {
-        return FarmerTableViewModel(
-            farmerTableViewInteraction: farmerTableViewInteractions,
-            farmerTableViewControllerStateObservable: makeFarmerTableViewStateObservable
-        )
-    }
-
-    func makeFarmerCreateViewController() -> FarmerAddViewController {
-        return FarmerAddViewController()
-    }
-
-    func makeFarmerAddViewController() -> FarmerAddViewController {
-        FarmerAddViewController()
-    }
-
-    func processInitFarmerPackage() -> UINavigationController {
-        let farmerTableViewInteraction = self.makeFarmerTableViewInteractions(stateStore: self.stateStore)
-        let makeFarmerTableViewStateObservable = self.makeFarmerTableViewStateObservable()
-        let farmerTableViewModel = self.makeFarmerTableViewModel(
-            farmerTableViewInteractions: farmerTableViewInteraction,
-            makeFarmerTableViewStateObservable: makeFarmerTableViewStateObservable
-        )
-        let farmerTableViewController = self.makeFarmerTableViewController(
-            farmerTableViewModel: farmerTableViewModel
-        )
-        let farmerNavigationController = UINavigationController(rootViewController: farmerTableViewController)
-        farmerNavigationController.tabBarItem = UITabBarItem(
-            title: "Agriculteur",
-            image: UIImage(named: "contact"),
-            tag: 1)
-        
-        return farmerNavigationController
-    }
-
+    
     func proccessInitTabBarController() -> UITabBarController {
-        let farmerNavigationController = self.processInitFarmerPackage()
-
-        let mapFieldNavigationController = self.producerCreationDependencyContainer.processInitMapField()
-
+        let producerNavigation = producerCreationDependencyContainer.makeProducerNavigation()
         let tabBarController = UITabBarController()
-
-        tabBarController.viewControllers = [farmerNavigationController]
-
+        tabBarController.viewControllers = [producerNavigation]
         tabBarController.tabBar.tintColor = Util.getOppositeColorBlackOrWhite()
-
         return tabBarController
     }
 

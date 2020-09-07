@@ -12,7 +12,7 @@ import ReSwift
 struct Reducers {
     public static func appReducer(action: Action, state: AppState?) -> AppState {
         return AppState(
-            farmerState: Reducers.farmerReducer(action: action, state: state?.farmerState),
+            producerListState: Reducers.producerListReducer(action: action, state: state?.producerListState),
             mapFieldState: Reducers.mapFieldReducer(action: action, state: state?.mapFieldState),
             fieldListState: Reducers.fieldListReducer(action: action, state: state?.fieldListState),
             culturalPracticeState: Reducers.culturalPracticeFormReducer(action: action, state: state?.culturalPracticeState),
