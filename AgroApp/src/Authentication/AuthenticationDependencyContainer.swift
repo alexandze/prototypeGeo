@@ -25,8 +25,9 @@ class AuthenticationDependencyContainerImpl: AuthenticationDependencyContainer {
     }
     
     private func makeLoginHostingController() -> SettingViewController<LoginView> {
-        var loginViewModel = makeLoginViewModel()
-        let loginView = makeLoginView(loginViewModel: loginViewModel)
+        let viewState = makeLoginViewState()
+        var loginViewModel = makeLoginViewModel(viewState: viewState)
+        let loginView = makeLoginView(loginViewModel: loginViewModel, viewState: viewState)
         let hostingViewController = SettingViewController(myView: loginView)
         loginViewModel.viewController = hostingViewController
         return hostingViewController
@@ -48,18 +49,19 @@ class AuthenticationDependencyContainerImpl: AuthenticationDependencyContainer {
         LoginViewModelImpl.ViewState()
     }
     
-    private func makeLoginViewModel() -> LoginViewModel {
+    private func makeLoginViewModel(viewState: LoginViewModelImpl.ViewState) -> LoginViewModel {
         LoginViewModelImpl(
             loginStateObservable: makeLoginObservableState(),
             loginInteraction: makeLoginInteraction(),
-            viewState: makeLoginViewState()
+            viewState: viewState
         )
     }
     
     private func makeLoginView(
-        loginViewModel: LoginViewModel
+        loginViewModel: LoginViewModel,
+        viewState: LoginViewModelImpl.ViewState
     ) -> LoginView {
-        LoginView(loginViewModel:loginViewModel)
+        LoginView(loginViewModel:loginViewModel, viewState: viewState)
     }
 }
 

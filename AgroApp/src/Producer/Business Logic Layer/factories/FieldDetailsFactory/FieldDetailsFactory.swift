@@ -316,32 +316,3 @@ protocol FieldDetailsFactory {
         _ sectionList: [Section<ElementUIData>]
     ) -> [Section<ElementUIData>]
 }
-
-protocol SelectValue: ValueForm {
-    func getRawValue() -> Int
-    static func getValues() -> [String]
-    static func getTupleValues() -> [(Int, String)]
-    static func make(rawValue: Int) -> SelectValue?
-}
-
-protocol SelectValueInit: ValueForm {
-    func getIndexValueSelected() -> Int?
-    func getValues() -> [String]
-    func getTupleValues() -> [(Int, String)]
-    static func make(_ values: [String], _ indexValueSelected: Int?) -> SelectValueInit
-    static func setIndexValueSelected(_ indexValueSelected: Int, selectValueInit: SelectValueInit) -> SelectValueInit
-}
-
-protocol InputValue: ValueForm {
-    static func getRegexPattern() -> String
-    static func getUnitType() -> String
-    static func make(value: String) -> InputValue?
-}
-
-protocol ValueForm {
-    
-    func getValue() -> String
-    
-    static func getTypeValue() -> String
-    static func getTitle() -> String
-}

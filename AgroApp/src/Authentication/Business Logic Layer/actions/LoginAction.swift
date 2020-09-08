@@ -11,4 +11,6 @@ import ReSwift
 
 struct LoginAction {
     struct SignInAction: Action { }
+    
+    struct GetElementUIDataListAction: Action { }
 }

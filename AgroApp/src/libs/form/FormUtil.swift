@@ -111,8 +111,6 @@ class InputElementDataObservable: ElementUIDataObservable {
 }
 
 // MARK: - ImputElement
-
-
 /// InputElement For form
 /// If input value is empty or value is incorrect (check regex), the propertie isValid is false
 struct InputElement: InputElementData {
@@ -129,7 +127,7 @@ struct InputElement: InputElementData {
     var typeValue: String?
     var regex: NSRegularExpression?
     var subtitle: String?
-    var number: Int? = nil
+    var number: Int?
 
     func toInputElementObservable() -> InputElementObservable {
         InputElementObservable(

@@ -15,8 +15,13 @@ class LoginInteractionImpl: LoginInteraction {
         self.actionDispatcher = actionDispatcher
     }
     
+    func getElementUIDataListAction() {
+        let action = LoginAction.GetElementUIDataListAction()
+        Util.dispatchActionInSchedulerReSwift(action, actionDispatcher: actionDispatcher)
+    }
+    
 }
 
 protocol LoginInteraction {
-    
+    func getElementUIDataListAction()
 }

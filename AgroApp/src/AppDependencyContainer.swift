@@ -47,7 +47,41 @@ class AppDependencyContainerImpl: AppDependencyContainer {
     func proccessInitTabBarController() -> UITabBarController {
         let producerNavigation = producerCreationDependencyContainer.makeProducerNavigation()
         let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [producerNavigation]
+        
+        let profileFakeController = FakeViewController(title: "Profil")
+        profileFakeController.title = "Profil"
+        
+        profileFakeController.tabBarItem = UITabBarItem(
+            title: "Profil",
+            image: UIImage(systemName: "person"),
+            tag: 1
+        )
+        
+        let makeScenarionFakeController = FakeViewController(title: "Créer Scénario")
+        makeScenarionFakeController.title = "Créer Scénario"
+        
+        makeScenarionFakeController.tabBarItem = UITabBarItem(
+            title: "Créer Scénario",
+            image: UIImage(systemName: "slider.horizontal.3"),
+            tag: 2
+        )
+        
+        let executeScenarionFakeController = FakeViewController(title: "Exécuter Scénario")
+        executeScenarionFakeController.title = "Exécuter Scénario"
+        
+        executeScenarionFakeController.tabBarItem = UITabBarItem(
+            title: "Exécuter Scénario",
+            image: UIImage(systemName: "play"),
+            tag: 3
+        )
+        
+        tabBarController.viewControllers = [
+            UINavigationController(rootViewController: profileFakeController),
+            producerNavigation,
+            UINavigationController(rootViewController: makeScenarionFakeController),
+            UINavigationController(rootViewController: executeScenarionFakeController)
+        ]
+    
         tabBarController.tabBar.tintColor = Util.getOppositeColorBlackOrWhite()
         return tabBarController
     }

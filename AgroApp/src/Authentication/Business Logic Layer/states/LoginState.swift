@@ -14,4 +14,21 @@ struct LoginState: Equatable {
     }
     
     var uuidState: String
+    var elementUIDataListObservable: [ElementUIDataObservable]?
+    var actionResponse: ActionResponse?
+    
+    func changeValues(
+        elementUIDataListObservable: [ElementUIDataObservable]?,
+        actionResponse: ActionResponse
+    ) -> LoginState {
+        LoginState(
+            uuidState: UUID().uuidString,
+            elementUIDataListObservable: elementUIDataListObservable ?? self.elementUIDataListObservable,
+            actionResponse: actionResponse
+        )
+    }
+    
+    enum ActionResponse {
+        case getElementUIDataListActionResponse
+    }
 }
