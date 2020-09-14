@@ -12,6 +12,7 @@ class ContainerMapAndTitleNavigationController: UIViewController {
     var mapFieldViewController: MapFieldViewController
     var containerTitleNavigationViewController: ContainerTitleNavigationViewController
     let containerMapAndTitleNavigationView: ContainerMapAndTitleNavigationView
+    var containerMapAndTitleNavigationViewModel: ContainerMapAndTitleNavigationViewModel
     var firstCall: Bool = true
 
     required init?(coder: NSCoder) {
@@ -21,13 +22,16 @@ class ContainerMapAndTitleNavigationController: UIViewController {
     init(
         mapFieldViewController: MapFieldViewController,
         containerTitleNavigationViewController: ContainerTitleNavigationViewController,
+        containerMapAndTitleNavigationViewModel: ContainerMapAndTitleNavigationViewModel,
         containerMapAndTitleNavigationView: ContainerMapAndTitleNavigationView = ContainerMapAndTitleNavigationView()
     ) {
         self.mapFieldViewController = mapFieldViewController
         self.containerTitleNavigationViewController = containerTitleNavigationViewController
         self.containerMapAndTitleNavigationView = containerMapAndTitleNavigationView
+        self.containerMapAndTitleNavigationViewModel = containerMapAndTitleNavigationViewModel
         super.init(nibName: nil, bundle: nil)
     }
+    
     public override func loadView() {
         view = containerMapAndTitleNavigationView
     }
@@ -37,6 +41,18 @@ class ContainerMapAndTitleNavigationController: UIViewController {
         initContainerView()
         initDragGestureOnContainerFieldNavigation()
         hideNavigationAndTabBar()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        containerMapAndTitleNavigationViewModel.hideValidateButton = { [weak self] in self?.containerMapAndTitleNavigationView.hideValidateButton() }
+        containerMapAndTitleNavigationViewModel.showValidateButton = { [weak self] in self?.containerMapAndTitleNavigationView.showValidateButton() }
+        containerMapAndTitleNavigationViewModel.subscribeToObserverState()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        containerMapAndTitleNavigationViewModel.disposes()
     }
     
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -58,6 +74,7 @@ class ContainerMapAndTitleNavigationController: UIViewController {
         self.addChilds(mapFieldViewController, containerTitleNavigationViewController)
         containerMapAndTitleNavigationView.initViewOfMapFieldController(mapFieldViewController.view)
         initBackButton()
+        initValidateButton()
         containerMapAndTitleNavigationView.initViewOfContainerNavigation(containerTitleNavigationViewController.view)
         mapFieldViewController.didMove(toParent: self)
         containerTitleNavigationViewController.didMove(toParent: self)
@@ -66,6 +83,12 @@ class ContainerMapAndTitleNavigationController: UIViewController {
     private func initBackButton() {
         containerMapAndTitleNavigationView.initBackButton()
         containerMapAndTitleNavigationView.handleBackButtonFunc = {[weak self] in self?.handleBackButton() }
+    }
+    
+    private func initValidateButton() {
+        containerMapAndTitleNavigationView.initValidateButton()
+        containerMapAndTitleNavigationView.handleValideButtonFunc = { [weak self] in self?.containerMapAndTitleNavigationViewModel.handleValidateButton()  }
+        containerMapAndTitleNavigationView.hideValidateButton()
     }
 
     private func initDragGestureOnContainerFieldNavigation() {
@@ -86,6 +109,7 @@ class ContainerMapAndTitleNavigationController: UIViewController {
         containerTitleNavigationViewController.removeFromParent()
     }
     
+    // TODO mettre dans le view model
     private func handleBackButton() {
         removeChildrenView()
         containerTitleNavigationViewController.popAllViewController()

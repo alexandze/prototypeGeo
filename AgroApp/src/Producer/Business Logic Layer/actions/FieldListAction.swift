@@ -29,4 +29,6 @@ struct FieldListAction {
     struct InitNimSelectValueAction: Action {
         let nimSelectValue: NimSelectValue
     }
+    
+    struct CheckIfAllFieldIsValidAction: Action { }
 }

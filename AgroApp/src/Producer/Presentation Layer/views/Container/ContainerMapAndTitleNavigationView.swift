@@ -11,17 +11,28 @@ import UIKit
 class ContainerMapAndTitleNavigationView: UIView {
     
     let buttonBack: UIButton = {
-        let buttonBack = UIButton()
-        let cancelImage = UIImage(named: "stop")
-        buttonBack.setImage(cancelImage, for: .normal)
-        buttonBack.translatesAutoresizingMaskIntoConstraints = false
-        return buttonBack
+        let button = UIButton(type: .custom)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Retour", for: .normal)
+        button.backgroundColor =  .red
+        button.layer.cornerRadius = 10
+        return button
+    }()
+    
+    let buttonValidate: UIButton = {
+        let button = UIButton(type: .custom)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Terminer", for: .normal)
+        button.backgroundColor = Util.getGreenColor()
+        button.layer.cornerRadius = 10
+        return button
     }()
 
     var constraintNavigationViewControllerView: [NSLayoutConstraint]?
     var constraintFieldViewController: [NSLayoutConstraint]?
     var currentYPositionSlideView: CGFloat = 0
     var handleBackButtonFunc: (() -> Void)?
+    var handleValideButtonFunc: (() -> Void)?
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -66,10 +77,33 @@ class ContainerMapAndTitleNavigationView: UIView {
         
         NSLayoutConstraint.activate([
             buttonBack.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            buttonBack.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 5)
+            buttonBack.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 5),
+            buttonBack.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.05),
+            buttonBack.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.3)
         ])
         
         buttonBack.addTarget(self, action: #selector(handleBackButton(_:)), for: .touchUpInside)
+    }
+    
+    func initValidateButton() {
+        addSubview(buttonValidate)
+        
+        NSLayoutConstraint.activate([
+            buttonValidate.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            buttonValidate.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -5),
+            buttonValidate.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.05),
+            buttonValidate.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.3)
+        ])
+        
+        buttonValidate.addTarget(self, action: #selector(handleValidateButton(_:)), for: .touchUpInside)
+    }
+    
+    func hideValidateButton() {
+        buttonValidate.isHidden = true
+    }
+    
+    func showValidateButton() {
+        buttonValidate.isHidden = false
     }
     
     func initDragGestureFor(titleView: TitleView) {
@@ -103,6 +137,10 @@ class ContainerMapAndTitleNavigationView: UIView {
     
     @objc private func handleBackButton(_ button: UIButton) {
         handleBackButtonFunc?()
+    }
+    
+    @objc private func handleValidateButton(_ button: UIButton) {
+        handleValideButtonFunc?()
     }
 
     private func slideTo(_ slideFunc: @escaping (UIView, PositionY) -> Void) {

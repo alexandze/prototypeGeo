@@ -33,6 +33,7 @@ struct FieldListState: Equatable {
         case updateFieldSuccess
         case removeFieldResponse(indexPathFieldRemoved: IndexPath, fieldRemoved: Field)
         case initNimSelectValueActionResponse
+        case checkIfAllFieldIsValidActionResponse(isAllFieldValid: Bool)
         case notResponse
     }
 

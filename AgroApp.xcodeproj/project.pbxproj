@@ -58,6 +58,14 @@
 		7F8AD78B24E9CA6E00C56282 /* HandlerRemoveNimInputElementAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8AD78A24E9CA6E00C56282 /* HandlerRemoveNimInputElementAction.swift */; };
 		7F8AD78E24EA0E7B00C56282 /* ProducerElementUIDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8AD78D24EA0E7B00C56282 /* ProducerElementUIDataFactory.swift */; };
 		7F8BFA462505BF5D00A23BB3 /* ProducerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8BFA452505BF5D00A23BB3 /* ProducerListView.swift */; };
+		7F8C8E8E250F171900A58740 /* ContainerMapAndTitleNavigationAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8C8E8D250F171900A58740 /* ContainerMapAndTitleNavigationAction.swift */; };
+		7F8C8E91250F184900A58740 /* ContainerMapAndTitleNavigationReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8C8E90250F184900A58740 /* ContainerMapAndTitleNavigationReducer.swift */; };
+		7F8C8E93250F18E900A58740 /* ContainerMapAndTitleNavigationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8C8E92250F18E900A58740 /* ContainerMapAndTitleNavigationState.swift */; };
+		7F8C8E96250F1C1800A58740 /* ContainerMapAndTitleNavigationMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8C8E95250F1C1800A58740 /* ContainerMapAndTitleNavigationMiddleware.swift */; };
+		7F8C8E98250F1E3600A58740 /* ContainerMapAndTitleNavigationInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8C8E97250F1E3600A58740 /* ContainerMapAndTitleNavigationInteraction.swift */; };
+		7F8C8E9D250F30D400A58740 /* ContainerMapAndTitleNavigationMakeElementUIDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8C8E9C250F30D400A58740 /* ContainerMapAndTitleNavigationMakeElementUIDataFactory.swift */; };
+		7F8C8E9F250F31C300A58740 /* ContainerMapAndTitleNavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8C8E9E250F31C300A58740 /* ContainerMapAndTitleNavigationViewModel.swift */; };
+		7F8C8EA1250F696900A58740 /* HandlerCheckIfAllFieldIsValidAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8C8EA0250F696900A58740 /* HandlerCheckIfAllFieldIsValidAction.swift */; };
 		7F95178A24F34B9A00BAE845 /* HandlerSelectElementOnListAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F95178924F34B9A00BAE845 /* HandlerSelectElementOnListAction.swift */; };
 		7F95178C24F354A300BAE845 /* HandleAddDoseFumierAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F95178B24F354A300BAE845 /* HandleAddDoseFumierAction.swift */; };
 		7FAA414224FC6FAE00FEC2AD /* FieldService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FAA414124FC6FAE00FEC2AD /* FieldService.swift */; };
@@ -83,7 +91,6 @@
 		7FEF13C724F72C460034B96C /* HandlerCloseSelectFormWithoutSaveAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEF13C624F72C460034B96C /* HandlerCloseSelectFormWithoutSaveAction.swift */; };
 		7FEF13C924F73FB30034B96C /* HandlerCheckIfFormIsDirtyAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEF13C824F73FB30034B96C /* HandlerCheckIfFormIsDirtyAction.swift */; };
 		7FF7F13324E6170300F99A3D /* HandlerCheckIfAllInputElementIsValidAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF7F13224E6170300F99A3D /* HandlerCheckIfAllInputElementIsValidAction.swift */; };
-		9805683423B92DD40056D199 /* FarmerFormated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9805683323B92DD40056D199 /* FarmerFormated.swift */; };
 		9805683823B954630056D199 /* ProducerListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9805683723B954630056D199 /* ProducerListViewModel.swift */; };
 		980ECA142430261700AAD0AB /* SelectFormCulturalPracticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980ECA132430261700AAD0AB /* SelectFormCulturalPracticeView.swift */; };
 		980ECA162430286D00AAD0AB /* HeaderPresentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980ECA152430286D00AAD0AB /* HeaderPresentedView.swift */; };
@@ -174,7 +181,6 @@
 		98B9991223B5076400CA7EF9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98B9991123B5076400CA7EF9 /* Assets.xcassets */; };
 		98B9991523B5076400CA7EF9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98B9991323B5076400CA7EF9 /* LaunchScreen.storyboard */; };
 		98B9991D23B50ACC00CA7EF9 /* ProducerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B9991C23B50ACC00CA7EF9 /* ProducerListViewController.swift */; };
-		98B9992223B50B6000CA7EF9 /* Farmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B9992123B50B6000CA7EF9 /* Farmer.swift */; };
 		98B9992423B50E0800CA7EF9 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B9992323B50E0800CA7EF9 /* Section.swift */; };
 		98BA0D7B240CDC2800948A26 /* ContainerTitleNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BA0D7A240CDC2800948A26 /* ContainerTitleNavigationViewController.swift */; };
 		98BA0D7D240CDDD000948A26 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BA0D7C240CDDD000948A26 /* UIViewControllerExtension.swift */; };
@@ -192,8 +198,6 @@
 		98D1929723C020ED00BF9A7A /* ProducerListInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D1929623C020ED00BF9A7A /* ProducerListInteraction.swift */; };
 		98D1929923C0212C00BF9A7A /* ActionDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D1929823C0212C00BF9A7A /* ActionDispatcher.swift */; };
 		98D1929B23C034A600BF9A7A /* ProducerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D1929A23C034A600BF9A7A /* ProducerViewCell.swift */; };
-		98D1929E23C03CF900BF9A7A /* FarmerMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D1929D23C03CF900BF9A7A /* FarmerMiddleware.swift */; };
-		98D192A023C03E0800BF9A7A /* GetFarmersMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D1929F23C03E0800BF9A7A /* GetFarmersMiddleware.swift */; };
 		98D4628924AEDC4B00DD53BD /* InputFormCulturalPracticeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D4628824AEDC4B00DD53BD /* InputFormCulturalPracticeState.swift */; };
 		98D4628B24AEDF2C00DD53BD /* InputFormCulturalPracticeFormReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D4628A24AEDF2C00DD53BD /* InputFormCulturalPracticeFormReducer.swift */; };
 		98DB0F4B242866C50065963B /* SubtitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DB0F4A242866C50065963B /* SubtitleTableViewCell.swift */; };
@@ -290,6 +294,14 @@
 		7F8AD78A24E9CA6E00C56282 /* HandlerRemoveNimInputElementAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerRemoveNimInputElementAction.swift; sourceTree = "<group>"; };
 		7F8AD78D24EA0E7B00C56282 /* ProducerElementUIDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProducerElementUIDataFactory.swift; sourceTree = "<group>"; };
 		7F8BFA452505BF5D00A23BB3 /* ProducerListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProducerListView.swift; sourceTree = "<group>"; };
+		7F8C8E8D250F171900A58740 /* ContainerMapAndTitleNavigationAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerMapAndTitleNavigationAction.swift; sourceTree = "<group>"; };
+		7F8C8E90250F184900A58740 /* ContainerMapAndTitleNavigationReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerMapAndTitleNavigationReducer.swift; sourceTree = "<group>"; };
+		7F8C8E92250F18E900A58740 /* ContainerMapAndTitleNavigationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerMapAndTitleNavigationState.swift; sourceTree = "<group>"; };
+		7F8C8E95250F1C1800A58740 /* ContainerMapAndTitleNavigationMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerMapAndTitleNavigationMiddleware.swift; sourceTree = "<group>"; };
+		7F8C8E97250F1E3600A58740 /* ContainerMapAndTitleNavigationInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerMapAndTitleNavigationInteraction.swift; sourceTree = "<group>"; };
+		7F8C8E9C250F30D400A58740 /* ContainerMapAndTitleNavigationMakeElementUIDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerMapAndTitleNavigationMakeElementUIDataFactory.swift; sourceTree = "<group>"; };
+		7F8C8E9E250F31C300A58740 /* ContainerMapAndTitleNavigationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerMapAndTitleNavigationViewModel.swift; sourceTree = "<group>"; };
+		7F8C8EA0250F696900A58740 /* HandlerCheckIfAllFieldIsValidAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerCheckIfAllFieldIsValidAction.swift; sourceTree = "<group>"; };
 		7F95178924F34B9A00BAE845 /* HandlerSelectElementOnListAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerSelectElementOnListAction.swift; sourceTree = "<group>"; };
 		7F95178B24F354A300BAE845 /* HandleAddDoseFumierAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleAddDoseFumierAction.swift; sourceTree = "<group>"; };
 		7FAA414124FC6FAE00FEC2AD /* FieldService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldService.swift; sourceTree = "<group>"; };
@@ -316,7 +328,6 @@
 		7FEF13C824F73FB30034B96C /* HandlerCheckIfFormIsDirtyAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerCheckIfFormIsDirtyAction.swift; sourceTree = "<group>"; };
 		7FF7F13224E6170300F99A3D /* HandlerCheckIfAllInputElementIsValidAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerCheckIfAllInputElementIsValidAction.swift; sourceTree = "<group>"; };
 		825DECEC2C742A323721D8B0 /* Pods_prototypeGeoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_prototypeGeoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9805683323B92DD40056D199 /* FarmerFormated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FarmerFormated.swift; sourceTree = "<group>"; };
 		9805683723B954630056D199 /* ProducerListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProducerListViewModel.swift; sourceTree = "<group>"; };
 		980ECA132430261700AAD0AB /* SelectFormCulturalPracticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFormCulturalPracticeView.swift; sourceTree = "<group>"; };
 		980ECA152430286D00AAD0AB /* HeaderPresentedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderPresentedView.swift; sourceTree = "<group>"; };
@@ -428,7 +439,6 @@
 		98B9991423B5076400CA7EF9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		98B9991623B5076400CA7EF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		98B9991C23B50ACC00CA7EF9 /* ProducerListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProducerListViewController.swift; sourceTree = "<group>"; };
-		98B9992123B50B6000CA7EF9 /* Farmer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Farmer.swift; sourceTree = "<group>"; };
 		98B9992323B50E0800CA7EF9 /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		98BA0D7A240CDC2800948A26 /* ContainerTitleNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerTitleNavigationViewController.swift; sourceTree = "<group>"; };
 		98BA0D7C240CDDD000948A26 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
@@ -446,8 +456,6 @@
 		98D1929623C020ED00BF9A7A /* ProducerListInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProducerListInteraction.swift; sourceTree = "<group>"; };
 		98D1929823C0212C00BF9A7A /* ActionDispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionDispatcher.swift; sourceTree = "<group>"; };
 		98D1929A23C034A600BF9A7A /* ProducerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProducerViewCell.swift; sourceTree = "<group>"; };
-		98D1929D23C03CF900BF9A7A /* FarmerMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FarmerMiddleware.swift; sourceTree = "<group>"; };
-		98D1929F23C03E0800BF9A7A /* GetFarmersMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFarmersMiddleware.swift; sourceTree = "<group>"; };
 		98D4628824AEDC4B00DD53BD /* InputFormCulturalPracticeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFormCulturalPracticeState.swift; sourceTree = "<group>"; };
 		98D4628A24AEDF2C00DD53BD /* InputFormCulturalPracticeFormReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFormCulturalPracticeFormReducer.swift; sourceTree = "<group>"; };
 		98DB0F4A242866C50065963B /* SubtitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleTableViewCell.swift; sourceTree = "<group>"; };
@@ -530,6 +538,7 @@
 				7F5B76BD24F1A26F00392605 /* CulturalPracticeFactory */,
 				7F3091F024EF2C7E00FA2269 /* FieldDetailsFactory */,
 				7F8AD78C24EA0C9F00C56282 /* AddProducerFormFactory */,
+				7F8C8E9B250F304200A58740 /* ContainerMapAndTitleNavigationFactory */,
 			);
 			path = factories;
 			sourceTree = "<group>";
@@ -644,6 +653,30 @@
 				9860400923BD8BC800D5B538 /* ProducerListReducer.swift */,
 			);
 			path = ProducerListReducer;
+			sourceTree = "<group>";
+		};
+		7F8C8E8F250F181600A58740 /* ContainerMapAndTitleNavigationReducer */ = {
+			isa = PBXGroup;
+			children = (
+				7F8C8E90250F184900A58740 /* ContainerMapAndTitleNavigationReducer.swift */,
+			);
+			path = ContainerMapAndTitleNavigationReducer;
+			sourceTree = "<group>";
+		};
+		7F8C8E94250F1B5500A58740 /* ContainerMapAndTitleNavigationMiddleware */ = {
+			isa = PBXGroup;
+			children = (
+				7F8C8E95250F1C1800A58740 /* ContainerMapAndTitleNavigationMiddleware.swift */,
+			);
+			path = ContainerMapAndTitleNavigationMiddleware;
+			sourceTree = "<group>";
+		};
+		7F8C8E9B250F304200A58740 /* ContainerMapAndTitleNavigationFactory */ = {
+			isa = PBXGroup;
+			children = (
+				7F8C8E9C250F30D400A58740 /* ContainerMapAndTitleNavigationMakeElementUIDataFactory.swift */,
+			);
+			path = ContainerMapAndTitleNavigationFactory;
 			sourceTree = "<group>";
 		};
 		7F95178D24F36E3100BAE845 /* InputFormCulturalPracticeFormReducer */ = {
@@ -852,7 +885,6 @@
 				98603FFE23BD854400D5B538 /* store */,
 				98B9992523B50E2C00CA7EF9 /* libs */,
 				98304AD223EE185900510FFE /* Calcul */,
-				98B9991E23B50AF100CA7EF9 /* Farmer */,
 				7FEC759F2502FF5600357CF1 /* Authentication */,
 				9830047524AC291E00CDF624 /* Producer */,
 			);
@@ -871,12 +903,12 @@
 			isa = PBXGroup;
 			children = (
 				98363B2C23DECA3F00AFFC63 /* MapFieldViewController.swift */,
-				9854BFE0240A1C3C00E5AB8A /* ContainerMapAndTitleNavigationController.swift */,
 				98BA0D7A240CDC2800948A26 /* ContainerTitleNavigationViewController.swift */,
 				9854BFD42408F53400E5AB8A /* FieldListViewController.swift */,
 				9810DA41242F0FCA00545A23 /* SelectFormCulturalPracticeViewController.swift */,
 				98457B652423E5FA00AF4C90 /* CulturalPracticeFormViewController.swift */,
 				98B9991C23B50ACC00CA7EF9 /* ProducerListViewController.swift */,
+				9854BFE0240A1C3C00E5AB8A /* ContainerMapAndTitleNavigationController.swift */,
 			);
 			path = viewControllers;
 			sourceTree = "<group>";
@@ -893,6 +925,7 @@
 				98CB79D424B82B3D00EFFF19 /* ContainerFormCulturalPracticeViewModel.swift */,
 				9854BFF8240B901A00E5AB8A /* CulturalPracticeFormViewModel.swift */,
 				9805683723B954630056D199 /* ProducerListViewModel.swift */,
+				7F8C8E9E250F31C300A58740 /* ContainerMapAndTitleNavigationViewModel.swift */,
 			);
 			path = viewModels;
 			sourceTree = "<group>";
@@ -908,6 +941,7 @@
 				7F5E1F5424F6137600B3762D /* SelectFormCulturalPracticeInterraction.swift */,
 				7F63514624F8994500EFD229 /* ContainerFormCulturalPracticeInteraction.swift */,
 				98D1929623C020ED00BF9A7A /* ProducerListInteraction.swift */,
+				7F8C8E97250F1E3600A58740 /* ContainerMapAndTitleNavigationInteraction.swift */,
 			);
 			path = interactions;
 			sourceTree = "<group>";
@@ -924,6 +958,7 @@
 				98CB79CE24B817EA00EFFF19 /* ContainerFormCulturalPracticeAction.swift */,
 				9810DA49242F184A00545A23 /* CulturalPracticeFormAction.swift */,
 				98D1928F23BFFF7C00BF9A7A /* ProducerListAction.swift */,
+				7F8C8E8D250F171900A58740 /* ContainerMapAndTitleNavigationAction.swift */,
 			);
 			path = actions;
 			sourceTree = "<group>";
@@ -931,6 +966,7 @@
 		98363B3423DECB2800AFFC63 /* reducers */ = {
 			isa = PBXGroup;
 			children = (
+				7F8C8E8F250F181600A58740 /* ContainerMapAndTitleNavigationReducer */,
 				7F8BFA442505BE4200A23BB3 /* ProducerListReducer */,
 				7F63514324F8846500EFD229 /* ContainerFormCulturalPracticeReducer */,
 				7F5E1F5124F6045D00B3762D /* SelectFormCulturalPracticeReducer */,
@@ -956,6 +992,7 @@
 				9854BFFA240B956400E5AB8A /* CulturalPracticeFormState.swift */,
 				9891610B24DC97B2005E1F7C /* AddProducerFormState.swift */,
 				9860400323BD868A00D5B538 /* ProducerListState.swift */,
+				7F8C8E92250F18E900A58740 /* ContainerMapAndTitleNavigationState.swift */,
 			);
 			path = states;
 			sourceTree = "<group>";
@@ -987,6 +1024,7 @@
 		98363B4F23DEEC4500AFFC63 /* middlewares */ = {
 			isa = PBXGroup;
 			children = (
+				7F8C8E94250F1B5500A58740 /* ContainerMapAndTitleNavigationMiddleware */,
 				98363B5023DEEC7A00AFFC63 /* mapFieldMiddleware.swift */,
 			);
 			path = middlewares;
@@ -1051,54 +1089,6 @@
 				9860401023BD9C1700D5B538 /* StoreSubscriptionExtension.swift */,
 			);
 			path = store;
-			sourceTree = "<group>";
-		};
-		9860400223BD864D00D5B538 /* states */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = states;
-			sourceTree = "<group>";
-		};
-		9860400723BD8A0400D5B538 /* reducers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = reducers;
-			sourceTree = "<group>";
-		};
-		9860400823BD8A1100D5B538 /* stores */ = {
-			isa = PBXGroup;
-			children = (
-				98B9992023B50B3000CA7EF9 /* models */,
-				98D1929C23C03CB000BF9A7A /* middlewares */,
-				98D1929323C01FDF00BF9A7A /* interactions */,
-				9860400D23BD953000D5B538 /* actions */,
-				9860400723BD8A0400D5B538 /* reducers */,
-				9860400223BD864D00D5B538 /* states */,
-			);
-			path = stores;
-			sourceTree = "<group>";
-		};
-		9860400D23BD953000D5B538 /* actions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = actions;
-			sourceTree = "<group>";
-		};
-		987820D123C5A20D0086ED75 /* viewModels */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = viewModels;
-			sourceTree = "<group>";
-		};
-		987820D223C5A22C0086ED75 /* views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = views;
 			sourceTree = "<group>";
 		};
 		989090A224C03D3D00AFC080 /* Container */ = {
@@ -1202,33 +1192,6 @@
 			path = AgroApp;
 			sourceTree = "<group>";
 		};
-		98B9991E23B50AF100CA7EF9 /* Farmer */ = {
-			isa = PBXGroup;
-			children = (
-				987820D223C5A22C0086ED75 /* views */,
-				987820D123C5A20D0086ED75 /* viewModels */,
-				9860400823BD8A1100D5B538 /* stores */,
-				98B9991F23B50B1B00CA7EF9 /* viewControllers */,
-			);
-			path = Farmer;
-			sourceTree = "<group>";
-		};
-		98B9991F23B50B1B00CA7EF9 /* viewControllers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = viewControllers;
-			sourceTree = "<group>";
-		};
-		98B9992023B50B3000CA7EF9 /* models */ = {
-			isa = PBXGroup;
-			children = (
-				98B9992123B50B6000CA7EF9 /* Farmer.swift */,
-				9805683323B92DD40056D199 /* FarmerFormated.swift */,
-			);
-			path = models;
-			sourceTree = "<group>";
-		};
 		98B9992523B50E2C00CA7EF9 /* libs */ = {
 			isa = PBXGroup;
 			children = (
@@ -1264,24 +1227,9 @@
 				986E1C8724D5E0C900EDB1DE /* HandlerRemoveFieldAction.swift */,
 				9891610024D9FEF5005E1F7C /* HandlerDidSelectedFieldOnMapAction.swift */,
 				7F1E4A0E24FE619A0041A1F2 /* HandlerInitNimSelectValueAction.swift */,
+				7F8C8EA0250F696900A58740 /* HandlerCheckIfAllFieldIsValidAction.swift */,
 			);
 			path = FieldListReducer;
-			sourceTree = "<group>";
-		};
-		98D1929323C01FDF00BF9A7A /* interactions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = interactions;
-			sourceTree = "<group>";
-		};
-		98D1929C23C03CB000BF9A7A /* middlewares */ = {
-			isa = PBXGroup;
-			children = (
-				98D1929D23C03CF900BF9A7A /* FarmerMiddleware.swift */,
-				98D1929F23C03E0800BF9A7A /* GetFarmersMiddleware.swift */,
-			);
-			path = middlewares;
 			sourceTree = "<group>";
 		};
 		98DFE6FA24AC0157007CC832 /* Presentation Layer */ = {
@@ -1603,7 +1551,6 @@
 				9891610724DC93CF005E1F7C /* AddProducerFormAction.swift in Sources */,
 				98F126A824C715EC001853D5 /* TravailSol.swift in Sources */,
 				7F65187C24F36E92003CA9E6 /* HandlerCloseInputFormWithSaveAction.swift in Sources */,
-				98D1929E23C03CF900BF9A7A /* FarmerMiddleware.swift in Sources */,
 				980ECA162430286D00AAD0AB /* HeaderPresentedView.swift in Sources */,
 				9810DA4C242F1EEE00545A23 /* SelectFormCulturalPracticeReducer.swift in Sources */,
 				7F274D44250711AA00826719 /* Login.swift in Sources */,
@@ -1649,6 +1596,7 @@
 				98B9991023B5076000CA7EF9 /* prototypeGeo.xcdatamodeld in Sources */,
 				7F8BFA462505BF5D00A23BB3 /* ProducerListView.swift in Sources */,
 				989090A624C05A4000AFC080 /* ContainerTitleNavigationState.swift in Sources */,
+				7F8C8E91250F184900A58740 /* ContainerMapAndTitleNavigationReducer.swift in Sources */,
 				9891610E24DCA0E9005E1F7C /* AddProducerFormInteraction.swift in Sources */,
 				98D1929723C020ED00BF9A7A /* ProducerListInteraction.swift in Sources */,
 				9860400023BD855F00D5B538 /* AppState.swift in Sources */,
@@ -1657,10 +1605,10 @@
 				98363B3E23DED25A00AFFC63 /* Field.swift in Sources */,
 				9854BFD72408F5F700E5AB8A /* TitleView.swift in Sources */,
 				98D4628B24AEDF2C00DD53BD /* InputFormCulturalPracticeFormReducer.swift in Sources */,
-				98B9992223B50B6000CA7EF9 /* Farmer.swift in Sources */,
 				9854BFE3240A1D6200E5AB8A /* FieldListViewModel.swift in Sources */,
 				7FAA414424FC701300FEC2AD /* FieldMakeSectionByFieldFactory.swift in Sources */,
 				9854BFDF2409047C00E5AB8A /* FieldListView.swift in Sources */,
+				7F8C8E96250F1C1800A58740 /* ContainerMapAndTitleNavigationMiddleware.swift in Sources */,
 				7F274D512507147C00826719 /* SelectValueInit.swift in Sources */,
 				7F274D57250722F300826719 /* LoginMakeElementUIdataListFactory.swift in Sources */,
 				9854BFF9240B901A00E5AB8A /* CulturalPracticeFormViewModel.swift in Sources */,
@@ -1673,6 +1621,7 @@
 				98F1269E24C6F029001853D5 /* Avaloir.swift in Sources */,
 				7F34F01D24E76FF7001278CA /* AddProducerFormService.swift in Sources */,
 				7F274D472507131000826719 /* EmailInputValue.swift in Sources */,
+				7F8C8EA1250F696900A58740 /* HandlerCheckIfAllFieldIsValidAction.swift in Sources */,
 				9847564524AED2FC0048A503 /* InputFormCulturalPracticeView.swift in Sources */,
 				7F1E4A0D24FE1B320041A1F2 /* ProducerService.swift in Sources */,
 				7F63514724F8994500EFD229 /* ContainerFormCulturalPracticeInteraction.swift in Sources */,
@@ -1690,17 +1639,19 @@
 				7F3091F224EF2CC400FA2269 /* FieldDetailsFactory.swift in Sources */,
 				98F126A624C712CB001853D5 /* DelaiIncorporationFumier.swift in Sources */,
 				98DC7B5824E0667F00A898B6 /* HandlerGetListElementUIDataWihoutValue.swift in Sources */,
+				7F8C8E98250F1E3600A58740 /* ContainerMapAndTitleNavigationInteraction.swift in Sources */,
 				7F6546B224EDC8220040F30E /* FieldDetailsTableViewHeader.swift in Sources */,
 				7F274D532507149F00826719 /* SelectValue.swift in Sources */,
 				9891610324DC8C3D005E1F7C /* AddProducerFormView.swift in Sources */,
 				98363B4823DEE34F00AFFC63 /* MapFieldRepository.swift in Sources */,
 				7F1E49FC24FDBD6F0041A1F2 /* ProducerMakeElementUIDataListFactory.swift in Sources */,
-				9805683423B92DD40056D199 /* FarmerFormated.swift in Sources */,
 				9860401123BD9C1700D5B538 /* StoreSubscriptionExtension.swift in Sources */,
+				7F8C8E8E250F171900A58740 /* ContainerMapAndTitleNavigationAction.swift in Sources */,
 				7FD0BD5224E87C6800EB86A3 /* Enterprise.swift in Sources */,
 				7F5E1F4C24F59CAA00B3762D /* InputFormCulturalPracticeInteraction.swift in Sources */,
 				9854BFE1240A1C3C00E5AB8A /* ContainerMapAndTitleNavigationController.swift in Sources */,
 				98D1929923C0212C00BF9A7A /* ActionDispatcher.swift in Sources */,
+				7F8C8E9D250F30D400A58740 /* ContainerMapAndTitleNavigationMakeElementUIDataFactory.swift in Sources */,
 				98F126B824C8F056001853D5 /* PMehlich3.swift in Sources */,
 				98F126B424C8EFFB001853D5 /* TauxApplicationPhosphoreRang.swift in Sources */,
 				7FAA415124FCE58A00FEC2AD /* HandlerShowCulturalPracticeDataSectionListAction.swift in Sources */,
@@ -1746,17 +1697,18 @@
 				98C77E7324B024AF00AA6423 /* UIButtonRepresentable.swift in Sources */,
 				98F126A224C70795001853D5 /* DoseFumier.swift in Sources */,
 				7FD4636F24EB5BC800E6824B /* HelperAddProducerFormReducerHandler.swift in Sources */,
+				7F8C8E9F250F31C300A58740 /* ContainerMapAndTitleNavigationViewModel.swift in Sources */,
 				98F126AC24C71D98001853D5 /* DrainageSouterrain.swift in Sources */,
 				98457BAA2427353B00AF4C90 /* CulturalPractice.swift in Sources */,
 				7F5B76C324F1A61400392605 /* CulturalPracticeService.swift in Sources */,
 				98363B3023DECA9F00AFFC63 /* MapFieldViewModel.swift in Sources */,
+				7F8C8E93250F18E900A58740 /* ContainerMapAndTitleNavigationState.swift in Sources */,
 				7F1E4A0324FDEF840041A1F2 /* ProducerMakeByElementUIData.swift in Sources */,
 				98D1929023BFFF7C00BF9A7A /* ProducerListAction.swift in Sources */,
 				9847564724AED9FC0048A503 /* InputFormCulturalPracticeViewModel.swift in Sources */,
 				7FBEF40324F8C5C600716014 /* HandlerCheckIfFormIsDirtyAndValidAction.swift in Sources */,
 				98B9990823B5076000CA7EF9 /* SceneDelegate.swift in Sources */,
 				7FEF13C724F72C460034B96C /* HandlerCloseSelectFormWithoutSaveAction.swift in Sources */,
-				98D192A023C03E0800BF9A7A /* GetFarmersMiddleware.swift in Sources */,
 				98363B4C23DEE57A00AFFC63 /* MapFieldService.swift in Sources */,
 				98F126BC24C8F09F001853D5 /* CultureAnneeEnCoursAnterieure.swift in Sources */,
 				7FD0BD5024E87A2E00EB86A3 /* Producer.swift in Sources */,

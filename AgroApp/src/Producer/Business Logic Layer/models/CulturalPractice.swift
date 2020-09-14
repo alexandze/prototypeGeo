@@ -36,6 +36,34 @@ struct CulturalPractice {
     init(id: Int? = nil) {
         self.id = id
     }
+    
+    func isValid() -> Bool {
+        id != nil &&
+        avaloir != nil &&
+        bandeRiveraine != nil &&
+        travailSol != nil &&
+        couvertureAssociee != nil &&
+        couvertureDerobee != nil &&
+        drainageSouterrain != nil &&
+        drainageSurface != nil &&
+        conditionProfilCultural != nil &&
+        tauxApplicationPhosphoreRang != nil &&
+        tauxApplicationPhosphoreVolee != nil &&
+        pMehlich3 != nil &&
+        alMehlich3 != nil &&
+        cultureAnneeEnCoursAnterieure != nil &&
+        isDoseFumierValid()
+    }
+    
+    private func isDoseFumierValid() -> Bool {
+        let doseFumierCount = doseFumier?.count
+        let periodeApplicationFumierCount = periodeApplicationFumier?.count
+        let delaiIncorporationFumierCount = delaiIncorporationFumier?.count
+        
+        return doseFumierCount == periodeApplicationFumierCount &&
+        doseFumierCount == delaiIncorporationFumierCount &&
+        periodeApplicationFumierCount == delaiIncorporationFumierCount
+    }
 }
 
 extension CulturalPractice: Codable {

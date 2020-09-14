@@ -22,4 +22,18 @@ struct Field {
         copyField.culturalPratice = culturalPractice
         return copyField
     }
+    
+    func isValid() -> Bool {
+        isNimValid() &&
+        isIdPleinTerreValid()
+    }
+    
+    private func isNimValid() -> Bool {
+        nim?.getIndexValueSelected() != nil
+    }
+    
+    private func isIdPleinTerreValid() -> Bool {
+        let count = idPleinTerre?.value.count
+        return count != nil && count! > 0
+    }
 }

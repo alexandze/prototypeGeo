@@ -65,7 +65,7 @@ struct LoginView: View {
                 if !self.isKeyboardVisible() {
                     ButtonValidate(title: "Connexion", isButtonActivated: true) {
                         self.loginViewModel.handleConnexionButton()
-                    }
+                    }.padding(.bottom, 5)
                 }
                 
             }.onAppear {
@@ -112,18 +112,11 @@ private struct InputWithTitleElement: View {
             
             HStack {
                 ZStack {
-                    TextField(
-                        "",
-                        text: $inputElement.value
-                    )//.keyboardType(self.inputElement.keyboardType.getUIKeyboardType())
-                        .padding(
-                            EdgeInsets(top: 8, leading: 10, bottom: 8, trailing: 50)
-                    ).background(colorScheme == .dark ? Color.black : Color.white)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 5)
-                                .stroke(lineWidth: 2)
-                                .foregroundColor(self.getForegroundColorOfRoundedRectangle())
-                    )
+                    if self.isTitleValuePassword() {
+                        self.getPasswordTextField()
+                    } else {
+                        self.getNormalTextField()
+                    }
                     
                     HStack {
                         Spacer()
@@ -151,6 +144,40 @@ private struct InputWithTitleElement: View {
         self.inputElement.isValid
             ? .green
             : .red
+    }
+    
+    private func isTitleValuePassword() -> Bool {
+        inputElement.typeValue == "password"
+    }
+    
+    private func getPasswordTextField() -> some View {
+        SecureField(
+            "",
+            text: $inputElement.value
+        )//.keyboardType(self.inputElement.keyboardType.getUIKeyboardType())
+            .padding(
+                EdgeInsets(top: 8, leading: 10, bottom: 8, trailing: 50)
+        ).background(colorScheme == .dark ? Color.black : Color.white)
+            .overlay(
+                RoundedRectangle(cornerRadius: 5)
+                    .stroke(lineWidth: 2)
+                    .foregroundColor(self.getForegroundColorOfRoundedRectangle())
+        )
+    }
+    
+    private func getNormalTextField() -> some View {
+        TextField(
+            "",
+            text: $inputElement.value
+        )//.keyboardType(self.inputElement.keyboardType.getUIKeyboardType())
+            .padding(
+                EdgeInsets(top: 8, leading: 10, bottom: 8, trailing: 50)
+        ).background(colorScheme == .dark ? Color.black : Color.white)
+            .overlay(
+                RoundedRectangle(cornerRadius: 5)
+                    .stroke(lineWidth: 2)
+                    .foregroundColor(self.getForegroundColorOfRoundedRectangle())
+        )
     }
 }
 

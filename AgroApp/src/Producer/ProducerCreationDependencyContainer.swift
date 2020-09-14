@@ -319,7 +319,7 @@ class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContain
         let producerNavigation = UINavigationController(rootViewController: producerListViewController)
         
         producerListViewController.tabBarItem = UITabBarItem(
-            title: "Producteur",
+            title: "Producteurs",
             image: UIImage(systemName: "person.2.square.stack"),
             tag: 1
         )
@@ -340,7 +340,7 @@ class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContain
         return navController
     }
 
-    // MARK: - Methods process
+    // MARK: - ContainerMapAndTitleNavigationController
 
     func processInitMapField() -> UINavigationController {
         makeMapFieldNavigationController()
@@ -350,10 +350,30 @@ class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContain
         makeNavigationController()
     }
 
-    func processInitContainerMapAndTitleNavigationController() -> ContainerMapAndTitleNavigationController {
+    func makeContainerMapAndTitleNavigationController() -> ContainerMapAndTitleNavigationController {
         ContainerMapAndTitleNavigationController(
             mapFieldViewController: makeMapFieldViewController(),
-            containerTitleNavigationViewController: makeContainerTitleNavigationViewController()
+            containerTitleNavigationViewController: makeContainerTitleNavigationViewController(),
+            containerMapAndTitleNavigationViewModel: makeContainerMapAndTitleNavigationViewModel()
+        )
+    }
+    
+    func makeContainerMapAndTitleNavigationInteraction() -> ContainerMapAndTitleNavigationInteraction {
+        ContainerMapAndTitleNavigationInteractionImpl(actionDispatcher: stateStore)
+    }
+    
+    func makeContainerMapAndTitleNavigationStateObservable() -> Observable<ContainerMapAndTitleNavigationState> {
+        self.stateStore.makeObservable { (subscription: Subscription<AppState>) -> Subscription<ContainerMapAndTitleNavigationState> in
+            subscription
+                .select { $0.containerMapAndTitleNavigationState }
+                .skip {$0 == $1}
+        }.subscribeOn(Util.getSchedulerBackgroundForReSwift())
+    }
+    
+    func makeContainerMapAndTitleNavigationViewModel() -> ContainerMapAndTitleNavigationViewModel {
+        ContainerMapAndTitleNavigationViewModelImpl(
+            stateObservable: makeContainerMapAndTitleNavigationStateObservable(),
+            interaction: makeContainerMapAndTitleNavigationInteraction()
         )
     }
 }
@@ -363,7 +383,7 @@ protocol ProducerCreationDependencyContainer {
     func makeNavigationController() -> UINavigationController
     func makeCulturalPracticeFormViewController() -> CulturalPracticeFormViewController
     func makeFieldListViewController() -> FieldListViewController
-    func processInitContainerMapAndTitleNavigationController() -> ContainerMapAndTitleNavigationController
+    func makeContainerMapAndTitleNavigationController() -> ContainerMapAndTitleNavigationController
     func processInitMapField() -> UINavigationController
     func makeSelectFormCulturalPracticeViewController() -> SelectFormCulturalPracticeViewController
     func makeInputFormCulturalPracticeHostingController() -> SettingViewController<InputFormCulturalPracticeView>

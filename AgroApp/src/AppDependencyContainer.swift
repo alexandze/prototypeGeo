@@ -25,11 +25,10 @@ class AppDependencyContainerImpl: AppDependencyContainer {
                 containerFormCulturalPracticeState: ContainerFormCulturalPracticeState(uuidState: UUID().uuidString),
                 containerTitleNavigationState: ContainerTitleNavigationState(uuidState: UUID().uuidString),
                 addProducerFormState: AddProducerFormState(uuidState: UUID().uuidString),
-                loginState: LoginState(uuidState: UUID().uuidString)
+                loginState: LoginState(uuidState: UUID().uuidString),
+                containerMapAndTitleNavigationState: ContainerMapAndTitleNavigationState(uuidState: UUID().uuidString)
             ),
-            middleware: [
-                FarmerMiddleware.shared.makeGetFarmersMiddleware()
-            ],
+            middleware: [ContainerMapAndTitleNavigationMiddleware().middleware],
             automaticallySkipsRepeats: true
         )
     }()
@@ -58,28 +57,28 @@ class AppDependencyContainerImpl: AppDependencyContainer {
         )
         
         let makeScenarionFakeController = FakeViewController(title: "Créer Scénario")
-        makeScenarionFakeController.title = "Créer Scénario"
+        makeScenarionFakeController.title = "Scénario"
         
         makeScenarionFakeController.tabBarItem = UITabBarItem(
-            title: "Créer Scénario",
+            title: "Scénario",
             image: UIImage(systemName: "slider.horizontal.3"),
             tag: 2
         )
         
         let executeScenarionFakeController = FakeViewController(title: "Exécuter Scénario")
-        executeScenarionFakeController.title = "Exécuter Scénario"
+        executeScenarionFakeController.title = "Exécuter"
         
         executeScenarionFakeController.tabBarItem = UITabBarItem(
-            title: "Exécuter Scénario",
+            title: "Exécuter",
             image: UIImage(systemName: "play"),
             tag: 3
         )
         
         tabBarController.viewControllers = [
-            UINavigationController(rootViewController: profileFakeController),
             producerNavigation,
             UINavigationController(rootViewController: makeScenarionFakeController),
-            UINavigationController(rootViewController: executeScenarionFakeController)
+            UINavigationController(rootViewController: executeScenarionFakeController),
+            UINavigationController(rootViewController: profileFakeController)
         ]
     
         tabBarController.tabBar.tintColor = Util.getOppositeColorBlackOrWhite()
@@ -88,8 +87,8 @@ class AppDependencyContainerImpl: AppDependencyContainer {
 
     // MARK: - MapField Navigation
 
-    func processInitContainerMapAndTitleNavigationController() -> ContainerMapAndTitleNavigationController {
-        producerCreationDependencyContainer.processInitContainerMapAndTitleNavigationController()
+    func makeContainerMapAndTitleNavigationController() -> ContainerMapAndTitleNavigationController {
+        producerCreationDependencyContainer.makeContainerMapAndTitleNavigationController()
     }
 
     func processInitCulturalPracticeViewController() -> CulturalPracticeFormViewController {
@@ -122,7 +121,7 @@ protocol AppDependencyContainer {
     var authenticationDependencyContainer: AuthenticationDependencyContainer { get }
     func proccessInitTabBarController() -> UITabBarController
 
-    func processInitContainerMapAndTitleNavigationController() -> ContainerMapAndTitleNavigationController
+    func makeContainerMapAndTitleNavigationController() -> ContainerMapAndTitleNavigationController
 
     func processInitCulturalPracticeViewController() -> CulturalPracticeFormViewController
 

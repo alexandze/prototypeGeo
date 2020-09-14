@@ -54,6 +54,8 @@ class FieldListViewModelImpl: FieldListViewModel {
                     self?.handleRemoveFieldResponse(indexPathFieldRemoved: indexPathRemoveField, fieldRemoved: fieldRemoved)
                 case .initNimSelectValueActionResponse:
                     print("initNimSelectValueActionResponse")
+                case .checkIfAllFieldIsValidActionResponse(isAllFieldValid: let isAllFieldValid):
+                    self?.handleCheckIfAllFieldIsValidActionResponse(isAllFieldValid)
                 case .notResponse:
                     break
                 }
@@ -100,6 +102,10 @@ extension FieldListViewModelImpl {
         default:
             break
         }
+    }
+    
+    private func handleCheckIfAllFieldIsValidActionResponse(_ isAllFieldValid: Bool) {
+        
     }
 
     private func handleIsAppearActionResponse() {
@@ -158,11 +164,7 @@ extension FieldListViewModelImpl {
     }
 
     private func handleUpdateFieldSuccess() {
-        /*
-        if fieldListState!.isAppear != nil && fieldListState!.isAppear == false {
-            tableView?.reloadData()
-        }
-        */
+        // TODO dispatch check if all Field is Valid
     }
 }
 

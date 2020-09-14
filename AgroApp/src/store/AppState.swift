@@ -20,4 +20,5 @@ struct AppState: StateType {
     var containerTitleNavigationState: ContainerTitleNavigationState
     var addProducerFormState: AddProducerFormState
     var loginState: LoginState
+    var containerMapAndTitleNavigationState: ContainerMapAndTitleNavigationState
 }

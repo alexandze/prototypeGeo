@@ -32,6 +32,9 @@ extension Reducers {
         case let initNimSelectValueAction as FieldListAction.InitNimSelectValueAction:
             return FieldListReducerHandler.HandlerInitNimSelectValueAction()
                 .handle(action: initNimSelectValueAction, state)
+        case let checkIfAllFieldIsValidAction as FieldListAction.CheckIfAllFieldIsValidAction:
+            return FieldListReducerHandler
+                .HandlerCheckIfAllFieldIsValidAction().handle(action: checkIfAllFieldIsValidAction, state)
         default:
             return state
         }

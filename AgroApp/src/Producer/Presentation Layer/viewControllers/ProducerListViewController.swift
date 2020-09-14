@@ -58,7 +58,7 @@ class ProducerListViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func initTitleNavigation() {
-        title = "Producteur"
+        title = "Producteurs"
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -94,7 +94,7 @@ class ProducerListViewController: UIViewController, UITableViewDelegate, UITable
             return
         }
         
-        navigationController?.pushViewController(appDependency.processInitContainerMapAndTitleNavigationController(), animated: true)
+        navigationController?.pushViewController(appDependency.makeContainerMapAndTitleNavigationController(), animated: true)
     }
     
     private func showNavigationAndTabBar() {
