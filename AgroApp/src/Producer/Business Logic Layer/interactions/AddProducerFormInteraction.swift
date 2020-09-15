@@ -95,6 +95,11 @@ class AddProducerFormInteractionImpl: AddProducerFormInteraction {
         let action = FieldListAction.InitNimSelectValueAction(nimSelectValue: nimSelectValue)
         Util.dispatchActionInSchedulerReSwift(action, actionDispatcher: actionDispatcher)
     }
+    
+    func hideValidateButtonOfContainerAction() {
+        let action = ContainerMapAndTitleNavigationAction.HideValidateButtonAction()
+        Util.dispatchActionInSchedulerReSwift(action, actionDispatcher: actionDispatcher)
+    }
 }
 
 protocol AddProducerFormInteraction {
@@ -108,4 +113,5 @@ protocol AddProducerFormInteraction {
     func validateFormAction()
     func notResponseAction()
     func initNimSelectValueAction(_ nimSelectValue: NimSelectValue)
+    func hideValidateButtonOfContainerAction()
 }

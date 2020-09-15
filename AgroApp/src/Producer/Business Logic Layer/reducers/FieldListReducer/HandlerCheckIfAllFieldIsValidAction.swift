@@ -19,17 +19,20 @@ extension FieldListReducerHandler {
             return (
                 checkIfAllFieldIsValidWrapper(util: ) >>>
                     newState(util:)
-            )(util) ?? state
+                )(util) ?? state
         }
         
         private func checkIfAllFieldIsValidWrapper(util: UtilHandlerCheckIfAllFieldIsValidAction?) -> UtilHandlerCheckIfAllFieldIsValidAction? {
-            guard var newUtil = util,
-                let fieldList = newUtil.state.fieldList
-            else {
+            guard var newUtil = util else {
                 return nil
             }
             
-            newUtil.isAllFieldValid = checkIfAllFieldIsValid(fieldList)
+            guard let fieldList = newUtil.state.fieldList, !fieldList.isEmpty else {
+                newUtil.isAllFieldValid = false
+                return newUtil
+            }
+            
+            newUtil.isAllFieldValid = isAllFieldValid(fieldList)
             return newUtil
         }
         
@@ -43,8 +46,14 @@ extension FieldListReducerHandler {
             )
         }
         
-        private func checkIfAllFieldIsValid(_ fieldList: [Field]) -> Bool {
-            fieldList.first { $0.isValid() && $0.culturalPratice != nil && $0.culturalPratice!.isValid() } != nil
+        private func isAllFieldValid(_ fieldList: [Field]) -> Bool {
+            fieldList.first { field in
+                let isValid = field.culturalPratice?.isValid() ?? false
+                
+                return !field.isValid() ||
+                    field.culturalPratice == nil ||
+                    !isValid
+                } == nil
         }
     }
     

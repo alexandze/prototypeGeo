@@ -14,8 +14,18 @@ extension Reducers {
         action: Action,
         state: ContainerMapAndTitleNavigationState?
     ) -> ContainerMapAndTitleNavigationState {
-        var state = state ?? ContainerMapAndTitleNavigationState(uuidState: UUID().uuidString)
-        return state
+        let state = state ?? ContainerMapAndTitleNavigationState(uuidState: UUID().uuidString)
+        
+        switch action {
+        case let hideValidateButtonAction as ContainerMapAndTitleNavigationAction.HideValidateButtonAction:
+            return ContainerMapAndTitleNavigationHandler
+                .HandlerHideValidateButtonAction().handle(action: hideValidateButtonAction, state)
+        case let showValidateButtonAction as ContainerMapAndTitleNavigationAction.ShowValidateButtonAction:
+            return ContainerMapAndTitleNavigationHandler
+                .HandlerShowValidateButtonAction().handle(action: showValidateButtonAction, state)
+        default:
+            return state
+        }
     }
 }
 

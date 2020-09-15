@@ -69,6 +69,7 @@ struct AddProducerFormView: View {
                     alignment: .top
                 ).onAppear {
                     self.viewModel.configView()
+                    self.viewModel.dispatchHideValidateButtonOfContainer()
                     self.viewModel.subscribeToStateObservable()
                 }
                 .onDisappear {

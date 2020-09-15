@@ -80,6 +80,10 @@ class AddProducerFormViewModelImpl: AddProducerFormViewModel {
         // self.viewController?.title = "Nouveau Agriculteur"
         // self.viewController?.navigationController?.navigationBar.prefersLargeTitles = true
     }
+    
+    func dispatchHideValidateButtonOfContainer() {
+        interaction.hideValidateButtonOfContainerAction()
+    }
 
     func dispose() {
         _ = Util.runInSchedulerBackground {
@@ -255,4 +259,5 @@ protocol AddProducerFormViewModel {
     func handleValidateButton()
     func handleAddNimButton()
     func handleRemoveNimButton(id: UUID)
+    func dispatchHideValidateButtonOfContainer()
 }

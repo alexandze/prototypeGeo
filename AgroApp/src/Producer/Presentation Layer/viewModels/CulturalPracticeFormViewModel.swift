@@ -90,6 +90,10 @@ class CulturalPraticeFormViewModelImpl: CulturalPraticeFormViewModel {
         }
     }
     
+    func dispatchHideValidateButtonOfContainer() {
+        culturalPraticeFormInteraction.hideValidateButtonOfContainerAction()
+    }
+    
     func getNumberOfSection() -> Int {
         self.state?.sections?.count ?? 0
     }
@@ -286,5 +290,6 @@ protocol CulturalPraticeFormViewModel {
     func handleAddDoseFumierButton()
     func handleRemoveDoseFumierButtonByIndexPath(_ indexPath: IndexPath, editingStyle: UITableViewCell.EditingStyle)
     func handleCanEditRowByIndexPath(_ indexPath: IndexPath) -> Bool
+    func dispatchHideValidateButtonOfContainer()
     
 }

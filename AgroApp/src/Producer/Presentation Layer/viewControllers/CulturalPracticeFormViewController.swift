@@ -43,7 +43,7 @@ public class CulturalPracticeFormViewController: UIViewController, UITableViewDe
 
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        culturalPraticeViewModel.dispatchHideValidateButtonOfContainer()
         culturalPraticeFormView.initFieldButton { [weak self] in self?.culturalPraticeViewModel.handleFieldButton() }
         culturalPraticeFormView.initCulturalPracticeButton { [weak self] in self?.culturalPraticeViewModel.handleCulturalPracticeButton() }
         culturalPraticeViewModel.reloadTableView = {[weak self] in self?.tableView.reloadData() }

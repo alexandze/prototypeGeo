@@ -94,6 +94,11 @@ class CulturalPraticeFormInteractionImpl: CulturalPraticeFormInteraction {
         let action = CulturalPracticeFormAction.ShowCulturalPracticeDataSectionListAction()
         Util.dispatchActionInSchedulerReSwift(action, actionDispatcher: actionDispatcher)
     }
+    
+    func hideValidateButtonOfContainerAction() {
+        let action = ContainerMapAndTitleNavigationAction.HideValidateButtonAction()
+        Util.dispatchActionInSchedulerReSwift(action, actionDispatcher: actionDispatcher)
+    }
 }
 
 protocol CulturalPraticeFormInteraction {
@@ -121,5 +126,6 @@ protocol CulturalPraticeFormInteraction {
     func updateFieldAction(field: Field)
     func showFieldDataSectionListAction()
     func showCulturalPracticeDataSectionListAction()
+    func hideValidateButtonOfContainerAction()
     
 }

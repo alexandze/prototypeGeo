@@ -44,6 +44,7 @@ public class FieldListViewController: UIViewController, UITableViewDelegate, UIT
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fieldListViewModel.subscribeToObservableFieldListState()
+        fieldListViewModel.dispatchCheckIfAllFieldIsValid()
     }
 
     public override func viewWillDisappear(_ animated: Bool) {

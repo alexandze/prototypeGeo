@@ -74,6 +74,8 @@
 		7FAA414A24FC7FE500FEC2AD /* FieldMakeFieldUpdateBySectionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FAA414924FC7FE500FEC2AD /* FieldMakeFieldUpdateBySectionFactory.swift */; };
 		7FAA414F24FCDD5500FEC2AD /* HandlerShowFieldDataSectionListAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FAA414E24FCDD5500FEC2AD /* HandlerShowFieldDataSectionListAction.swift */; };
 		7FAA415124FCE58A00FEC2AD /* HandlerShowCulturalPracticeDataSectionListAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FAA415024FCE58A00FEC2AD /* HandlerShowCulturalPracticeDataSectionListAction.swift */; };
+		7FB3598A25107F0000276B42 /* HandlerHideValidateButtonAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB3598925107F0000276B42 /* HandlerHideValidateButtonAction.swift */; };
+		7FB3598C2510810F00276B42 /* HandlerShowValidateButtonAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB3598B2510810F00276B42 /* HandlerShowValidateButtonAction.swift */; };
 		7FB78A2A24F4952500FBCA9A /* HandlerCloseInputFormWithoutSaveAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB78A2924F4952500FBCA9A /* HandlerCloseInputFormWithoutSaveAction.swift */; };
 		7FBEF40124F8B21300716014 /* HandlerCloseContainerFormWithSaveAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBEF40024F8B21300716014 /* HandlerCloseContainerFormWithSaveAction.swift */; };
 		7FBEF40324F8C5C600716014 /* HandlerCheckIfFormIsDirtyAndValidAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBEF40224F8C5C600716014 /* HandlerCheckIfFormIsDirtyAndValidAction.swift */; };
@@ -310,6 +312,8 @@
 		7FAA414924FC7FE500FEC2AD /* FieldMakeFieldUpdateBySectionFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldMakeFieldUpdateBySectionFactory.swift; sourceTree = "<group>"; };
 		7FAA414E24FCDD5500FEC2AD /* HandlerShowFieldDataSectionListAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerShowFieldDataSectionListAction.swift; sourceTree = "<group>"; };
 		7FAA415024FCE58A00FEC2AD /* HandlerShowCulturalPracticeDataSectionListAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerShowCulturalPracticeDataSectionListAction.swift; sourceTree = "<group>"; };
+		7FB3598925107F0000276B42 /* HandlerHideValidateButtonAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerHideValidateButtonAction.swift; sourceTree = "<group>"; };
+		7FB3598B2510810F00276B42 /* HandlerShowValidateButtonAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerShowValidateButtonAction.swift; sourceTree = "<group>"; };
 		7FB78A2924F4952500FBCA9A /* HandlerCloseInputFormWithoutSaveAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerCloseInputFormWithoutSaveAction.swift; sourceTree = "<group>"; };
 		7FBEF40024F8B21300716014 /* HandlerCloseContainerFormWithSaveAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerCloseContainerFormWithSaveAction.swift; sourceTree = "<group>"; };
 		7FBEF40224F8C5C600716014 /* HandlerCheckIfFormIsDirtyAndValidAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerCheckIfFormIsDirtyAndValidAction.swift; sourceTree = "<group>"; };
@@ -659,6 +663,8 @@
 			isa = PBXGroup;
 			children = (
 				7F8C8E90250F184900A58740 /* ContainerMapAndTitleNavigationReducer.swift */,
+				7FB3598925107F0000276B42 /* HandlerHideValidateButtonAction.swift */,
+				7FB3598B2510810F00276B42 /* HandlerShowValidateButtonAction.swift */,
 			);
 			path = ContainerMapAndTitleNavigationReducer;
 			sourceTree = "<group>";
@@ -1566,10 +1572,12 @@
 				9860400F23BD976800D5B538 /* StoreSubcriberProxy.swift in Sources */,
 				7F274D592507266A00826719 /* LoginService.swift in Sources */,
 				9894340A2410C76D003C0110 /* PolygonWithData.swift in Sources */,
+				7FB3598A25107F0000276B42 /* HandlerHideValidateButtonAction.swift in Sources */,
 				7FD0BD5424E8856800EB86A3 /* HandlerAddNimInputElementAction.swift in Sources */,
 				7F0200F625034F64006EC562 /* LoginReducer.swift in Sources */,
 				7F1E49FE24FDC0940041A1F2 /* ElementUIDataFactory.swift in Sources */,
 				7F5E1F4E24F5ABAB00B3762D /* HandlerCheckIfInputValueIsValidAction.swift in Sources */,
+				7FB3598C2510810F00276B42 /* HandlerShowValidateButtonAction.swift in Sources */,
 				989090AA24C1530800AFC080 /* ContainerTitleNavigationAction.swift in Sources */,
 				7FAA414724FC722700FEC2AD /* IdPleineTerre.swift in Sources */,
 				7F1D50DE24E3509100486C81 /* AddProducerFormFactory.swift in Sources */,
