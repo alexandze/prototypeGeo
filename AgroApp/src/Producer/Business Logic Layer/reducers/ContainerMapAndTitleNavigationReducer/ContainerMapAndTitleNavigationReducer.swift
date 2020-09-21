@@ -23,6 +23,14 @@ extension Reducers {
         case let showValidateButtonAction as ContainerMapAndTitleNavigationAction.ShowValidateButtonAction:
             return ContainerMapAndTitleNavigationHandler
                 .HandlerShowValidateButtonAction().handle(action: showValidateButtonAction, state)
+        case let makeProducerSuccessAction as ContainerMapAndTitleNavigationAction.MakeProducerSuccessAction:
+            return ContainerMapAndTitleNavigationHandler
+                .HandlerMakeProducerSuccessAction().handle(action: makeProducerSuccessAction, state)
+        case let closeContainerAction as ContainerMapAndTitleNavigationAction.CloseContainerAction:
+                return ContainerMapAndTitleNavigationHandler
+                    .HandlerCloseContainerAction().handle(action: closeContainerAction, state)
+        case let killState as ContainerMapAndTitleNavigationAction.KillStateAction:
+            return state.changeValues(actionResponse: .notActionResponse)
         default:
             return state
         }

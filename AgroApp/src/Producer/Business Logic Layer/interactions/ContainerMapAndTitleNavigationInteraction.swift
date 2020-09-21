@@ -16,8 +16,25 @@ class ContainerMapAndTitleNavigationInteractionImpl: ContainerMapAndTitleNavigat
     init(actionDispatcher: ActionDispatcher) {
         self.actionDispatcher = actionDispatcher
     }
+    
+    func makeProducerAction() {
+        let action = ContainerMapAndTitleNavigationAction.MakeProducerAction()
+        Util.dispatchActionInSchedulerReSwift(action, actionDispatcher: actionDispatcher)
+    }
+    
+    func closeContainerAction() {
+        let action = ContainerMapAndTitleNavigationAction.CloseContainerAction()
+        Util.dispatchActionInSchedulerReSwift(action, actionDispatcher: actionDispatcher)
+    }
+    
+    func killStateAction() {
+        let action = ContainerMapAndTitleNavigationAction.KillStateAction()
+        Util.dispatchActionInSchedulerReSwift(action, actionDispatcher: actionDispatcher)
+    }
 }
 
 protocol ContainerMapAndTitleNavigationInteraction {
-    
+    func makeProducerAction()
+    func closeContainerAction()
+    func killStateAction()
 }

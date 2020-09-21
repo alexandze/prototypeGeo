@@ -12,4 +12,10 @@ import ReSwift
 struct ProducerListAction {
     struct GetProducerListAction: Action { }
     struct GetProducerListSuccesAction: Action { }
+    
+    struct SaveNewProducerInDatabaseSuccessAction: Action {
+        var producer: Producer
+    }
+    
+    struct SaveNewProducerInDatabaseErrorAction: Action { }
 }

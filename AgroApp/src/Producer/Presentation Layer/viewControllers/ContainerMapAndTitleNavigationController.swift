@@ -47,6 +47,7 @@ class ContainerMapAndTitleNavigationController: UIViewController {
         super.viewWillAppear(animated)
         containerMapAndTitleNavigationViewModel.hideValidateButton = { [weak self] in self?.containerMapAndTitleNavigationView.hideValidateButton() }
         containerMapAndTitleNavigationViewModel.showValidateButton = { [weak self] in self?.containerMapAndTitleNavigationView.showValidateButton() }
+        containerMapAndTitleNavigationViewModel.closeContainer = { [weak self] in self?.closeContainer() }
         containerMapAndTitleNavigationViewModel.subscribeToObserverState()
     }
     
@@ -82,7 +83,7 @@ class ContainerMapAndTitleNavigationController: UIViewController {
     
     private func initBackButton() {
         containerMapAndTitleNavigationView.initBackButton()
-        containerMapAndTitleNavigationView.handleBackButtonFunc = {[weak self] in self?.handleBackButton() }
+        containerMapAndTitleNavigationView.handleBackButtonFunc = {[weak self] in self?.containerMapAndTitleNavigationViewModel.handleBackButton() }
     }
     
     private func initValidateButton() {
@@ -110,7 +111,7 @@ class ContainerMapAndTitleNavigationController: UIViewController {
     }
     
     // TODO mettre dans le view model
-    private func handleBackButton() {
+    private func closeContainer() {
         removeChildrenView()
         containerTitleNavigationViewController.popAllViewController()
         navigationController?.popViewController(animated: true)

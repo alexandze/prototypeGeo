@@ -16,6 +16,7 @@ class ContainerMapAndTitleNavigationViewModelImpl: ContainerMapAndTitleNavigatio
     var disposeState: Disposable?
     var hideValidateButton: (() -> Void)?
     var showValidateButton: (() -> Void)?
+    var closeContainer: (() -> Void)?
     
     init(
         stateObservable: Observable<ContainerMapAndTitleNavigationState>,
@@ -42,8 +43,8 @@ class ContainerMapAndTitleNavigationViewModelImpl: ContainerMapAndTitleNavigatio
                     self.handleShowValidateButtonActionResponse()
                 case .closeContainerActionResponse:
                     self.handleCloseContainerActionResponse()
-                case .makeProducerActionResponse:
-                    self.handleMakeProducerActionResponse()
+                case .makeProducerSuccessActionResponse:
+                    self.handleMakeProducerSuccessActionResponse()
                 case .notActionResponse:
                     break
                 }
@@ -63,12 +64,11 @@ class ContainerMapAndTitleNavigationViewModelImpl: ContainerMapAndTitleNavigatio
 
 extension ContainerMapAndTitleNavigationViewModelImpl {
     func handleValidateButton() {
-        print("Handle Validate Button")
-        // TODO dispatch makeProducer
+        interaction.makeProducerAction()
     }
     
     func handleBackButton() {
-        // TODO dispatch CloseContainerMap
+        interaction.closeContainerAction()
     }
     
     private func handleHideValidateButtonActionResponse() {
@@ -80,17 +80,19 @@ extension ContainerMapAndTitleNavigationViewModelImpl {
     }
     
     private func handleCloseContainerActionResponse() {
-        
+        interaction.killStateAction()
+        closeContainer?()
     }
     
-    private func handleMakeProducerActionResponse() {
-        
+    private func handleMakeProducerSuccessActionResponse() {
+        interaction.closeContainerAction()
     }
 }
 
 protocol ContainerMapAndTitleNavigationViewModel {
     var hideValidateButton: (() -> Void)? { get set }
     var showValidateButton: (() -> Void)? { get set }
+    var closeContainer: (() -> Void)? { get set }
     func subscribeToObserverState()
     func disposes()
     func handleValidateButton()

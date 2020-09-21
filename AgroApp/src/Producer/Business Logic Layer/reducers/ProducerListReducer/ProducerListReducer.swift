@@ -16,6 +16,8 @@ extension Reducers {
         switch action {
         case let successGetFamers as ProducerListAction.GetProducerListSuccesAction:
             break
+        case let saveNewProducerInDatabaseSuccessAction as ProducerListAction.SaveNewProducerInDatabaseSuccessAction:
+            
         default:
             break
         }

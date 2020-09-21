@@ -16,6 +16,5 @@ struct ProducerListState: Equatable {
 
     var uuidState: String
     var producerList: [Producer]?
-    var sectionsFarmersFormated: [Section<ElementUIData>]?
     var isEmptyFarmers: Bool?
 }

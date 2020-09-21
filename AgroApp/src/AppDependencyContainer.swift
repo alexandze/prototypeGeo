@@ -28,7 +28,7 @@ class AppDependencyContainerImpl: AppDependencyContainer {
                 loginState: LoginState(uuidState: UUID().uuidString),
                 containerMapAndTitleNavigationState: ContainerMapAndTitleNavigationState(uuidState: UUID().uuidString)
             ),
-            middleware: [ContainerMapAndTitleNavigationMiddleware().middleware],
+            middleware: [ContainerMapAndTitleNavigationMiddleware().middleware, ProducerListMiddleware().middleware],
             automaticallySkipsRepeats: true
         )
     }()

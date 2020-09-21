@@ -31,7 +31,7 @@ struct AddProducerFormState: Equatable {
         AddProducerFormState(
             uuidState: UUID().uuidString,
             elementUIDataObservableList: elementUIDataObservableList ?? self.elementUIDataObservableList,
-            addButtonElementObservable: addButtonElementObservable,
+            addButtonElementObservable: addButtonElementObservable ?? self.addButtonElementObservable,
             producer: producer ?? self.producer,
             enterpriseList: enterpriseList ?? self.enterpriseList,
             responseAction: responseAction

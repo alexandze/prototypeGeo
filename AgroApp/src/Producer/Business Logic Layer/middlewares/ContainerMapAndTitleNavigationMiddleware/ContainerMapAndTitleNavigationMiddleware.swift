@@ -13,12 +13,30 @@ class ContainerMapAndTitleNavigationMiddleware {
     var middleware: Middleware<AppState> = { dispatch, getState in
         return { next in
             return { action in
-                // TODO creer le producteur avec ses entreprises
-                // print(action)
                 
-                // call next middleware
+                switch action {
+                case let makeProducer as ContainerMapAndTitleNavigationAction.MakeProducerAction:
+                    ContainerMapAndTitleNavigationMiddleware().handleMakeProducerAction(makeProducer, getState, dispatch)
+                default:
+                    break
+                }
+                
                 return next(action)
             }
         }
+    }
+    
+    private func handleMakeProducerAction(
+        _ action: ContainerMapAndTitleNavigationAction.MakeProducerAction,
+        _ getState: @escaping () -> AppState?,
+        _ dispatch: @escaping DispatchFunction
+    ) {
+        guard let appState = getState() else {
+            let action = ContainerMapAndTitleNavigationAction.MakeProducerFailureAction()
+            return dispatch(action)
+        }
+        
+        let action = HandlerMakeProducerActionMiddleware().handle(action, appState)
+        dispatch(action)
     }
 }

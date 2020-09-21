@@ -20,7 +20,7 @@ struct ContainerMapAndTitleNavigationState: Equatable {
         case hideValidateButtonActionResponse
         case showValidateButtonActionResponse
         case closeContainerActionResponse
-        case makeProducerActionResponse
+        case makeProducerSuccessActionResponse(producer: Producer)
         case notActionResponse
     }
     

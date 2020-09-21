@@ -77,6 +77,13 @@
 		7FB3598A25107F0000276B42 /* HandlerHideValidateButtonAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB3598925107F0000276B42 /* HandlerHideValidateButtonAction.swift */; };
 		7FB3598C2510810F00276B42 /* HandlerShowValidateButtonAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB3598B2510810F00276B42 /* HandlerShowValidateButtonAction.swift */; };
 		7FB78A2A24F4952500FBCA9A /* HandlerCloseInputFormWithoutSaveAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB78A2924F4952500FBCA9A /* HandlerCloseInputFormWithoutSaveAction.swift */; };
+		7FBD4D6A25184DB700030850 /* HandlerMakeProducerActionMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBD4D6925184DB700030850 /* HandlerMakeProducerActionMiddleware.swift */; };
+		7FBD4D6C251877AC00030850 /* HanderMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBD4D6B251877AC00030850 /* HanderMiddleware.swift */; };
+		7FBD4D6E25187A1B00030850 /* HandlerMiddlewareAsync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBD4D6D25187A1B00030850 /* HandlerMiddlewareAsync.swift */; };
+		7FBD4D7025187CC100030850 /* HandlerMakeProducerSuccessAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBD4D6F25187CC100030850 /* HandlerMakeProducerSuccessAction.swift */; };
+		7FBD4D7225188DF100030850 /* HandlerCloseContainerAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBD4D7125188DF100030850 /* HandlerCloseContainerAction.swift */; };
+		7FBD4D7525189D0600030850 /* ProducerListMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBD4D7425189D0600030850 /* ProducerListMiddleware.swift */; };
+		7FBD4D7725189E1700030850 /* HandlerMakeProducerSuccessActionMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBD4D7625189E1700030850 /* HandlerMakeProducerSuccessActionMiddleware.swift */; };
 		7FBEF40124F8B21300716014 /* HandlerCloseContainerFormWithSaveAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBEF40024F8B21300716014 /* HandlerCloseContainerFormWithSaveAction.swift */; };
 		7FBEF40324F8C5C600716014 /* HandlerCheckIfFormIsDirtyAndValidAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBEF40224F8C5C600716014 /* HandlerCheckIfFormIsDirtyAndValidAction.swift */; };
 		7FBEF40524F8D82900716014 /* HandlerCloseContainerFormWithoutSaveAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBEF40424F8D82900716014 /* HandlerCloseContainerFormWithoutSaveAction.swift */; };
@@ -315,6 +322,13 @@
 		7FB3598925107F0000276B42 /* HandlerHideValidateButtonAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerHideValidateButtonAction.swift; sourceTree = "<group>"; };
 		7FB3598B2510810F00276B42 /* HandlerShowValidateButtonAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerShowValidateButtonAction.swift; sourceTree = "<group>"; };
 		7FB78A2924F4952500FBCA9A /* HandlerCloseInputFormWithoutSaveAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerCloseInputFormWithoutSaveAction.swift; sourceTree = "<group>"; };
+		7FBD4D6925184DB700030850 /* HandlerMakeProducerActionMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerMakeProducerActionMiddleware.swift; sourceTree = "<group>"; };
+		7FBD4D6B251877AC00030850 /* HanderMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HanderMiddleware.swift; sourceTree = "<group>"; };
+		7FBD4D6D25187A1B00030850 /* HandlerMiddlewareAsync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerMiddlewareAsync.swift; sourceTree = "<group>"; };
+		7FBD4D6F25187CC100030850 /* HandlerMakeProducerSuccessAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerMakeProducerSuccessAction.swift; sourceTree = "<group>"; };
+		7FBD4D7125188DF100030850 /* HandlerCloseContainerAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerCloseContainerAction.swift; sourceTree = "<group>"; };
+		7FBD4D7425189D0600030850 /* ProducerListMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProducerListMiddleware.swift; sourceTree = "<group>"; };
+		7FBD4D7625189E1700030850 /* HandlerMakeProducerSuccessActionMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerMakeProducerSuccessActionMiddleware.swift; sourceTree = "<group>"; };
 		7FBEF40024F8B21300716014 /* HandlerCloseContainerFormWithSaveAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerCloseContainerFormWithSaveAction.swift; sourceTree = "<group>"; };
 		7FBEF40224F8C5C600716014 /* HandlerCheckIfFormIsDirtyAndValidAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerCheckIfFormIsDirtyAndValidAction.swift; sourceTree = "<group>"; };
 		7FBEF40424F8D82900716014 /* HandlerCloseContainerFormWithoutSaveAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerCloseContainerFormWithoutSaveAction.swift; sourceTree = "<group>"; };
@@ -665,6 +679,8 @@
 				7F8C8E90250F184900A58740 /* ContainerMapAndTitleNavigationReducer.swift */,
 				7FB3598925107F0000276B42 /* HandlerHideValidateButtonAction.swift */,
 				7FB3598B2510810F00276B42 /* HandlerShowValidateButtonAction.swift */,
+				7FBD4D6F25187CC100030850 /* HandlerMakeProducerSuccessAction.swift */,
+				7FBD4D7125188DF100030850 /* HandlerCloseContainerAction.swift */,
 			);
 			path = ContainerMapAndTitleNavigationReducer;
 			sourceTree = "<group>";
@@ -673,6 +689,7 @@
 			isa = PBXGroup;
 			children = (
 				7F8C8E95250F1C1800A58740 /* ContainerMapAndTitleNavigationMiddleware.swift */,
+				7FBD4D6925184DB700030850 /* HandlerMakeProducerActionMiddleware.swift */,
 			);
 			path = ContainerMapAndTitleNavigationMiddleware;
 			sourceTree = "<group>";
@@ -713,6 +730,15 @@
 				7FAA414624FC722700FEC2AD /* IdPleineTerre.swift */,
 			);
 			path = FieldData;
+			sourceTree = "<group>";
+		};
+		7FBD4D7325189CBD00030850 /* ProducerListMiddleware */ = {
+			isa = PBXGroup;
+			children = (
+				7FBD4D7425189D0600030850 /* ProducerListMiddleware.swift */,
+				7FBD4D7625189E1700030850 /* HandlerMakeProducerSuccessActionMiddleware.swift */,
+			);
+			path = ProducerListMiddleware;
 			sourceTree = "<group>";
 		};
 		7FEC759F2502FF5600357CF1 /* Authentication */ = {
@@ -913,8 +939,8 @@
 				9854BFD42408F53400E5AB8A /* FieldListViewController.swift */,
 				9810DA41242F0FCA00545A23 /* SelectFormCulturalPracticeViewController.swift */,
 				98457B652423E5FA00AF4C90 /* CulturalPracticeFormViewController.swift */,
-				98B9991C23B50ACC00CA7EF9 /* ProducerListViewController.swift */,
 				9854BFE0240A1C3C00E5AB8A /* ContainerMapAndTitleNavigationController.swift */,
+				98B9991C23B50ACC00CA7EF9 /* ProducerListViewController.swift */,
 			);
 			path = viewControllers;
 			sourceTree = "<group>";
@@ -930,8 +956,8 @@
 				9810DA43242F0FE800545A23 /* SelectFormCulturalPracticeViewModel.swift */,
 				98CB79D424B82B3D00EFFF19 /* ContainerFormCulturalPracticeViewModel.swift */,
 				9854BFF8240B901A00E5AB8A /* CulturalPracticeFormViewModel.swift */,
-				9805683723B954630056D199 /* ProducerListViewModel.swift */,
 				7F8C8E9E250F31C300A58740 /* ContainerMapAndTitleNavigationViewModel.swift */,
+				9805683723B954630056D199 /* ProducerListViewModel.swift */,
 			);
 			path = viewModels;
 			sourceTree = "<group>";
@@ -1030,6 +1056,7 @@
 		98363B4F23DEEC4500AFFC63 /* middlewares */ = {
 			isa = PBXGroup;
 			children = (
+				7FBD4D7325189CBD00030850 /* ProducerListMiddleware */,
 				7F8C8E94250F1B5500A58740 /* ContainerMapAndTitleNavigationMiddleware */,
 				98363B5023DEEC7A00AFFC63 /* mapFieldMiddleware.swift */,
 			);
@@ -1221,6 +1248,8 @@
 				98EBA95124B1600300D233D0 /* DimensionScreen.swift */,
 				986E1C8524D5C07100EDB1DE /* HandlerReducer.swift */,
 				7F34983425078B7B00C4449C /* FakeViewController.swift */,
+				7FBD4D6B251877AC00030850 /* HanderMiddleware.swift */,
+				7FBD4D6D25187A1B00030850 /* HandlerMiddlewareAsync.swift */,
 			);
 			path = libs;
 			sourceTree = "<group>";
@@ -1521,6 +1550,7 @@
 				98F126B624C8F023001853D5 /* TauxApplicationPhosphoreVolee.swift in Sources */,
 				7F95178C24F354A300BAE845 /* HandleAddDoseFumierAction.swift in Sources */,
 				98CB79D524B82B3D00EFFF19 /* ContainerFormCulturalPracticeViewModel.swift in Sources */,
+				7FBD4D6E25187A1B00030850 /* HandlerMiddlewareAsync.swift in Sources */,
 				7F274D492507134300826719 /* LastNameInputValue.swift in Sources */,
 				98A2C548240E696C002A884B /* AnnotationWithData.swift in Sources */,
 				7FAA414A24FC7FE500FEC2AD /* FieldMakeFieldUpdateBySectionFactory.swift in Sources */,
@@ -1546,6 +1576,7 @@
 				7F34983525078B7B00C4449C /* FakeViewController.swift in Sources */,
 				7F0200F425034F16006EC562 /* LoginState.swift in Sources */,
 				9854BFF5240B7A9F00E5AB8A /* FieldListInteraction.swift in Sources */,
+				7FBD4D7225188DF100030850 /* HandlerCloseContainerAction.swift in Sources */,
 				98B9990623B5076000CA7EF9 /* AppDelegate.swift in Sources */,
 				9854BFE5240A1FA500E5AB8A /* FieldListState.swift in Sources */,
 				9847564324AEC6710048A503 /* SettingViewController.swift in Sources */,
@@ -1567,6 +1598,7 @@
 				98CB79D324B827AC00EFFF19 /* ContainerFormCulturalPracticeView.swift in Sources */,
 				7F5B76C724F2030800392605 /* CulturalPracticeRemoveFactory.swift in Sources */,
 				9891610A24DC940F005E1F7C /* AddProducerFormReducer.swift in Sources */,
+				7FBD4D6C251877AC00030850 /* HanderMiddleware.swift in Sources */,
 				98F126A024C6F1D4001853D5 /* BandeRiveraine.swift in Sources */,
 				7F8AD78E24EA0E7B00C56282 /* ProducerElementUIDataFactory.swift in Sources */,
 				9860400F23BD976800D5B538 /* StoreSubcriberProxy.swift in Sources */,
@@ -1581,6 +1613,7 @@
 				989090AA24C1530800AFC080 /* ContainerTitleNavigationAction.swift in Sources */,
 				7FAA414724FC722700FEC2AD /* IdPleineTerre.swift in Sources */,
 				7F1D50DE24E3509100486C81 /* AddProducerFormFactory.swift in Sources */,
+				7FBD4D7025187CC100030850 /* HandlerMakeProducerSuccessAction.swift in Sources */,
 				98F126A424C71130001853D5 /* PeriodeApplicationFumier.swift in Sources */,
 				986E1C8824D5E0C900EDB1DE /* HandlerRemoveFieldAction.swift in Sources */,
 				989090AE24C18F4300AFC080 /* FieldListReducer.swift in Sources */,
@@ -1612,6 +1645,7 @@
 				98363B4023DED70D00AFFC63 /* MapFieldState.swift in Sources */,
 				98363B3E23DED25A00AFFC63 /* Field.swift in Sources */,
 				9854BFD72408F5F700E5AB8A /* TitleView.swift in Sources */,
+				7FBD4D6A25184DB700030850 /* HandlerMakeProducerActionMiddleware.swift in Sources */,
 				98D4628B24AEDF2C00DD53BD /* InputFormCulturalPracticeFormReducer.swift in Sources */,
 				9854BFE3240A1D6200E5AB8A /* FieldListViewModel.swift in Sources */,
 				7FAA414424FC701300FEC2AD /* FieldMakeSectionByFieldFactory.swift in Sources */,
@@ -1623,6 +1657,7 @@
 				9891610524DC932D005E1F7C /* AddProducerFormViewModel.swift in Sources */,
 				98DB0F5724297F960065963B /* TableState.swift in Sources */,
 				7F274D4D2507144200826719 /* ValueForm.swift in Sources */,
+				7FBD4D7725189E1700030850 /* HandlerMakeProducerSuccessActionMiddleware.swift in Sources */,
 				98EBA95424B1654A00D233D0 /* InputFormCulturalPracticeAction.swift in Sources */,
 				9830049024AC2B8300CDF624 /* ProducerCreationDependencyContainer.swift in Sources */,
 				7FB78A2A24F4952500FBCA9A /* HandlerCloseInputFormWithoutSaveAction.swift in Sources */,
@@ -1686,6 +1721,7 @@
 				7F1E4A0524FDF4520041A1F2 /* EnterpriseMakeByElementUIData.swift in Sources */,
 				98F126B224C8EFBC001853D5 /* CouvertureDerobee.swift in Sources */,
 				9860400623BD882900D5B538 /* Reducers.swift in Sources */,
+				7FBD4D7525189D0600030850 /* ProducerListMiddleware.swift in Sources */,
 				986E1C8424D5C02C00EDB1DE /* HandlerUpdateFieldAction.swift in Sources */,
 				7F5B76BC24F1926900392605 /* HandlerSelectFieldOnListAction.swift in Sources */,
 				98363B4223DEDF6600AFFC63 /* MapFieldAction.swift in Sources */,

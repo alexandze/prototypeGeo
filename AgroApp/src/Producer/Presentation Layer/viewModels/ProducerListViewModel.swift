@@ -24,21 +24,30 @@ class ProducerListViewModelImpl: ProducerListViewModel {
         self.state = producerListStateObservable
     }
     
-    func dispatchGetFarmers(offset: Int, limit: Int) {
-        producerListInteraction.getFamers(offset: offset, limit: limit)
+    func handlerViewWillAppear() {
+        dispatchGetFarmers(offset: 0, limit: 0)
+        susbcribeToObservableState()
     }
     
-    func susbcribeToObservableState() {
-        self.disposableTableViewControllerState = state
+    func handlerViewWillDisappear() {
+        disposeToObservableState()
+    }
+    
+    private func susbcribeToObservableState() {
+        disposableTableViewControllerState = state
             .observeOn(Util.getSchedulerMain())
             .subscribe { even in
                 guard let state = even.element else { return }
                 
         }
     }
-
-    func disposeToObservableState() {
-        self.disposableTableViewControllerState?.dispose()
+    
+    private func disposeToObservableState() {
+        disposableTableViewControllerState?.dispose()
+    }
+    
+    private func dispatchGetFarmers(offset: Int, limit: Int) {
+        producerListInteraction.getFamers(offset: offset, limit: limit)
     }
 }
 
@@ -46,12 +55,11 @@ extension ProducerListViewModelImpl {
     func handleAddProducerButton() {
         // TODO dispatch show AddProducer
         showMakeProducerContainer?()
-        
     }
 }
 
 protocol ProducerListViewModel {
     var showMakeProducerContainer: (() -> Void)? { get set }
-    func susbcribeToObservableState()
-    func disposeToObservableState()
+    func handlerViewWillAppear()
+    func handlerViewWillDisappear()
 }

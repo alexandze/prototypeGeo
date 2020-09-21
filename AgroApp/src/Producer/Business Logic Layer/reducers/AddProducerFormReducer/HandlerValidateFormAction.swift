@@ -34,6 +34,7 @@ extension AddProducerFormReducerHandler {
                     makeProducerByElementWrapper(util: ) >>>
                     makeNewEnterpriseListWrapper(util: ) >>>
                     makeNimSelectValueWrapper(util: ) >>>
+                    setEnterpriseListOfProducerWrapper(util: ) >>>
                     newState(util:)
             )(util) ?? state
         }
@@ -141,6 +142,10 @@ extension AddProducerFormReducerHandler {
                 return nil
             }
             
+            guard let isAllInputElementIsValid = newUtil.isAllInputElementIsValid, isAllInputElementIsValid else {
+                return newUtil
+            }
+            
             guard let newEnterpriseList = newUtil.newEnterpriseList else {
                 return newUtil
             }
@@ -151,6 +156,29 @@ extension AddProducerFormReducerHandler {
         
         private func makeNimSelectValueByEnterpriseList(_ enterpriseList: [Enterprise]) -> NimSelectValue? {
             enterpriseService.makeNimSelectValueByEnterpriseList(enterpriseList)
+        }
+        
+        private func setEnterpriseListOfProducerWrapper(util: UtilHandlerValidateFormAction?) -> UtilHandlerValidateFormAction? {
+            guard var newUtil = util else {
+                return nil
+            }
+            
+            guard let isAllInputElementIsValid = newUtil.isAllInputElementIsValid, isAllInputElementIsValid else {
+                return newUtil
+            }
+            
+            guard let enterpriseList = newUtil.newEnterpriseList, let producer = newUtil.newProducer else {
+                return newUtil
+            }
+            
+            newUtil.newProducer = setEnterpriseList(enterpriseList, ofProducer: producer)
+            return newUtil
+        }
+        
+        private func setEnterpriseList(_ enterpriseList: [Enterprise], ofProducer producer: Producer) -> Producer {
+            var copyProducer = producer
+            copyProducer.enterprises = enterpriseList
+            return copyProducer
         }
 
         private func newState(util: UtilHandlerValidateFormAction?) -> AddProducerFormState? {

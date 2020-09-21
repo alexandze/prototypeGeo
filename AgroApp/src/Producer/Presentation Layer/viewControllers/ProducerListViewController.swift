@@ -44,13 +44,13 @@ class ProducerListViewController: UIViewController, UITableViewDelegate, UITable
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         producerListViewModel.showMakeProducerContainer = { [weak self] in self?.showMakeProducerContainer() }
-        producerListViewModel.susbcribeToObservableState()
+        producerListViewModel.handlerViewWillAppear()
         showNavigationAndTabBar()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        producerListViewModel.disposeToObservableState()
+        producerListViewModel.handlerViewWillDisappear()
     }
     
     func registerTableViewCell(cellId: String, tableView: UITableView) {

@@ -14,4 +14,11 @@ struct ContainerMapAndTitleNavigationAction {
     struct ShowValidateButtonAction: Action { }
     struct CloseContainerAction: Action { }
     struct MakeProducerAction: Action { }
+    
+    struct MakeProducerSuccessAction: Action {
+        var producer: Producer
+    }
+    
+    struct MakeProducerFailureAction: Action { }
+    struct KillStateAction: Action { }
 }
