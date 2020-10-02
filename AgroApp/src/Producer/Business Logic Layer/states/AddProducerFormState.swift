@@ -37,6 +37,17 @@ struct AddProducerFormState: Equatable {
             responseAction: responseAction
         )
     }
+    
+    func reset() -> AddProducerFormState {
+        AddProducerFormState(
+            uuidState: UUID().uuidString,
+            elementUIDataObservableList: nil,
+            addButtonElementObservable: nil,
+            producer: nil,
+            enterpriseList: nil,
+            responseAction: .notResponse
+        )
+    }
 
     enum ResponseAction {
         case getListElementUIDataWihoutValueResponse

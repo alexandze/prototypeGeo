@@ -36,6 +36,7 @@ class ProducerListViewController: UIViewController, UITableViewDelegate, UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.producerListView.tableView.register(UITableViewCell.self, forCellReuseIdentifier: self.cellID)
         initTitleNavigation()
         initAddBarButton()
         producerListView.tableView.rowHeight = 60
@@ -44,6 +45,7 @@ class ProducerListViewController: UIViewController, UITableViewDelegate, UITable
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         producerListViewModel.showMakeProducerContainer = { [weak self] in self?.showMakeProducerContainer() }
+        producerListViewModel.reloadTableViewData = { [weak self] in self?.reloadTableViewData() }
         producerListViewModel.handlerViewWillAppear()
         showNavigationAndTabBar()
     }
@@ -63,16 +65,21 @@ class ProducerListViewController: UIViewController, UITableViewDelegate, UITable
     
     func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        0
+        1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        0
+        producerListViewModel.getNumberRow()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let tableViewCell =  tableView.dequeueReusableCell(withIdentifier: self.cellID, for: indexPath)
+        tableViewCell.textLabel?.text = producerListViewModel.getNameByIndexPath(indexPath)
+        tableViewCell.backgroundColor = Util.getColorBlackOrWhite()
+        tableViewCell.alpha = 0.95
+        tableViewCell.imageView?.image = UIImage(systemName: "person.circle")
+        tableViewCell.imageView?.tintColor = Util.getOppositeColorBlackOrWhite()
         return tableViewCell
     }
     
@@ -95,6 +102,10 @@ class ProducerListViewController: UIViewController, UITableViewDelegate, UITable
         }
         
         navigationController?.pushViewController(appDependency.makeContainerMapAndTitleNavigationController(), animated: true)
+    }
+    
+    func reloadTableViewData() {
+        producerListView.tableView.reloadData()
     }
     
     private func showNavigationAndTabBar() {

@@ -26,6 +26,8 @@ extension Reducers {
         case let checkIfFormIsDirtyAction as SelectFormCulturalPracticeAction.CheckIfFormIsDirtyAction:
             return SelectFormCulturalPracticeHandlerReducer
                 .HandlerCheckIfFormIsDirtyAction().handle(action: checkIfFormIsDirtyAction, state)
+        case _ as ContainerMapAndTitleNavigationAction.KillStateAction:
+            return state.reset()
         default:
             return state
         }

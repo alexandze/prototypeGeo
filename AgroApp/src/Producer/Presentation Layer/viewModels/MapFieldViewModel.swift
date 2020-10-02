@@ -51,6 +51,8 @@ class MapFieldViewModel {
                     self.handleGetAllFieldErrorResponse()
                 case .willDeselectFieldOnMapActionResponse:
                     self.handleWillDeselectFieldOnMapActionResponse()
+                case .notReponseAction:
+                    break
                 }
             })
     }

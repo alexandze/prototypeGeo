@@ -29,8 +29,8 @@ extension Reducers {
         case let closeContainerAction as ContainerMapAndTitleNavigationAction.CloseContainerAction:
                 return ContainerMapAndTitleNavigationHandler
                     .HandlerCloseContainerAction().handle(action: closeContainerAction, state)
-        case let killState as ContainerMapAndTitleNavigationAction.KillStateAction:
-            return state.changeValues(actionResponse: .notActionResponse)
+        case _ as ContainerMapAndTitleNavigationAction.KillStateAction:
+            return state.reset()
         default:
             return state
         }

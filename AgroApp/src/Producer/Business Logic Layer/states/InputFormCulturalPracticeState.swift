@@ -45,4 +45,15 @@ struct InputFormCulturalPracticeState: Equatable {
             actionResponse: actionResponse ?? self.actionResponse
         )
     }
+    
+    func reset() -> InputFormCulturalPracticeState {
+        InputFormCulturalPracticeState(
+            uuidState: UUID().uuidString,
+            sectionInputElement: nil,
+            inputElementObservable: nil,
+            field: nil,
+            isDirty: nil,
+            actionResponse: .noAction
+        )
+    }
 }

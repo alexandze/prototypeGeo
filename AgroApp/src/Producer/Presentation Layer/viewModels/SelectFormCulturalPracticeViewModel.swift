@@ -51,6 +51,8 @@ class SelectFormCulturalPracticeViewModelImpl: SelectFormCulturalPracticeViewMod
                     self.handleCloseSelectFormWithoutSaveAction()
                 case .checkIfFormIsDirtyActionResponse(isDirty: let isDirty):
                     self.handleCheckIfFormIsDirtyActionResponse(isDirty)
+                case .notResponse:
+                    break
                 }
         }
     }

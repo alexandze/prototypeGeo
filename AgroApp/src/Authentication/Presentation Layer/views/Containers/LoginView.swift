@@ -12,6 +12,7 @@ struct LoginView: View {
     let loginViewModel: LoginViewModel
     @ObservedObject var keyboardFollower: KeyboardFollower
     @ObservedObject var viewState: LoginViewModelImpl.ViewState
+    @Environment(\.colorScheme) var colorScheme
     
     init(
         loginViewModel: LoginViewModel,
@@ -35,11 +36,23 @@ struct LoginView: View {
                                 .bold()
                                 .italic()
                                 .padding()
-                            ForEach(self.viewState.elementUIDataObservableList, id: \.id) { (elementUIData: ElementUIDataObservable) in
+                            ZStack {
+                                Rectangle()
+                                    .frame(
+                                        width: geometryProxy.size.width * 0.9,
+                                        height: geometryProxy.size.height * 0.3
+                                ).cornerRadius(12)
+                                    .foregroundColor(self.colorScheme == .dark ? .black : .white)
+                                    .shadow(color: .gray, radius: 5)
+                                
                                 VStack {
-                                    if self.isInputElement(elementUIData) {
-                                        InputWithTitleElement(inputElement: (elementUIData as! InputElementObservable))
-                                            .padding(15)
+                                    ForEach(self.viewState.elementUIDataObservableList, id: \.id) { (elementUIData: ElementUIDataObservable) in
+                                        VStack {
+                                            if self.isInputElement(elementUIData) {
+                                                InputWithTitleElement(inputElement: (elementUIData as! InputElementObservable))
+                                                    .padding(15)
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -49,7 +62,7 @@ struct LoginView: View {
                                     self.loginViewModel.handleConnexionButton()
                                 }
                             }
-
+                            
                         }
                     }.frame(
                         width: geometryProxy.size.width * 0.9,
@@ -75,7 +88,7 @@ struct LoginView: View {
             .onDisappear {
                 self.loginViewModel.disposes()
             }.animation(.default)
-            .environmentObject( DimensionScreen(width: geometryProxy.size.width, height: geometryProxy.size.height))
+                .environmentObject(DimensionScreen(width: geometryProxy.size.width, height: geometryProxy.size.height))
             
         }
         
@@ -104,7 +117,7 @@ private struct InputWithTitleElement: View {
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
-        VStack {
+        VStack(alignment: .center, spacing: 1) {
             HStack {
                 Text("\(self.inputElement.title)")
                 Spacer()
@@ -186,7 +199,7 @@ private struct ButtonValidate: View {
     var isButtonActivated: Bool
     var action: () -> Void
     @EnvironmentObject var dimensionScreen: DimensionScreen
-
+    
     var body: some View {
         Button(action: {
             self.action()
@@ -204,7 +217,7 @@ private struct ButtonValidate: View {
             .background(self.getBackgroundColor())
             .cornerRadius(10)
     }
-
+    
     private func getBackgroundColor() -> Color {
         isButtonActivated ? Color(Util.getGreenColor()) : .red
     }

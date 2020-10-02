@@ -32,4 +32,11 @@ struct ContainerMapAndTitleNavigationState: Equatable {
             actionResponse: actionResponse ?? self.actionResponse
         )
     }
+    
+    func reset() -> ContainerMapAndTitleNavigationState {
+        ContainerMapAndTitleNavigationState(
+            uuidState: UUID().uuidString,
+            actionResponse: .notActionResponse
+        )
+    }
 }

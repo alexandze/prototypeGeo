@@ -22,6 +22,8 @@ extension Reducers {
             return MapFieldReducerHandler().handle(getAllFieldAction: getAllFieldAction, state)
         case let willDeselectFieldOnMapAction as MapFieldAction.WillDeselectFieldOnMapAction:
             return MapFieldReducerHandler().handle(willDeselectFieldOnMapAction: willDeselectFieldOnMapAction, state)
+        case _ as ContainerMapAndTitleNavigationAction.KillStateAction:
+            return state.reset()
         default:
             return state
         }

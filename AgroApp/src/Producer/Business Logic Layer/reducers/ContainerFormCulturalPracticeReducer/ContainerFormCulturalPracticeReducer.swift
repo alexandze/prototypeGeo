@@ -29,6 +29,8 @@ extension Reducers {
         case let closeContainerFormWithoutSaveAction as ContainerFormCulturalPracticeAction.CloseContainerFormWithoutSaveAction:
             return ContainerFormCulturalPracticeHandler
                 .HandlerCloseContainerFormWithoutSaveAction().handle(action: closeContainerFormWithoutSaveAction, state)
+        case _ as ContainerMapAndTitleNavigationAction.KillStateAction:
+            return state.reset()
         default:
             return state
         }

@@ -104,6 +104,7 @@ class AddProducerFormViewModelImpl: AddProducerFormViewModel {
                     .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
                     .removeDuplicates()
                     .sink {[weak self] value in
+                        elementUIData.objectWillChange.send()
                         self?.interaction.checkIfInputElemenIsValidAction(id: elementUIData.id, value: value)
                         self?.interaction.checkIfAllInputElementIsValidAction()
                 }

@@ -45,6 +45,8 @@ class ContainerTitleNavigationViewModelImpl: ContainerTitleNavigationViewModel {
                     self.handlePrintCloseButtonActionSuccess()
                 case .backActionSuccess:
                     self.handleBackActionSuccess()
+                case .notResponse:
+                    break
                 }
         }
     }

@@ -143,6 +143,12 @@ class Util {
     static func getMirrorChildrenOfTValue<T>(_ tValue: T) -> Mirror.Children {
         Mirror(reflecting: tValue).children
     }
+    
+    static func disposeStateObservable(_ disposable: Disposable) {
+        _ = Util.runInSchedulerBackground {
+            disposable.dispose()
+        }
+    }
 }
 
 precedencegroup CompositionPrecedence {

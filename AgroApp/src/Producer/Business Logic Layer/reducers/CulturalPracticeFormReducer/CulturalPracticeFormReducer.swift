@@ -35,6 +35,8 @@ extension Reducers {
         case let showCulturalPracticeDataSectionListAction as CulturalPracticeFormAction.ShowCulturalPracticeDataSectionListAction:
             return CulturalPracticeFormReducerHandler
                 .HandlerShowCulturalPracticeDataSectionListAction().handle(action: showCulturalPracticeDataSectionListAction, state)
+        case _ as ContainerMapAndTitleNavigationAction.KillStateAction:
+            return state.reset()
         default:
             break
         }

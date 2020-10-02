@@ -49,7 +49,7 @@ struct CulturalPracticeFormState: Equatable {
         case notResponse
     }
 
-    public func changeValues(
+    func changeValues(
         currentField: Field? = nil,
         sections: [Section<ElementUIData>]? = nil,
         culturalPracticeElementSectionList: [Section<ElementUIData>]? = nil,
@@ -67,6 +67,18 @@ struct CulturalPracticeFormState: Equatable {
             title: title ?? self.title,
             isFinishCompletedLastDoseFumier: isFinishCompletedCurrentContainer ?? self.isFinishCompletedLastDoseFumier,
             responseAction: responseAction ?? self.responseAction
+        )
+    }
+    
+    func reset() -> CulturalPracticeFormState {
+        CulturalPracticeFormState(
+            uuidState: UUID().uuidString,
+            currentField: nil,
+            sections: nil, culturalPracticeElementSectionList: nil,
+            fieldElementSectionList: nil,
+            title: nil,
+            isFinishCompletedLastDoseFumier: nil,
+            responseAction: .notResponse
         )
     }
 }

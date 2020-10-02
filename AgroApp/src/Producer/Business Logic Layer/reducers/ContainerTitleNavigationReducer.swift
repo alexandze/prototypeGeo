@@ -24,6 +24,8 @@ extension Reducers {
             return ContainerTitleNavigationHandler().handle(backAction: action, state)
         case let action as ContainerTitleNavigationAction.SetCurrentViewControllerAction:
             return ContainerTitleNavigationHandler().handle(setCurrentViewControllerAction: action, state)
+        case _ as ContainerMapAndTitleNavigationAction.KillStateAction:
+            return state.reset()
         default:
             return state
         }

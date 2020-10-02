@@ -26,7 +26,8 @@ class AppDependencyContainerImpl: AppDependencyContainer {
                 containerTitleNavigationState: ContainerTitleNavigationState(uuidState: UUID().uuidString),
                 addProducerFormState: AddProducerFormState(uuidState: UUID().uuidString),
                 loginState: LoginState(uuidState: UUID().uuidString),
-                containerMapAndTitleNavigationState: ContainerMapAndTitleNavigationState(uuidState: UUID().uuidString)
+                containerMapAndTitleNavigationState: ContainerMapAndTitleNavigationState(uuidState: UUID().uuidString),
+                profilState: ProfilState(uuidState: UUID().uuidString)
             ),
             middleware: [ContainerMapAndTitleNavigationMiddleware().middleware, ProducerListMiddleware().middleware],
             automaticallySkipsRepeats: true
@@ -34,23 +35,22 @@ class AppDependencyContainerImpl: AppDependencyContainer {
     }()
 
     let producerCreationDependencyContainer: ProducerCreationDependencyContainer
-    
     let authenticationDependencyContainer: AuthenticationDependencyContainer
+    let profilDependencyContainer: ProfilDependencyContainer
 
     init() {
         self.producerCreationDependencyContainer = ProducerCreationDependencyContainerImpl(stateStore: self.stateStore)
-        
         self.authenticationDependencyContainer = AuthenticationDependencyContainerImpl(stateStore: self.stateStore)
+        self.profilDependencyContainer = ProfilDependencyContainerImpl(stateStore: self.stateStore)
     }
     
     func proccessInitTabBarController() -> UITabBarController {
         let producerNavigation = producerCreationDependencyContainer.makeProducerNavigation()
         let tabBarController = UITabBarController()
         
-        let profileFakeController = FakeViewController(title: "Profil")
-        profileFakeController.title = "Profil"
+        let profilNavigationController = profilDependencyContainer.makeProfilNavigation()
         
-        profileFakeController.tabBarItem = UITabBarItem(
+        profilNavigationController.tabBarItem = UITabBarItem(
             title: "Profil",
             image: UIImage(systemName: "person"),
             tag: 1
@@ -78,7 +78,7 @@ class AppDependencyContainerImpl: AppDependencyContainer {
             producerNavigation,
             UINavigationController(rootViewController: makeScenarionFakeController),
             UINavigationController(rootViewController: executeScenarionFakeController),
-            UINavigationController(rootViewController: profileFakeController)
+            profilNavigationController
         ]
     
         tabBarController.tabBar.tintColor = Util.getOppositeColorBlackOrWhite()

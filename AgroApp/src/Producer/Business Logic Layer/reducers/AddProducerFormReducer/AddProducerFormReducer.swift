@@ -32,6 +32,8 @@ extension Reducers {
             return AddProducerFormReducerHandler.HandlerValidateFormAction().handle(action: validateFormAction, state)
         case _ as AddProducerFormAction.NotResponseAction:
             return state.changeValues(responseAction: .notResponse)
+        case _ as ContainerMapAndTitleNavigationAction.KillStateAction:
+            return state.reset()
         default:
             return state
         }

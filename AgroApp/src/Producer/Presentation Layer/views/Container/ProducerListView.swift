@@ -15,7 +15,7 @@ class ProducerListView: UIView {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = .systemGray6
         tableView.alpha = 0.95
-        tableView.rowHeight = 80
+        tableView.rowHeight = 160
         return tableView
     }()
     

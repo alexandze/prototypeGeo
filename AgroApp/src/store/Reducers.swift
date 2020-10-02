@@ -22,7 +22,8 @@ struct Reducers {
             containerTitleNavigationState: Reducers.containerTitleNavigationReducer(action: action, state: state?.containerTitleNavigationState),
             addProducerFormState: Reducers.addProducerFormReducer(action: action, state: state?.addProducerFormState),
             loginState: Reducers.loginReducer(action: action, state: state?.loginState),
-            containerMapAndTitleNavigationState: Reducers.containerMapAndTitleNavigationReducer(action: action, state: state?.containerMapAndTitleNavigationState)
+            containerMapAndTitleNavigationState: Reducers.containerMapAndTitleNavigationReducer(action: action, state: state?.containerMapAndTitleNavigationState),
+            profilState: Reducers.profilReducer(action: action, state: state?.profilState)
         )
     }
 }

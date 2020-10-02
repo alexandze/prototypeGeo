@@ -11,13 +11,15 @@ import ReSwift
 
 extension Reducers {
     public static func producerListReducer(action: Action, state: ProducerListState?) -> ProducerListState {
-        var state = state ?? ProducerListState(uuidState: UUID().uuidString)
+        let state = state ?? ProducerListState(uuidState: UUID().uuidString)
 
         switch action {
-        case let successGetFamers as ProducerListAction.GetProducerListSuccesAction:
-            break
+        case let getProducerListSuccessAction as ProducerListAction.GetProducerListSuccesAction:
+            return ProducerListHandler
+                .HandlerGetProducerListSuccesAction().handle(action: getProducerListSuccessAction, state)
         case let saveNewProducerInDatabaseSuccessAction as ProducerListAction.SaveNewProducerInDatabaseSuccessAction:
-            
+            return ProducerListHandler
+                .HandlerSaveNewProducerInDatabaseSuccessAction().handle(action: saveNewProducerInDatabaseSuccessAction, state)
         default:
             break
         }
@@ -25,3 +27,5 @@ extension Reducers {
         return state
     }
 }
+
+class ProducerListHandler { }

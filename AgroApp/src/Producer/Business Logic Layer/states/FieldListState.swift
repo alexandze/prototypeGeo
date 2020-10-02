@@ -59,4 +59,18 @@ struct FieldListState: Equatable {
             nimSelectValue: nimSelectValue ?? self.nimSelectValue
         )
     }
+    
+    func reset() -> FieldListState {
+        FieldListState(
+            uuidState: UUID().uuidString,
+            fieldList: nil,
+            currentField: nil,
+            indexForRemove: nil,
+            subAction: .notResponse,
+            title: "Liste des parcelles choisies",
+            isAppear: nil,
+            indexForUpdate: nil,
+            nimSelectValue: nil
+        )
+    }
 }

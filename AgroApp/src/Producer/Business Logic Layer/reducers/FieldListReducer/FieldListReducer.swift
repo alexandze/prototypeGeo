@@ -35,6 +35,8 @@ extension Reducers {
         case let checkIfAllFieldIsValidAction as FieldListAction.CheckIfAllFieldIsValidAction:
             return FieldListReducerHandler
                 .HandlerCheckIfAllFieldIsValidAction().handle(action: checkIfAllFieldIsValidAction, state)
+        case _ as ContainerMapAndTitleNavigationAction.KillStateAction:
+            return state.reset()
         default:
             return state
         }

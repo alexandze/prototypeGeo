@@ -18,12 +18,35 @@ class ProducerListMiddleware {
                 switch action {
                 case let makeProducerAction as ContainerMapAndTitleNavigationAction.MakeProducerSuccessAction:
                     ProducerListMiddleware().makeProducerSuccessAction(makeProducerAction, getState, dispatch)
+                case let getProducerListAction as ProducerListAction.GetProducerListAction:
+                    ProducerListMiddleware().getProducerListAction(getProducerListAction, getState, dispatch)
                 default:
                     break
                 }
                 
                 return next(action)
             }
+        }
+    }
+    
+    private func getProducerListAction(
+        _ action: ProducerListAction.GetProducerListAction,
+        _ getState: @escaping () -> AppState?,
+        _ dispatch: @escaping DispatchFunction
+    ) {
+        guard let producerListState = getState()?.producerListState else {
+            return dispatch(ProducerListAction.GetProducerListFailureAction())
+        }
+        
+        _ = ProducerListMiddleware.HandlerGetProducerListActionMiddleware()
+            .handle(action, producerListState)
+            .subscribe { element in
+                switch element {
+                case .success(let newAction):
+                    dispatch(newAction)
+                case .error(_):
+                    dispatch(ProducerListAction.GetProducerListFailureAction())
+                }
         }
     }
     

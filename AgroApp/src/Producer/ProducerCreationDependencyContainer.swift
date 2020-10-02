@@ -289,7 +289,7 @@ class ProducerCreationDependencyContainerImpl: ProducerCreationDependencyContain
             subscription.select { appState in
                 appState.producerListState
             }
-        })
+        }).subscribeOn(Util.getSchedulerBackgroundForReSwift())
     }
     
     private func makeProducerListInteraction(stateStore: Store<AppState>) -> ProducerListInteraction {

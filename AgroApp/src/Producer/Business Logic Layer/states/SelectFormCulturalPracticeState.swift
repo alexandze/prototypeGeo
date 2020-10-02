@@ -33,11 +33,22 @@ struct SelectFormCulturalPracticeState: Equatable {
             actionResponse: actionResponse ?? self.actionResponse
         )
     }
+    
+    func reset() -> SelectFormCulturalPracticeState {
+        SelectFormCulturalPracticeState(
+            uuidState: UUID().uuidString,
+            selectElement: nil,
+            section: nil,
+            field: nil,
+            actionResponse: .notResponse
+        )
+    }
 
     enum SelectFormCulturalPracticeActionResponse {
         case selectElementSelectedOnListActionResponse(currentIndexRow: Int)
         case closeSelectFormWithSaveActionResponse
         case closeSelectFormWithoutSaveAction
         case checkIfFormIsDirtyActionResponse(isDirty: Bool)
+        case notResponse
     }
 }

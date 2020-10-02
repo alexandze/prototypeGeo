@@ -29,6 +29,8 @@ extension Reducers {
         case let checkIfFormIsValidAndDirtyForPrintAlertAction as InputFormCulturalPracticeAction.CheckIfFormIsValidAndDirtyForPrintAlertAction:
             return InputFormCulturalPracticeReducerHandler
                 .HandlerCheckIfFormIsValidAndDirtyForPrintAlertAction().handle(action: checkIfFormIsValidAndDirtyForPrintAlertAction, state)
+        case _ as ContainerMapAndTitleNavigationAction.KillStateAction:
+            return state.reset()
         default:
             return state
         }

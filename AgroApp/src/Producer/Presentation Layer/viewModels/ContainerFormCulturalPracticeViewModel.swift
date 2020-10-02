@@ -52,6 +52,8 @@ class ContainerFormCulturalPracticeViewModelImpl: ContainerFormCulturalPracticeV
                     self.handleCloseContainerFormWithSaveActionResponse()
                 case .closeContainerFormWithoutSaveActionResponse:
                     self.handleCloseContainerFormWithoutSaveActionResponse()
+                case .notResponse:
+                    break
                 }
         }
     }

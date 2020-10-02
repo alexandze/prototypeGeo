@@ -17,4 +17,33 @@ struct ProducerListState: Equatable {
     var uuidState: String
     var producerList: [Producer]?
     var isEmptyFarmers: Bool?
+    var actionResponse: ActionResponse?
+    
+    enum ActionResponse {
+        case saveNewProducerInDatabaseSuccessActionResponse
+        case getProducerListSuccesActionResponse
+        case notActionResponse
+    }
+    
+    func changeValue(
+        producerList: [Producer]? = nil,
+        isEmptyFarmers: Bool? = nil,
+        actionResponse: ActionResponse
+    ) -> ProducerListState {
+        ProducerListState(
+            uuidState: UUID().uuidString,
+            producerList: producerList ?? self.producerList,
+            isEmptyFarmers: isEmptyFarmers ?? self.isEmptyFarmers,
+            actionResponse: actionResponse
+        )
+    }
+    
+    func reset() -> ProducerListState {
+        ProducerListState(
+            uuidState: UUID().uuidString,
+            producerList: nil,
+            isEmptyFarmers: nil,
+            actionResponse: .notActionResponse
+        )
+    }
 }

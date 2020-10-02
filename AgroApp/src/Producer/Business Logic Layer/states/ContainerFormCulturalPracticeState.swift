@@ -26,6 +26,7 @@ struct ContainerFormCulturalPracticeState: Equatable {
         case checkIfInputValueIsValidActionResponse(indexElementUIData: Int)
         case closeContainerFormWithSaveActionResponse
         case closeContainerFormWithoutSaveActionResponse
+        case notResponse
     }
 
     func changeValue(
@@ -42,6 +43,17 @@ struct ContainerFormCulturalPracticeState: Equatable {
             elementUIDataObservableList: elementUIDataObservableList ?? self.elementUIDataObservableList,
             isFormValid: isFormValid ?? self.isFormValid,
             actionResponse: actionResponse
+        )
+    }
+    
+    func reset() -> ContainerFormCulturalPracticeState {
+        ContainerFormCulturalPracticeState(
+            uuidState: UUID().uuidString,
+            field: nil,
+            section: nil,
+            elementUIDataObservableList: nil,
+            isFormValid: nil,
+            actionResponse: .notResponse
         )
     }
 }

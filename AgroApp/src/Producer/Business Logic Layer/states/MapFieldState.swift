@@ -26,6 +26,7 @@ struct MapFieldState: Equatable {
         case getAllFieldErrorActionResponse
         case getAllFieldActionSuccessResponse
         case willDeselectFieldOnMapActionResponse
+        case notReponseAction
     }
 
     func changeValues(
@@ -40,6 +41,16 @@ struct MapFieldState: Equatable {
             lastFieldSelected: lastFieldSelected ?? self.lastFieldSelected,
             lastFieldDeselected: lastFieldDeselected ?? self.lastFieldDeselected,
             responseAction: responseAction ?? self.responseAction
+        )
+    }
+    
+    func reset() -> MapFieldState {
+        MapFieldState(
+            uuidState: UUID().uuidString,
+            fieldDictionnary: nil,
+            lastFieldSelected: nil,
+            lastFieldDeselected: nil,
+            responseAction: .notReponseAction
         )
     }
 }

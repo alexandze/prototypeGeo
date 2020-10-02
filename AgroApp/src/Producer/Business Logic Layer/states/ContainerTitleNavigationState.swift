@@ -26,12 +26,14 @@ struct ContainerTitleNavigationState: Equatable {
         case hideButttonActionSuccess
         case printButtonActionSuccess
         case backActionSuccess
+        case notResponse
     }
 
     enum CurrentViewControllerInNavigation {
         case fieldList
         case culturalPracticeForm
         case addProducerForm
+        
     }
 
     func changeValue(
@@ -44,6 +46,15 @@ struct ContainerTitleNavigationState: Equatable {
             title: title ?? self.title,
             subAction: subAction ?? self.subAction,
             currentViewController: currentViewController ?? self.currentViewController
+        )
+    }
+    
+    func reset() -> ContainerTitleNavigationState {
+        ContainerTitleNavigationState(
+            uuidState: UUID().uuidString,
+            title: nil,
+            subAction: .notResponse,
+            currentViewController: nil
         )
     }
 }

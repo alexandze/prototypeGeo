@@ -10,35 +10,66 @@ import UIKit
 import RxSwift
 
 class ProducerListViewModelImpl: ProducerListViewModel {
-
+    
     let producerListInteraction: ProducerListInteraction
-    let state: Observable<ProducerListState>
+    let stateObservable: Observable<ProducerListState>
     var disposableTableViewControllerState: Disposable?
     var showMakeProducerContainer: (() -> Void)?
-
+    var reloadTableViewData: (() -> Void)?
+    var state: ProducerListState?
+    
     init(
         producerListInteraction: ProducerListInteraction,
         producerListStateObservable: Observable<ProducerListState>
     ) {
         self.producerListInteraction = producerListInteraction
-        self.state = producerListStateObservable
+        self.stateObservable = producerListStateObservable
     }
     
     func handlerViewWillAppear() {
-        dispatchGetFarmers(offset: 0, limit: 0)
         susbcribeToObservableState()
+        dispatchGetFarmers(offset: 0, limit: 0)
     }
     
     func handlerViewWillDisappear() {
         disposeToObservableState()
     }
     
+    func getNumberRow() -> Int {
+        state?.producerList?.count ?? 0
+    }
+    
+    func getNameByIndexPath(_ indexPath: IndexPath) -> String {
+        guard let producerList = state?.producerList,
+            Util.hasIndexInArray(producerList, index: indexPath.row),
+            let firstName = producerList[indexPath.row].firstName?.value,
+            let lastName = producerList[indexPath.row].lastName?.value
+        else {
+            return ""
+        }
+        
+        return "\(firstName) \(lastName)"
+    }
+    
     private func susbcribeToObservableState() {
-        disposableTableViewControllerState = state
+        disposableTableViewControllerState = stateObservable
             .observeOn(Util.getSchedulerMain())
-            .subscribe { even in
-                guard let state = even.element else { return }
+            .subscribe { [weak self] even in
+                guard let state = even.element,
+                    let actionResponse = state.actionResponse,
+                    let self = self
+                    else { return }
                 
+                self.state = state
+                
+                switch actionResponse {
+                case .getProducerListSuccesActionResponse:
+                    self.handleGetProducerListSuccessActionResponse()
+                case .saveNewProducerInDatabaseSuccessActionResponse:
+                    self.getSaveNewProducerInDatabaseSuccessActionResponse()
+                case .notActionResponse:
+                    break
+                }
         }
     }
     
@@ -47,7 +78,7 @@ class ProducerListViewModelImpl: ProducerListViewModel {
     }
     
     private func dispatchGetFarmers(offset: Int, limit: Int) {
-        producerListInteraction.getFamers(offset: offset, limit: limit)
+        producerListInteraction.getProducerListAction(offset: offset, limit: limit)
     }
 }
 
@@ -56,10 +87,21 @@ extension ProducerListViewModelImpl {
         // TODO dispatch show AddProducer
         showMakeProducerContainer?()
     }
+    
+    private func handleGetProducerListSuccessActionResponse() {
+        reloadTableViewData?()
+    }
+    
+    private func getSaveNewProducerInDatabaseSuccessActionResponse() {
+        
+    }
 }
 
 protocol ProducerListViewModel {
     var showMakeProducerContainer: (() -> Void)? { get set }
+    var reloadTableViewData: (() -> Void)? { get set }
     func handlerViewWillAppear()
     func handlerViewWillDisappear()
+    func getNumberRow() -> Int
+    func getNameByIndexPath(_ indexPath: IndexPath) -> String
 }

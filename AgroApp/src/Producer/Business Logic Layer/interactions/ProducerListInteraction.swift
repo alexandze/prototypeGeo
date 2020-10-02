@@ -18,11 +18,11 @@ public class ProducerListInteractionImpl: ProducerListInteraction {
         self.actionDispatcher = actionDispatcher
     }
 
-    public func getFamers(offset: Int, limit: Int) {
-        
+    func getProducerListAction(offset: Int, limit: Int) {
+        Util.dispatchActionInSchedulerReSwift(ProducerListAction.GetProducerListAction(), actionDispatcher: actionDispatcher)
     }
 }
 
 protocol ProducerListInteraction {
-    func getFamers(offset: Int, limit: Int)
+    func getProducerListAction(offset: Int, limit: Int)
 }

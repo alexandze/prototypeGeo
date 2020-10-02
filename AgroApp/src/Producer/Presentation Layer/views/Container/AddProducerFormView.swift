@@ -13,8 +13,6 @@ struct AddProducerFormView: View {
     @ObservedObject var keyboardFollower: KeyboardFollower
     @ObservedObject var viewState: AddProducerFormViewModelImpl.ViewState
 
-    @State var value: String = ""
-
     init(
         addProducerFormViewModel: AddProducerFormViewModel,
         keyboardFollower: KeyboardFollower = KeyboardFollower(),

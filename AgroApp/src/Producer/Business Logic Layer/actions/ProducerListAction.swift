@@ -11,7 +11,12 @@ import ReSwift
 
 struct ProducerListAction {
     struct GetProducerListAction: Action { }
-    struct GetProducerListSuccesAction: Action { }
+    
+    struct GetProducerListSuccesAction: Action {
+        let producerList: [Producer]
+    }
+    
+    struct GetProducerListFailureAction: Action { }
     
     struct SaveNewProducerInDatabaseSuccessAction: Action {
         var producer: Producer
