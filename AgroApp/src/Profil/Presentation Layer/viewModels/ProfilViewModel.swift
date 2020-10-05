@@ -42,6 +42,14 @@ class ProfilViewModelImpl: ProfilViewModel {
         self.viewController?.setAlpha(Util.getAlphaValue())
         self.viewController?.navigationController?.setNavigationBarHidden(false, animated: true)
         self.viewController?.title = "Profil"
+        initEditBarButton()
+    }
+    
+    private func initEditBarButton() {
+        let imageEdit = UIImage(systemName: "square.and.pencil")
+        let editButton = UIBarButtonItem(image: imageEdit , style: .done, target: self, action: #selector(handleEditButton))
+        editButton.tintColor = Util.getOppositeColorBlackOrWhite()
+        viewController?.navigationItem.rightBarButtonItems = [editButton]
     }
     
     private func subscribeStateObserver() {
@@ -72,6 +80,12 @@ class ProfilViewModelImpl: ProfilViewModel {
     
     class ViewState: ObservableObject {
         
+    }
+}
+
+extension ProfilViewModelImpl {
+    @objc private func handleEditButton() {
+        print("Edit")
     }
 }
 

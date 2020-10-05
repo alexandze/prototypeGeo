@@ -34,16 +34,25 @@ struct ProfilView: View {
                     ).padding()
                     
                     NameView(
-                        firstName: "Aurelie",
-                        lastName: "Dumond",
-                        email: "aurelie_dumond@gmail.com"
-                    ).padding()
+                        firstName: "Joe",
+                        lastName: "Donald",
+                        email: "joe_donald@gmail.com",
+                        phoneNumber: "+1 819 999 3535"
+                    )
                     
                     HStack {
                         CardSats(number: "5", title: "Producteurs")
                         CardSats(number: "25", title: "Parcelles")
                         CardSats(number: "10", title: "Scénarios")
                     }
+                    
+                    AddressCard(
+                        address: "3333 Rue Foucher",
+                        zipCode: "G8Z1M8",
+                        province: "Trois Rivières",
+                        region: "Québec",
+                        pays: "Canada"
+                    )
                 }
             }.environmentObject(
                 DimensionScreen(width: geometryProxy.size.width, height: geometryProxy.size.height))
@@ -61,6 +70,7 @@ struct NameView: View {
     var firstName: String
     var lastName: String
     var email: String
+    var phoneNumber: String
     
     @EnvironmentObject var dimensionScreen: DimensionScreen
     @Environment(\.colorScheme) var colorScheme
@@ -68,31 +78,69 @@ struct NameView: View {
     var body: some View {
         ZStack {
             Rectangle()
-                .frame(width: dimensionScreen.width * 0.8, height: dimensionScreen.height * 0.2)
+                .frame(width: dimensionScreen.width * 0.8, height: dimensionScreen.height * 0.30)
                 .cornerRadius(12)
                 .foregroundColor(colorScheme == .dark ? .black : .white)
-                .shadow(color: .gray, radius: 5)
+                //.shadow(color: .gray, radius: 5)
             
-            VStack(alignment: .center, spacing: 5) {
-                Text(firstName)
-                    .font(.body)
-                    .multilineTextAlignment(.center)
-                    .frame(width: dimensionScreen.width * 0.75)
+            VStack(alignment: .leading, spacing: 5) {
+                LabelTitleValue(title: "Prénom", value: firstName)
                 HrLineView()
-                
-                Text(lastName)
-                    .font(.body)
-                    .multilineTextAlignment(.center)
-                    .frame(width: dimensionScreen.width * 0.75)
-                
+                LabelTitleValue(title: "Nom", value: lastName)
                 HrLineView()
-                
-                Text(email)
-                    .font(.body)
-                    .multilineTextAlignment(.center)
-                    .frame(width: dimensionScreen.width * 0.75)
-                
-            }
+                LabelTitleValue(title: "Email", value: email)
+                HrLineView()
+                LabelTitleValue(title: "Numéro de téléphone", value: phoneNumber)
+            }.frame(width: dimensionScreen.width * 0.8, height: dimensionScreen.height * 0.2)
+        }
+    }
+}
+
+struct AddressCard: View {
+    var address: String
+    var zipCode: String
+    var province: String
+    var region: String
+    var pays: String
+    
+    @EnvironmentObject var dimensionScreen: DimensionScreen
+    @Environment(\.colorScheme) var colorScheme
+    
+    var body: some View {
+        ZStack {
+            Rectangle()
+                .frame(width: dimensionScreen.width * 0.8, height: dimensionScreen.height * 0.30)
+                .cornerRadius(12)
+                .foregroundColor(colorScheme == .dark ? .black : .white)
+                //.shadow(color: .gray, radius: 5)
+            
+            VStack(alignment: .leading, spacing: 5) {
+                LabelTitleValue(title: "Adresse", value: address)
+                HrLineView()
+                LabelTitleValue(title: "Province", value: province)
+                HrLineView()
+                LabelTitleValue(title: "Région", value: region)
+                HrLineView()
+                LabelTitleValue(title: "Code postal", value: zipCode)
+            }.frame(width: dimensionScreen.width * 0.8, height: dimensionScreen.height * 0.2)
+        }
+    }
+}
+
+private struct LabelTitleValue: View {
+    var title: String
+    var value: String
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(title)
+                .font(.system(size: 15))
+                .multilineTextAlignment(.leading)
+                .foregroundColor(.gray)
+            
+            Text(value)
+                .font(.system(size: 18))
+                .multilineTextAlignment(.leading)
         }
     }
 }
@@ -110,11 +158,12 @@ struct CardSats: View {
                 .frame(width: dimensionScreen.width * 0.25, height: dimensionScreen.height * 0.1)
                 .cornerRadius(12)
                 .foregroundColor(colorScheme == .dark ? .black : .white)
-                .shadow(color: .gray, radius: 5)
+                //.shadow(color: .gray, radius: 5)
             
             VStack {
                 Text(self.number)
                 Text(self.title)
+                    .foregroundColor(.gray)
             }
         }
     }
@@ -134,14 +183,14 @@ struct ImageProfil: View {
                 .resizable()
                 .frame(width: width, height: height)
                 .cornerRadius(height / 2, antialiased: true)
-                .shadow(color: .gray, radius: 5)
+                //.shadow(color: .gray, radius: 5)
         }
         
         return Image(uiImage: uiImage)
             .resizable()
             .frame(width: width, height: height)
             .cornerRadius(height / 2, antialiased: true)
-            .shadow(color: .gray, radius: 5)
+            //.shadow(color: .gray, radius: 5)
     }
 }
 

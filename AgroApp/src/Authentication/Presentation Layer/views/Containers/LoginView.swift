@@ -43,7 +43,7 @@ struct LoginView: View {
                                         height: geometryProxy.size.height * 0.3
                                 ).cornerRadius(12)
                                     .foregroundColor(self.colorScheme == .dark ? .black : .white)
-                                    .shadow(color: .gray, radius: 5)
+                                    //.shadow(color: .gray, radius: 5)
                                 
                                 VStack {
                                     ForEach(self.viewState.elementUIDataObservableList, id: \.id) { (elementUIData: ElementUIDataObservable) in
