@@ -108,6 +108,10 @@ class InputElementDataObservable: ElementUIDataObservable {
         let valueTrim = self.value.trimmingCharacters(in: .whitespacesAndNewlines)
         return regex.matches(in: valueTrim, range: NSRange(location: 0, length: valueTrim.count)).count == 1
     }
+    
+    func getColor() -> Color {
+        Color(Util.getOppositeColorBlackOrWhite())
+    }
 }
 
 // MARK: - ImputElement

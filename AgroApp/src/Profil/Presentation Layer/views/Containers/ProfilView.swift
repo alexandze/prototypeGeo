@@ -27,7 +27,7 @@ struct ProfilView: View {
     var body: some View {
         GeometryReader { (geometryProxy: GeometryProxy) in
             ScrollView {
-                VStack {
+                VStack(alignment: .center) {
                     ImageProfil(
                         width: geometryProxy.size.width * 0.4,
                         height: geometryProxy.size.height * 0.2
@@ -53,8 +53,11 @@ struct ProfilView: View {
                         region: "Québec",
                         pays: "Canada"
                     )
-                }
-            }.environmentObject(
+                }.frame(
+                    width: geometryProxy.size.width
+                )
+            }
+            .environmentObject(
                 DimensionScreen(width: geometryProxy.size.width, height: geometryProxy.size.height))
         }.onAppear {
             self.viewModel.handleOnAppear()

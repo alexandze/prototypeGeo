@@ -29,11 +29,11 @@ struct AddProducerFormView: View {
             VStack {
                 ScrollView {
                     VStack {
-                        ForEach(self.viewState.elementUIDataObservableList) { (elementUIData: ElementUIDataObservable) in
+                        ForEach(self.viewState.elementUIDataObservableList, id: \.id) { (elementUIData: ElementUIDataObservable) in
                             VStack {
                                 if elementUIData.type == InputElementObservable.TYPE_ELEMENT {
                                     InputWithTitleElement(elementUIData: elementUIData) {}
-                                        .padding(15)
+                                        .padding(20)
                                 }
 
                                 if elementUIData.type == InputElementWithRemoveButtonObservable.TYPE_ELEMENT {
@@ -53,19 +53,26 @@ struct AddProducerFormView: View {
                                 .offset(x:( geometryProxy.size.width / 2) - 67)
                         }
 
+                        /*
+                        
                         if self.keyboardFollower.isVisible {
                             self.getButtonValidate()
                                 .padding(.vertical, 15)
                         }
+ */
 
                     }
-                }.frame(
+                }
+                /*
+                .frame(
                     width: geometryProxy.size.width,
                     height: self.isKeyboardVisible()
                         ? self.calculHeightWithKeyBoard(geometryProxy: geometryProxy)
                         : self.calculHeightWithoutKeyBoard(geometryProxy: geometryProxy),
                     alignment: .top
-                ).onAppear {
+                ) */
+                .frame(width: geometryProxy.size.width, height: geometryProxy.size.height * 0.85)
+                .onAppear {
                     self.viewModel.configView()
                     self.viewModel.dispatchHideValidateButtonOfContainer()
                     self.viewModel.subscribeToStateObservable()
@@ -76,12 +83,14 @@ struct AddProducerFormView: View {
                 .animation(.default)
 
                 Spacer()
-
+/*
                 if !self.isKeyboardVisible() {
                     self.getButtonValidate()
                         .padding(.bottom, 15)
                 }
-
+*/
+                self.getButtonValidate()
+                    .padding(.bottom, 15)
             }.environmentObject(self.viewState)
                 .environmentObject(self.keyboardFollower)
                 .environmentObject(
@@ -136,9 +145,9 @@ private struct InputWithTitleElement: View {
     }
 
     var body: some View {
-        VStack(alignment: .center, spacing: 2) {
+        VStack(alignment: .center, spacing: 3) {
             HStack {
-                Text("\(self.inputElement.title) \(self.getNumber())")
+                Text("\(self.inputElement.title) \(self.getNumber())").frame(width: 100, height: 15, alignment: .leading)
                 Spacer()
             }
 
@@ -169,7 +178,8 @@ private struct InputWithTitleElement: View {
                         }
 
                         if !self.inputElement.isValid && !self.inputElement.isRequired {
-                            getWarningImage().padding(.trailing, 5)
+                            getWarningImage()
+                                .padding(.trailing, 5)
                         }
                     }
                 }
@@ -182,6 +192,7 @@ private struct InputWithTitleElement: View {
 
                 Spacer()
             }
+        
         }
     }
 
@@ -217,13 +228,13 @@ private struct ButtonValidate: View {
             Text(title)
                 .frame(
                     width: dimensionScreen.width * 0.6,
-                    height: dimensionScreen.height * 0.09
+                    height: dimensionScreen.height * 0.1
             )
         }.disabled(!isButtonActivated)
             .frame(
-                width: dimensionScreen.width * 0.6,
-                height: dimensionScreen.height * 0.09
-        ).foregroundColor(.white)
+                width: 250, height: 70, alignment: .center
+            )
+        .foregroundColor(.white)
             .background(self.getBackgroundColor())
             .cornerRadius(10)
     }

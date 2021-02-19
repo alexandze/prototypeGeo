@@ -27,59 +27,54 @@ struct LoginView: View {
     var body: some View {
         GeometryReader { (geometryProxy: GeometryProxy) in
             
-            VStack {
+            VStack(alignment: .center) {
                 if self.viewState.isprint {
                     ScrollView {
-                        VStack {
+                        VStack(alignment: .center) {
                             Text("AgroApp")
                                 .font(.system(size: 45))
                                 .bold()
                                 .italic()
                                 .padding()
-                            ZStack {
+                            ZStack(alignment: .center) {
+                                
                                 Rectangle()
                                     .frame(
                                         width: geometryProxy.size.width * 0.9,
-                                        height: geometryProxy.size.height * 0.3
-                                ).cornerRadius(12)
+                                        height: self.isKeyboardVisible() ? geometryProxy.size.height * 0.45 :  geometryProxy.size.height * 0.3,
+                                        alignment: .center
+                                    ).cornerRadius(12)
                                     .foregroundColor(self.colorScheme == .dark ? .black : .white)
-                                    //.shadow(color: .gray, radius: 5)
+                                
+                                //.shadow(color: .gray, radius: 5)
                                 
                                 VStack {
                                     ForEach(self.viewState.elementUIDataObservableList, id: \.id) { (elementUIData: ElementUIDataObservable) in
                                         VStack {
                                             if self.isInputElement(elementUIData) {
                                                 InputWithTitleElement(inputElement: (elementUIData as! InputElementObservable))
+                                                    .frame(
+                                                        width: geometryProxy.size.width * 0.8,
+                                                        alignment: .center
+                                                    )
                                                     .padding(15)
                                             }
                                         }
                                     }
                                 }
                             }
-                            
-                            if self.isKeyboardVisible() {
-                                ButtonValidate(title: "Connexion", isButtonActivated: true) {
-                                    self.loginViewModel.handleConnexionButton()
-                                }
-                            }
-                            
-                        }
-                    }.frame(
-                        width: geometryProxy.size.width * 0.9,
-                        height: self.isKeyboardVisible()
-                            ? self.calculHeightWithKeyBoard(geometryProxy: geometryProxy)
-                            : self.calculHeightWithoutKeyBoard(geometryProxy: geometryProxy),
-                        alignment: .top
-                    )
+                        }.frame(
+                            width: geometryProxy.size.width,
+                            alignment: .center
+                        )
+                    }
                 }
                 
                 Spacer()
                 
-                if !self.isKeyboardVisible() {
-                    ButtonValidate(title: "Connexion", isButtonActivated: true) {
-                        self.loginViewModel.handleConnexionButton()
+                ButtonValidate(title: "Connexion", isButtonActivated: true) {
+                    self.loginViewModel.handleConnexionButton()
                     }.padding(.bottom, 5)
-                }
                 
             }.onAppear {
                 self.loginViewModel.configView()
@@ -88,7 +83,7 @@ struct LoginView: View {
             .onDisappear {
                 self.loginViewModel.disposes()
             }.animation(.default)
-                .environmentObject(DimensionScreen(width: geometryProxy.size.width, height: geometryProxy.size.height))
+            .environmentObject(DimensionScreen(width: geometryProxy.size.width, height: geometryProxy.size.height))
             
         }
         
@@ -97,14 +92,6 @@ struct LoginView: View {
     private func isInputElement(_ elementUIData: ElementUIDataObservable) -> Bool {
         elementUIData.type == InputElementObservable.TYPE_ELEMENT &&
             (elementUIData as? InputElementObservable) != nil
-    }
-    
-    private func calculHeightWithKeyBoard(geometryProxy: GeometryProxy) -> CGFloat {
-        geometryProxy.size.height - keyboardFollower.keyboardHeight
-    }
-    
-    private func calculHeightWithoutKeyBoard(geometryProxy: GeometryProxy) -> CGFloat {
-        geometryProxy.size.height * 0.85
     }
     
     private func isKeyboardVisible() -> Bool {
@@ -168,13 +155,13 @@ private struct InputWithTitleElement: View {
             "",
             text: $inputElement.value
         )//.keyboardType(self.inputElement.keyboardType.getUIKeyboardType())
-            .padding(
-                EdgeInsets(top: 8, leading: 10, bottom: 8, trailing: 50)
+        .padding(
+            EdgeInsets(top: 8, leading: 10, bottom: 8, trailing: 50)
         ).background(colorScheme == .dark ? Color.black : Color.white)
-            .overlay(
-                RoundedRectangle(cornerRadius: 5)
-                    .stroke(lineWidth: 2)
-                    .foregroundColor(self.getForegroundColorOfRoundedRectangle())
+        .overlay(
+            RoundedRectangle(cornerRadius: 5)
+                .stroke(lineWidth: 2)
+                .foregroundColor(self.getForegroundColorOfRoundedRectangle())
         )
     }
     
@@ -183,13 +170,13 @@ private struct InputWithTitleElement: View {
             "",
             text: $inputElement.value
         )//.keyboardType(self.inputElement.keyboardType.getUIKeyboardType())
-            .padding(
-                EdgeInsets(top: 8, leading: 10, bottom: 8, trailing: 50)
+        .padding(
+            EdgeInsets(top: 8, leading: 10, bottom: 8, trailing: 50)
         ).background(colorScheme == .dark ? Color.black : Color.white)
-            .overlay(
-                RoundedRectangle(cornerRadius: 5)
-                    .stroke(lineWidth: 2)
-                    .foregroundColor(self.getForegroundColorOfRoundedRectangle())
+        .overlay(
+            RoundedRectangle(cornerRadius: 5)
+                .stroke(lineWidth: 2)
+                .foregroundColor(self.getForegroundColorOfRoundedRectangle())
         )
     }
 }
@@ -206,16 +193,16 @@ private struct ButtonValidate: View {
         }) {
             Text(title)
                 .frame(
-                    width: dimensionScreen.width * 0.6,
-                    height: dimensionScreen.height * 0.09
-            )
+                    width: 250,
+                    height: 70
+                )
         }.disabled(!isButtonActivated)
-            .frame(
-                width: dimensionScreen.width * 0.6,
-                height: dimensionScreen.height * 0.09
+        .frame(
+            width: 250,
+            height: 70
         ).foregroundColor(.white)
-            .background(self.getBackgroundColor())
-            .cornerRadius(10)
+        .background(self.getBackgroundColor())
+        .cornerRadius(10)
     }
     
     private func getBackgroundColor() -> Color {

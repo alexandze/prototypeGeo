@@ -13,8 +13,8 @@ class ProfilViewModelImpl: ProfilViewModel {
     
     let stateObserver: Observable<ProfilState>
     let interaction: ProfilInteraction
-    weak var viewState: ViewState?
-    weak var viewController: SettingViewController<ProfilView>?
+    var viewState: ViewState?
+    var viewController: SettingViewController<ProfilView>?
     private var disposableStateObserver: Disposable?
     private var state: ProfilState?
     

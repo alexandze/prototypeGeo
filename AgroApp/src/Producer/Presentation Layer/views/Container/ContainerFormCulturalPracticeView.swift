@@ -48,7 +48,11 @@ struct ContainerFormCulturalPracticeView: View {
                 self.viewModel.disposeObserver()
             }.environmentObject(
                 DimensionScreen(width: geometry.size.width, height: geometry.size.height)
-            ).alert(isPresented: self.$viewState.presentAlert, content: self.createAlert)
+            ).environmentObject(
+                keyboardFollower
+            )
+            .animation(.default)
+            .alert(isPresented: self.$viewState.presentAlert, content: self.createAlert)
         }
     }
 
@@ -97,6 +101,7 @@ private struct HeaderView: View {
 private struct CenterView: View {
     @ObservedObject var viewState: ContainerFormCulturalPracticeViewModelImpl.ViewState
     @EnvironmentObject var dimensionScreen: DimensionScreen
+    @EnvironmentObject var keyboardFollower: KeyboardFollower
 
     var body: some View {
         ScrollView {
@@ -113,7 +118,7 @@ private struct CenterView: View {
                     }
                 }
             }
-        }
+        }.frame(width: dimensionScreen.width, height: self.getheight() , alignment: .center)
     }
 
     func canCastToInputElementObservable(_ elementUIData: ElementUIDataObservable) -> Bool {
@@ -122,6 +127,10 @@ private struct CenterView: View {
 
     func canCastToSelectElementObservable(_ elementUIData: ElementUIDataObservable) -> Bool {
         elementUIData.toSelectElementObservable() != nil
+    }
+    
+    func getheight() -> CGFloat {
+        keyboardFollower.keyboardHeight > 0 ? dimensionScreen.height * 0.4 : dimensionScreen.height * 0.85
     }
 }
 
@@ -183,7 +192,10 @@ private struct TextFieldWithStyle: View {
                         .stroke(lineWidth: 2)
                         .foregroundColor(self.getForegroundColorOfRoundedRectangle())
             )
-        }
+        }.frame(
+            width: self.dimensionScreen.width,
+            alignment: .center
+        )
     }
 
     private func getForegroundColorOfRoundedRectangle() -> Color {
@@ -200,32 +212,20 @@ private struct ButtonValidate: View {
         Button(action: { self.handleButton() }) {
             Text("Valider")
                 .frame(
-                    minWidth: self.getWidthValidateButton(),
-                    idealWidth: self.getWidthValidateButton(),
-                    maxWidth: self.getWidthValidateButton(),
-                    minHeight: self.getHeightValidateButton(),
-                    idealHeight: self.getHeightValidateButton(),
-                    maxHeight: self.getHeightValidateButton(),
+                    width: 250,
+                    height: 70,
                     alignment: .center
             )
         }.frame(
-            width: self.getWidthValidateButton(),
-            height: self.getHeightValidateButton(),
+            width: 250,
+            height: 70,
             alignment: .center
         ).foregroundColor(.white)
             .background(self.getBackgroundColor())
             .cornerRadius(10)
             .disabled(!self.isButtonActivated)
     }
-
-    func getWidthValidateButton() -> CGFloat {
-        dimensionScreen.width * 0.6
-    }
-
-    func getHeightValidateButton() -> CGFloat {
-        dimensionScreen.height * 0.09
-    }
-
+    
     private func getBackgroundColor() -> Color {
         self.isButtonActivated ? Color(Util.getGreenColor()) : .red
     }

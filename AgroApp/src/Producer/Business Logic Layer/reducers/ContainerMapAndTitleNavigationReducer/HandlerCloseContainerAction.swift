@@ -24,8 +24,6 @@ extension ContainerMapAndTitleNavigationHandler {
         }
     }
     
-    
-    
     private struct UtilHandlerCloseContainerAction {
         let state: ContainerMapAndTitleNavigationState
     }

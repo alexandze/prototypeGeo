@@ -26,7 +26,6 @@ extension ProducerListHandler {
                 actionResponse: .getProducerListSuccesActionResponse
             )
         }
-        
     }
     
     private struct UtilHandlerGetProducerListSuccesAction {
